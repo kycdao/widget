@@ -4,6 +4,13 @@ const kycDaoConfig = {
 
 window.kycDao = kycDaoSdk.init(kycDaoConfig);
 
+/*
+    TODO:
+    - SDK init (allowed blockchains = [NEAR])
+    - wire up scaffolding
+    - setup "callback handling" for post-redirect back from NEAR wallet
+*/
+
 async function getKycDaoApiStatus() {
   const status = await kycDao.getServerStatus();
 
