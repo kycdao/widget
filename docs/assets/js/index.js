@@ -69,7 +69,7 @@ const main = () => {
     document
       .getElementById("check-status")
       .addEventListener("click", async () => {
-        // await kycDaoSdk.checkStatusForAddress(wallet.getAccountId())
+        await kycDaoSdk.checkStatusForAddress(wallet.getAccountId())
       });
 
     // 4. Ask user for necessary information
@@ -78,24 +78,39 @@ const main = () => {
       .addEventListener("click", async () => {
         const termsAccepted = document
           .getElementById("terms-accepted")
-          .getAttribute("value");
+          .getAttribute("checked") === 'checked' ? true : false;
         const taxResidency = document
           .getElementById("tax-residency")
           .getAttribute("value");
 
-        /*
-        await kycDaoSdk.startVerification({
-          taxResidency
+
+        await kycDaoSdk.validateData({
+          taxResidency,
           termsAccepted
         })
-        */
+
       });
 
     // 5. Start identity verification
     document
       .getElementById("start-verification")
       .addEventListener("click", async () => {
-        // await kycDaoSdk.startVerification()
+        const challenge = await kycDaoSdk.verifyWallet();
+
+        const key = await near.keystore.getKey(
+          near.wallet.account().connection.networkId,
+          near.wallet.getAccountId()
+        );
+
+        /** @type {NearSignature} */
+        const signature = key.sign(Buffer.from(challenge));
+
+        await kycDaoSdk.verifyIdentity({
+          signature: `ed25519:${nearApi.utils.serialize.base_encode(
+            signature.signature
+          )}`,
+          publicKey: signature.publicKey.toString(),
+        });
       });
   })();
 };
