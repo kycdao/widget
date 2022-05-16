@@ -33,11 +33,11 @@
       <!-- Check API status -->
       <div>
         <h3>
-          Check initialized API status
+          1. Check initialized API status
           <button
             type="button"
             class="btn btn-primary"
-            onclick="getKycDaoApiStatus()"
+            id="check-api-status"
           >
             Refresh
           </button>
@@ -49,15 +49,29 @@
       </div>
 
       <div>
-        <h2>web3 login (NEAR network)</h2>
+        <h3>2. web3 login (NEAR network)</h3>
         <button id="near-login">Login with NEAR</button>
 
         <span id="near-status"></span>
+
+        <hr />
       </div>
 
-      <!-- Check NFT in wallet - direct, on-chain -->
+      <!--
+        Check NFT in wallet - direct, on-chain
+
+        ACHTUNG ACHTUNG ACHTUNG!
+
+       ⚠️ only use this for gating on your backend (server-side) ⚠️
+
+        WARNING WARNING!
+      -->
       <div>
-        <h3>Check if wallet has kycDAO NFT (on-chain)</h3>
+        <h3>3. Check if wallet has kycDAO NFT (on-chain)</h3>
+
+        <button id="check-status">Do I have kycNFT already?</button>
+
+        <span id="kycnft-status"></span>
 
         <hr />
       </div>
@@ -66,9 +80,20 @@
 
       <!-- Connect wallet with kycDAO -->
       <div>
-        <h3>1. Connect wallet with kycDAO</h3>
+        <h3>4. Ask user for necessary information</h3>
+
+        current tax residency <input id="tax-residency" type="text" value="Aruba" /><br />
+        accept terms of service & privacy policy <input id="terms-accepted" type="checkbox" /><br />
+
+        <button id="validate-data">Validate data</button>
 
         <hr />
+
+        <h3>5. Start identity verification</h3>
+
+        <button id="start-verification">Start verification</button>
+
+        <span id="verification-status"></span>
       </div>
     </div>
   </body>

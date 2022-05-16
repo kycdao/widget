@@ -3,6 +3,7 @@
 const kycDaoConfig = {
   baseUrl: "https://staging.kycdao.xyz/api/frontend",
   enabledBlockchains: ["near-testnet"],
+  enabledVerification: ["individual-kyc"],
 };
 
 window.kycDao = kycDaoSdk.init(kycDaoConfig);
@@ -33,32 +34,70 @@ const config = {
   },
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+const main = () => {
   console.log("bootstrapping blockchain connection");
 
   (async () => {
     const near = await nearApi.connect(config);
     const wallet = new nearApi.WalletConnection(near);
 
-    const signIn = async () => {
-      if (wallet.isSignedIn()) {
-        throw new Error('already signed in');
-      }
+    // 1. Check initialized API status
+    document
+      .getElementById("check-api-status")
+      .addEventListener("click", getKycDaoApiStatus);
 
-      await wallet.requestSignIn("app.kycdao.testnet", 'kycDAO');
-    };
-
-    document.getElementById("near-status").innerHTML = `connected to ${near.config.nodeUrl}`;
+    // 2. web3 login (NEAR network)
+    document.getElementById(
+      "near-status"
+    ).innerHTML = `connected to ${near.config.nodeUrl}`;
 
     if (!wallet.isSignedIn()) {
-      document.getElementById("near-login").addEventListener("click", signIn);
+      document
+        .getElementById("near-login")
+        .addEventListener(
+          "click",
+          async () => await wallet.requestSignIn("app.kycdao.testnet", "kycDAO")
+        );
     } else {
       const b = document.getElementById("near-login");
       b.innerHTML = `hi ${wallet.getAccountId()}`;
-      b.setAttribute('disabled', 'yes');
-
-      // await kycDaoSdk.checkStatusForAddress(wallet)
+      b.setAttribute("disabled", "yes");
     }
 
+    // 3. Check if wallet has kycDAO NFT (on-chain)
+    // ⚠️ only use this for access control on your backend (server-side) ⚠️
+    document
+      .getElementById("check-status")
+      .addEventListener("click", async () => {
+        // await kycDaoSdk.checkStatusForAddress(wallet.getAccountId())
+      });
+
+    // 4. Ask user for necessary information
+    document
+      .getElementById("validate-data")
+      .addEventListener("click", async () => {
+        const termsAccepted = document
+          .getElementById("terms-accepted")
+          .getAttribute("value");
+        const taxResidency = document
+          .getElementById("tax-residency")
+          .getAttribute("value");
+
+        /*
+        await kycDaoSdk.startVerification({
+          taxResidency
+          termsAccepted
+        })
+        */
+      });
+
+    // 5. Start identity verification
+    document
+      .getElementById("start-verification")
+      .addEventListener("click", async () => {
+        // await kycDaoSdk.startVerification()
+      });
   })();
-});
+};
+
+document.addEventListener("DOMContentLoaded", main);
