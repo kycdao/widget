@@ -17,6 +17,7 @@
       integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/gh/nearprotocol/near-api-js/dist/near-api-js.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.0.10/dist/kycdao-sdk.min.js"></script>
     <script src="assets/js/index.js"></script>
   </head>
@@ -45,6 +46,13 @@
         <p><b>kycDAO API status: </b><span id="api-status"></span></p>
 
         <hr />
+      </div>
+
+      <div>
+        <h2>web3 login (NEAR network)</h2>
+        <button id="near-login">Login with NEAR</button>
+
+        <span id="near-status"></span>
       </div>
 
       <!-- Check NFT in wallet - direct, on-chain -->
