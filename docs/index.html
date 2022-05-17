@@ -12,13 +12,8 @@
       integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
       crossorigin="anonymous"
     />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
-      integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/gh/nearprotocol/near-api-js/dist/near-api-js.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.0.10/dist/kycdao-sdk.min.js"></script>
+    <!-- use minified version when possible but currently it gives some errors while the non-minified doesn't -->
+    <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.0.11/dist/kycdao-sdk.js"></script>
     <script src="assets/js/index.js"></script>
   </head>
 
@@ -34,11 +29,7 @@
       <div>
         <h3>
           1. Check initialized API status
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="check-api-status"
-          >
+          <button type="button" class="btn btn-primary" id="check-api-status">
             Refresh
           </button>
         </h3>
@@ -50,7 +41,9 @@
 
       <div>
         <h3>2. web3 login (NEAR network)</h3>
-        <button id="near-login">Login with NEAR</button>
+        <button type="button" class="btn btn-primary" id="near-login">
+          Login with NEAR
+        </button>
 
         <span id="near-status"></span>
 
@@ -69,7 +62,9 @@
       <div>
         <h3>3. Check if wallet has kycDAO NFT (on-chain)</h3>
 
-        <button id="check-status">Do I have kycNFT already?</button>
+        <button type="button" class="btn btn-primary" id="check-status">
+          Do I have kycNFT already?
+        </button>
 
         <span id="kycnft-status"></span>
 
@@ -82,16 +77,108 @@
       <div>
         <h3>4. Ask user for necessary information</h3>
 
-        current tax residency <input id="tax-residency" type="text" value="Aruba" /><br />
-        accept terms of service & privacy policy <input id="terms-accepted" type="checkbox" /><br />
-
-        <button id="validate-data">Validate data</button>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-5">
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="Email"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-5">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="email-verified" /> Email address
+                  already verified (by the integrating party)
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="tax-residency" class="col-sm-2 control-label"
+              >Current tax residency</label
+            >
+            <div class="col-sm-5">
+              <input
+                type="text"
+                class="form-control"
+                id="tax-residency"
+                placeholder="United States"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-5">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="legal-entity" /> User is a legal
+                  entity (e.g. a business)
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="verification-type" class="col-sm-2 control-label"
+              >Verification type</label
+            >
+            <div class="col-sm-5">
+              <select class="form-control" id="verification-type">
+                <option>KYC</option>
+                <option>Accreditation</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-5">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="terms-accepted" /> Accept Terms and
+                  Conditions & Privacy Policy
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-4">
+              <button type="submit" class="btn btn-primary" id="submit-verification-data">
+                Submit verification data
+              </button>
+            </div>
+          </div>
+        </form>
 
         <hr />
 
         <h3>5. Start identity verification</h3>
 
-        <button id="start-verification">Start verification</button>
+        <form>
+          <div class="form-group">
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-5">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="disclaimer-accepted" /> Accept
+                    Disclaimer
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-offset-2 col-sm-4">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                id="start-verification"
+              >
+                Start verification
+              </button>
+            </div>
+          </div>
+        </form>
 
         <span id="verification-status"></span>
       </div>

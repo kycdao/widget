@@ -2,8 +2,8 @@
 
 const kycDaoConfig = {
   baseUrl: "https://staging.kycdao.xyz/api/frontend",
-  enabledBlockchains: ["near-testnet"],
-  enabledVerification: ["individual-kyc"],
+  enbaledBlockchainNetworks: ["NearTestnet"],
+  enbaledVerificationTypes: ["KYC"],
 };
 
 window.kycDao = kycDaoSdk.init(kycDaoConfig);
@@ -22,45 +22,32 @@ async function getKycDaoApiStatus() {
   elem.innerHTML = status.apiStatus;
 }
 
-const nearApi = window.nearApi;
-
-const config = {
-  nodeUrl: "https://rpc.testnet.near.org",
-  walletUrl: "https://wallet.testnet.near.org",
-  helperUrl: "https://helper.testnet.near.org",
-  explorerUrl: "https://explorer.testnet.near.org",
-  deps: {
-    keyStore: new nearApi.keyStores.BrowserLocalStorageKeyStore(),
-  },
-};
-
 const main = () => {
-  console.log("bootstrapping blockchain connection");
-
   (async () => {
-    const near = await nearApi.connect(config);
-    const wallet = new nearApi.WalletConnection(near);
-
     // 1. Check initialized API status
     document
       .getElementById("check-api-status")
       .addEventListener("click", getKycDaoApiStatus);
 
     // 2. web3 login (NEAR network)
+    // TODO move this down, it will also create kycDAO session and user
     document.getElementById(
       "near-status"
-    ).innerHTML = `connected to ${near.config.nodeUrl}`;
+    ).innerHTML = `connected to ${kycDao.nearConfig.nodeUrl}`;
 
-    if (!wallet.isSignedIn()) {
+    if (
+      !kycDao.chainAndAddress ||
+      kycDao.chainAndAddress.blockchain !== "Near"
+    ) {
       document
         .getElementById("near-login")
         .addEventListener(
           "click",
-          async () => await wallet.requestSignIn("app.kycdao.testnet", "kycDAO")
+          async () => await kycDao.connectWallet("Near")
         );
     } else {
       const b = document.getElementById("near-login");
-      b.innerHTML = `hi ${wallet.getAccountId()}`;
+      b.innerHTML = `hi ${kycDao.chainAndAddress.address}`;
       b.setAttribute("disabled", "yes");
     }
 
@@ -69,48 +56,22 @@ const main = () => {
     document
       .getElementById("check-status")
       .addEventListener("click", async () => {
-        await kycDaoSdk.checkStatusForAddress(wallet.getAccountId())
+        await kycDao.walletHasKycNft();
       });
 
     // 4. Ask user for necessary information
     document
-      .getElementById("validate-data")
+      .getElementById("submit-verification-data")
       .addEventListener("click", async () => {
-        const termsAccepted = document
-          .getElementById("terms-accepted")
-          .getAttribute("checked") === 'checked' ? true : false;
-        const taxResidency = document
-          .getElementById("tax-residency")
-          .getAttribute("value");
-
-
-        await kycDaoSdk.validateData({
-          taxResidency,
-          termsAccepted
-        })
-
+        // TODO send in data with kycDao.startVerification which will trigger the Persona flow as well
+        // TODO handle backend polling after Persona + add indicator
       });
 
     // 5. Start identity verification
     document
       .getElementById("start-verification")
       .addEventListener("click", async () => {
-        const challenge = await kycDaoSdk.verifyWallet();
-
-        const key = await near.keystore.getKey(
-          near.wallet.account().connection.networkId,
-          near.wallet.getAccountId()
-        );
-
-        /** @type {NearSignature} */
-        const signature = key.sign(Buffer.from(challenge));
-
-        await kycDaoSdk.verifyIdentity({
-          signature: `ed25519:${nearApi.utils.serialize.base_encode(
-            signature.signature
-          )}`,
-          publicKey: signature.publicKey.toString(),
-        });
+        // TODO TODO send in data with kycDao.startMinting, handle polling, add indicator
       });
   })();
 };
