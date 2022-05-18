@@ -48,6 +48,7 @@ const setupLoginDance = (actualLoginFn) => {
 const main = () => {
   (async () => {
     // 1. Check initialized API status
+    await getKycDaoApiStatus();
     document
       .getElementById("check-api-status")
       .addEventListener("click", getKycDaoApiStatus);
