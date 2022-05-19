@@ -20,36 +20,97 @@ const getKycDaoApiStatus = async () => {
   const status = await window.kycDao.getServerStatus();
 
   const elem = document.getElementById("api-status");
-  elem.innerHTML = status.apiStatus;
+  elem.innerHTML = `connected to ${status.apiStatus}`;
 };
 
-const setupLoginDance = (actualLoginFn) => {
+const residencyOptionsSetup = () => {
+  const taxResidencyPicker = document.getElementById("tax-residency");
+
+  for (const country of kycDaoSdk.COUNTRIES) {
+    const option = document.createElement("option");
+    option.text = country.name;
+    option.value = country.iso_cca2;
+    taxResidencyPicker.add(option);
+  }
+};
+
+const connectWalletSetup = () => {
   document.getElementById(
     "near-status"
   ).innerHTML = `connected to ${kycDao.nearConfig.nodeUrl}`;
 
-  if (!kycDao.chainAndAddress || kycDao.chainAndAddress.blockchain !== "Near") {
-    document
-      .getElementById("near-login")
-      .addEventListener("click", actualLoginFn);
+  const walletStatus = document.getElementById("wallet-status");
+  const nearButton = document.getElementById("near-login");
+
+  nearButton.addEventListener("click", async () => {
+    try {
+      await kycDao.connectWallet("Near");
+    } catch (e) {
+      walletStatus.innerHTML = e;
+    }
+  });
+
+  if (!kycDao.walletConnected) {
+    walletStatus.innerHTML = "Not connected";
   } else {
-    const b = document.getElementById("near-login");
-    b.innerHTML = `hi ${kycDao.chainAndAddress.address}`;
-    b.setAttribute("disabled", "yes");
+    walletStatus.innerHTML = `${kycDao.connectedChainAndAddress.blockchain} - ${kycDao.connectedChainAndAddress.address}`;
+    if (kycDao.connectedChainAndAddress.blockchain === "Near") {
+      nearButton.setAttribute("disabled", "yes");
+      nearButton.title = "NEAR wallet already connected";
+    }
+  }
+};
+
+const kycDaoLoginSetup = () => {
+  const status = document.getElementById("kycdao-status");
+  const button = document.getElementById("kycdao-login");
+
+  button.addEventListener("click", async () => {
+    try {
+      await kycDao.registerOrLogin();
+      status.innerHTML = "User logged in with the connected wallet";
+    } catch (e) {
+      status.innerHTML = e;
+    }
+  });
+
+  if (!kycDao.loggedIn) {
+    status.innerHTML = "Not logged in";
+  } else {
+    status.innerHTML = "User logged in with the connected wallet";
+  }
+
+  if (!kycDao.walletConnected) {
+    button.setAttribute("disabled", "yes");
+    button.title = "No wallet connected";
+  }
+};
+
+const kycNftCheckSetup = () => {
+  const status = document.getElementById("kycnft-status");
+  const button = document.getElementById("kycnft-check");
+  button.addEventListener("click", async () => {
+    status.innerHTML = "Feature not implemented yet";
+    /* const hasKycNft = await kycDao.walletHasKycNft();
+    if (hasKycNft) {
+      status.innerHTML = "Connected wallet already has a kycNF";
+    } else {
+      status.innerHTML = "Connected wallet does not have a kycNF yet";
+    } */
+  });
+
+  status.innerHTML = "Not checked yet";
+
+  if (!kycDao.walletConnected || !kycDao.loggedIn) {
+    button.setAttribute("disabled", "yes");
+    button.title = "No wallet connected or not logged in";
   }
 };
 
 const main = () => {
   (async () => {
     // add tax residency picker country options
-    const taxResidencyPicker = document.getElementById("tax-residency");
-
-    for (const country of kycDaoSdk.COUNTRIES) {
-      const option = document.createElement("option");
-      option.text = country.name;
-      option.value = country.iso_cca2;
-      taxResidencyPicker.add(option);
-    }
+    residencyOptionsSetup();
 
     // 1. Check initialized API status
     await getKycDaoApiStatus();
@@ -58,18 +119,16 @@ const main = () => {
       .addEventListener("click", getKycDaoApiStatus);
 
     // 2. web3 login (NEAR network)
-    const web3login = () => kycDao.connectWallet("Near");
-    setupLoginDance(web3login);
+    connectWalletSetup();
 
-    // 3. Check if wallet has kycDAO NFT (on-chain)
+    // 3. kycDAO login
+    kycDaoLoginSetup();
+
+    // 4. Check if wallet has kycDAO NFT (on-chain)
     // ⚠️ only use this for access control on your backend (server-side) ⚠️
-    document
-      .getElementById("check-status")
-      .addEventListener("click", async () => {
-        await kycDao.walletHasKycNft();
-      });
+    kycNftCheckSetup();
 
-    // 4. Start identity verification
+    // 5. Start identity verification
     document
       .getElementById("submit-verification-data")
       .addEventListener("click", async () => {
@@ -77,7 +136,7 @@ const main = () => {
         // TODO handle backend polling + add indicator
       });
 
-    // 5. mint kycNFT
+    // 6. mint kycNFT
     document
       .getElementById("start-verification")
       .addEventListener("click", async () => {

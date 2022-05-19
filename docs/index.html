@@ -32,7 +32,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- use minified version when possible but currently it gives some errors while the non-minified doesn't -->
-    <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.0.14/dist/kycdao-sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.0.15/dist/kycdao-sdk.js"></script>
     <script src="assets/js/index.js"></script>
   </head>
 
@@ -60,11 +60,59 @@
 
       <div>
         <h3>2. web3 login (NEAR network)</h3>
-        <button type="button" class="btn btn-primary" id="near-login">
-          Login with NEAR
-        </button>
 
-        <span id="near-status"></span>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="near-status"
+              >NEAR SDK status:</label
+            >
+            <div class="col-sm-4">
+              <p class="form-control-static" id="near-status"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-4">
+              <button type="button" class="btn btn-primary" id="near-login">
+                Login with NEAR
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="wallet-status"
+              >Connected wallet:</label
+            >
+            <div class="col-sm-4">
+              <p class="form-control-static" id="wallet-status"></p>
+            </div>
+          </div>
+        </form>
+
+        <hr />
+      </div>
+
+      <div>
+        <h3>3. kycDAO login</h3>
+
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="kycdao-status"
+              >kycDAO login status:</label
+            >
+            <div class="col-sm-4">
+              <p class="form-control-static" id="kycdao-status"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="kycdao-login"
+              >Log in connected wallet:</label
+            >
+            <div class="col-sm-4">
+              <button type="button" class="btn btn-primary" id="kycdao-login">
+                Login with kycDAO
+              </button>
+            </div>
+          </div>
+        </form>
 
         <hr />
       </div>
@@ -79,27 +127,45 @@
         WARNING WARNING!
       -->
       <div>
-        <h3>3. Check if wallet has kycDAO NFT (on-chain)</h3>
+        <h3>4. Check if wallet has kycDAO NFT (on-chain)</h3>
 
-        <button type="button" class="btn btn-primary" id="check-status">
-          Do I have kycNFT already?
-        </button>
-
-        <span id="kycnft-status"></span>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="kycnft-status"
+              >kycNFT status:</label
+            >
+            <div class="col-sm-4">
+              <p class="form-control-static" id="kycnft-status"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="kycnft-check"
+              >Check for kycNFT:</label
+            >
+            <div class="col-sm-4">
+              <button type="button" class="btn btn-primary" id="kycnft-check">
+                Check
+              </button>
+            </div>
+          </div>
+        </form>
 
         <hr />
       </div>
 
-      <h2>User verification and NFT minting steps</h2>
+      <h2>
+        User verification and NFT minting steps
+        <small>Under construction</small>
+      </h2>
 
       <!-- Connect wallet with kycDAO -->
       <div>
-        <h3>4. Collect user information and start verification</h3>
+        <h3>5. Collect user information and start verification</h3>
 
-        <form class="form-horizontal">
+        <form class="form-horizontal" disabled>
           <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">Email</label>
-            <div class="col-sm-5">
+            <label for="email" class="col-sm-3 control-label">Email</label>
+            <div class="col-sm-4">
               <input
                 type="email"
                 class="form-control"
@@ -109,7 +175,7 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-5">
+            <div class="col-sm-offset-3 col-sm-4">
               <div class="checkbox">
                 <label>
                   <input type="checkbox" id="email-verified" /> Email address
@@ -119,10 +185,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="tax-residency" class="col-sm-2 control-label"
+            <label for="tax-residency" class="col-sm-3 control-label"
               >Current tax residency</label
             >
-            <div class="col-sm-5">
+            <div class="col-sm-4">
               <select
                 class="form-control selectpicker"
                 id="tax-residency"
@@ -132,7 +198,7 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-5">
+            <div class="col-sm-offset-3 col-sm-4">
               <div class="checkbox">
                 <label>
                   <input type="checkbox" id="legal-entity" /> User is a legal
@@ -142,10 +208,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="verification-type" class="col-sm-2 control-label"
+            <label for="verification-type" class="col-sm-3 control-label"
               >Verification type</label
             >
-            <div class="col-sm-5">
+            <div class="col-sm-4">
               <select class="form-control" id="verification-type">
                 <option>KYC</option>
                 <option>Accreditation</option>
@@ -153,7 +219,7 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-5">
+            <div class="col-sm-offset-3 col-sm-4">
               <div class="checkbox">
                 <label>
                   <input type="checkbox" id="terms-accepted" /> Accept Terms and
@@ -163,11 +229,13 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-4">
+            <div class="col-sm-offset-3 col-sm-4">
               <button
                 type="button"
                 class="btn btn-primary"
                 id="submit-verification-data"
+                disabled
+                title="Coming soon!"
               >
                 Start verification
               </button>
@@ -177,12 +245,12 @@
 
         <hr />
 
-        <h3>5. Start NFT minting</h3>
+        <h3>6. Start NFT minting</h3>
 
         <form>
           <div class="form-group">
             <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-5">
+              <div class="col-sm-offset-3 col-sm-4">
                 <div class="checkbox">
                   <label>
                     <input type="checkbox" id="disclaimer-accepted" /> Accept
@@ -191,11 +259,13 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-offset-2 col-sm-4">
+            <div class="col-sm-offset-3 col-sm-4">
               <button
                 type="button"
                 class="btn btn-primary"
                 id="start-verification"
+                disabled
+                title="Coming soon!"
               >
                 Start minting
               </button>

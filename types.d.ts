@@ -24,11 +24,14 @@ interface ServerStatus {
 }
 
 interface KycDaoSdk {
+  connectedChainAndAddress: ChainAndAddress | undefined;
+  walletConnected: boolean;
   init: (config: KycDaoSdkConfig) => Record<string, unknown>;
   getServerStatus: () => ServerStatus;
   walletHasKycNft: () => Promise<boolean>;
   walletHasKycNft: (chainAndAddress: ChainAndAddress) => Promise<boolean>;
   connectWallet(blockchain: Blockchain): Promise<void>;
+  registerOrLogin(): Promise<void>;
   startVerification(verificationData: VerificationData): Promise<void>;
   getNftImageOptions(): Promise<NftImage[]>;
   startMinting(mintingData: MintingData): Promise<void>;
