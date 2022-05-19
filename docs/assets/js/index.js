@@ -101,7 +101,7 @@ const kycNftCheckSetup = () => {
 
   status.innerHTML = "Not checked yet";
 
-  if (!kycDao.walletConnected || !kycDao.loggedIn) {
+  if (!kycDao.walletConnected) {
     button.setAttribute("disabled", "yes");
     button.title = "No wallet connected or not logged in";
   }
