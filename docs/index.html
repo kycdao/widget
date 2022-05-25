@@ -32,7 +32,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- use minified version when possible but currently it gives some errors while the non-minified doesn't -->
-    <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.0.16/dist/kycdao-sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.0.17/dist/kycdao-sdk.js"></script>
     <script src="assets/js/index.js"></script>
   </head>
 
@@ -73,7 +73,7 @@
           <div class="form-group">
             <div class="col-sm-offset-3 col-sm-4">
               <button type="button" class="btn btn-primary" id="near-login">
-                Login with NEAR
+                Log in with NEAR
               </button>
             </div>
           </div>
@@ -83,6 +83,13 @@
             >
             <div class="col-sm-4">
               <p class="form-control-static" id="wallet-status"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-4">
+              <button type="button" class="btn btn-primary" id="wallet-logout">
+                Log out wallet
+              </button>
             </div>
           </div>
         </form>

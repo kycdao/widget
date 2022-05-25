@@ -34,30 +34,82 @@ const residencyOptionsSetup = () => {
   }
 };
 
-const connectWalletSetup = () => {
+const walletChanged = new Event("walletChanged");
+
+const updateWalletConnectionElements = () => {
+  const walletStatus = document.getElementById("wallet-status");
+  const nearButton = document.getElementById("near-login");
+  const logoutButton = document.getElementById("wallet-logout");
+
+  if (!kycDao.walletConnected) {
+    walletStatus.innerHTML = "Not connected";
+
+    logoutButton.setAttribute("disabled", "yes");
+    logoutButton.title = "logoutButton";
+
+    nearButton.removeAttribute("disabled");
+    nearButton.title = "";
+  } else {
+    walletStatus.innerHTML = `${kycDao.connectedChainAndAddress.blockchain} - ${kycDao.connectedChainAndAddress.address}`;
+    logoutButton.removeAttribute("disabled");
+    logoutButton.title = "";
+
+    switch (kycDao.connectedChainAndAddress.blockchain) {
+      case "Near":
+        nearButton.setAttribute("disabled", "yes");
+        nearButton.title = "NEAR wallet already connected";
+        break;
+      // case "Ethereum":
+    }
+  }
+};
+
+const walletConnectionSetup = () => {
   document.getElementById(
     "near-status"
   ).innerHTML = `connected to ${kycDao.nearConfig.nodeUrl}`;
 
   const walletStatus = document.getElementById("wallet-status");
   const nearButton = document.getElementById("near-login");
+  const logoutButton = document.getElementById("wallet-logout");
 
   nearButton.addEventListener("click", async () => {
     try {
       await kycDao.connectWallet("Near");
+      document.dispatchEvent(walletChanged);
     } catch (e) {
       walletStatus.innerHTML = e;
     }
   });
 
-  if (!kycDao.walletConnected) {
-    walletStatus.innerHTML = "Not connected";
-  } else {
-    walletStatus.innerHTML = `${kycDao.connectedChainAndAddress.blockchain} - ${kycDao.connectedChainAndAddress.address}`;
-    if (kycDao.connectedChainAndAddress.blockchain === "Near") {
-      nearButton.setAttribute("disabled", "yes");
-      nearButton.title = "NEAR wallet already connected";
+  logoutButton.addEventListener("click", async () => {
+    try {
+      await kycDao.disconnectWallet();
+      document.dispatchEvent(walletChanged);
+    } catch (e) {
+      walletStatus.innerHTML = e;
     }
+  });
+
+  updateWalletConnectionElements();
+};
+
+const updateKycDaoLoginElements = () => {
+  const status = document.getElementById("kycdao-status");
+  const button = document.getElementById("kycdao-login");
+
+  if (!kycDao.loggedIn) {
+    status.innerHTML = "Not logged in";
+  } else {
+    status.innerHTML = "User logged in with the connected wallet";
+  }
+
+  if (!kycDao.walletConnected) {
+    button.setAttribute("disabled", "yes");
+    button.title = "No wallet connected";
+  } else {
+    button.removeAttribute("disabled");
+    button.title = "";
   }
 };
 
@@ -74,11 +126,11 @@ const kycDaoLoginSetup = () => {
     }
   });
 
-  if (!kycDao.loggedIn) {
-    status.innerHTML = "Not logged in";
-  } else {
-    status.innerHTML = "User logged in with the connected wallet";
-  }
+  updateKycDaoLoginElements();
+};
+
+const updateKycNftCheckElements = () => {
+  const button = document.getElementById("kycnft-check");
 
   if (!kycDao.walletConnected) {
     button.setAttribute("disabled", "yes");
@@ -89,22 +141,26 @@ const kycDaoLoginSetup = () => {
 const kycNftCheckSetup = () => {
   const status = document.getElementById("kycnft-status");
   const button = document.getElementById("kycnft-check");
+
   button.addEventListener("click", async () => {
     status.innerHTML = "Feature not implemented yet";
     /* const hasKycNft = await kycDao.walletHasKycNft();
     if (hasKycNft) {
-      status.innerHTML = "Connected wallet already has a kycNF";
+      status.innerHTML = "Connected wallet already has a kycNFT";
     } else {
-      status.innerHTML = "Connected wallet does not have a kycNF yet";
+      status.innerHTML = "Connected wallet does not have a kycNFT yet";
     } */
   });
 
   status.innerHTML = "Not checked yet";
 
-  if (!kycDao.walletConnected) {
-    button.setAttribute("disabled", "yes");
-    button.title = "No wallet connected or not logged in";
-  }
+  updateKycNftCheckElements();
+};
+
+const updateElements = () => {
+  updateWalletConnectionElements();
+  updateKycDaoLoginElements();
+  updateKycNftCheckElements();
 };
 
 const main = () => {
@@ -119,7 +175,7 @@ const main = () => {
       .addEventListener("click", getKycDaoApiStatus);
 
     // 2. web3 login (NEAR network)
-    connectWalletSetup();
+    walletConnectionSetup();
 
     // 3. kycDAO login
     kycDaoLoginSetup();
@@ -145,4 +201,5 @@ const main = () => {
   })();
 };
 
+document.addEventListener("walletChanged", updateElements);
 document.addEventListener("DOMContentLoaded", main);
