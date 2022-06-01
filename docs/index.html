@@ -16,6 +16,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css"
     />
+    <link rel="stylesheet" href="assets/css/index.css" />
     <script
       src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
       integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
@@ -32,7 +33,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- use minified version when possible but currently it gives some errors while the non-minified doesn't -->
-    <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.0.17/dist/kycdao-sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.0.19/dist/kycdao-sdk.js"></script>
     <script src="assets/js/index.js"></script>
   </head>
 
@@ -58,6 +59,7 @@
         <hr />
       </div>
 
+      <!-- Connect wallet with kycDAO -->
       <div>
         <h3>2. web3 login (NEAR network)</h3>
 
@@ -97,6 +99,7 @@
         <hr />
       </div>
 
+      <!-- Register/log in user to kycDAO -->
       <div>
         <h3>3. kycDAO login</h3>
 
@@ -134,7 +137,10 @@
         WARNING WARNING!
       -->
       <div>
-        <h3>4. Check if wallet has kycDAO NFT (on-chain)</h3>
+        <h3>
+          4. Check if wallet has kycDAO NFT (on-chain)
+          <small>Under construction</small>
+        </h3>
 
         <form class="form-horizontal">
           <div class="form-group">
@@ -160,16 +166,13 @@
         <hr />
       </div>
 
-      <h2>
-        User verification and NFT minting steps
-        <small>Under construction</small>
-      </h2>
+      <h2>User verification and NFT minting steps</h2>
 
-      <!-- Connect wallet with kycDAO -->
+      <!-- Submit required data and start verification -->
       <div>
         <h3>5. Collect user information and start verification</h3>
 
-        <form class="form-horizontal" disabled>
+        <form class="form-horizontal" id="verification-form">
           <div class="form-group">
             <label for="email" class="col-sm-3 control-label">Email</label>
             <div class="col-sm-4">
@@ -220,8 +223,9 @@
             >
             <div class="col-sm-4">
               <select class="form-control" id="verification-type">
-                <option>KYC</option>
-                <option>Accreditation</option>
+                <option value="" disabled selected hidden>e.g. KYC</option>
+                <option value="KYC">KYC</option>
+                <option value="KYB">Accreditation (KYB)</option>
               </select>
             </div>
           </div>
@@ -241,18 +245,49 @@
                 type="button"
                 class="btn btn-primary"
                 id="submit-verification-data"
-                disabled
-                title="Coming soon!"
               >
                 Start verification
               </button>
             </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="verification-status"
+              >Verification status:</label
+            >
+            <div class="col-sm-6">
+              <p class="form-control-static" id="verification-status"></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label
+              class="col-sm-3 control-label"
+              for="verification-status-check"
+              >Re-check verification status:</label
+            >
+            <div class="col-sm-1">
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="verification-status-check"
+              >
+                Check
+              </button>
+            </div>
+            <div class="col-sm-1 lds-ring hidden" id="verification-spinner">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
         </form>
 
         <hr />
+      </div>
 
-        <h3>6. Start NFT minting</h3>
+      <!-- NFT minting -->
+      <div>
+        <h3>6. Start NFT minting <small>Under construction</small></h3>
 
         <form>
           <div class="form-group">
@@ -270,7 +305,7 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                id="start-verification"
+                id="start-minting"
                 disabled
                 title="Coming soon!"
               >
@@ -279,8 +314,6 @@
             </div>
           </div>
         </form>
-
-        <span id="verification-status"></span>
       </div>
     </div>
 

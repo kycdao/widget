@@ -1,6 +1,7 @@
 /// <reference path="../../../types.d.ts" />
 
 const kycDaoConfig = {
+  environment: "demo",
   baseUrl: "https://staging.kycdao.xyz/api/frontend",
   enbaledBlockchainNetworks: ["NearTestnet"],
   enbaledVerificationTypes: ["KYC"],
@@ -35,6 +36,7 @@ const residencyOptionsSetup = () => {
 };
 
 const walletChanged = new Event("walletChanged");
+const loginStatusChanged = new Event("loginStatusChanged");
 
 const updateWalletConnectionElements = () => {
   const walletStatus = document.getElementById("wallet-status");
@@ -44,7 +46,7 @@ const updateWalletConnectionElements = () => {
   if (!kycDao.walletConnected) {
     walletStatus.innerHTML = "Not connected";
 
-    logoutButton.setAttribute("disabled", "yes");
+    logoutButton.disabled = true;
     logoutButton.title = "logoutButton";
 
     nearButton.removeAttribute("disabled");
@@ -56,7 +58,7 @@ const updateWalletConnectionElements = () => {
 
     switch (kycDao.connectedChainAndAddress.blockchain) {
       case "Near":
-        nearButton.setAttribute("disabled", "yes");
+        nearButton.disabled = true;
         nearButton.title = "NEAR wallet already connected";
         break;
       // case "Ethereum":
@@ -86,6 +88,7 @@ const walletConnectionSetup = () => {
     try {
       await kycDao.disconnectWallet();
       document.dispatchEvent(walletChanged);
+      document.dispatchEvent(loginStatusChanged);
     } catch (e) {
       walletStatus.innerHTML = e;
     }
@@ -105,7 +108,7 @@ const updateKycDaoLoginElements = () => {
   }
 
   if (!kycDao.walletConnected) {
-    button.setAttribute("disabled", "yes");
+    button.disabled = true;
     button.title = "No wallet connected";
   } else {
     button.removeAttribute("disabled");
@@ -120,6 +123,7 @@ const kycDaoLoginSetup = () => {
   button.addEventListener("click", async () => {
     try {
       await kycDao.registerOrLogin();
+      document.dispatchEvent(loginStatusChanged);
       status.innerHTML = "User logged in with the connected wallet";
     } catch (e) {
       status.innerHTML = e;
@@ -133,7 +137,7 @@ const updateKycNftCheckElements = () => {
   const button = document.getElementById("kycnft-check");
 
   if (!kycDao.walletConnected) {
-    button.setAttribute("disabled", "yes");
+    button.disabled = true;
     button.title = "No wallet connected";
   }
 };
@@ -157,10 +161,156 @@ const kycNftCheckSetup = () => {
   updateKycNftCheckElements();
 };
 
-const updateElements = () => {
+const disableFormInputs = ({ form, disable = true, ignoreIds = [] }) => {
+  if (form instanceof HTMLFormElement) {
+    for (const elem of form.elements) {
+      if (!ignoreIds.includes(elem.id)) {
+        disable ? (elem.disabled = true) : elem.removeAttribute("disabled");
+      }
+    }
+  }
+};
+
+const updateVerificationElements = () => {
+  const form = document.getElementById("verification-form");
+  const status = document.getElementById("verification-status");
+
+  if (!kycDao.loggedIn) {
+    disableFormInputs({ form, ignoreIds: ["verification-status-check"] });
+  } else {
+    disableFormInputs({
+      form,
+      disable: false,
+      ignoreIds: ["verification-status-check"],
+    });
+  }
+
+  status.innerHTML = "Not started";
+};
+
+const pollVerificationStatus = async ({
+  verificationType,
+  interval = 1000,
+  maxAttempts = 10,
+}) => {
+  if (!verificationType) {
+    throw new Error(
+      "pollVerificationStatus error: verificationType must be specified"
+    );
+  }
+
+  let attempts = 0;
+
+  const executePoll = async (resolve, reject) => {
+    const result = await kycDao.checkVerificationStatus();
+    attempts++;
+
+    if (result[verificationType] === true) {
+      return resolve(true);
+    } else if (attempts === maxAttempts) {
+      return resolve(false);
+    } else {
+      setTimeout(executePoll, interval, resolve, reject);
+    }
+  };
+
+  return new Promise(executePoll);
+};
+
+let verificationTypeForCheck;
+
+const verificationSetup = () => {
+  const submitButton = document.getElementById("submit-verification-data");
+  const checkButton = document.getElementById("verification-status-check");
+  const status = document.getElementById("verification-status");
+  const spinner = document.getElementById("verification-spinner");
+  const form = document.getElementById("verification-form");
+
+  checkButton.disabled = true;
+
+  const checkVerificationStatus = async (verificationType) => {
+    disableFormInputs({ form });
+    status.innerHTML = "Verification pending confirmation, please wait";
+    submitButton.innerHTML = "Start verification";
+    spinner.classList.remove("hidden");
+
+    verificationTypeForCheck = verificationType;
+
+    const interval = 1000;
+    const maxAttempts = 10;
+    const gotVerified = await pollVerificationStatus({
+      verificationType: verificationTypeForCheck,
+      interval,
+      maxAttempts,
+    });
+
+    if (gotVerified) {
+      status.innerHTML = `User verification confirmed for type "${verificationTypeForCheck}"`;
+    } else {
+      status.innerHTML = `Could not confirm verification in ${
+        (interval * maxAttempts) / 1000
+      } seconds, please try again`;
+      checkButton.removeAttribute("disabled");
+    }
+    spinner.classList.add("hidden");
+    disableFormInputs({ form, disable: false });
+  };
+
+  submitButton.addEventListener("click", async () => {
+    verificationTypeForCheck = undefined;
+    checkButton.disabled = true;
+    status.innerHTML = "Verification started";
+
+    const verificationData = {
+      email: form["email"]?.value,
+      isEmailConfirmed: form["email-verified"]?.checked,
+      taxResidency: form["tax-residency"]?.value,
+      isLegalEntity: form["legal-entity"]?.checked,
+      verificationType: form["verification-type"]?.value,
+      termsAccepted: form["terms-accepted"]?.checked,
+    };
+
+    try {
+      const options = {
+        personaOptions: {
+          onCancel: () => {
+            disableFormInputs({ form, ignoreIds: [submitButton.id] });
+            status.innerHTML = "Persona verification flow interrupted";
+            submitButton.innerHTML = "Continue verification";
+          },
+          onComplete: async () =>
+            await checkVerificationStatus(verificationData.verificationType),
+          onError: (error) => {
+            status.innerHTML = `Persona verification error: ${error}`;
+            submitButton.innerHTML = "Start verification";
+          },
+        },
+      };
+      await kycDao.startVerification(verificationData, options);
+    } catch (e) {
+      status.innerHTML =
+        typeof e === "string" ? e : e?.message || "Unknown error";
+    }
+    // TODO handle backend polling + add indicator
+  });
+
+  checkButton.addEventListener("click", async () => {
+    if (verificationTypeForCheck) {
+      await checkVerificationStatus(verificationTypeForCheck);
+    }
+  });
+
+  updateVerificationElements();
+};
+
+const updateElementsOnWalletChange = () => {
   updateWalletConnectionElements();
   updateKycDaoLoginElements();
   updateKycNftCheckElements();
+};
+
+const updateElementsOnLoginStatusChange = () => {
+  updateVerificationElements();
 };
 
 const main = () => {
@@ -184,22 +334,21 @@ const main = () => {
     // ⚠️ only use this for access control on your backend (server-side) ⚠️
     kycNftCheckSetup();
 
-    // 5. Start identity verification
-    document
-      .getElementById("submit-verification-data")
-      .addEventListener("click", async () => {
-        // TODO send in data with kycDao.startVerification which will also trigger the KYC flow with the configured provider
-        // TODO handle backend polling + add indicator
-      });
+    // 5. Identity verification
+    verificationSetup();
 
     // 6. mint kycNFT
     document
-      .getElementById("start-verification")
+      .getElementById("start-minting")
       .addEventListener("click", async () => {
         // TODO TODO send in data with kycDao.startMinting, handle polling, add indicator
       });
   })();
 };
 
-document.addEventListener("walletChanged", updateElements);
+document.addEventListener("walletChanged", updateElementsOnWalletChange);
+document.addEventListener(
+  "loginStatusChanged",
+  updateElementsOnLoginStatusChange
+);
 document.addEventListener("DOMContentLoaded", main);
