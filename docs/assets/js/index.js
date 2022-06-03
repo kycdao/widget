@@ -291,7 +291,6 @@ const verificationSetup = () => {
       status.innerHTML =
         typeof e === "string" ? e : e?.message || "Unknown error";
     }
-    // TODO handle backend polling + add indicator
   });
 
   checkButton.addEventListener("click", async () => {
@@ -303,14 +302,58 @@ const verificationSetup = () => {
   updateVerificationElements();
 };
 
+const updateMintingElements = () => {
+  const form = document.getElementById("minting-form");
+  const placeholder = document.getElementById("nft-image-placeholder");
+  const image = document.getElementById("nft-image");
+
+  if (!kycDao.loggedIn) {
+    disableFormInputs({ form });
+    image.classList.add("hidden");
+    placeholder.classList.remove("hidden");
+  } else {
+    const url = kycDao.getNftImageUrl();
+    image.setAttribute(
+      "src",
+      `${url}?cachebuster=${new Date().getTime().toString()}`
+    );
+    placeholder.classList.add("hidden");
+    image.classList.remove("hidden");
+
+    // TODO if verified
+    if (true) {
+      disableFormInputs({
+        form,
+        disable: false,
+        ignoreIds: ["disclaimer-accepted", "start-minting"],
+      });
+    }
+  }
+};
+
+const mintingOptionsSetup = () => {
+  const regenerateButton = document.getElementById("regenerate-nft-image");
+  const mintButton = document.getElementById("start-minting");
+
+  regenerateButton.addEventListener("click", async () => {
+    await kycDao.regenerateNftImage();
+    updateMintingElements();
+  });
+
+  mintButton.addEventListener("click", async () => {});
+
+  updateMintingElements();
+};
+
 const updateElementsOnWalletChange = () => {
   updateWalletConnectionElements();
   updateKycDaoLoginElements();
   updateKycNftCheckElements();
 };
 
-const updateElementsOnLoginStatusChange = () => {
+const updateElementsOnLoginStatusChange = async () => {
   updateVerificationElements();
+  updateMintingElements();
 };
 
 const main = () => {
@@ -338,11 +381,7 @@ const main = () => {
     verificationSetup();
 
     // 6. mint kycNFT
-    document
-      .getElementById("start-minting")
-      .addEventListener("click", async () => {
-        // TODO TODO send in data with kycDao.startMinting, handle polling, add indicator
-      });
+    mintingOptionsSetup();
   })();
 };
 

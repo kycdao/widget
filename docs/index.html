@@ -33,7 +33,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- use minified version when possible but currently it gives some errors while the non-minified doesn't -->
-    <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.0.19/dist/kycdao-sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.0.20/dist/kycdao-sdk.js"></script>
     <script src="assets/js/index.js"></script>
   </head>
 
@@ -289,28 +289,60 @@
       <div>
         <h3>6. Start NFT minting <small>Under construction</small></h3>
 
-        <form>
+        <form class="form-horizontal" id="minting-form">
           <div class="form-group">
-            <div class="form-group">
-              <div class="col-sm-offset-3 col-sm-4">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" id="disclaimer-accepted" /> Accept
-                    Disclaimer
-                  </label>
-                </div>
-              </div>
+            <label
+              class="col-sm-3 control-label"
+              for="verification-status-check"
+              >NFT image:</label
+            >
+            <div class="col-sm-2" style="height: 90px">
+              <p class="form-control-static" id="nft-image-placeholder">
+                User not logged in
+              </p>
+              <img
+                class="hidden"
+                id="nft-image"
+                alt="NFT image"
+                width="86"
+                height="86"
+              />
             </div>
-            <div class="col-sm-offset-3 col-sm-4">
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-2">
               <button
                 type="button"
                 class="btn btn-primary"
-                id="start-minting"
-                disabled
-                title="Coming soon!"
+                id="regenerate-nft-image"
               >
+                Regenerate
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-4">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="disclaimer-accepted" /> Accept
+                  Disclaimer
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-4">
+              <button type="button" class="btn btn-primary" id="start-minting">
                 Start minting
               </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="minting-status"
+              >Minting status:</label
+            >
+            <div class="col-sm-6">
+              <p class="form-control-static" id="minting-status">Not started</p>
             </div>
           </div>
         </form>

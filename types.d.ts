@@ -43,7 +43,8 @@ interface KycDaoSdk {
     providerOptions?: VerificationProviderOptions
   ): Promise<void>;
   checkVerificationStatus(): Promise<VerificationStasusByType>;
-  getNftImageOptions(): Promise<NftImage[]>;
+  getNftImageUrl(): string;
+  regenerateNftImage(): Promise<void>;
   startMinting(mintingData: MintingData): Promise<void>;
 }
 
@@ -73,14 +74,6 @@ interface VerificationProviderOptions {
   personaOptions?: PersonaOptions;
 }
 
-interface NftImage {
-  id: string; // seed
-  url: string;
-  name?: string;
-  description?: string;
-}
-
 interface MintingData {
   disclaimerAccepted: boolean;
-  nftImageId?: string;
 }
