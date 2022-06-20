@@ -33,7 +33,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- use minified version when possible but currently it gives some errors while the non-minified doesn't -->
-    <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.0.20/dist/kycdao-sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@kycdao/kycdao-sdk@0.1.0/dist/kycdao-sdk.js"></script>
     <script src="assets/js/index.js"></script>
   </head>
 
@@ -42,6 +42,36 @@
       <div class="page-header">
         <h1>kycDAO SDK integration example</h1>
       </div>
+
+      <h2>SDK Status</h2>
+
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-3 control-label" for="sdk-status">Status:</label>
+          <div class="col-sm-2">
+            <p class="form-control-static" id="sdk-status">Initializing</p>
+          </div>
+          <div class="col-sm-1 lds-ring" id="init-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div class="col-sm-6">
+            <p class="form-control-static hidden" id="init-error"></p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label" for="redirect-event"
+            >Redirect event handled:</label
+          >
+          <div class="col-sm-4">
+            <p class="form-control-static" id="redirect-event"></p>
+          </div>
+        </div>
+      </form>
+
+      <hr />
 
       <h2>General SDK methods</h2>
 
@@ -90,7 +120,7 @@
           <div class="form-group">
             <div class="col-sm-offset-3 col-sm-4">
               <button type="button" class="btn btn-primary" id="wallet-logout">
-                Log out wallet
+                Disconnect wallet
               </button>
             </div>
           </div>
@@ -264,7 +294,7 @@
               for="verification-status-check"
               >Re-check verification status:</label
             >
-            <div class="col-sm-1">
+            <div class="col-sm-2">
               <button
                 type="button"
                 class="btn btn-primary"
@@ -287,7 +317,7 @@
 
       <!-- NFT minting -->
       <div>
-        <h3>6. Start NFT minting <small>Under construction</small></h3>
+        <h3>6. Start NFT minting</h3>
 
         <form class="form-horizontal" id="minting-form">
           <div class="form-group">
@@ -331,10 +361,16 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-4">
+            <div class="col-sm-offset-3 col-sm-2">
               <button type="button" class="btn btn-primary" id="start-minting">
                 Start minting
               </button>
+            </div>
+            <div class="col-sm-1 lds-ring hidden" id="minting-spinner">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
             </div>
           </div>
           <div class="form-group">

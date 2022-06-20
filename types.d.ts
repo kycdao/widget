@@ -19,19 +19,18 @@ interface KycDaoSdkConfig {
   apiKey?: string;
   environment: KycDaoEnvironment;
   baseUrl: string;
-  enbaledBlockchainNetworks: BlockchainNetwork[];
-  enbaledVerificationTypes: VerificationType[];
+  enabledBlockchainNetworks: BlockchainNetwork[];
+  enabledVerificationTypes: VerificationType[];
 }
 
 interface ServerStatus {
   apiStatus: string;
 }
 
-interface KycDaoSdk {
-  connectedChainAndAddress: ChainAndAddress | undefined;
+interface KycDao {
+  connectedWallet: ChainAndAddress | undefined;
   walletConnected: boolean;
   loggedIn: boolean;
-  init: (config: KycDaoSdkConfig) => Record<string, unknown>;
   getServerStatus: () => ServerStatus;
   walletHasKycNft: () => Promise<boolean>;
   walletHasKycNft: (chainAndAddress: ChainAndAddress) => Promise<boolean>;
@@ -46,6 +45,17 @@ interface KycDaoSdk {
   getNftImageUrl(): string;
   regenerateNftImage(): Promise<void>;
   startMinting(mintingData: MintingData): Promise<void>;
+}
+
+type WalletRedirectEvent = "NearLogin" | "NearMint" | "NearUserRejectedError";
+
+interface KycDaoInitializationResult {
+  kycDao: KycDao;
+  walletRedirectEvent?: WalletRedirectEvent;
+}
+
+interface KycDaoSdk {
+  init: (config: KycDaoSdkConfig) => Promise<KycDaoInitializationResult>;
 }
 
 const kycDaoSdk: KycDaoSdk;

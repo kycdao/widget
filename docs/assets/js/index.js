@@ -1,14 +1,5 @@
 /// <reference path="../../../types.d.ts" />
 
-const kycDaoConfig = {
-  environment: "demo",
-  baseUrl: "https://staging.kycdao.xyz/api/frontend",
-  enbaledBlockchainNetworks: ["NearTestnet"],
-  enbaledVerificationTypes: ["KYC"],
-};
-
-window.kycDao = kycDaoSdk.init(kycDaoConfig);
-
 /*
     TODO:
     - nicer "callback handling" for post-redirect back from NEAR wallet
@@ -52,11 +43,11 @@ const updateWalletConnectionElements = () => {
     nearButton.removeAttribute("disabled");
     nearButton.title = "";
   } else {
-    walletStatus.innerHTML = `${kycDao.connectedChainAndAddress.blockchain} - ${kycDao.connectedChainAndAddress.address}`;
+    walletStatus.innerHTML = `${kycDao.connectedWallet.blockchain} - ${kycDao.connectedWallet.address}`;
     logoutButton.removeAttribute("disabled");
     logoutButton.title = "";
 
-    switch (kycDao.connectedChainAndAddress.blockchain) {
+    switch (kycDao.connectedWallet.blockchain) {
       case "Near":
         nearButton.disabled = true;
         nearButton.title = "NEAR wallet already connected";
@@ -79,6 +70,7 @@ const walletConnectionSetup = () => {
     try {
       await kycDao.connectWallet("Near");
       document.dispatchEvent(walletChanged);
+      document.dispatchEvent(loginStatusChanged);
     } catch (e) {
       walletStatus.innerHTML = e;
     }
@@ -325,7 +317,6 @@ const updateMintingElements = () => {
       disableFormInputs({
         form,
         disable: false,
-        ignoreIds: ["disclaimer-accepted", "start-minting"],
       });
     }
   }
@@ -334,13 +325,33 @@ const updateMintingElements = () => {
 const mintingOptionsSetup = () => {
   const regenerateButton = document.getElementById("regenerate-nft-image");
   const mintButton = document.getElementById("start-minting");
+  const status = document.getElementById("minting-status");
+  const spinner = document.getElementById("minting-spinner");
+  const form = document.getElementById("minting-form");
 
   regenerateButton.addEventListener("click", async () => {
     await kycDao.regenerateNftImage();
     updateMintingElements();
   });
 
-  mintButton.addEventListener("click", async () => {});
+  mintButton.addEventListener("click", async () => {
+    mintButton.disabled = true;
+    spinner.classList.remove("hidden");
+    status.innerHTML = "Minting started";
+
+    const mintingData = {
+      disclaimerAccepted: form["disclaimer-accepted"]?.checked,
+    };
+    try {
+      await kycDao.startMinting(mintingData);
+      status.innerHTML = "Minting successful";
+    } catch (e) {
+      status.innerHTML = e;
+    }
+
+    spinner.classList.add("hidden");
+    mintButton.removeAttribute("disabled");
+  });
 
   updateMintingElements();
 };
@@ -360,6 +371,33 @@ const main = () => {
   (async () => {
     // add tax residency picker country options
     residencyOptionsSetup();
+
+    const kycDaoConfig = {
+      environment: "demo",
+      baseUrl: "https://staging.kycdao.xyz/api/frontend",
+      enabledBlockchainNetworks: ["NearTestnet"],
+      enabledVerificationTypes: ["KYC"],
+    };
+
+    const sdkStatus = document.getElementById("sdk-status");
+    const sdkInitError = document.getElementById("init-error");
+    const sdkInitSpinner = document.getElementById("init-spinner");
+    const sdkRedirEvent = document.getElementById("redirect-event");
+    try {
+      const kycDaoInitResult = await kycDaoSdk.init(kycDaoConfig);
+      window.kycDao = kycDaoInitResult.kycDao;
+      window.walletRedirectEvent = kycDaoInitResult.walletRedirectEvent;
+      sdkStatus.innerHTML = "Initialized";
+      sdkRedirEvent.innerHTML = walletRedirectEvent
+        ? walletRedirectEvent.toString()
+        : "None";
+    } catch (e) {
+      sdkStatus.innerHTML = "Failed to initialize";
+      sdkInitError.innerHTML = e.toString;
+      sdkInitSpinner.classList.remove("hidden");
+      console.error(`kycDAO SDK initialization error: ${e}`);
+    }
+    sdkInitSpinner.classList.add("hidden");
 
     // 1. Check initialized API status
     await getKycDaoApiStatus();
