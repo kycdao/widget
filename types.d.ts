@@ -1,14 +1,27 @@
-const Blockchains = ["Ethereum", "Near"];
-type Blockchain = typeof Blockchains[number];
+const Blockchains = {
+  Ethereum: 'Ethereum',
+  Near: 'Near',
+} as const;
+type Blockchain = keyof typeof Blockchains;
 
-const BlockchainNetworks = ["NearTestnet", "NearMainnet", "PolygonMumbai"];
-type BlockchainNetwork = typeof BlockchainNetworks[number];
+const BlockchainNetworks = {
+  NearTestnet: 'NearTestnet',
+  NearMainnet: 'NearMainnet',
+  PolygonMumbai: 'PolygonMumbai',
+} as const;
+type BlockchainNetwork = keyof typeof BlockchainNetworks;
 
-const KycDaoEnvironments = ["demo", "test"];
-type KycDaoEnvironment = typeof KycDaoEnvironments[number];
+const KycDaoEnvironments = {
+  demo: 'demo',
+  test: 'test',
+} as const;
+type KycDaoEnvironment = keyof typeof KycDaoEnvironments;
 
-const VerificationTypes = ["KYB", "KYC"];
-type VerificationType = typeof VerificationTypes[number];
+const VerificationTypes = {
+  Accreditation: 'Accreditation',
+  KYC: 'KYC',
+} as const;
+type VerificationType = keyof typeof VerificationTypes;
 
 interface Window {
   nearApi: any;
@@ -24,7 +37,9 @@ interface KycDaoSdkConfig {
 }
 
 interface ServerStatus {
+  serverBaseUrl: string;
   apiStatus: string;
+  isOk: boolean;
 }
 
 interface KycDao {
@@ -32,8 +47,8 @@ interface KycDao {
   walletConnected: boolean;
   loggedIn: boolean;
   getServerStatus: () => ServerStatus;
-  walletHasKycNft: () => Promise<boolean>;
-  walletHasKycNft: (chainAndAddress: ChainAndAddress) => Promise<boolean>;
+  walletHasKycNft(): Promise<boolean>;
+  walletHasKycNft(chainAndAddress: ChainAndAddress): Promise<boolean>;
   connectWallet(blockchain: Blockchain): Promise<void>;
   disconnectWallet(): Promise<void>;
   registerOrLogin(): Promise<void>;
@@ -46,6 +61,8 @@ interface KycDao {
   regenerateNftImage(): Promise<void>;
   startMinting(mintingData: MintingData): Promise<void>;
 }
+
+type VerificationStasusByType = Partial<Record<VerificationType, boolean>>;
 
 type WalletRedirectEvent = "NearLogin" | "NearMint" | "NearUserRejectedError";
 
