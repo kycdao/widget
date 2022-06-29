@@ -12,7 +12,7 @@ const getKycDaoApiStatus = async () => {
   const status = await window.kycDao.getServerStatus();
 
   const elem = document.getElementById("api-status");
-  elem.innerHTML = `connected to ${status.apiStatus}`;
+  elem.innerHTML = `Status message: ${status.apiStatus}`;
 };
 
 const residencyOptionsSetup = () => {
@@ -60,7 +60,7 @@ const updateWalletConnectionElements = () => {
 const walletConnectionSetup = () => {
   document.getElementById(
     "near-status"
-  ).innerHTML = `connected to ${kycDao.nearConfig.nodeUrl}`;
+  ).innerHTML = `Connected to Near network.`;
 
   const walletStatus = document.getElementById("wallet-status");
   const nearButton = document.getElementById("near-login");
@@ -387,6 +387,9 @@ const main = () => {
       const kycDaoInitResult = await kycDaoSdk.init(kycDaoConfig);
       window.kycDao = kycDaoInitResult.kycDao;
       window.walletRedirectEvent = kycDaoInitResult.walletRedirectEvent;
+      console.log(kycDaoInitResult.walletRedirectEvent);
+      console.log(window.walletRedirectEvent);
+      console.log(walletRedirectEvent);
       sdkStatus.innerHTML = "Initialized";
       sdkRedirEvent.innerHTML = walletRedirectEvent
         ? walletRedirectEvent.toString()
