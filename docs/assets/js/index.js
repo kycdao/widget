@@ -386,13 +386,10 @@ const main = () => {
     try {
       const kycDaoInitResult = await kycDaoSdk.init(kycDaoConfig);
       window.kycDao = kycDaoInitResult.kycDao;
-      window.walletRedirectEvent = kycDaoInitResult.walletRedirectEvent;
-      console.log(kycDaoInitResult.walletRedirectEvent);
-      console.log(window.walletRedirectEvent);
-      console.log(walletRedirectEvent);
+      window.kycDaoRedirectEvent = kycDaoInitResult.redirectEvent;
       sdkStatus.innerHTML = "Initialized";
-      sdkRedirEvent.innerHTML = walletRedirectEvent
-        ? walletRedirectEvent.toString()
+      sdkRedirEvent.innerHTML = kycDaoRedirectEvent
+        ? kycDaoRedirectEvent.toString()
         : "None";
     } catch (e) {
       sdkStatus.innerHTML = "Failed to initialize";
