@@ -373,10 +373,10 @@ const main = () => {
     residencyOptionsSetup();
 
     const kycDaoConfig = {
-      environment: "demo",
-      baseUrl: "https://staging.kycdao.xyz/api/frontend",
+      baseUrl: "https://staging.kycdao.xyz",
       enabledBlockchainNetworks: ["NearTestnet"],
       enabledVerificationTypes: ["KYC"],
+      demoMode: true,
     };
 
     const sdkStatus = document.getElementById("sdk-status");
