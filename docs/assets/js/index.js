@@ -30,41 +30,77 @@ const walletChanged = new Event("walletChanged");
 const loginStatusChanged = new Event("loginStatusChanged");
 
 const updateWalletConnectionElements = () => {
+  const evmStatus = document.getElementById("evm-status");
+  const nearStatus = document.getElementById("near-status");
   const walletStatus = document.getElementById("wallet-status");
+  const evmButton = document.getElementById("evm-login");
   const nearButton = document.getElementById("near-login");
   const logoutButton = document.getElementById("wallet-logout");
+
+  const evmProviderConfigured = kycDaoStatus.evmProviderConfigured;
+  evmStatus.innerHTML = evmProviderConfigured
+    ? "EVM provider is configured"
+    : "EVM provider not configured";
+  if (!evmProviderConfigured) {
+    evmButton.disabled = true;
+    evmButton.title = "EVM provider not configured";
+  }
+
+  const nearNetwork = kycDaoStatus.nearNetworkConnected;
+  nearStatus.innerHTML = nearNetwork
+    ? `Connected to ${nearNetwork}`
+    : "NEAR SDK is not configured";
+  if (!nearNetwork) {
+    nearButton.disabled = true;
+    nearButton.title = "NEAR SDK is not configured";
+    logoutButton.disabled = true;
+    logoutButton.title = "NEAR SDK is not configured";
+  }
 
   if (!kycDao.walletConnected) {
     walletStatus.innerHTML = "Not connected";
 
-    logoutButton.disabled = true;
-    logoutButton.title = "logoutButton";
+    if (nearNetwork) {
+      logoutButton.disabled = true;
+      logoutButton.title = "NEAR wallet not connected";
 
-    nearButton.removeAttribute("disabled");
-    nearButton.title = "";
+      nearButton.removeAttribute("disabled");
+      nearButton.title = "";
+    }
   } else {
-    walletStatus.innerHTML = `${kycDao.connectedWallet.blockchain} - ${kycDao.connectedWallet.address}`;
-    logoutButton.removeAttribute("disabled");
-    logoutButton.title = "";
+    walletStatus.innerHTML = `${kycDao.connectedWallet.blockchain} - ${kycDao.connectedWallet.blockchainNetwork} - ${kycDao.connectedWallet.address}`;
 
     switch (kycDao.connectedWallet.blockchain) {
       case "Near":
         nearButton.disabled = true;
         nearButton.title = "NEAR wallet already connected";
+
+        logoutButton.removeAttribute("disabled");
+        logoutButton.title = "";
         break;
-      // case "Ethereum":
+      case "Ethereum":
+        logoutButton.disabled = true;
+        logoutButton.title = "NEAR wallet not connected";
+        break;
     }
   }
 };
 
 const walletConnectionSetup = () => {
-  document.getElementById(
-    "near-status"
-  ).innerHTML = `Connected to Near network.`;
-
   const walletStatus = document.getElementById("wallet-status");
+  const evmButton = document.getElementById("evm-login");
   const nearButton = document.getElementById("near-login");
   const logoutButton = document.getElementById("wallet-logout");
+
+  evmButton.addEventListener("click", async () => {
+    try {
+      await kycDao.connectWallet("Ethereum");
+      document.dispatchEvent(walletChanged);
+      document.dispatchEvent(loginStatusChanged);
+    } catch (e) {
+      walletStatus.innerHTML = e;
+    }
+  });
 
   nearButton.addEventListener("click", async () => {
     try {
@@ -96,7 +132,8 @@ const updateKycDaoLoginElements = () => {
   if (!kycDao.loggedIn) {
     status.innerHTML = "Not logged in";
   } else {
-    status.innerHTML = "User logged in with the connected wallet";
+    const connectedWallet = `${kycDao.connectedWallet.blockchain} - ${kycDao.connectedWallet.address}`;
+    status.innerHTML = `User logged in with wallet: ${connectedWallet}`;
   }
 
   if (!kycDao.walletConnected) {
@@ -116,7 +153,8 @@ const kycDaoLoginSetup = () => {
     try {
       await kycDao.registerOrLogin();
       document.dispatchEvent(loginStatusChanged);
-      status.innerHTML = "User logged in with the connected wallet";
+      const connectedWallet = `${kycDao.connectedWallet.blockchain} - ${kycDao.connectedWallet.address}`;
+      status.innerHTML = `User logged in with wallet: ${connectedWallet}`;
     } catch (e) {
       status.innerHTML = e;
     }
@@ -374,9 +412,10 @@ const main = () => {
 
     const kycDaoConfig = {
       baseUrl: "https://staging.kycdao.xyz",
-      enabledBlockchainNetworks: ["NearTestnet"],
+      enabledBlockchainNetworks: ["NearTestnet", "PolygonMumbai"],
       enabledVerificationTypes: ["KYC"],
       demoMode: true,
+      evmProvider: window.ethereum,
     };
 
     const sdkStatus = document.getElementById("sdk-status");
@@ -387,6 +426,7 @@ const main = () => {
       const kycDaoInitResult = await kycDaoSdk.init(kycDaoConfig);
       window.kycDao = kycDaoInitResult.kycDao;
       window.kycDaoRedirectEvent = kycDaoInitResult.redirectEvent;
+      window.kycDaoStatus = kycDaoInitResult.sdkStatus;
       sdkStatus.innerHTML = "Initialized";
       sdkRedirEvent.innerHTML = kycDaoRedirectEvent
         ? kycDaoRedirectEvent.toString()
@@ -405,7 +445,7 @@ const main = () => {
       .getElementById("check-api-status")
       .addEventListener("click", getKycDaoApiStatus);
 
-    // 2. web3 login (NEAR network)
+    // 2. web3 login
     walletConnectionSetup();
 
     // 3. kycDAO login
