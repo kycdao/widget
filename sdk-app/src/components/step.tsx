@@ -1,4 +1,4 @@
-import { Children, FC, PropsWithChildren, useCallback, useContext } from "react"
+import { FC, PropsWithChildren, useCallback, useContext } from "react"
 import { StateContext } from "./stateContext"
 
 type StepProps = {
@@ -10,12 +10,11 @@ type StepProps = {
 
 export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, footer, next, prev }) => {
     const state = useContext(StateContext)
-    const closeModal = useCallback(() => window.postMessage('closeModal', 'http://localhost:3000'), [])
+    const closeModal = useCallback(() => window.parent.postMessage('closeModal', 'http://localhost:5000/'), [])
 
     if (!state) {
         return <>Something went seriously wrong! Probably you didn't provided the data! Check your data provider!</>
     }
-
 
     return <div style={{ display: 'flex', flexDirection: 'column', padding: "2em", justifyContent: 'space-between', height: '586px' }}>
         <div style={{ flexDirection: 'row', justifyContent: 'space-between', display: "flex" }}>

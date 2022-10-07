@@ -117,15 +117,15 @@
                 }
             }
 
+            window.addEventListener('message', function (event) {
+                if(event.origin !== "http://localhost:3000") {
+                }
+                if(event.data === 'closeModal') {
+                    modal.style.display = "none";
+                }
+            }, false)
         }
 
-        window.addEventListener('message', function (event) {
-            if(event.origin !== "http://localhost:3000") {
-            }
-            if(event.data === 'closeModal') {
-                modal.style.display = "none";
-            }
-        }, false)
     </script>
 </body>
 
