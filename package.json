@@ -7,7 +7,8 @@
   "license": "UNLICENSED",
   "private": false,
   "scripts": {
-    "serve": "node ./serve.js --chdir=docs/"
+    "serve": "node ./serve.js --chdir=docs/",
+    "start": "node ./serve.js --chdir=docs/ & yarn --cwd sdk-app start"
   },
   "devDependencies": {
     "livereload": "^0.9.3",
