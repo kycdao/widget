@@ -1,0 +1,31 @@
+.tr2 {
+  -webkit-transition-property: all;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  -ms-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -ms-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+}
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+svg.default{
+  fill: #7289DA;
+}
+
+svg.white {
+  fill: white;
+  @extend .tr2;
+
+  &:hover{
+    fill: var(--kyc-normal-blue);
+  }
+}

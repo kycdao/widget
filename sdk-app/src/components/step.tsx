@@ -19,11 +19,11 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, foote
     return <div style={{ display: 'flex', flexDirection: 'column', padding: "1em", justifyContent: 'space-between', height: '650px' }}>
         <div style={{ flexDirection: 'row', justifyContent: 'space-between', display: "flex", paddingBottom: '1em' }}>
             <div>
-                {prev && <button style={{ fontSize: '2em' }} onClick={prev}>&#60;</button>}
-                {next && <button style={{ fontSize: '2em' }} onClick={next}>&#62;</button>}
+                {prev && <button className="kyc-button transparent" style={{ fontSize: '2em' }} onClick={prev}>&#60;</button>}
+                {next && <button className="kyc-button transparent" onClick={next}>&#62;</button>}
             </div>
             <div></div>
-            <button style={{ fontSize: '2em' }} onClick={closeModal}>&times;</button>
+            <button className="kyc-button transparent" style={{ fontSize: '2em' }} onClick={closeModal}>&times;</button>
         </div>
         <div>
             {header}

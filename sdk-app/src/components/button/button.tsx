@@ -3,10 +3,11 @@ import './button.scss'
 
 export type ButtonProps = {
     onClick?: () => void
+    className?: string
 }
 
-export const Button: FC<PropsWithChildren<ButtonProps>> = ({ onClick, children }) => {
-    return <button className="kyc-button blue" type="button" onClick={onClick}>
+export const Button: FC<PropsWithChildren<ButtonProps>> = ({ onClick, children, className }) => {
+    return <button className={`kyc-button ${className}`} onClick={onClick}>
         <span>
             {children}
         </span>

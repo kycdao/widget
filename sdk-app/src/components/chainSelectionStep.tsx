@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Step } from "../components/step"
+import { Step } from "./step"
 
 const Chain: FC<{name: string}> = ({ name }) => {
     return <div>

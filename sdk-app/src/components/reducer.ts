@@ -1,6 +1,6 @@
 export type Data = {
     chain?: string
-    discord?: string
+    email: string
     taxResidence?: string
     idIssuer?: string
     currentPage: number
@@ -10,7 +10,7 @@ export enum DataActionTypes {
     chainChange,
     nexPage,
     prevPage,
-    discordChange,
+    emailChange,
     taxResidenceChange,
     idIssuerChange
 }
@@ -20,8 +20,8 @@ export type ChainChangeAction = {
     payload: string
 }
 
-export type DiscordChangeAction = {
-    type: DataActionTypes.discordChange
+export type EmailChangeAction = {
+    type: DataActionTypes.emailChange
     payload: string
 }
 
@@ -45,21 +45,22 @@ export type TaxResidentChangeAction = {
     payload: string
 }
 
-export type DataChangeActions = ChainChangeAction | DiscordChangeAction | IdIssuerChangeAction | NextPageAction | PrevPageAction | TaxResidentChangeAction
+export type DataChangeActions = ChainChangeAction | EmailChangeAction | IdIssuerChangeAction | NextPageAction | PrevPageAction | TaxResidentChangeAction
 
 export enum StepID {
     AgreementStep,
     kycDAOMembershipStep,
     verificationStep,
-    emailDiscordVerificationStep
+    emailDiscordVerificationStep,
+    taxResidenceStep
   }
   
 export  const reducer = (data: Data, { payload, type }: DataChangeActions): Data => {
     switch (type) {
         case DataActionTypes.chainChange:
             return { ...data, chain: payload }
-        case DataActionTypes.discordChange:
-            return { ...data, discord: payload }
+        case DataActionTypes.emailChange:
+            return { ...data, email: payload }
         case DataActionTypes.idIssuerChange:
             return { ...data, idIssuer: payload }
         case DataActionTypes.nexPage:

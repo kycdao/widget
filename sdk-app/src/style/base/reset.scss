@@ -28,11 +28,6 @@ a {
   background: none;
   outline: none;
   border: none;
-
-  &:focus-visible {
-    outline: none;
-    border: none;
-  }
 }
 
 html,
