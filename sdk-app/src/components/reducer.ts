@@ -49,7 +49,9 @@ export type DataChangeActions = ChainChangeAction | DiscordChangeAction | IdIssu
 
 export enum StepID {
     AgreementStep,
-    kycDAOMembershipStep
+    kycDAOMembershipStep,
+    verificationStep,
+    emailDiscordVerificationStep
   }
   
 export  const reducer = (data: Data, { payload, type }: DataChangeActions): Data => {
@@ -61,9 +63,7 @@ export  const reducer = (data: Data, { payload, type }: DataChangeActions): Data
         case DataActionTypes.idIssuerChange:
             return { ...data, idIssuer: payload }
         case DataActionTypes.nexPage:
-            return { ...data, currentPage: data.currentPage + 1 }
-        case DataActionTypes.prevPage:
-            return { ...data, currentPage: data.currentPage - 1 }
+            return { ...data, currentPage: payload }
         case DataActionTypes.taxResidenceChange:
             return { ...data, taxResidence: payload }
         default: {

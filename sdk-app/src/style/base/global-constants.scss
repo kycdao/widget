@@ -1,0 +1,79 @@
+:root {
+  --grid-col-width: 4.166666666666667%; /* 100 / 22 */
+  --full-hd-col-width: 4.545454545454545%; /* 100 / 22 */
+  --normal-col-width: 5%; /* 100 / 20 */
+  --narrow-col-width: 5.555555555555556%; /* 100 / 18 */
+  --table-column-width: 12.5%; /* 100 / 8 */
+  --mobile-column-width: 25%; /* 100 / 4 */
+  --small-mobile-column-width: 50%; /* 100 / 2 */
+}
+
+
+// sizing constants
+
+$grid-col-width: 4.166666666666667%; /* 100 / 22 */
+$full-hd-col-width: 4.545454545454545%; /* 100 / 22 */
+$normal-col-width: 5%; /* 100 / 20 */
+$narrow-col-width: 5.555555555555556%; /* 100 / 18 */
+$table-column-width: 12.5%; /* 100 / 8 */
+$mobile-column-width: 25%; /* 100 / 4 */
+$small-mobile-column-width: 50%; /* 100 / 2 */
+
+$fullhd-column-count: 24;
+$widescreen-column-count: 12;
+$desktop-column-count: 12;
+$table-column-count: 8;
+$mobile-column-count: 4;
+$small-mobile-column-count: 2;
+
+$grid-columns: (
+  4000px: $fullhd-column-count,
+  1217px: 12,
+  1025px: 8,
+  721px: 4,
+  327px: 2,
+);
+
+
+// media queries for screen sizes
+$sm: "only screen and (min-width: 0) and (max-width: 576px)";
+$md: "only screen and (min-width: 577px) and (max-width: 768px)";
+$lg: "only screen and (min-width: 769px) and (max-width: 992px)";
+$xl: "only screen and (min-width: 993px) and (max-width: 1200px)";
+$xxl: "only screen and (min-width: 1201px)";
+
+$smobile: "only screen and (min-width: 0) and (max-width: 350px)";
+$mobile: "only screen and (min-width: 351px) and (max-width: 720px)";
+$tablet: "only screen and (min-width: 721px) and (max-width: 1024px)";
+$desktop: "only screen and (min-width: 1025px) and (max-width: 1216px)";
+$widescreen: "only screen and (min-width: 1217px) and (max-width: 1600px)";
+$fullhd: "only screen and (min-width: 1601px)";
+
+
+.button-size{
+
+  @media #{$smobile}, #{$mobile} {
+
+    span{
+      font-size: 26px;
+    }
+  }
+
+  @media #{$tablet}, #{$desktop} {
+    //height: var(--button-height);
+
+    span{
+      font-size: 26px;
+    }
+  }
+
+
+  @media #{$widescreen}, #{$fullhd} {
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+
+    span{
+      font-size: 2vw;
+    }
+  }
+}

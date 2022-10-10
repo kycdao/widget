@@ -1,0 +1,15 @@
+// @use '@angular/material' as mat;
+
+
+// SCSS-heavy
+
+@import "./style/base/animations";
+@import "./style/base/helpers";
+// rest was here
+@import "./style/base/z-index";
+@import "./style/base/typography";
+@import "./style/base/global-constants.scss";
+
+// CSS3 Custom Properties (CSS Variables)
+@import "./style/base/reset";
+@import "./style/base/colors-and-variables";

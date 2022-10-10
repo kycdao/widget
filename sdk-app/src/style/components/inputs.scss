@@ -1,0 +1,33 @@
+.kyc-input {
+  height: var(--button-height);
+  display: inline-flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 0 0 0 rgba(white, 0);
+  background: white;
+  color: var(--kyc-dark-purple);
+  border-radius: var(--border-radius-light);
+  @extend .text-md;
+  @extend .tr2;
+
+  ::placeholder {
+    color: var(--kyc-dark-purple);
+  }
+  :-ms-input-placeholder {
+    color: var(--kyc-dark-purple);
+  }
+  ::-ms-input-placeholder {
+    color: var(--kyc-dark-purple);
+  }
+
+  &:hover {
+    box-shadow: 0 0 0 10px rgba(var(--kyc-normal-blue), 0.3);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 10px rgba(var(--kyc-normal-blue), 0.5);
+    outline: none;
+  }
+}

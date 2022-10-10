@@ -1,0 +1,65 @@
+/* TRANSITIONS */
+
+.tr2 {
+  -webkit-transition-property: all;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  -ms-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -ms-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+}
+
+@mixin tr($transition-speed) {
+  -webkit-transition-property: $transition-speed;
+  -moz-transition-property: $transition-speed;
+  -o-transition-property: $transition-speed;
+  -ms-transition-property: $transition-speed;
+  transition-property: $transition-speed;
+  -webkit-transition-duration: $transition-speed;
+  -moz-transition-duration: $transition-speed;
+  -o-transition-duration: $transition-speed;
+  -ms-transition-duration: $transition-speed;
+  transition-duration: $transition-speed;
+}
+
+@mixin rotate($rotation) {
+  -webkit-transition-property: $rotation;
+  -moz-transition-property: $rotation;
+  -o-transition-property: $rotation;
+  -ms-transition-property: $rotation;
+  transition-property: $rotation;
+  -ms-transform: rotate($rotation); /* IE 9 */
+  -webkit-transform: rotate($rotation); /* Chrome, Safari, Opera */
+  transform: rotate($rotation);
+}
+
+@mixin delay($delay-speeed) {
+  -webkit-animation-delay: $delay-speeed; /* Safari 4.0 - 8.0 */
+  animation-delay: $delay-speeed;
+}
+
+@mixin bezier-eas-out($speed) {
+  transition: all $speed cubic-bezier(0.36, 0.26, 0.47, 0.9);
+}
+
+@mixin scale($scaleRate) {
+  -ms-transform: scale($scaleRate, $scaleRate); /* IE 9 */
+  -webkit-transform: scale($scaleRate, $scaleRate); /* Safari */
+  transform: scale($scaleRate, $scaleRate);
+}
+
+@mixin translateX($translateX) {
+  -ms-transform: translateX($translateX); /* IE 9 */
+  -webkit-transform: translateX($translateX); /* Safari */
+  transform: translateX($translateX);
+}
+
+@mixin translateY($translateY) {
+  -ms-transform: translateY($translateY); /* IE 9 */
+  -webkit-transform: translateY($translateY); /* Safari */
+  transform: translateY($translateY);
+}

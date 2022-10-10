@@ -36,3 +36,25 @@
     transform: rotate(360deg);
   }
 }
+
+.h1 {
+  margin-bottom: 1em;
+}
+
+.p {
+  margin-bottom: 1em;
+  font-size: 12pt;
+}
+
+.middle {
+  text-align: center;
+}
+
+.policy {
+  font-size: 10pt;
+}
+
+.li {
+  margin-left: 2em;
+  font-size: 12pt;
+}
