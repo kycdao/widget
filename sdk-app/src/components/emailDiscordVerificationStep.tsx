@@ -25,7 +25,7 @@ export const EmailDiscordVerificationStep = () => {
         <>
             <DiscordIconSvg/><p className="p">Connect Discord</p>
             <Input value={data.email} placeholder={"email"} className="full-width" onChange={onEmailChange}/>
-            <Button className="full-width blue" onClick={onSubmit}>Submit</Button>
+            <Button className="full-width blue" onClick={onSubmit}/>
         </>
     }>
         <h1 className="h1">Email / Discord verification</h1>

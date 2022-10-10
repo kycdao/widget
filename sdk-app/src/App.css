@@ -59,3 +59,9 @@
   margin-left: 2em;
   font-size: 12pt;
 }
+
+.header-button {
+  margin-left: 0;
+  margin-right: 0;
+  font-size: 2em;
+}

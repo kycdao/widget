@@ -1,5 +1,4 @@
 import { ChangeEventHandler, FC, useCallback } from 'react';
-import { DataActionTypes } from '../reducer';
 
 import './input.component.scss'
 

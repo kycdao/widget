@@ -1,30 +1,6 @@
 import { Step } from "../components/step"
 import { Button } from "../components/button/button"
 
-export const BeginVerifyingStep = () => {
-    return <Step >
-        <h1>KycDAO</h1>
-        <p>Lorem ipsum</p>
-        <Button />
-    </Step>
-}
-
-export const GovernmentIDSelectionStep = () => {
-    return <Step >
-        <h1>KycDAO</h1>
-        <p>Lorem ipsum</p>
-        <Button />
-    </Step>
-}
-
-export const UploadIDPhotoTypeStep = () => {
-    return <Step >
-        <h1>KycDAO</h1>
-        <p>Lorem ipsum</p>
-        <Button />
-    </Step>
-}
-
 export const UploadIDPhotoStep = () => {
     return <Step >
         <h1>KycDAO</h1>

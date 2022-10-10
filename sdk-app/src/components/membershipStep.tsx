@@ -18,7 +18,7 @@ export const KycDAOMembershipStep: FC = () => {
     return <Step prev={onPrev} footer={
         <>
             <div className="policy">By starting verification you accept <a href="#">Privacy Policy</a> and <a href="#">Terms &#38; Conditions.</a></div>
-            <Button className="full-width blue" onClick={onSubmit}>Submit</Button>
+            <Button className="full-width blue" onClick={onSubmit}/>
         </>
     }>
         <h1 className="h1">01 KycDAO Membership</h1>

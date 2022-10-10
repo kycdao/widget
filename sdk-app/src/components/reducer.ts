@@ -52,7 +52,10 @@ export enum StepID {
     kycDAOMembershipStep,
     verificationStep,
     emailDiscordVerificationStep,
-    taxResidenceStep
+    taxResidenceStep,
+    beginVerificationStep,
+    idIssuerSelectionStep,
+    UploadIDPhotoTypeStep
   }
   
 export  const reducer = (data: Data, { payload, type }: DataChangeActions): Data => {

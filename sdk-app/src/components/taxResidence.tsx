@@ -1,6 +1,5 @@
 import { useContext, useCallback } from "react"
 import { Button } from "./button/button"
-import { DiscordIconSvg } from "./discord-icon-svg/discord-icon-svg.component"
 import { Input } from "./input/input.component"
 import { StepID, DataActionTypes } from "./reducer"
 import { StateContext } from "./stateContext"
@@ -18,13 +17,13 @@ export const TaxResidenceStep = () => {
     }, [])
 
     const onSubmit = useCallback(() => {
-        dispatch({ type: DataActionTypes.nexPage, payload: StepID.verificationStep })
+        dispatch({ type: DataActionTypes.nexPage, payload: StepID.beginVerificationStep })
     }, [])
 
     return <Step prev={onPrev} footer={
         <>
             <Input value={data.email} placeholder={"Type your tax residence here"} className="full-width" onChange={onEmailChange}/>
-            <Button className="full-width blue" onClick={onSubmit}>Submit</Button>
+            <Button className="full-width blue" onClick={onSubmit}/>
         </>
     }>
         <h1 className="h1">Tax residence</h1>

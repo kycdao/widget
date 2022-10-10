@@ -8,6 +8,9 @@ import { EmailDiscordVerificationStep } from './components/emailDiscordVerificat
 import { KycDAOMembershipStep } from './components/membershipStep';
 import { VerificationStep } from './components/verificationStep';
 import { TaxResidenceStep } from './components/taxResidence';
+import { BeginVerifyingStep } from './components/beginVerifying';
+import { IDIssuerSelectionStep } from './components/IDIssuerSelectionStep';
+import { UploadIDPhotoTypeStep } from './components/uploadPhotoTypeStep';
 
 export const StepSelector: FC<{ stepID: StepID }> = ({ stepID }) => {
     switch (stepID) {
@@ -25,6 +28,15 @@ export const StepSelector: FC<{ stepID: StepID }> = ({ stepID }) => {
         }
         case StepID.taxResidenceStep: {
             return <TaxResidenceStep />
+        }
+        case StepID.beginVerificationStep: {
+            return <BeginVerifyingStep />
+        }
+        case StepID.idIssuerSelectionStep: {
+            return <IDIssuerSelectionStep />
+        }
+        case StepID.UploadIDPhotoTypeStep: {
+            return <UploadIDPhotoTypeStep />
         }
         default: {
             return <>Something went wrong</>

@@ -37,11 +37,8 @@
     margin-left: 1rem;
   }
 
-  &:hover {
-    span {
-      margin-left: 1rem;
-    }
 
+  &:hover {
     .nav {
       width: auto;
       opacity: 1;
@@ -50,7 +47,6 @@
     }
 
     .arrow {
-      @include rotate(-45deg);
       @extend .tr2;
     }
   }
@@ -102,30 +98,63 @@
   }
 
   &.blue {
-    background: var(--kyc-normal-blue);
-    box-shadow: 0 0 0 0 rgba(white, 0);
+    @keyframes hover {
+      from {
+        background: var(--kyc-normal-blue);
+        box-shadow: 0 0 1pt 0 var(--kyc-normal-blue-35);
+      }
 
-    span,
-    .material-icons {
-      color: white;
-    }
-
-    &:hover {
-      background: var(--kyc-normal-blue);
-      box-shadow: 0 0 0 10px var(--kyc-normal-blue-35);
-
-      span,
-      .material-icons {
-        color: white;
+      to {
+        background: var(--kyc-green);
+        box-shadow: 0 0 0 1pt var(--kyc-green-35);
       }
     }
 
+    @keyframes textHover {
+      from {
+        margin-left: 0.5em;
+      }
+
+      to {
+        margin-left: 0.2em;
+      }
+    }
+
+    background: var(--kyc-normal-blue);
+    box-shadow: 0 0 1pt 0 var(--kyc-normal-blue-35);
+
+    span,
+    .material-icons {
+      font-weight: 600;
+      color: white;
+      margin-left: 0.5em;
+    }
+
+    &:hover {
+      animation-name: hover;
+      animation-duration: 500ms;
+
+      
+      background: var(--kyc-green);
+      box-shadow: 0 0 0 1pt var(--kyc-green-35);
+      
+      span,
+      .material-icons {
+        animation-name: textHover;
+        animation-duration: 500ms;
+
+        margin-left: 0.2em;
+        color: white;
+      }
+
+    }
+
     &:focus {
-      box-shadow: 0 0 0 10px var(--kyc-normal-blue-50);
+      box-shadow: 0 0 0 1pt var(--kyc-green-50);
     }
 
     &:active {
-      box-shadow: 0 0 0 10px var(--kyc-normal-blue-75);
+      box-shadow: 0 0 0 1pt var(--kyc-green-75);
     }
 
     &:focus-visible {
