@@ -1,8 +1,7 @@
-import { useContext, useCallback, useState } from "react"
+import { useContext, useCallback } from "react"
 import { Button } from "./button/button"
 import { StepID, DataActionTypes } from "./reducer"
 import { Select } from "./select/select"
-import { Option } from "./select/option"
 import { StateContext } from "./stateContext"
 import { Step } from "./step"
 
@@ -19,7 +18,6 @@ export const IDIssuerSelectionStep = () => {
 
     const onChange = useCallback((value: string) => {
         dispatch({ type: DataActionTypes.idIssuerChange, payload: value })
-        console.log(value)
     }, [])
 
     return <Step prev={onPrev} footer={

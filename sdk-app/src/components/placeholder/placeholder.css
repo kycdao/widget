@@ -1,0 +1,10 @@
+.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: grey;
+    color: white;
+    user-select: none;
+    font-family: sans-serif;
+    font-size: 3vw;
+}
