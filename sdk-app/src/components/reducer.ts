@@ -54,8 +54,9 @@ export enum StepID {
     emailDiscordVerificationStep,
     taxResidenceStep,
     beginVerificationStep,
-    idIssuerSelectionStep,
-    UploadIDPhotoTypeStep
+    nftArtSelection,
+    finalStep,
+    chainSelection
   }
   
 export  const reducer = (data: Data, { payload, type }: DataChangeActions): Data => {

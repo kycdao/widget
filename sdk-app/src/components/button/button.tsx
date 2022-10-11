@@ -6,9 +6,10 @@ export type ButtonProps = {
     className?: string
     label?: string
     hoverLabel?: string
+    hideArrow?: boolean
 }
 
-export const Button: FC<ButtonProps> = ({ onClick, label = 'Submit', className, hoverLabel = 'Next' }) => {
+export const Button: FC<ButtonProps> = ({ onClick, label = 'Submit', className, hoverLabel = 'Next', hideArrow = false }) => {
     const ref = useRef<HTMLButtonElement>(null)
     const [innerHtml, setInnerHtml] = useState(label)
 
@@ -20,6 +21,6 @@ export const Button: FC<ButtonProps> = ({ onClick, label = 'Submit', className, 
         <span>
             {innerHtml}
         </span>
-        <i className="material-icons arrow"> arrow_forward </i>
+        { !hideArrow && <i className="material-icons arrow"> arrow_forward </i>}
     </button>
 }

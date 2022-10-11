@@ -17,6 +17,7 @@ export const TaxResidenceStep = () => {
     }, [])
 
     const onSubmit = useCallback(() => {
+        // dispatch({ type: DataActionTypes.nexPage, payload: StepID.nftArtSelection })
         dispatch({ type: DataActionTypes.nexPage, payload: StepID.beginVerificationStep })
     }, [])
 

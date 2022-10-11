@@ -15,6 +15,12 @@
   height: var(--button-height);
   @extend .tr2;
 
+  &.centered {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   span {
     font-family: var(--light-font);
     font-weight: 200;
@@ -225,6 +231,11 @@
     }
 
      */
+  }
+
+  &.underline {
+    color: var(--kyc-normal-blue);
+    text-decoration: underline;
   }
 
   .link-btn {

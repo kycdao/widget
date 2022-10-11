@@ -9,8 +9,10 @@ import { KycDAOMembershipStep } from './components/membershipStep';
 import { VerificationStep } from './components/verificationStep';
 import { TaxResidenceStep } from './components/taxResidence';
 import { BeginVerifyingStep } from './components/beginVerifying';
-import { IDIssuerSelectionStep } from './components/IDIssuerSelectionStep';
-import { UploadIDPhotoTypeStep } from './components/uploadPhotoTypeStep';
+import 'material-icons/iconfont/outlined.css';
+import { NftSelection } from './components/nftArtSelection';
+import { FinalStep } from './components/finalStep';
+import { ChainSelection } from './components/chainSelectionStep';
 
 export const StepSelector: FC<{ stepID: StepID }> = ({ stepID }) => {
     switch (stepID) {
@@ -32,11 +34,14 @@ export const StepSelector: FC<{ stepID: StepID }> = ({ stepID }) => {
         case StepID.beginVerificationStep: {
             return <BeginVerifyingStep />
         }
-        case StepID.idIssuerSelectionStep: {
-            return <IDIssuerSelectionStep />
+        case StepID.nftArtSelection: {
+            return <NftSelection />
         }
-        case StepID.UploadIDPhotoTypeStep: {
-            return <UploadIDPhotoTypeStep />
+        case StepID.chainSelection: {
+            return <ChainSelection />
+        }
+        case StepID.finalStep: {
+            return <FinalStep />
         }
         default: {
             return <>Something went wrong</>
