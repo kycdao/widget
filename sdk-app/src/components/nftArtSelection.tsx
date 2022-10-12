@@ -1,18 +1,27 @@
-import { useContext, useCallback } from "react"
+import { useContext, useCallback, useEffect, useState } from "react"
 import { StateContext } from "../components/stateContext"
 import { Step } from "../components/step"
 import { DataActionTypes, StepID } from "../components/reducer"
 import { Button } from "../components/button/button"
 import { Placeholder } from "./placeholder/placeholder"
+import { KycDaoContext } from "./kycDao.provider"
 
 export const NftSelection = () => {
     const { dispatch } = useContext(StateContext)
+    const { kycDao } = useContext(KycDaoContext)!
+
+    const [nftImages, setNftImages] = useState([])
+
+    useEffect(() => {
+        
+    }, [])
 
     const onSubmit = useCallback((ID: string) => () => {
         dispatch({ type: DataActionTypes.nexPage, payload: StepID.chainSelection })
     }, [])
 
     const onRegenerate = useCallback(() => {
+        kycDao.regenerateNftImage()
         // dispatch({ type: DataActionTypes.nexPage, payload: StepID.finalStep })
     }, [])
 

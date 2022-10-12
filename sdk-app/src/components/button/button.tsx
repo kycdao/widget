@@ -7,9 +7,10 @@ export type ButtonProps = {
     label?: string
     hoverLabel?: string
     hideArrow?: boolean
+    disabled?: boolean
 }
 
-export const Button: FC<ButtonProps> = ({ onClick, label = 'Submit', className, hoverLabel = 'Next', hideArrow = false }) => {
+export const Button: FC<ButtonProps> = ({ disabled = false ,onClick, label = 'Submit', className, hoverLabel = 'Next', hideArrow = false }) => {
     const ref = useRef<HTMLButtonElement>(null)
     const [innerHtml, setInnerHtml] = useState(label)
 
@@ -17,7 +18,7 @@ export const Button: FC<ButtonProps> = ({ onClick, label = 'Submit', className, 
         setInnerHtml(label)
     }, [])
 
-    return <button ref={ref} onMouseEnter={innerHtmlSetter(hoverLabel)} onMouseLeave={innerHtmlSetter(label)}  className={`kyc-button ${className}`} onClick={onClick}>
+    return <button disabled={disabled} ref={ref} onMouseEnter={innerHtmlSetter(hoverLabel)} onMouseLeave={innerHtmlSetter(label)}  className={`kyc-button ${className}`} onClick={onClick}>
         <span>
             {innerHtml}
         </span>
