@@ -1,9 +1,10 @@
 export type Data = {
     chain?: string
     email: string
-    taxResidence?: string
-    idIssuer?: string
+    taxResidency: string
+    idIssuer: string
     currentPage: number
+    termsAccepted: boolean
 }
 
 export enum DataActionTypes {
@@ -12,7 +13,8 @@ export enum DataActionTypes {
     prevPage,
     emailChange,
     taxResidenceChange,
-    idIssuerChange
+    idIssuerChange,
+    termsAcceptedChange
 }
 
 export type ChainChangeAction = {
@@ -45,7 +47,12 @@ export type TaxResidentChangeAction = {
     payload: string
 }
 
-export type DataChangeActions = ChainChangeAction | EmailChangeAction | IdIssuerChangeAction | NextPageAction | PrevPageAction | TaxResidentChangeAction
+export type TermsAcceptedChangeAction = {
+    type: DataActionTypes.termsAcceptedChange
+    payload: boolean
+}
+
+export type DataChangeActions = TermsAcceptedChangeAction | ChainChangeAction | EmailChangeAction | IdIssuerChangeAction | NextPageAction | PrevPageAction | TaxResidentChangeAction
 
 export enum StepID {
     AgreementStep,
@@ -56,10 +63,11 @@ export enum StepID {
     beginVerificationStep,
     nftArtSelection,
     finalStep,
-    chainSelection
-  }
-  
-export  const reducer = (data: Data, { payload, type }: DataChangeActions): Data => {
+    chainSelection,
+    termsAccepted
+}
+
+export const reducer = (data: Data, { payload, type }: DataChangeActions): Data => {
     switch (type) {
         case DataActionTypes.chainChange:
             return { ...data, chain: payload }
@@ -70,10 +78,11 @@ export  const reducer = (data: Data, { payload, type }: DataChangeActions): Data
         case DataActionTypes.nexPage:
             return { ...data, currentPage: payload }
         case DataActionTypes.taxResidenceChange:
-            return { ...data, taxResidence: payload }
+            return { ...data, taxResidency: payload }
+        case DataActionTypes.termsAcceptedChange:
+            return { ...data, termsAccepted: payload }
         default: {
             return data
         }
     }
-  }
-  
+}

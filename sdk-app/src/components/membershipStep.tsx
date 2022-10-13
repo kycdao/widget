@@ -13,6 +13,7 @@ export const KycDAOMembershipStep: FC = () => {
 
     const onSubmit = useCallback(() => {
         dispatch({ type: DataActionTypes.nexPage, payload: StepID.verificationStep })
+        dispatch({ type: DataActionTypes.termsAcceptedChange, payload: true })
     }, [])
 
     return <Step prev={onPrev} footer={

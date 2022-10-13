@@ -9,11 +9,11 @@ import { KycDAOMembershipStep } from './components/membershipStep';
 import { VerificationStep } from './components/verificationStep';
 import { TaxResidenceStep } from './components/taxResidence';
 import { BeginVerifyingStep } from './components/beginVerifying';
-import 'material-icons/iconfont/outlined.css';
+// import 'material-icons/iconfont/outlined.css';
 import { NftSelection } from './components/nftArtSelection';
 import { FinalStep } from './components/finalStep';
 import { ChainSelection } from './components/chainSelectionStep';
-import { KycDao, KycDaoInitializationResult } from '@kycdao/kycdao-sdk';
+import { BlockchainNetworks, KycDao, KycDaoInitializationResult, VerificationTypes } from '@kycdao/kycdao-sdk';
 import { KycDaoContext } from './components/kycDao.provider';
 
 export const StepSelector: FC<{ stepID: StepID }> = ({ stepID }) => {
@@ -58,8 +58,8 @@ export const App: FC = () => {
     useEffect(() => {
         KycDao.initialize({
             baseUrl: "https://staging.kycdao.xyz",
-            enabledBlockchainNetworks: ["NearTestnet", "PolygonMumbai"],
-            enabledVerificationTypes: ["KYC", "AccreditedInvestor"],
+            enabledBlockchainNetworks: [BlockchainNetworks.NearTestnet, BlockchainNetworks.PolygonMumbai],
+            enabledVerificationTypes: [VerificationTypes.KYC],
             demoMode: true,
             evmProvider: window.ethereum,
         }).then(setKycDao)

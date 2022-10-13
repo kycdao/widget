@@ -11,7 +11,7 @@ export const AgreementStep = () => {
         dispatch({ type: DataActionTypes.nexPage, payload: StepID.kycDAOMembershipStep })
     }, [])
 
-    return <Step header={<h1>KycDAO</h1>} footer={<Button className="full-width blue" onClick={onSubmit} />}>
+    return <Step header={<h1 className="h1">KycDAO</h1>} footer={<Button className="full-width blue" onClick={onSubmit} />}>
         <p>Lorem ipsum</p>
     </Step>
 }

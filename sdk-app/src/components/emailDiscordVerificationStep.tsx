@@ -1,6 +1,5 @@
 import { useContext, useCallback } from "react"
 import { Button } from "./button/button"
-import { DiscordIconSvg } from "./discord-icon-svg/discord-icon-svg.component"
 import { Input } from "./input/input.component"
 import { StepID, DataActionTypes } from "./reducer"
 import { StateContext } from "./stateContext"
@@ -26,7 +25,10 @@ export const EmailDiscordVerificationStep = () => {
     return <Step prev={onPrev} footer={
         <>
             <span style={{ display: 'inline-flex' }}>
-                <DiscordIconSvg /><p className="p">Connect Discord</p>
+                <div style={{ background: '#7289d9', width: 60, height: 60, display: "flex", justifyContent: 'center', alignItems: 'center' }}>
+                    <img style={{ width: 40, height: 40 }} src="images/discord.svg" />
+                </div>
+                <p className="p" style={{ alignSelf: 'center', marginLeft: '1em' }}>Connect Discord</p>
             </span>
             <Input value={data.email} placeholder={"email"} className="full-width" onChange={onEmailChange} />
             <Button disabled={!emailRegex.test(data.email)} className="full-width blue" onClick={onSubmit} />
