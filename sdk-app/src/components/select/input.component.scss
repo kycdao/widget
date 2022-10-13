@@ -1,4 +1,4 @@
-@import "../../style/_base.scss";
+@import "../../style/styles.scss";
 
 .kyc-select {
   height: var(--button-height);
@@ -11,11 +11,10 @@
   position: relative;
   box-shadow: 0 0 0 0 rgba(white, 0);
   background: #ecf0fe;
-  color: var(--kyc-dark-purple);
+  color: var(&kyc-dark-purple);
   border-radius: var(--border-radius-light);
   font-size: 12pt;
   border-width: 2pt;
-  @extend .tr2;
   border-style: solid;
 
   &.open {
@@ -28,29 +27,29 @@
   }
 
   ::placeholder {
-    color: var(--kyc-dark-purple);
+    color: var(&kyc-dark-purple);
   }
 
   ::-webkit-input-placeholder {
-    color: var(--kyc-dark-purple);
+    color: var(&kyc-dark-purple);
   }
 
   :-ms-input-placeholder {
-    color: var(--kyc-dark-purple);
+    color: var(&kyc-dark-purple);
   }
 
   ::-ms-input-placeholder {
-    color: var(--kyc-dark-purple);
+    color: var(&kyc-dark-purple);
   }
 
   &:hover {
-    box-shadow: 0 0 0 10px var(--kyc-normal-blue-35);
-    border-color: var(--kyc-normal-blue);
+    box-shadow: 0 0 0 10px var(&kyc-normal-blue-35);
+    border-color: var(&kyc-normal-blue);
   }
 
   &:focus {
-    box-shadow: 0 0 0 10px var(--kyc-normal-blue-50);
-    border-color: var(--kyc-normal-blue);
+    box-shadow: 0 0 0 10px var(&kyc-normal-blue-50);
+    border-color: var(&kyc-normal-blue);
   }
 
   &.full-width {
@@ -62,8 +61,8 @@
 .disabled {
   position: relative;
   z-index: 10;
-  border: 2px solid var(--kyc-green);
-  box-shadow: 0 0 0 10px var(--kyc-green-35);
+  border: 2px solid var(&kyc-green);
+  box-shadow: 0 0 0 10px var(&kyc-green-35);
 }
 
 .kyc-option {
@@ -81,7 +80,6 @@
   position: relative;
   box-shadow: 0 0 0 0 rgba(white, 0);
   background: #ecf0fe;
-  color: var(--kyc-dark-purple);
+  color: var(&kyc-dark-purple);
   font-size: 12pt;
-  @extend .tr2;
 }

@@ -1,5 +1,5 @@
-import { createContext, FC, StrictMode, useEffect, useReducer, useState } from 'react';
-import './App.css';
+import { FC, useEffect, useReducer, useState } from 'react';
+import './style/style.scss';
 import { StateContext } from './components/stateContext';
 import { Data, reducer, StepID } from './components/reducer';
 import { ErrorBoundary } from 'react-error-boundary'
@@ -69,21 +69,15 @@ export const App: FC = () => {
         return <>Loading...</>
     }
 
-    /* @TODO if(!kycDao.) {
-        return <>Error</>
-    }*/
-
     const { currentPage } = data
 
-    return <StrictMode>
-        <ErrorBoundary FallbackComponent={() => <>Something went wrong</>}>
-            <KycDaoContext.Provider value={kycDao}>
-                <StateContext.Provider value={{ data, dispatch }} >
-                    <StepSelector stepID={currentPage} />
-                </StateContext.Provider>
-            </KycDaoContext.Provider>
-        </ErrorBoundary>
-    </StrictMode>
+    return <ErrorBoundary FallbackComponent={() => <>Something went wrong</>}>
+        <KycDaoContext.Provider value={kycDao}>
+            <StateContext.Provider value={{ data, dispatch }} >
+                <StepSelector stepID={currentPage} />
+            </StateContext.Provider>
+        </KycDaoContext.Provider>
+    </ErrorBoundary>
 }
 
 export default App;

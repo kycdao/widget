@@ -16,7 +16,7 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, foote
         return <>Something went seriously wrong! Probably you did not provided the data! Check your data provider!</>
     }
 
-    return <div style={{ display: 'flex', flexDirection: 'column', padding: "1em", justifyContent: 'space-between', height: '650px' }}>
+    return <div style={{ display: 'flex', flexDirection: 'column', padding: "1em", justifyContent: 'space-between', height: '650px', paddingTop: 0, paddingBottom: 0 }}>
         <div style={{ flexDirection: 'row', justifyContent: 'space-between', display: "flex", paddingBottom: '1em' }}>
             <div>
                 {prev && <button className="kyc-button transparent header-button" style={{ paddingLeft: 0 }} onClick={prev}>&#60;</button>}
@@ -30,7 +30,7 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, foote
         <div style={{ flex: '1' }} >
             {children}
         </div>
-        <div>
+        <div style={{paddingBottom: '1em'}}>
             {footer}
         </div>
     </div>

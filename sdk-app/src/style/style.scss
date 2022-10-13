@@ -1,0 +1,73 @@
+@import 'variables.scss';
+
+.App {
+    text-align: center;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+  
+  .h1 {
+    margin-bottom: 1em;
+  }
+  
+  .h2 {
+    margin-bottom: 1em;
+  }
+  
+  .p {
+    margin-bottom: 1em;
+    font-size: 12pt;
+  }
+  
+  .middle {
+    text-align: center;
+  }
+  
+  .policy {
+    font-size: 10pt;
+    margin-bottom: 1em;
+  }
+  
+  .li {
+    margin-left: 2em;
+    font-size: 12pt;
+  }
+  
+  .header-button {
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 2em;
+  }
+  
+  .persona-widget__iframe {
+    width: 100%;
+    height: 644px;
+  }
+  
+body {
+  margin: 0;
+}

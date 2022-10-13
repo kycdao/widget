@@ -23,9 +23,8 @@ svg.default{
 
 svg.white {
   fill: white;
-  @extend .tr2;
 
   &:hover{
-    fill: var(--kyc-normal-blue);
+    fill: var(&kyc-normal-blue);
   }
 }

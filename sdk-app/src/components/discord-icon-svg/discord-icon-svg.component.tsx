@@ -4,6 +4,8 @@ import './discord-icon-svg.component.scss'
 
 export const DiscordIconSvg: FC<SVGProps> = ({ className }) => {
   return <svg
+    width={100}
+    height={100}
     className={className}
     viewBox="0 0 171 123"
     fill="none"
