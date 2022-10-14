@@ -9,7 +9,6 @@ import { KycDAOMembershipStep } from './components/membershipStep';
 import { VerificationStep } from './components/verificationStep';
 import { TaxResidenceStep } from './components/taxResidence';
 import { BeginVerifyingStep } from './components/beginVerifying';
-// import 'material-icons/iconfont/outlined.css';
 import { NftSelection } from './components/nftArtSelection';
 import { FinalStep } from './components/finalStep';
 import { ChainSelection } from './components/chainSelectionStep';

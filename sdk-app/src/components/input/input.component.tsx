@@ -2,6 +2,8 @@ import { ChangeEventHandler, FC, useCallback, useEffect, useRef, useState } from
 
 import './input.component.scss'
 
+const specialRegex = /[!$(){}[\]:;<+?\\>]/g
+
 type InputProps = {
   placeholder: string
   onChange?: (value: string) => void
@@ -10,9 +12,10 @@ type InputProps = {
   className?: string
   value?: string
   autoCompleteData?: string[]
+  autoFocus?: boolean
 }
 
-export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, className, value = '', autoCompleteData }) => {
+export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, className, value = '', autoCompleteData, autoFocus }) => {
   const [showAutoComplete, setShowAutoComplete] = useState(false)
   const autocompleteRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -38,7 +41,6 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
 
   useEffect(() => {
     function hndlr() {
-      console.log('selected')
       if (!showAutoComplete) {
         setShowAutoComplete(true)
       }
@@ -58,10 +60,11 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
 
   return <>
     {showAutoComplete && autoCompleteData && value && <div ref={autocompleteRef} className="autocomplete">
-      {autoCompleteData.filter(v => v.match(new RegExp(value, 'ig'))).map((v, i) =>
-        <div dangerouslySetInnerHTML={{ __html: v.replace(new RegExp(`(${value})`, 'ig'), '<strong>$1</strong>')}} className={`kyc-option full-width${i === 0 ? ' first' : ''}`} onClick={onAutocompleteHndlr(v)} key={v} />)}
+      {autoCompleteData.filter(v => v.match(new RegExp(value.replace(specialRegex, ''), 'ig'))).map((v, i) =>
+        <div dangerouslySetInnerHTML={{ __html: v.replace(new RegExp(`(${value.replace(specialRegex, '')})`, 'ig'), '<strong>$1</strong>')}} className={`kyc-option full-width${i === 0 ? ' first' : ''}`} onClick={onAutocompleteHndlr(v)} key={v} />)}
     </div>}
           <input
+            autoFocus={autoFocus}
             ref={inputRef}
             id={id}
             className={`kyc-input ${disabled ? 'disabled' : ''} ${className}`}

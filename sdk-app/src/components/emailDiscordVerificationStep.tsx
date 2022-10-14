@@ -5,7 +5,7 @@ import { StepID, DataActionTypes } from "./reducer"
 import { StateContext } from "./stateContext"
 import { Step } from "./step"
 
-const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
 export const EmailDiscordVerificationStep = () => {
     const { data, dispatch } = useContext(StateContext)
@@ -24,12 +24,12 @@ export const EmailDiscordVerificationStep = () => {
 
     return <Step prev={onPrev} footer={
         <>
-            <span style={{ display: 'inline-flex' }}>
+            {/*<span style={{ display: 'inline-flex' }}>
                 <div style={{ background: '#7289d9', width: 60, height: 60, display: "flex", justifyContent: 'center', alignItems: 'center' }}>
                     <img style={{ width: 40, height: 40 }} src="images/discord.svg" />
                 </div>
                 <p className="p" style={{ alignSelf: 'center', marginLeft: '1em' }}>Connect Discord</p>
-            </span>
+    </span>*/}
             <Input value={data.email} placeholder={"email"} className="full-width" onChange={onEmailChange} />
             <Button disabled={!emailRegex.test(data.email)} className="full-width blue" onClick={onSubmit} />
         </>

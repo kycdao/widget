@@ -8,26 +8,31 @@ import { Step } from "./step"
 
 export const TaxResidenceStep = () => {
     const [value, setValue] = useState('')
+    const [taxResidence, setTaxResidence] = useState('')
     const { dispatch } = useContext(StateContext)
 
     const onPrev = useCallback(() => {
         dispatch({ payload: StepID.AgreementStep, type: DataActionTypes.nexPage })
     }, [])
 
-
     const onSubmit = useCallback(() => {
-        dispatch({ type: DataActionTypes.taxResidenceChange, payload: value })
-        dispatch({ type: DataActionTypes.nexPage, payload: StepID.nftArtSelection })
+        dispatch({ type: DataActionTypes.taxResidenceChange, payload: taxResidence })
+        dispatch({ type: DataActionTypes.nexPage, payload: StepID.chainSelection })
         //dispatch({ type: DataActionTypes.nexPage, payload: StepID.beginVerificationStep })
-    }, [])
+    }, [taxResidence])
 
     const autoCompleteData = useMemo(() => Countries.map(c => c.name), [])
 
     const submitDisabled = useMemo(() => !Countries.find((c) => c.name === value), [value])
 
+    const onChange = useCallback((newValue: string) => {
+        setTaxResidence(Countries.find((country) => country.name === newValue)?.iso_cca2 || '')
+        setValue(newValue)
+    }, [])
+
     return <Step prev={onPrev} footer={
         <>
-            <Input autoCompleteData={autoCompleteData} value={value} placeholder={"Type your tax residence here"} className="full-width" onChange={setValue} />
+            <Input autoCompleteData={autoCompleteData} value={value} placeholder={"Type your tax residence here"} className="full-width" onChange={onChange} />
             <Button disabled={submitDisabled} className="full-width blue" onClick={onSubmit} />
         </>
     }>

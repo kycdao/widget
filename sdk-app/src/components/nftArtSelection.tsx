@@ -13,7 +13,7 @@ export const NftSelection = () => {
     const [nftImages, setNftImages] = useState([{ src: kycDao?.kycDao.getNftImageUrl(), hash: Date.now()}])
 
     const onSubmit = useCallback((ID: string) => () => {
-        dispatch({ type: DataActionTypes.nexPage, payload: StepID.chainSelection })
+        dispatch({ type: DataActionTypes.nexPage, payload: StepID.finalStep })
     }, [])
 
     const onRegenerate = useCallback(() => {
