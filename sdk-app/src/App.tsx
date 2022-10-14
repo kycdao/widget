@@ -1,19 +1,18 @@
+import { KycDaoInitializationResult, KycDao, BlockchainNetworks, VerificationTypes } from '@kycdao/kycdao-sdk';
 import { FC, useEffect, useReducer, useState } from 'react';
-import './style/style.scss';
-import { StateContext } from './components/stateContext';
-import { Data, reducer, StepID } from './components/reducer';
-import { ErrorBoundary } from 'react-error-boundary'
-import { AgreementStep } from './components/connectStep';
-import { EmailDiscordVerificationStep } from './components/emailDiscordVerificationStep';
-import { KycDAOMembershipStep } from './components/membershipStep';
-import { VerificationStep } from './components/verificationStep';
-import { TaxResidenceStep } from './components/taxResidence';
-import { BeginVerifyingStep } from './components/beginVerifying';
-import { NftSelection } from './components/nftArtSelection';
-import { FinalStep } from './components/finalStep';
-import { ChainSelection } from './components/chainSelectionStep';
-import { BlockchainNetworks, KycDao, KycDaoInitializationResult, VerificationTypes } from '@kycdao/kycdao-sdk';
+import { ErrorBoundary } from 'react-error-boundary';
 import { KycDaoContext } from './components/kycDao.provider';
+import { StepID, reducer, Data, StateContext } from './components/stateContext';
+import { BeginVerifyingStep } from './pages/beginVerifying';
+import { ChainSelection } from './pages/chainSelectionStep';
+import { AgreementStep } from './pages/connectStep';
+import { EmailDiscordVerificationStep } from './pages/emailDiscordVerificationStep';
+import { FinalStep } from './pages/finalStep';
+import { KycDAOMembershipStep } from './pages/membershipStep';
+import { NftSelection } from './pages/nftArtSelection';
+import { TaxResidenceStep } from './pages/taxResidence';
+import { VerificationStep } from './pages/verificationStep';
+import './style/style.scss';
 
 export const StepSelector: FC<{ stepID: StepID }> = ({ stepID }) => {
     switch (stepID) {

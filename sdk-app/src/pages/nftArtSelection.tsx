@@ -1,10 +1,10 @@
-import { useContext, useCallback, useEffect, useState } from "react"
-import { StateContext } from "../components/stateContext"
-import { Step } from "../components/step"
-import { DataActionTypes, StepID } from "../components/reducer"
+import { useContext, useState, useCallback } from "react"
 import { Button } from "../components/button/button"
-import { Placeholder } from "./placeholder/placeholder"
-import { KycDaoContext } from "./kycDao.provider"
+import { KycDaoContext } from "../components/kycDao.provider"
+import { Placeholder } from "../components/placeholder/placeholder"
+import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
+import { Step } from "../components/step"
+
 
 export const NftSelection = () => {
     const { dispatch } = useContext(StateContext)
@@ -35,6 +35,6 @@ export const NftSelection = () => {
             <Placeholder style={{ borderRadius: '100%' }} onClick={onSubmit('')} height="150px" width="150px" />
             <Placeholder style={{ borderRadius: '100%' }} onClick={onSubmit('')} height="150px" width="150px" />
         </div>
-        <Button hideArrow label="Regenerate ↻" hoverLabel="Regenerate ↻" className="full-width underline centered" onClick={onRegenerate} />
+        <Button label="Regenerate ↻" className="full-width underline centered" onClick={onRegenerate} />
     </Step>
 }

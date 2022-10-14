@@ -1,9 +1,8 @@
 import { useContext, useCallback, useEffect } from "react"
-import { StepID, DataActionTypes } from "./reducer"
-import { StateContext } from "./stateContext"
 import { Inquiry } from "persona"
 import { InquiryError } from "persona/dist/lib/interfaces"
-import { KycDaoContext } from "./kycDao.provider"
+import { KycDaoContext } from "../components/kycDao.provider"
+import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
 
 export const BeginVerifyingStep = () => {
     const { dispatch, data: { email, termsAccepted, taxResidency } } = useContext(StateContext)

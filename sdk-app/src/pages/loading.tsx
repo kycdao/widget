@@ -1,6 +1,5 @@
 import { FC } from "react"
-
-import { Step } from "./step"
+import { Step } from "../components/step"
 
 export const ChainSelection: FC = () => {
     return <Step header={<h1 className="h1">Mint</h1>}>

@@ -1,8 +1,8 @@
 import { useContext, useCallback } from "react"
-import { Button } from "./button/button"
-import { StepID, DataActionTypes } from "./reducer"
-import { StateContext } from "./stateContext"
-import { Step } from "./step"
+import { Button } from "../components/button/button"
+import { StateContext, StepID, DataActionTypes } from "../components/stateContext"
+import { Step } from "../components/step"
+import { SubmitButton } from "../components/submitButton/submitButton"
 
 export const VerificationStep = () => {
     const {dispatch} = useContext(StateContext)
@@ -15,7 +15,7 @@ export const VerificationStep = () => {
         dispatch({ type: DataActionTypes.nexPage, payload: StepID.emailDiscordVerificationStep })
     }, [])
 
-    return <Step prev={onPrev} footer={<Button className="full-width blue" onClick={onSubmit}/>}>
+    return <Step onEnter={onSubmit} prev={onPrev} footer={<SubmitButton className="full-width blue" onClick={onSubmit}/>}>
         <h1 className="h1">02 ID Verification</h1>
         <p className="p">We are using 3rd party partners to collect information for verification.</p>
         <p className="p">During the verification you wil be asked:</p>

@@ -1,8 +1,7 @@
 import { useContext, useCallback } from "react"
-import { StateContext } from "../components/stateContext"
+import { DataActionTypes, StateContext, StepID } from "../components/stateContext"
 import { Step } from "../components/step"
-import { DataActionTypes, StepID } from "../components/reducer"
-import { Button } from "../components/button/button"
+import { SubmitButton } from "../components/submitButton/submitButton"
 
 export const AgreementStep = () => {
     const { dispatch } = useContext(StateContext)
@@ -11,7 +10,7 @@ export const AgreementStep = () => {
         dispatch({ type: DataActionTypes.nexPage, payload: StepID.kycDAOMembershipStep })
     }, [])
 
-    return <Step header={<h1 className="h1">KycDAO</h1>} footer={<Button className="full-width blue" onClick={onSubmit} />}>
+    return <Step header={<h1 className="h1">KycDAO</h1>} onEnter={onSubmit} footer={<SubmitButton className="full-width blue" onClick={onSubmit} />}>
         <p>Lorem ipsum</p>
     </Step>
 }
