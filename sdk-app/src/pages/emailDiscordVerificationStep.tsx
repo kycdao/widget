@@ -1,7 +1,7 @@
 import { useContext, useCallback, useMemo } from "react"
 import { Input } from "../components/input/input.component"
 import { StateContext, StepID, DataActionTypes } from "../components/stateContext"
-import { Step } from "../components/step"
+import { Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/

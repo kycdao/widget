@@ -5,7 +5,6 @@
   "repository": "https://github.com/kycdao/sdk-example",
   "author": "kycDAO",
   "license": "UNLICENSED",
-  "private": false,
   "scripts": {
     "serve": "node ./serve.js --chdir=docs/",
     "start": "node ./serve.js --chdir=docs/ & yarn --cwd sdk-app start"
@@ -13,6 +12,5 @@
   "devDependencies": {
     "livereload": "^0.9.3",
     "mime-types": "^2.1.35"
-  },
-  "peerDependencies": {}
+  }
 }

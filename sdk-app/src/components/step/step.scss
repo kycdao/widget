@@ -1,0 +1,16 @@
+
+.step-header{
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  justify-content: space-between;
+  height: 650px;
+  padding-top: 0;
+  padding-bottom: 0;
+  align-items: center;
+
+  &>div{
+    width: 100%;
+    align-items: center;
+  }
+}

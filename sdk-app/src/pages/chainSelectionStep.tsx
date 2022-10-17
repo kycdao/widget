@@ -2,7 +2,7 @@ import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { FC, useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
-import { Step } from "../components/step"
+import { Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { ToggleButton } from "../components/toggleButton/toggleButton"
 

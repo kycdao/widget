@@ -1,5 +1,5 @@
 import { useContext, useCallback, useState, useEffect } from "react"
-import { Step } from "../components/step"
+import { Step } from "../components/step/step"
 import { Button } from "../components/button/button"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { Placeholder } from "../components/placeholder/placeholder"

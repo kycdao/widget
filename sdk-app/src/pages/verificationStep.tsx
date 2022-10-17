@@ -1,7 +1,7 @@
 import { useContext, useCallback } from "react"
 import { Button } from "../components/button/button"
 import { StateContext, StepID, DataActionTypes } from "../components/stateContext"
-import { Step } from "../components/step"
+import { Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 
 export const VerificationStep = () => {

@@ -3,7 +3,7 @@ import { Button } from "../components/button/button"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { Placeholder } from "../components/placeholder/placeholder"
 import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
-import { Step } from "../components/step"
+import { Step } from "../components/step/step"
 
 
 export const NftSelection = () => {
