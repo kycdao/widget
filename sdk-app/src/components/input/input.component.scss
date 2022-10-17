@@ -60,13 +60,6 @@ div.kyc-option {
   }
 }
 
-.disabled {
-  position: relative;
-  z-index: 10;
-  border: 2px solid $--kyc-green;
-  box-shadow: 0 0 0 10px $--kyc-green-35;
-}
-
 div.autocomplete {
   position: relative;
   width: 368px;
@@ -85,6 +78,10 @@ div.clear {
   user-select: none;
 
   &:hover {
+    color: lightgrey;
+  }
+
+  &.disabled {
     color: lightgrey;
   }
 }
