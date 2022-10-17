@@ -36,7 +36,7 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, foote
 
     return <div className="step-header" style={{  }}>
         <div style={{ flexDirection: 'row', justifyContent: 'space-between', display: "flex", paddingBottom: '1em' }}>
-            <div>
+            <div className="button-wrapper">
                 {/*{prev && <button className="header-button transparent" style={{ paddingLeft: 0 }} onClick={prev}>&#60;</button>}*/}
                 {prev && <button className="material-icons " onClick={prev}>chevron_left</button>}
                 {next && <button className="material-icons" onClick={next}>chevron_right</button>}

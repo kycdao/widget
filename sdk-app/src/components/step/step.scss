@@ -9,8 +9,24 @@
   padding-bottom: 0;
   align-items: center;
 
+
+
   &>div{
     width: 100%;
     align-items: center;
+
+    .button-wrapper {
+
+      & > button {
+        background: none;
+        border: none;
+
+        &:hover {
+          //background: ;
+        }
+      }
+    }
+
+
   }
 }
