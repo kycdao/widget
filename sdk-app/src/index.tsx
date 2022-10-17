@@ -6,9 +6,9 @@ import { BlockchainNetworks, VerificationTypes } from '@kycdao/kycdao-sdk';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorPage } from './pages/ErrorPage';
 
-export function BootstrapKycDaoModal(elementID: string, height: number | string, width: number | string) {
+export function BootstrapKycDaoModal(element: string | HTMLElement, height: number | string, width: number | string) {
   const root = createRoot(
-    document.getElementById(elementID) as HTMLElement
+    typeof element === 'string' ? document.querySelector(element) as HTMLElement : element
   )
   
   root.render(
