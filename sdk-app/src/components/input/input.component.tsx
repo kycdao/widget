@@ -58,6 +58,12 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
     setShowAutoComplete(false)
   }, [])
 
+  const onClear = useCallback(() => {
+    if(onChange) {
+      onChange('')
+    }
+  }, [])
+
   return <>
     {showAutoComplete && autoCompleteData && value && <div ref={autocompleteRef} className="autocomplete">
       {autoCompleteData.filter(v => v.match(new RegExp(value.replace(specialRegex, ''), 'ig'))).map((v, i) =>
@@ -74,5 +80,6 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
             disabled={disabled}
             value={value}
           />
+          <div className='clear' onClick={onClear}>&times;</div>
   </>
 }
