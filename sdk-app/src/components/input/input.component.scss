@@ -26,6 +26,7 @@ div.kyc-option {
   font-size: 12pt;
   border-width: 2pt;
   border-style: solid;
+  padding-right: 3em;
 
   ::placeholder {
     color: $--kyc-dark-purple;
@@ -71,4 +72,19 @@ div.autocomplete {
   width: 368px;
   max-height: 45vh;
   overflow-y: auto
+}
+
+div.clear {
+  position: relative;
+  top: -3em;
+  left: 92%;
+  right: 3em;
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    color: lightgrey;
+  }
 }
