@@ -34,22 +34,22 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, foote
         return () => document.removeEventListener('keyup', enterHndlr)
     }, [onEnter])
 
-    return <div className="step-header" style={{  }}>
-        <div style={{ flexDirection: 'row', justifyContent: 'space-between', display: "flex", paddingBottom: '1em' }}>
+    return <div className="step" style={{  }}>
+        <div className="step-header" >
             <div className="button-wrapper">
                 {/*{prev && <button className="header-button transparent" style={{ paddingLeft: 0 }} onClick={prev}>&#60;</button>}*/}
                 {prev && <button className="material-icons " onClick={prev}>chevron_left</button>}
                 {next && <button className="material-icons" onClick={next}>chevron_right</button>}
             </div>
-            <button className="kyc-button transparent header-button" onClick={closeModal}>&times;</button>
+            <button className="close-button" onClick={closeModal}>&times;</button>
         </div>
         <div>
             {header}
         </div>
-        <div style={{ flex: '1' }} >
+        <div className="step-body">
             {children}
         </div>
-        <div style={{paddingBottom: '1em'}}>
+        <div className="step-footer">
             {footer}
         </div>
     </div>

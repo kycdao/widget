@@ -25,10 +25,30 @@ export const KycDAOMembershipStep: FC = () => {
         <h1 className="h1">01 KycDAO Membership</h1>
         <p className="p">kycDAO is building a trusted web3 ecosystem linked together by verified wallets.</p>
         <p className="p">Once verified and proof is minted on-chain, all kycDAO partner services will accept the verification.</p>
-        <div className="middle">1 Connect</div>
-        <div className="middle">|</div>
-        <div className="middle">2 Verify</div>
-        <div className="middle">|</div>
-        <div className="middle">3 Mint</div>
+        <div className="the-process">
+
+            <ul>
+                <li>
+                    <span>1</span>
+                    <p>Connect</p>
+                </li>
+                <li>
+                    <span>2</span>
+                    <p>Verify</p>
+                </li>
+                <li>
+                    <span>3</span>
+                    <p>Verify</p>
+                </li>
+            </ul>
+
+        </div>
+
+        {/*<div className="middle">1 Connect</div>*/}
+        {/*<div className="middle">|</div>*/}
+        {/*<div className="middle">2 Verify</div>*/}
+        {/*<div className="middle">|</div>*/}
+        {/*<div className="middle">3 Mint</div>*/}
+
     </Step>
 }

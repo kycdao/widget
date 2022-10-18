@@ -34,6 +34,7 @@ button.kyc-button {
   }
 
   &:hover {
+
     .nav {
       width: auto;
       opacity: 1;
@@ -50,10 +51,6 @@ button.kyc-button {
   &.transparent {
     color: $--kyc-normal-blue;
     background: transparent;
-
-    &:hover {
-      color: $--kyc-normal-blue-35;
-    }
   }
 
   &.white {
@@ -117,9 +114,9 @@ button.kyc-button {
 
     span,
     .material-icons {
-      font-weight: 600;
+      font-weight: 400;
       color: white;
-      margin-left: 0.5em;
+      //margin-left: 0.5em;
     }
 
     &:hover {

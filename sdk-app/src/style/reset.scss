@@ -1,0 +1,52 @@
+
+
+body {
+
+  div, ul, ol, li, header, section, a, input {
+    box-sizing: border-box;
+  }
+}
+
+ul{
+  -webkit-margin-before:0em;
+  -webkit-margin-after:0em;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 0px
+}
+
+button, input, a{
+  background: none;
+  outline: none;
+  border: none;
+
+  &:focus-visible{
+    outline: none;
+    border: none;
+  }
+}
+
+li, ul, ol{
+  //list-style: none;
+}
+
+html, body, li, ul{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+
+  h1, h2, h3, h4, h5, p, a{
+    padding: 0;
+    margin: 0;
+  }
+}
+
+
+/* who thought blue linked image borders were a good idea? no abbr borders */
+abbr, img, object, a img,:link img,:visited img, a object,:link object,:visited object
+{ border: 0;}
+
+/* de-italicize address,abbr */
+address,abbr { font-style:normal }
+
