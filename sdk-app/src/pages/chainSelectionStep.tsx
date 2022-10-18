@@ -34,16 +34,16 @@ export const ChainSelection: FC = () => {
         if (connectedWallet) {
             try {
                 await kycDao?.kycDao.registerOrLogin()
-                await kycDao?.kycDao.startMinting({
+                /*await kycDao?.kycDao.startMinting({
                     disclaimerAccepted: termsAccepted,
                     verificationType: VerificationTypes.KYC
                 })
                 // kycDao?.kycDao.sess
-                await kycDao?.kycDao.startMinting({ disclaimerAccepted: true })
+                await kycDao?.kycDao.startMinting({ disclaimerAccepted: true })*/
             } catch (err) {
                 console.error(err)
             }
-            dispatch({ type: DataActionTypes.nexPage, payload: StepID.nftArtSelection })
+            dispatch({ type: DataActionTypes.nexPage, payload: StepID.beginVerificationStep })
         }
     }, [connectedWallet])
 

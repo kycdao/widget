@@ -1593,10 +1593,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@kycdao/kycdao-sdk@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@kycdao/kycdao-sdk/-/kycdao-sdk-0.2.2.tgz#9667222b3fa58df664f1ea2c281f8fc4aa278827"
-  integrity sha512-DUdKqCOCGVBXuIE6kM8p5E3/5AbX6bBR60X/zsq6LgYKWEzP/ez3KbI8mBFFKgZOWSH7DghwonISEV6lsxh6cA==
+"@kycdao/kycdao-sdk@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@kycdao/kycdao-sdk/-/kycdao-sdk-0.2.4.tgz#cda235922da775a9fcf7b4808c5eddaa1fa59002"
+  integrity sha512-UAjQ+6TPM3kf7UVXQQxghkdABn3DKjj6JethFeKWV23mlNFelyl/qKD4BLgW3M5cco+nKzp7Uy52uXHih3KFDw==
 
 "@leichtgewicht/ip-codec@^2.0.1":
   version "2.0.4"

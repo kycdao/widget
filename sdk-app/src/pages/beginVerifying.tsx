@@ -1,8 +1,7 @@
 import { useContext, useCallback, useEffect } from "react"
-import { Inquiry } from "persona"
-import { InquiryError } from "persona/dist/lib/interfaces"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
+import { VerificationTypes } from "@kycdao/kycdao-sdk"
 
 export const BeginVerifyingStep = () => {
     const { dispatch, data: { email, termsAccepted, taxResidency } } = useContext(StateContext)
@@ -13,8 +12,9 @@ export const BeginVerifyingStep = () => {
             return
         }
 
-        /*(async () => {
+        (async () => {
             try {
+                await kycDao?.kycDao.registerOrLogin()
                 await kycDao?.kycDao.startVerification({
                     email,
                     isEmailConfirmed: true, // @TODO
@@ -26,24 +26,30 @@ export const BeginVerifyingStep = () => {
                     personaOptions: {
                         onCancel,
                         onComplete,
-                        onError
+                        onError,
+                        frameAncestors: ['http://localhost:5000'],
+                        messageTargetOrigin: 'http://localhost:5000'
                     }
                 })
             } catch (e) {
                 console.error(e)
             }
-        })()*/
+
+            setTimeout(() => {
+                document.querySelector('iframe')?.setAttribute('allow')
+            }, 1000);            
+        })()
     }, [])
 
     const onComplete = useCallback(async () => {
-        dispatch({ type: DataActionTypes.nexPage, payload: StepID.chainSelection })
+        dispatch({ type: DataActionTypes.nexPage, payload: StepID.nftArtSelection })
     }, [])
 
     const onCancel = useCallback(() => {
         dispatch({ payload: StepID.taxResidenceStep, type: DataActionTypes.nexPage })
     }, [])
 
-    const onError = useCallback((error: InquiryError) => {
+    const onError = useCallback((error: string) => {
         console.log(error)
         // what should be the error page?
     }, [])
@@ -52,16 +58,5 @@ export const BeginVerifyingStep = () => {
         return <>Error</>
     }
 
-    // return <></>
-
-    return <Inquiry
-        templateId='itmpl_Ygs16MKTkA6obnF8C3Rb17dm'
-        environment='sandbox'
-        onComplete={onComplete}
-        onCancel={onCancel}
-        onError={onError}
-        frameHeight={kycDao.height}
-        frameWidth={kycDao.width}
-        frameAncestors={[window.location.origin, 'http://localhost:5000']}
-    />
+    return <></>
 }
