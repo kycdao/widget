@@ -1,7 +1,6 @@
-import { KycDaoInitializationResult, KycDao, BlockchainNetworks, VerificationTypes } from '@kycdao/kycdao-sdk';
+import { KycDao, SdkConfiguration } from '@kycdao/kycdao-sdk';
 import { FC, useEffect, useReducer, useState } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import { KycDaoContext } from './components/kycDao.provider';
+import { KycDaoContext, KycDaoState } from './components/kycDao.provider';
 import { StepID, reducer, Data, StateContext } from './components/stateContext';
 import { BeginVerifyingStep } from './pages/beginVerifying';
 import { ChainSelection } from './pages/chainSelectionStep';
@@ -49,18 +48,36 @@ export const StepSelector: FC<{ stepID: StepID }> = ({ stepID }) => {
     }
 }
 
-export const App: FC = () => {
+export type KycDaoModalProps = {
+    width?: number | string
+    height?: number | string
+}
+
+export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({ 
+    baseUrl,
+    enabledVerificationTypes,
+    height = 400,
+    width = 650,
+    apiKey,
+    demoMode,
+    enabledBlockchainNetworks,
+    environment,
+    evmProvider }) => {
     const [data, dispatch] = useReducer(reducer, { currentPage: StepID.AgreementStep, email: '' } as Data)
-    const [kycDao, setKycDao] = useState<KycDaoInitializationResult>()
+    const [kycDao, setKycDao] = useState<KycDaoState>()
 
     useEffect(() => {
         KycDao.initialize({
-            baseUrl: "https://staging.kycdao.xyz",
-            enabledBlockchainNetworks: [BlockchainNetworks.NearTestnet, BlockchainNetworks.PolygonMumbai],
-            enabledVerificationTypes: [VerificationTypes.KYC],
-            demoMode: true,
-            evmProvider: window.ethereum,
-        }).then(setKycDao)
+            baseUrl,
+            enabledVerificationTypes,
+            apiKey,
+            demoMode,
+            enabledBlockchainNetworks,
+            environment,
+            evmProvider
+        }).then((results) => {
+            setKycDao({ ...results, width, height })
+        })
     }, [])
 
     if (!kycDao) {
@@ -69,13 +86,11 @@ export const App: FC = () => {
 
     const { currentPage } = data
 
-    return <ErrorBoundary FallbackComponent={() => <>Something went wrong</>}>
-        <KycDaoContext.Provider value={kycDao}>
+    return <KycDaoContext.Provider value={kycDao}>
             <StateContext.Provider value={{ data, dispatch }} >
                 <StepSelector stepID={currentPage} />
             </StateContext.Provider>
         </KycDaoContext.Provider>
-    </ErrorBoundary>
 }
 
-export default App;
+export default KycDaoModal;

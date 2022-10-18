@@ -48,16 +48,20 @@ export const BeginVerifyingStep = () => {
         // what should be the error page?
     }, [])
 
+    if(!kycDao) {
+        return <>Error</>
+    }
+
     // return <></>
 
-    return  <Inquiry
-            templateId='itmpl_Ygs16MKTkA6obnF8C3Rb17dm'
-            environment='sandbox'
-            onComplete={onComplete}
-            onCancel={onCancel}
-            onError={onError}
-            frameHeight={650}
-            frameWidth={400}
-            frameAncestors={[window.location.origin, 'http://localhost:5000' ]}
-        />
+    return <Inquiry
+        templateId='itmpl_Ygs16MKTkA6obnF8C3Rb17dm'
+        environment='sandbox'
+        onComplete={onComplete}
+        onCancel={onCancel}
+        onError={onError}
+        frameHeight={kycDao.height}
+        frameWidth={kycDao.width}
+        frameAncestors={[window.location.origin, 'http://localhost:5000']}
+    />
 }

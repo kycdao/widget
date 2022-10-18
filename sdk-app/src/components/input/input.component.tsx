@@ -37,7 +37,7 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
     document.addEventListener('mousedown', closeEventHndlr)
 
     return () => document.removeEventListener('mousedown', closeEventHndlr)
-  }, [])
+  }, [autocompleteRef])
 
   useEffect(() => {
     function hndlr() {
@@ -49,23 +49,23 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
     inputRef.current?.addEventListener('focus', hndlr)
 
     return () => inputRef.current?.addEventListener('focus', hndlr)
-  }, [])
+  }, [showAutoComplete])
 
   const onAutocompleteHndlr = useCallback((value: string) => () => {
     if (onChange) {
       onChange(value)
     }
     setShowAutoComplete(false)
-  }, [])
+  }, [onChange])
 
   const onClear = useCallback(() => {
-    if(onChange) {
+    if(onChange && value) {
       onChange('')
     }
-  }, [])
+  }, [onChange])
 
   return <>
-    {showAutoComplete && autoCompleteData && value && <div ref={autocompleteRef} className="autocomplete">
+    {showAutoComplete && autoCompleteData && <div ref={autocompleteRef} className="autocomplete">
       {autoCompleteData.filter(v => v.match(new RegExp(value.replace(specialRegex, ''), 'ig'))).map((v, i) =>
         <div dangerouslySetInnerHTML={{ __html: v.replace(new RegExp(`(${value.replace(specialRegex, '')})`, 'ig'), '<strong>$1</strong>')}} className={`kyc-option full-width${i === 0 ? ' first' : ''}`} onClick={onAutocompleteHndlr(v)} key={v} />)}
     </div>}
@@ -80,6 +80,6 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
             disabled={disabled}
             value={value}
           />
-          <div className='clear' onClick={onClear}>&times;</div>
+          <div className={`clear${value === '' ? ' disabled' : ''}`} onClick={onClear}>&times;</div>
   </>
 }
