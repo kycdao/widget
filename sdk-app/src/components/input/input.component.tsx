@@ -62,7 +62,7 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
     if(onChange && value) {
       onChange('')
     }
-  }, [onChange])
+  }, [onChange, value])
 
   return <>
     {showAutoComplete && autoCompleteData && <div ref={autocompleteRef} className="autocomplete">

@@ -7,7 +7,7 @@ export const AgreementStep = () => {
     const { dispatch } = useContext(StateContext)
 
     const onSubmit = useCallback(() => {
-        dispatch({ type: DataActionTypes.nexPage, payload: StepID.kycDAOMembershipStep })
+        dispatch({ type: DataActionTypes.changePage, payload: StepID.kycDAOMembershipStep })
     }, [])
 
     return <Step header={<h1 className="h1">KycDAO</h1>} onEnter={onSubmit} footer={<SubmitButton className="full-width blue" onClick={onSubmit} />}>

@@ -10,7 +10,7 @@ export const EmailDiscordVerificationStep = () => {
     const { data, dispatch } = useContext(StateContext)
 
     const onPrev = useCallback(() => {
-        dispatch({ payload: StepID.verificationStep, type: DataActionTypes.nexPage })
+        dispatch({ payload: StepID.verificationStep, type: DataActionTypes.changePage })
     }, [])
 
     const onEmailChange = useCallback((value: string) => {
@@ -23,7 +23,7 @@ export const EmailDiscordVerificationStep = () => {
 
     const onSubmit = useCallback(() => {
         if(!disableSubmit) {
-            dispatch({ type: DataActionTypes.nexPage, payload: StepID.taxResidenceStep })
+            dispatch({ type: DataActionTypes.changePage, payload: StepID.taxResidenceStep })
         }
     }, [disableSubmit])
 

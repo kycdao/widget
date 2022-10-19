@@ -1,5 +1,4 @@
-import { VerificationTypes } from "@kycdao/kycdao-sdk"
-import { FC, useCallback, useContext, useEffect, useMemo, useState } from "react"
+import { FC, useCallback, useContext, useMemo, useState } from "react"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
 import { Step } from "../components/step/step"
@@ -12,7 +11,7 @@ export const ChainSelection: FC = () => {
     const kycDao = useContext(KycDaoContext)
     const [connectedWallet, setConnectedWallet] = useState<"Near" | "Ethereum">()
 
-    const { dispatch, data: { termsAccepted } } = useContext(StateContext)
+    const { dispatch } = useContext(StateContext)
 
     const chains = useMemo<{ value: Chains, label: string, isAvailable: boolean }[]>(() => [
         { label: 'NEAR', value: 'Near', isAvailable: true },
@@ -20,38 +19,23 @@ export const ChainSelection: FC = () => {
     ], [kycDao])
 
     const onChange = useCallback((value: Chains) => async () => {
-        await kycDao?.kycDao.connectWallet(value).then(() => setConnectedWallet(value))
-        // kycDao?.kycDao.
-        // dispatch()
+        kycDao?.kycDao.connectWallet(value).then(() => setConnectedWallet(value))
     }, [])
 
     const onPrev = useCallback(() => {
-        dispatch({ type: DataActionTypes.nexPage, payload: StepID.taxResidenceStep })
-        // dispatch()
+        dispatch({ type: DataActionTypes.changePage, payload: StepID.taxResidenceStep })
     }, [])
 
     const onSubmit = useCallback(async () => {
         if (connectedWallet) {
             try {
                 await kycDao?.kycDao.registerOrLogin()
-                await kycDao?.kycDao.startMinting({
-                    disclaimerAccepted: termsAccepted,
-                    verificationType: VerificationTypes.KYC
-                })
-                // kycDao?.kycDao.sess
-                await kycDao?.kycDao.startMinting({ disclaimerAccepted: true })
             } catch (err) {
                 console.error(err)
             }
-            dispatch({ type: DataActionTypes.nexPage, payload: StepID.nftArtSelection })
+            dispatch({ type: DataActionTypes.changePage, payload: StepID.beginVerificationStep })
         }
     }, [connectedWallet])
-
-    useEffect(() => {
-        if (kycDao) {
-            kycDao.kycDao.disconnectWallet()
-        }
-    }, [])
 
     if (!kycDao) {
         return <>Error</>

@@ -1,21 +1,25 @@
 import { useContext, useCallback, useEffect } from "react"
-import { Inquiry } from "persona"
-import { InquiryError } from "persona/dist/lib/interfaces"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
+import { VerificationTypes } from "@kycdao/kycdao-sdk"
+
+let verifyingModalOpen = false
 
 export const BeginVerifyingStep = () => {
     const { dispatch, data: { email, termsAccepted, taxResidency } } = useContext(StateContext)
     const kycDao = useContext(KycDaoContext)
 
     useEffect(() => {
-        if (!kycDao) {
+        if (!kycDao || verifyingModalOpen) {
             return
         }
+        
+        verifyingModalOpen = true;
 
-        /*(async () => {
+        (async () => {
             try {
-                await kycDao?.kycDao.startVerification({
+                await kycDao.kycDao.registerOrLogin()
+                await kycDao.kycDao.startVerification({
                     email,
                     isEmailConfirmed: true, // @TODO
                     isLegalEntity: false, // @TODO
@@ -26,42 +30,36 @@ export const BeginVerifyingStep = () => {
                     personaOptions: {
                         onCancel,
                         onComplete,
-                        onError
+                        onError,
+                        frameAncestors: ['https://localhost:3000', 'https://localhost:5000' ],
+                        messageTargetOrigin: 'https://localhost:3000'
                     }
                 })
             } catch (e) {
                 console.error(e)
             }
-        })()*/
-    }, [])
+        })()
+    }, [verifyingModalOpen, kycDao])
 
     const onComplete = useCallback(async () => {
-        dispatch({ type: DataActionTypes.nexPage, payload: StepID.chainSelection })
+        dispatch({ type: DataActionTypes.changePage, payload: StepID.nftArtSelection })
+        verifyingModalOpen = false
     }, [])
 
     const onCancel = useCallback(() => {
-        dispatch({ payload: StepID.taxResidenceStep, type: DataActionTypes.nexPage })
+        dispatch({ payload: StepID.chainSelection, type: DataActionTypes.changePage })
+        verifyingModalOpen = false
     }, [])
 
-    const onError = useCallback((error: InquiryError) => {
+    const onError = useCallback((error: string) => {
         console.log(error)
+        verifyingModalOpen = false
         // what should be the error page?
     }, [])
 
-    if(!kycDao) {
+    if (!kycDao) {
         return <>Error</>
     }
 
-    // return <></>
-
-    return <Inquiry
-        templateId='itmpl_Ygs16MKTkA6obnF8C3Rb17dm'
-        environment='sandbox'
-        onComplete={onComplete}
-        onCancel={onCancel}
-        onError={onError}
-        frameHeight={kycDao.height}
-        frameWidth={kycDao.width}
-        frameAncestors={[window.location.origin, 'http://localhost:5000']}
-    />
+    return <></>
 }

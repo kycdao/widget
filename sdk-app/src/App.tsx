@@ -7,6 +7,7 @@ import { ChainSelection } from './pages/chainSelectionStep';
 import { AgreementStep } from './pages/connectStep';
 import { EmailDiscordVerificationStep } from './pages/emailDiscordVerificationStep';
 import { FinalStep } from './pages/finalStep';
+import { Loading } from './pages/loading';
 import { KycDAOMembershipStep } from './pages/membershipStep';
 import { NftSelection } from './pages/nftArtSelection';
 import { TaxResidenceStep } from './pages/taxResidence';
@@ -42,6 +43,9 @@ export const StepSelector: FC<{ stepID: StepID }> = ({ stepID }) => {
         case StepID.finalStep: {
             return <FinalStep />
         }
+        case StepID.loading: {
+            return <Loading />
+        }
         default: {
             return <>Something went wrong</>
         }
@@ -63,7 +67,7 @@ export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({
     enabledBlockchainNetworks,
     environment,
     evmProvider }) => {
-    const [data, dispatch] = useReducer(reducer, { currentPage: StepID.AgreementStep, email: '' } as Data)
+    const [data, dispatch] = useReducer(reducer, { currentPage: StepID.AgreementStep, email: '', verifyingModalOpen: false } as Data)
     const [kycDao, setKycDao] = useState<KycDaoState>()
 
     useEffect(() => {

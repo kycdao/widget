@@ -1,11 +1,18 @@
 const { readFileSync, readdirSync, lstatSync } = require("fs");
-const http = require("http");
+const https = require('https');
 const path = require("path");
 const mime = require("mime-types");
 
 const livereload = require("livereload");
 
-const lrServer = livereload.createServer();
+const options = {
+  key: readFileSync('key.pem'),
+  cert: readFileSync('cert.pem')
+};
+
+const lrServer = livereload.createServer({
+  https: options
+});
 
 let targetDir = process.cwd();
 
@@ -18,7 +25,8 @@ if (maybeChdir.length > 1) {
 
 lrServer.watch(targetDir);
 
-const server = http.createServer(async (request, response) => {
+
+const server = https.createServer(options, async (request, response) => {
   const renderDir = (baseDir, relPath) => {
     console.log(baseDir, relPath);
 
@@ -42,7 +50,7 @@ const server = http.createServer(async (request, response) => {
     console.log(`ok index (${files.length} files)`);
   };
 
-  const url = new URL(request.url, `http://${request.headers["host"]}`);
+  const url = new URL(request.url, `https://${request.headers["host"]}`);
   const relativePath = decodeURIComponent(url.pathname);
   const action = url.searchParams.get(".action");
 
@@ -68,7 +76,7 @@ const server = http.createServer(async (request, response) => {
     if (filePath.endsWith(".html")) {
       const lrScript = `
       <script>
-        document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+        document.write('<script src="https://' + (location.host || 'localhost').split(':')[0] +
         ':35729/livereload.js?snipver=1"></' + 'script>')
       </script>`;
       r = Buffer.from(r.toString().replace("</body>", `${lrScript}</body>`));
@@ -94,5 +102,5 @@ const server = http.createServer(async (request, response) => {
 });
 
 server.listen(5000, () => {
-  console.log("Running at http://localhost:5000");
+  console.log("Running at https://localhost:5000");
 });
