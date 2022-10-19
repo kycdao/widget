@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Step } from "../components/step"
+import { Step } from "../components/step/step"
 import { FallbackProps } from "react-error-boundary"
 
 export const ErrorPage: FC<FallbackProps> = ({ error, resetErrorBoundary }) => {

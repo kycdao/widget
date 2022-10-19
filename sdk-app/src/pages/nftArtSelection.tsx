@@ -40,7 +40,7 @@ export const NftSelection = () => {
         return <>Error</>
     }
 
-    return <Step header={<h1>Select your KYC NFT art</h1>}>
+    return <Step  header={<h1>Select your KYC NFT art</h1>} >
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2em', justifyContent: 'space-around', alignContent: 'center', height: '75%' }}>
             <div onClick={onSubmit('')} style={{ cursor: 'pointer', height: "150px", width: "150px" }} >
                 <img src={`${nftImages[0].src}?${nftImages[0].hash}`} />

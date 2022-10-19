@@ -18,9 +18,10 @@ export const SubmitButton: FC<ButtonProps> = ({ style, disabled = false, onClick
     }, [])
 
     return <button style={style} disabled={disabled} ref={ref} onMouseEnter={innerHtmlSetter('Next')} onMouseLeave={innerHtmlSetter('Submit')} className={`kyc-button ${className}`} onClick={onClick}>
+        <i className="material-icons first-arrow"> chevron_right </i>
         <span>
             {innerHtml}
         </span>
-        <i className="material-icons arrow"> arrow_forward </i>
+        <i className="material-icons second-arrow"> chevron_right </i>
     </button>
 }

@@ -1,57 +1,109 @@
 @import "../../style/variables.scss";
 
 button.kyc-button {
+  height: $--button-height;
   display: inline-flex;
   justify-content: space-between;
-  padding-left: 1.5rem;
+  box-sizing: border-box;
+  padding-left: 1.5em;
   align-items: center;
-  outline: none;
-  border: 1px solid transparent;
+
+  position: relative;
+  box-shadow: 0 0 0 0 rgba(white, 0);
+  background: #ecf0fe;
+  color: $--kyc-dark-purple;
   border-radius: $--border-radius-light;
+  font-size: 12pt;
   cursor: pointer;
-  height: $--button-height;
+  @extend .tr2;
+
+  span {
+    font-family: 'gilroyRegular';
+    font-weight: 400;
+    font-size: 16px;
+    margin-left: 0;
+  }
+
+  &.full-width{
+    width: 100%;
+  }
 
   &[disabled] {
     background: $--inactive!important;
     pointer-events: none!important;
   }
 
-  &.centered {
-    justify-content: center;
-    padding-left: 0;
-    padding-right: 0;
-  }
 
-  span {
-    font-family: $--light-font;
-    font-weight: 200;
-    font-size: 18px;
-    margin-left: 0;
-  }
+  &.blue {
+    background: $--kyc-normal-blue;
 
-  .arrow {
-    margin-left: 1rem;
-  }
+    span,
+    .material-icons {
+      font-weight: 400;
+      color: white;
+    }
 
-  &:hover {
+    &:hover{
+      background: $--kyc-normal-blue;
+      box-shadow: 0 0 0 10px $--kyc-normal-blue-35;
+    }
 
-    .nav {
-      width: auto;
-      opacity: 1;
-      visibility: visible;
-      transform: translateX(0rem);
+    &:focus {
+      background: $--kyc-normal-blue;
+      box-shadow: 0 0 0 5px $--kyc-normal-blue-50;
+    }
+
+    &:active {
+      box-shadow: 0 0 0 5px $--kyc-normal-blue-35;
+    }
+
+    &:focus-visible {
+      outline: none;
+      border: none;
     }
   }
 
-  &.full-width {
-    display: flex;
-    width: 100%;
+
+  &.green{
+    background: $--kyc-cyberpunk;
+
+    span,
+    .material-icons {
+      font-weight: 400;
+      color: white;
+    }
+
+    &:hover{
+      background: $--kyc-cyberpunk;
+      box-shadow: 0 0 0 10px $--kyc-cyberpunk-35;
+
+      span,
+      .material-icons {
+        font-weight: 400;
+        color: $--kyc-dark-blue;
+        //margin-left: 0.5em;
+      }
+    }
+
+    &:focus {
+      background: $--kyc-cyberpunk;
+      box-shadow: 0 0 0 5px $--kyc-cyberpunk-50;
+    }
+
+
+    &:active {
+      box-shadow: 0 0 0 5px $--kyc-dark-blue-35;
+    }
+
+    &:focus-visible {
+      outline: none;
+      border: none;
+    }
   }
 
-  &.transparent {
-    color: $--kyc-normal-blue;
-    background: transparent;
-  }
+
+
+  /*
 
   &.white {
     background: white;
@@ -78,70 +130,6 @@ button.kyc-button {
 
     &:active {
       box-shadow: 0 0 0 10px rgba($--kyc-normal-blue, 0.7);
-    }
-
-    &:focus-visible {
-      outline: none;
-      border: none;
-    }
-  }
-
-  &.blue {
-    @keyframes hover {
-      from {
-        background: $--kyc-normal-blue;
-        box-shadow: 0 0 1pt 0 $--kyc-normal-blue-35;
-      }
-
-      to {
-        background: $--kyc-green;
-        box-shadow: 0 0 0 1pt $--kyc-green-35;
-      }
-    }
-
-    @keyframes textHover {
-      from {
-        margin-left: 0.5em;
-      }
-
-      to {
-        margin-left: 0.2em;
-      }
-    }
-
-    background: $--kyc-normal-blue;
-    box-shadow: 0 0 1pt 0 $--kyc-normal-blue-35;
-
-    span,
-    .material-icons {
-      font-weight: 400;
-      color: white;
-      //margin-left: 0.5em;
-    }
-
-    &:hover {
-      animation-name: hover;
-      animation-duration: 500ms;
-
-      background: $--kyc-green;
-      box-shadow: 0 0 0 1pt $--kyc-green-35;
-      
-      span,
-      .material-icons {
-        animation-name: textHover;
-        animation-duration: 500ms;
-
-        margin-left: 0.2em;
-        color: white;
-      }
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 1pt $--kyc-green-50;
-    }
-
-    &:active {
-      box-shadow: 0 0 0 1pt $--kyc-green-75;
     }
 
     &:focus-visible {
@@ -202,7 +190,7 @@ button.kyc-button {
     color: $--kyc-normal-blue;
     text-decoration: underline;
     background: transparent;
-    
+
     @keyframes underlineHover {
       from {
         color: $--kyc-normal-blue;
@@ -219,4 +207,6 @@ button.kyc-button {
       color: $--kyc-green;
     }
   }
+
+   */
 }

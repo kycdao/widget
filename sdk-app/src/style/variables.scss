@@ -4,6 +4,7 @@ $--kyc-dark-purple: #21114a;
 $--kyc-green: #03f682;
 $--kyc-green-darken: #0BCB77;
 $--kyc-dark-green: #09b678;
+$--kyc-cyberpunk: #72F9D1;
 $--kyc-red: #ff4646;
 $--kyc-red-darken: #D51F4F;
 
@@ -30,8 +31,32 @@ $--kyc-green-35: rgba(3, 246, 13, 0.35);
 $--kyc-green-50: rgba(3, 246, 13, 0.50);
 $--kyc-green-75: rgba(3, 246, 13, 0.75);
 
+$--kyc-cyberpunk-15: rgba(144, 249, 209, 0.15);
+$--kyc-cyberpunk-35: rgba(144, 249, 209, 0.35);
+$--kyc-cyberpunk-50: rgba(144, 249, 209, 0.50);
+
 $--kyc-red-35: rgba(255, 70, 70, 0.35);
 
 $--primary-font: gilroyRegular;
 $--light-font: gilroyLight;
 $--display-font: gilroyBold;
+
+
+.tr2{
+  -webkit-transition-property: all;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  -ms-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -ms-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+}
+
+@mixin translateX($translateX) {
+  -ms-transform: translateX($translateX); /* IE 9 */
+  -webkit-transform: translateX($translateX); /* Safari */
+  transform: translateX($translateX);
+}

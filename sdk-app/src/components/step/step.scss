@@ -19,7 +19,6 @@
   padding-bottom: 0;
   align-items: center;
 
-
   .step-header{
     display: flex;
     width: 100%;
@@ -46,6 +45,7 @@
         align-items: center;
         justify-content: center;
         border-radius: $--border-radius-light;
+        @extend .tr2;
 
         &:hover {
           background: $--kyc-normal-blue-15;
@@ -67,6 +67,7 @@
 
       font-size: 24px;
       color: $--kyc-normal-blue;
+      @extend .tr2;
 
       &:hover {
         background: $--kyc-normal-blue-15;
@@ -84,6 +85,7 @@
 
   .step-body{
     width: 100%;
+    height: 100%;
     box-sizing: border-box;
 
     p{
@@ -97,16 +99,20 @@
     padding-bottom: 1rem;
     width: 100%;
     box-sizing: border-box;
+    position: relative;
 
     .policy{
       font-family: 'gilroyRegular';
       color: $--kyc-dark-blue;
     }
 
+    .kyc-input{
+      margin: 1rem 0;
+    }
   }
 }
 
-/* 01 STEP - Membership */
+/* 01 STEP - membershipStep.tsx */
 
 .the-process{
 
@@ -155,10 +161,24 @@
 
       p{
         margin-left: 1rem;
-
       }
-
     }
   }
-
 }
+
+/* 02 STEP - verificationStep.tx */
+
+/* 03 STEP - emailDiscordVerificationStep.tsx  */
+
+/* 04 STEP - taxResidence.tsx  */
+
+/* 05 STEP - chainSelectionStep.tsx  */
+
+/* 06 STEP - nftArtSelection.tsx  */
+
+/* 07 STEP - chainSelectionStep.tsx  */
+
+
+
+
+

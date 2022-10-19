@@ -14,8 +14,8 @@ export const VerificationStep = () => {
         dispatch({ type: DataActionTypes.changePage, payload: StepID.emailDiscordVerificationStep })
     }, [])
 
-    return <Step onEnter={onSubmit} prev={onPrev} footer={<SubmitButton className="full-width blue" onClick={onSubmit}/>}>
-        <h1 className="h1">02 ID Verification</h1>
+    return <Step onEnter={onSubmit} prev={onPrev} next={onSubmit} footer={<SubmitButton className="full-width blue" onClick={onSubmit}/>}>
+        <h1 className="h1">02 - ID Verification</h1>
         <p className="p">We are using 3rd party partners to collect information for verification.</p>
         <p className="p">During the verification you wil be asked:</p>
         <ul>

@@ -37,7 +37,7 @@ export const TaxResidenceStep = () => {
         setValue(newValue)
     }, [])
 
-    return <Step onEnter={onSubmit} prev={onPrev} footer={
+    return <Step onEnter={onSubmit} prev={onPrev} next={onSubmit} footer={
         <>
             <Input autoFocus autoCompleteData={autoCompleteData} value={value} placeholder={"Type your tax residence here"} className="full-width" onChange={onChange} />
             <SubmitButton disabled={submitDisabled} className="full-width blue" onClick={onSubmit} />

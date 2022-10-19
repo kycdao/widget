@@ -22,7 +22,7 @@ export const KycDAOMembershipStep: FC = () => {
             <SubmitButton className="full-width blue" onClick={onSubmit}/>
         </>
     }>
-        <h1 className="h1">01 KycDAO Membership</h1>
+        <h1 className="h1">01 - KycDAO Membership</h1>
         <p className="p">kycDAO is building a trusted web3 ecosystem linked together by verified wallets.</p>
         <p className="p">Once verified and proof is minted on-chain, all kycDAO partner services will accept the verification.</p>
         <div className="the-process">
