@@ -1,5 +1,4 @@
 import { useContext, useCallback } from "react"
-import { Button } from "../components/button/button"
 import { StateContext, StepID, DataActionTypes } from "../components/stateContext"
 import { Step } from "../components/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
@@ -8,11 +7,11 @@ export const VerificationStep = () => {
     const {dispatch} = useContext(StateContext)
 
     const onPrev = useCallback( () => {
-        dispatch({ payload: StepID.kycDAOMembershipStep, type: DataActionTypes.nexPage })
+        dispatch({ payload: StepID.kycDAOMembershipStep, type: DataActionTypes.changePage })
     }, [])
 
     const onSubmit = useCallback(() => {
-        dispatch({ type: DataActionTypes.nexPage, payload: StepID.emailDiscordVerificationStep })
+        dispatch({ type: DataActionTypes.changePage, payload: StepID.emailDiscordVerificationStep })
     }, [])
 
     return <Step onEnter={onSubmit} prev={onPrev} footer={<SubmitButton className="full-width blue" onClick={onSubmit}/>}>

@@ -8,11 +8,11 @@ export const KycDAOMembershipStep: FC = () => {
     const { dispatch } = useContext(StateContext)
 
     const onPrev = useCallback(() => {
-        dispatch({ payload: StepID.AgreementStep, type: DataActionTypes.nexPage })
+        dispatch({ payload: StepID.AgreementStep, type: DataActionTypes.changePage })
     }, [])
 
     const onSubmit = useCallback(() => {
-        dispatch({ type: DataActionTypes.nexPage, payload: StepID.verificationStep })
+        dispatch({ type: DataActionTypes.changePage, payload: StepID.verificationStep })
         dispatch({ type: DataActionTypes.termsAcceptedChange, payload: true })
     }, [])
 

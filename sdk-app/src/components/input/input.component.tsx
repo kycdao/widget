@@ -59,7 +59,6 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
   }, [onChange])
 
   const onClear = useCallback(() => {
-    console.log(value)
     if(onChange && value) {
       onChange('')
     }

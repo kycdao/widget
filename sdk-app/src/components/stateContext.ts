@@ -11,7 +11,7 @@ export type Data = {
 
 export enum DataActionTypes {
     chainChange,
-    nexPage,
+    changePage,
     prevPage,
     emailChange,
     taxResidenceChange,
@@ -36,7 +36,7 @@ export type EmailChangeAction = {
 }
 
 export type NextPageAction = {
-    type: DataActionTypes.nexPage
+    type: DataActionTypes.changePage
     payload: StepID
 }
 
@@ -76,7 +76,7 @@ export const reducer = (data: Data, { payload, type }: DataChangeActions): Data 
             return { ...data, chain: payload }
         case DataActionTypes.emailChange:
             return { ...data, email: payload }
-        case DataActionTypes.nexPage:
+        case DataActionTypes.changePage:
             return { ...data, currentPage: payload }
         case DataActionTypes.taxResidenceChange:
             return { ...data, taxResidency: payload }
@@ -93,5 +93,6 @@ export const reducer = (data: Data, { payload, type }: DataChangeActions): Data 
 export const StateContext = createContext<{ data: Data, dispatch: React.Dispatch<DataChangeActions> }>(
     {
         data: { currentPage: 0, email: '', taxResidency: '', termsAccepted: false, verifyingModalOpen: false },
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         dispatch: () => { }
     })

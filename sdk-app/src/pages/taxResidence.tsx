@@ -12,21 +12,20 @@ export const TaxResidenceStep = () => {
     const [taxResidence, setTaxResidence] = useState(taxResidency)
 
     useEffect(() => {
-        console.log(taxResidency)
         if(taxResidency) {
             setValue(Countries.find((country) => country.iso_cca2 === taxResidency)?.name || '')
         }
     }, [])
 
     const onPrev = useCallback(() => {
-        dispatch({ payload: StepID.emailDiscordVerificationStep, type: DataActionTypes.nexPage })
+        dispatch({ payload: StepID.emailDiscordVerificationStep, type: DataActionTypes.changePage })
         dispatch({ payload: taxResidence, type: DataActionTypes.taxResidenceChange })
     }, [taxResidence])
 
     const onSubmit = useCallback(() => {
         if(!submitDisabled) {
             dispatch({ type: DataActionTypes.taxResidenceChange, payload: taxResidence })
-            dispatch({ type: DataActionTypes.nexPage, payload: StepID.chainSelection })
+            dispatch({ type: DataActionTypes.changePage, payload: StepID.chainSelection })
             //dispatch({ type: DataActionTypes.nexPage, payload: StepID.beginVerificationStep })
         }
     }, [taxResidence, submitDisabled])

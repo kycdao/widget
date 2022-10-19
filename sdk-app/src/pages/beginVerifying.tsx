@@ -42,12 +42,12 @@ export const BeginVerifyingStep = () => {
     }, [verifyingModalOpen, kycDao])
 
     const onComplete = useCallback(async () => {
-        dispatch({ type: DataActionTypes.nexPage, payload: StepID.nftArtSelection })
+        dispatch({ type: DataActionTypes.changePage, payload: StepID.nftArtSelection })
         verifyingModalOpen = false
     }, [])
 
     const onCancel = useCallback(() => {
-        dispatch({ payload: StepID.taxResidenceStep, type: DataActionTypes.nexPage })
+        dispatch({ payload: StepID.chainSelection, type: DataActionTypes.changePage })
         verifyingModalOpen = false
     }, [])
 

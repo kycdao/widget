@@ -1,3 +1,4 @@
+import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { useContext, useState, useCallback } from "react"
 import { Button } from "../components/button/button"
 import { KycDaoContext } from "../components/kycDao.provider"
@@ -7,13 +8,19 @@ import { Step } from "../components/step"
 
 
 export const NftSelection = () => {
-    const { dispatch } = useContext(StateContext)
+    const { dispatch, data: {  termsAccepted, } } = useContext(StateContext)
     const kycDao = useContext(KycDaoContext)
 
     const [nftImages, setNftImages] = useState([{ src: kycDao?.kycDao.getNftImageUrl(), hash: Date.now()}])
 
     const onSubmit = useCallback((ID: string) => () => {
-        dispatch({ type: DataActionTypes.nexPage, payload: StepID.finalStep })
+        dispatch({ type: DataActionTypes.changePage, payload: StepID.finalStep })
+        if(kycDao) {
+            kycDao.kycDao.startMinting({
+                disclaimerAccepted: termsAccepted,
+                verificationType: VerificationTypes.KYC
+            })
+        }
     }, [])
 
     const onRegenerate = useCallback(() => {

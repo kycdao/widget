@@ -118,10 +118,10 @@
             }
 
             window.addEventListener('message', function (event) {
-                if (event.origin !== "https://localhosts:3000") {
-                }
-                if (event.data === 'closeModal') {
-                    modal.style.display = "none";
+                if (event.origin === "https://localhost:3000") {
+                    if (event.data === 'closeModal') {
+                        modal.style.display = "none";
+                    }
                 }
             }, false)
         }
