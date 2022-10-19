@@ -13,13 +13,20 @@ export const NftSelection = () => {
 
     const [nftImages, setNftImages] = useState([{ src: kycDao?.kycDao.getNftImageUrl(), hash: Date.now()}])
 
-    const onSubmit = useCallback((ID: string) => () => {
-        dispatch({ type: DataActionTypes.changePage, payload: StepID.finalStep })
+    const onSubmit = useCallback((ID: string) => async () => {
         if(kycDao) {
-            kycDao.kycDao.startMinting({
-                disclaimerAccepted: termsAccepted,
-                verificationType: VerificationTypes.KYC
-            })
+            try {
+                dispatch({ type: DataActionTypes.changePage, payload: StepID.loading })
+                await kycDao.kycDao.startMinting({
+                    disclaimerAccepted: termsAccepted,
+                    verificationType: VerificationTypes.KYC
+                })
+                dispatch({ type: DataActionTypes.changePage, payload: StepID.finalStep })
+            } catch(e: any) {
+                if(e.code && e.code === 4001) {
+                    dispatch({ type: DataActionTypes.changePage, payload: StepID.nftArtSelection })
+                }
+            }
         }
     }, [])
 

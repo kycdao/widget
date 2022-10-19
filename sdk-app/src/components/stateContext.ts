@@ -67,7 +67,8 @@ export enum StepID {
     nftArtSelection,
     finalStep,
     chainSelection,
-    termsAccepted
+    termsAccepted,
+    loading
 }
 
 export const reducer = (data: Data, { payload, type }: DataChangeActions): Data => {

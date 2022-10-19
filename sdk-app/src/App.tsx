@@ -7,6 +7,7 @@ import { ChainSelection } from './pages/chainSelectionStep';
 import { AgreementStep } from './pages/connectStep';
 import { EmailDiscordVerificationStep } from './pages/emailDiscordVerificationStep';
 import { FinalStep } from './pages/finalStep';
+import { Loading } from './pages/loading';
 import { KycDAOMembershipStep } from './pages/membershipStep';
 import { NftSelection } from './pages/nftArtSelection';
 import { TaxResidenceStep } from './pages/taxResidence';
@@ -41,6 +42,9 @@ export const StepSelector: FC<{ stepID: StepID }> = ({ stepID }) => {
         }
         case StepID.finalStep: {
             return <FinalStep />
+        }
+        case StepID.loading: {
+            return <Loading />
         }
         default: {
             return <>Something went wrong</>

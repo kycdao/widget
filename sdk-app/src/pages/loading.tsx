@@ -1,10 +1,10 @@
 import { FC } from "react"
 import { Step } from "../components/step"
 
-export const ChainSelection: FC = () => {
-    return <Step header={<h1 className="h1">Mint</h1>}>
+export const Loading: FC = () => {
+    return <Step header={<h1 className="h1">Loading</h1>}>
         <h1 className="h1">
-            Verification is loading
+            Loading
         </h1>
         <h2 className="h2">...</h2>
     </Step>
