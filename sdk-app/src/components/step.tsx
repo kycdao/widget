@@ -11,7 +11,7 @@ type StepProps = {
 
 export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, footer, next, prev, onEnter }) => {
     const state = useContext(StateContext)
-    const closeModal = useCallback(() => window.parent.postMessage('closeModal', 'http://localhost:5000/'), [])
+    const closeModal = useCallback(() => window.parent.postMessage('closeModal', 'https://localhost:5000/'), [])
 
     if (!state) {
         return <>Something went seriously wrong! Probably you did not provided the data! Check your data provider!</>

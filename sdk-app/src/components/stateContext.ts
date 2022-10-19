@@ -4,9 +4,9 @@ export type Data = {
     chain?: string
     email: string
     taxResidency: string
-    idIssuer: string
     currentPage: number
     termsAccepted: boolean
+    verifyingModalOpen: boolean
 }
 
 export enum DataActionTypes {
@@ -15,9 +15,15 @@ export enum DataActionTypes {
     prevPage,
     emailChange,
     taxResidenceChange,
-    idIssuerChange,
-    termsAcceptedChange
+    termsAcceptedChange,
+    setVerifyingModalOpen
 }
+
+export type SetVerifyingModalOpen = {
+    type: DataActionTypes.setVerifyingModalOpen
+    payload: boolean
+}
+
 
 export type ChainChangeAction = {
     type: DataActionTypes.chainChange
@@ -26,11 +32,6 @@ export type ChainChangeAction = {
 
 export type EmailChangeAction = {
     type: DataActionTypes.emailChange
-    payload: string
-}
-
-export type IdIssuerChangeAction = {
-    type: DataActionTypes.idIssuerChange
     payload: string
 }
 
@@ -54,7 +55,7 @@ export type TermsAcceptedChangeAction = {
     payload: boolean
 }
 
-export type DataChangeActions = TermsAcceptedChangeAction | ChainChangeAction | EmailChangeAction | IdIssuerChangeAction | NextPageAction | PrevPageAction | TaxResidentChangeAction
+export type DataChangeActions = SetVerifyingModalOpen | TermsAcceptedChangeAction | ChainChangeAction | EmailChangeAction | NextPageAction | PrevPageAction | TaxResidentChangeAction
 
 export enum StepID {
     AgreementStep,
@@ -75,14 +76,14 @@ export const reducer = (data: Data, { payload, type }: DataChangeActions): Data 
             return { ...data, chain: payload }
         case DataActionTypes.emailChange:
             return { ...data, email: payload }
-        case DataActionTypes.idIssuerChange:
-            return { ...data, idIssuer: payload }
         case DataActionTypes.nexPage:
             return { ...data, currentPage: payload }
         case DataActionTypes.taxResidenceChange:
             return { ...data, taxResidency: payload }
         case DataActionTypes.termsAcceptedChange:
             return { ...data, termsAccepted: payload }
+        case DataActionTypes.setVerifyingModalOpen:
+            return { ...data, verifyingModalOpen: payload }
         default: {
             return data
         }
@@ -91,6 +92,6 @@ export const reducer = (data: Data, { payload, type }: DataChangeActions): Data 
 
 export const StateContext = createContext<{ data: Data, dispatch: React.Dispatch<DataChangeActions> }>(
     {
-        data: { currentPage: 0, email: '', idIssuer: '', taxResidency: '', termsAccepted: false },
+        data: { currentPage: 0, email: '', taxResidency: '', termsAccepted: false, verifyingModalOpen: false },
         dispatch: () => { }
     })

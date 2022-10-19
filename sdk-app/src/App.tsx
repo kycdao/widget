@@ -63,7 +63,7 @@ export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({
     enabledBlockchainNetworks,
     environment,
     evmProvider }) => {
-    const [data, dispatch] = useReducer(reducer, { currentPage: StepID.AgreementStep, email: '' } as Data)
+    const [data, dispatch] = useReducer(reducer, { currentPage: StepID.AgreementStep, email: '', verifyingModalOpen: false } as Data)
     const [kycDao, setKycDao] = useState<KycDaoState>()
 
     useEffect(() => {
