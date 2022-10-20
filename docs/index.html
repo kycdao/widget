@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Web site created using create-react-app" />
+    <script src="assets/js/KycDaoClient.js"></script>
 
     <style>
         /* The Modal (background) */
@@ -84,8 +85,9 @@
 
 <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <button id="myBtn">Open modal</button>
-    <div id="myModal" class="modal">
+    <button id="myBtn">Open Custom modal</button>
+    <button id="builtInmodalBtn">Open builtin modal</button>
+    <div id="customModal">
         <div class="modal-content">
             <div class="modal-body">
                 <iframe allow="encrypted-media; camera" style="border: 0px;" src="https://localhost:3000/" width="400"
@@ -94,36 +96,46 @@
         </div>
     </div>
 
+
     <script>
         window.onload = function () {
-            // Get the modal
-            var modal = document.getElementById("myModal");
+            const kycDAOClient = new KycDaoClient('https://localhost:3000/')
 
             // Get the button that opens the modal
-            var btn = document.getElementById("myBtn");
+            const btn = document.getElementById("myBtn");
 
             // Get the <span> element that closes the modal
-            var span = document.getElementById("close");
+            const span = document.getElementById("close");
 
             // When the user clicks on the button, open the modal
             btn.onclick = function () {
-                modal.style.display = "block";
+                document.getElementById("customModal").style.display = "block";
             }
 
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function (event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
+                const customModal = document.getElementById("customModal")
+
+                if (event.target == customModal) {
+                    customModal.style.display = "none";
                 }
             }
 
             window.addEventListener('message', function (event) {
-                if (event.origin === "https://localhost:3000") {
+                if (event.origin === "https://localhost:3000" || event.origin === "https://localhost:5000") {
                     if (event.data === 'closeModal') {
-                        modal.style.display = "none";
+                        if (kycDAOClient.isOpen) {
+                            kycDAOClient.close()
+                        } else {
+                            document.getElementById("customModal").style.display = "none";
+                        }
                     }
                 }
             }, false)
+
+            document.getElementById('builtInmodalBtn').onclick = function () {
+                kycDAOClient.open()
+            }
         }
 
     </script>
