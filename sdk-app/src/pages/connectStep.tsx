@@ -1,6 +1,6 @@
 import { useContext, useCallback } from "react"
 import { DataActionTypes, StateContext, StepID } from "../components/stateContext"
-import { Step } from "../components/step"
+import { Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 
 export const AgreementStep = () => {

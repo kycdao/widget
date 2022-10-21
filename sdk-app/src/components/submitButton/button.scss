@@ -1,5 +1,43 @@
 @import "../../style/variables.scss";
 
+.kyc-button{
+  overflow: hidden;
+
+  .first-arrow{
+    position: absolute;
+    left: 1rem;
+    @include translateX(0);
+    @extend .tr2;
+  }
+
+  .second-arrow{
+    position: absolute;
+    right: 1rem;
+    @include translateX(0);
+    @extend .tr2;
+  }
+
+  span{
+    margin-left: 1.5rem !important;
+  }
+
+
+
+  &:hover{
+
+    .first-arrow{
+      //right: 0;
+      @include translateX(20rem);
+    }
+
+    .second-arrow{
+      @include translateX(4rem);
+
+    }
+  }
+}
+
+/*
 button.kyc-button {
   display: inline-flex;
   justify-content: space-between;
@@ -223,3 +261,5 @@ button.kyc-button {
     }
   }
 }
+
+ */

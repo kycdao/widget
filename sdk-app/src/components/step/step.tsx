@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren, useCallback, useContext, useEffect } from "react"
-import { StateContext } from "./stateContext"
+import { StateContext } from "../stateContext"
+import './step.scss'
 
 type StepProps = {
     header?: JSX.Element
@@ -33,21 +34,22 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, foote
         return () => document.removeEventListener('keyup', enterHndlr)
     }, [onEnter])
 
-    return <div style={{ display: 'flex', flexDirection: 'column', padding: "1em", justifyContent: 'space-between', height: '650px', paddingTop: 0, paddingBottom: 0 }}>
-        <div style={{ flexDirection: 'row', justifyContent: 'space-between', display: "flex", paddingBottom: '1em' }}>
-            <div>
-                {prev && <button className="kyc-button transparent header-button" style={{ paddingLeft: 0 }} onClick={prev}>&#60;</button>}
-                {next && <button className="kyc-button transparent header-button" onClick={next}>&#62;</button>}
+    return <div className="step" style={{  }}>
+        <div className="step-header" >
+            <div className="button-wrapper">
+                {/*{prev && <button className="header-button transparent" style={{ paddingLeft: 0 }} onClick={prev}>&#60;</button>}*/}
+                {prev && <button className="material-icons " onClick={prev}>chevron_left</button>}
+                {next && <button className="material-icons" onClick={next}>chevron_right</button>}
             </div>
-            <button className="kyc-button transparent header-button" onClick={closeModal}>&times;</button>
+            <button className="close-button" onClick={closeModal}>&times;</button>
         </div>
         <div>
             {header}
         </div>
-        <div style={{ flex: '1' }} >
+        <div className="step-body">
             {children}
         </div>
-        <div style={{paddingBottom: '1em'}}>
+        <div className="step-footer">
             {footer}
         </div>
     </div>

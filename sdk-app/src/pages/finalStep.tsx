@@ -1,5 +1,5 @@
 import { useContext, useCallback, useState, useEffect } from "react"
-import { Step } from "../components/step"
+import { Step } from "../components/step/step"
 import { Button } from "../components/button/button"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { Placeholder } from "../components/placeholder/placeholder"
@@ -22,7 +22,7 @@ export const FinalStep = () => {
     }, [])
 
     return <Step header={<h1>Congrats!</h1>}>
-        <h2 style={{ textAlign: 'center' }}>You have successfully minted your kycNFT on { kycDao.kycDao.connectedWallet?.blockchainNetwork }</h2>
+        <h1 style={{ textAlign: 'center' }}>You have successfully minted your kycNFT on { kycDao.kycDao.connectedWallet?.blockchainNetwork }</h1>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
             {nftImageUrl ? <img src={nftImageUrl} width="300px" height="300px" /> : <Placeholder width="300px" height="300px" />}
         </div>

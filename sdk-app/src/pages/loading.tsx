@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Step } from "../components/step"
+import { Step } from "../components/step/step"
 
 export const Loading: FC = () => {
     return <Step header={<h1 className="h1">Loading</h1>}>

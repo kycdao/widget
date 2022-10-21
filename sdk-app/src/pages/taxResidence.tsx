@@ -2,7 +2,7 @@ import { Countries } from "@kycdao/kycdao-sdk"
 import { useState, useContext, useCallback, useMemo, useEffect } from "react"
 import { Input } from "../components/input/input.component"
 import { StateContext, StepID, DataActionTypes } from "../components/stateContext"
-import { Step } from "../components/step"
+import { Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 
 export const TaxResidenceStep = () => {
@@ -37,7 +37,7 @@ export const TaxResidenceStep = () => {
         setValue(newValue)
     }, [])
 
-    return <Step onEnter={onSubmit} prev={onPrev} footer={
+    return <Step onEnter={onSubmit} prev={onPrev} next={onSubmit} footer={
         <>
             <Input autoFocus autoCompleteData={autoCompleteData} value={value} placeholder={"Type your tax residence here"} className="full-width" onChange={onChange} />
             <SubmitButton disabled={submitDisabled} className="full-width blue" onClick={onSubmit} />

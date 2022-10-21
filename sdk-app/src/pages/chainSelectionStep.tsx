@@ -1,7 +1,7 @@
 import { FC, useCallback, useContext, useMemo, useState } from "react"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
-import { Step } from "../components/step"
+import { Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { ToggleButton } from "../components/toggleButton/toggleButton"
 
@@ -41,7 +41,7 @@ export const ChainSelection: FC = () => {
         return <>Error</>
     }
 
-    return <Step onEnter={onSubmit} prev={onPrev} header={<h1 className="h1">Mint</h1>} footer={<>
+    return <Step onEnter={onSubmit} prev={onPrev} next={onSubmit} header={<h1 className="h1">Mint</h1>} footer={<>
         <SubmitButton disabled={!connectedWallet} className="full-width blue" onClick={onSubmit} />
     </>} >
         <h2 className="h2">
