@@ -5,6 +5,7 @@ import KycDaoModal from './App';
 import { BlockchainNetworks, VerificationTypes } from '@kycdao/kycdao-sdk';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorPage } from './pages/ErrorPage';
+import { KycDaoClient } from './KycDaoClient';
 
 export function BootstrapKycDaoModal(element: string | HTMLElement, height: number | string, width: number | string) {
   const root = createRoot(
@@ -28,3 +29,4 @@ export function BootstrapKycDaoModal(element: string | HTMLElement, height: numb
 }
 
 globalThis.BootstrapKycDaoModal = BootstrapKycDaoModal
+globalThis.KycDaoClient = KycDaoClient
