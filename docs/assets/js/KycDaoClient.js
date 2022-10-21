@@ -14,13 +14,14 @@ function KycDaoClient(url, width, height, parent) {
 
 KycDaoClient.prototype.open = function () {
     this.modal = document.createElement('div')
-    this.modal.className = "KycDaoModal"
+    this.modal.classList.add("KycDaoModal")
 
     const modalContent = document.createElement('div')
-    this.modal.className = "modal-content"
+    modalContent.classList.add("KycDaoModalContent")
 
     const modalBody = document.createElement('div')
     modalBody.className = 'modal-body'
+    modalBody.classList.add("KycDaoModalBody")
 
     const iframe = document.createElement('iframe')
     iframe.allow = "encrypted-media; camera"
@@ -28,6 +29,7 @@ KycDaoClient.prototype.open = function () {
     iframe.src = this.url
     iframe.width = this.width
     iframe.height = this.height
+    iframe.classList.add('KycDaoModalIframe')
 
     modalBody.appendChild(iframe)
     modalContent.appendChild(modalBody)

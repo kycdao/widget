@@ -39,9 +39,9 @@ KycDaoClient.prototype.open = function () {
     this.parent.appendChild(this.modal)
 }
 
-KycDaoClient.prototype.close = function() {
-    if(this.modal) {
-        if(this.parent) {
+KycDaoClient.prototype.close = function () {
+    if (this.modal) {
+        if (this.parent) {
             this.parent.removeChild(this.modal)
         } else {
             document.removeChild(this.modal)

@@ -42,7 +42,7 @@ $--light-font: gilroyLight;
 $--display-font: gilroyBold;
 
 
-.tr2{
+.tr2 {
   -webkit-transition-property: all;
   -moz-transition-property: all;
   -o-transition-property: all;
@@ -56,7 +56,9 @@ $--display-font: gilroyBold;
 }
 
 @mixin translateX($translateX) {
-  -ms-transform: translateX($translateX); /* IE 9 */
-  -webkit-transform: translateX($translateX); /* Safari */
+  -ms-transform: translateX($translateX);
+  /* IE 9 */
+  -webkit-transform: translateX($translateX);
+  /* Safari */
   transform: translateX($translateX);
 }

@@ -1,36 +1,34 @@
 @import "../../style/variables.scss";
 
-.kyc-button{
+.kyc-button {
   overflow: hidden;
 
-  .first-arrow{
+  .first-arrow {
     position: absolute;
     left: 1rem;
     @include translateX(0);
     @extend .tr2;
   }
 
-  .second-arrow{
+  .second-arrow {
     position: absolute;
     right: 1rem;
     @include translateX(0);
     @extend .tr2;
   }
 
-  span{
+  span {
     margin-left: 1.5rem !important;
   }
 
+  &:hover {
 
-
-  &:hover{
-
-    .first-arrow{
+    .first-arrow {
       //right: 0;
       @include translateX(20rem);
     }
 
-    .second-arrow{
+    .second-arrow {
       @include translateX(4rem);
 
     }
