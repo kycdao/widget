@@ -1,30 +1,40 @@
-import { FC, PropsWithChildren, useCallback, useContext, useEffect } from "react"
+import { FC, PropsWithChildren, useCallback, useContext, useEffect, useLayoutEffect, useState } from "react"
 import { StateContext } from "../stateContext"
 import './step.scss'
 
+export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
+
+export type StepAnimation = { from: MovingDirection, to: MovingDirection }
+
 type StepProps = {
-    header?: JSX.Element
-    footer?: JSX.Element
-    next?: () => void
-    prev?: () => void
+    header?: (disabled: boolean) => JSX.Element
+    footer?: (disabled: boolean) => JSX.Element
     onEnter?: () => void
+    className?: string
+    disabled?: boolean
+    animation?: StepAnimation
 }
 
-export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, footer, next, prev, onEnter }) => {
+export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, footer, onEnter, className, disabled = false, animation }) => {
     const state = useContext(StateContext)
-    const closeModal = useCallback(() => window.parent.postMessage('closeModal', 'https://localhost:5000'), [])
+    const [animatedClass, setAnimatedClass] = useState<MovingDirection>()
 
-    if (!state) {
-        return <>Something went seriously wrong! Probably you did not provided the data! Check your data provider!</>
-    }
+    useLayoutEffect(() => {
+        if (animation) {
+            setAnimatedClass(animation.from)
+            setTimeout(() => {
+                setAnimatedClass(animation.to)
+            }, 200);
+        }
+    }, [animation])
 
     useEffect(() => {
-        if(!onEnter) {
+        if (!onEnter || disabled) {
             return
         }
 
-        const enterHndlr = ({key}: KeyboardEvent) => {
-            if(key === 'Enter') {
+        const enterHndlr = ({ key }: KeyboardEvent) => {
+            if (key === 'Enter') {
                 onEnter()
             }
         }
@@ -32,25 +42,21 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, foote
         document.addEventListener('keyup', enterHndlr)
 
         return () => document.removeEventListener('keyup', enterHndlr)
-    }, [onEnter])
+    }, [onEnter, state, disabled])
 
-    return <div className="step" style={{  }}>
-        <div className="step-header" >
-            <div className="button-wrapper">
-                {/*{prev && <button className="header-button transparent" style={{ paddingLeft: 0 }} onClick={prev}>&#60;</button>}*/}
-                {prev && <button className="material-icons " onClick={prev}>chevron_left</button>}
-                {next && <button className="material-icons" onClick={next}>chevron_right</button>}
+    if (!state) {
+        return <>Something went seriously wrong! Probably you did not provided the data! Check your data provider!</>
+    }
+
+    return <div className={`step${animatedClass ? ` ${animatedClass}` : ''} ${className}`} style={{ position: 'absolute' }}>
+            <div>
+                {header ? header(disabled) : null}
             </div>
-            <button className="close-button" onClick={closeModal}>&times;</button>
-        </div>
-        <div>
-            {header}
-        </div>
-        <div className="step-body">
-            {children}
-        </div>
-        <div className="step-footer">
-            {footer}
-        </div>
+            <div className={`step-body`} >
+                {children}
+            </div>
+            <div className={`step-footer`}>
+                {footer ? footer(disabled) : null}
+            </div>
     </div>
 }

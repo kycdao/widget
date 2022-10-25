@@ -22,7 +22,7 @@ export const Select: FC<PropsWithChildren<InputProps>> = ({ disabled, placeholde
     const ref = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        function closeEventHndlr(event: any) {
+        const closeEventHndlr = (event: any) => {
             if (ref.current && !ref.current.contains(event.target)) {
                 setOpen(false)
             }

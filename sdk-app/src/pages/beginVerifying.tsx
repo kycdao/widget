@@ -1,11 +1,12 @@
-import { useContext, useCallback, useEffect } from "react"
+import { useContext, useCallback, useEffect, FC } from "react"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
+import { StepAnimation } from "../components/step/step"
 
 let verifyingModalOpen = false
 
-export const BeginVerifyingStep = () => {
+export const BeginVerifyingStep: FC<{ className?: string, animation?: StepAnimation, disabled: boolean }> = ({ className, animation, disabled = false }) => {
     const { dispatch, data: { email, termsAccepted, taxResidency } } = useContext(StateContext)
     const kycDao = useContext(KycDaoContext)
 
@@ -13,7 +14,7 @@ export const BeginVerifyingStep = () => {
         if (!kycDao || verifyingModalOpen) {
             return
         }
-        
+
         verifyingModalOpen = true;
 
         (async () => {
@@ -31,7 +32,7 @@ export const BeginVerifyingStep = () => {
                         onCancel,
                         onComplete,
                         onError,
-                        frameAncestors: ['https://localhost:3000', 'https://localhost:5000' ],
+                        frameAncestors: ['https://localhost:3000', 'https://localhost:5000'],
                         messageTargetOrigin: 'https://localhost:3000'
                     }
                 })
@@ -42,12 +43,12 @@ export const BeginVerifyingStep = () => {
     }, [verifyingModalOpen, kycDao])
 
     const onComplete = useCallback(async () => {
-        dispatch({ type: DataActionTypes.changePage, payload: StepID.nftArtSelection })
+        dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.nftArtSelection } })
         verifyingModalOpen = false
     }, [])
 
     const onCancel = useCallback(() => {
-        dispatch({ payload: StepID.chainSelection, type: DataActionTypes.changePage })
+        dispatch({ payload: { current: StepID.chainSelection }, type: DataActionTypes.changePage })
         verifyingModalOpen = false
     }, [])
 

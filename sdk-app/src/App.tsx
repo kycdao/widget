@@ -1,10 +1,10 @@
 import { KycDao, SdkConfiguration } from '@kycdao/kycdao-sdk';
-import { FC, useEffect, useReducer, useState } from 'react';
+import { FC, useContext, useEffect, useReducer, useState } from 'react';
 import { KycDaoContext, KycDaoState } from './components/kycDao.provider';
-import { StepID, reducer, Data, StateContext } from './components/stateContext';
+import { StepID, reducer, Data, StateContext, DefaultData } from './components/stateContext';
 import { BeginVerifyingStep } from './pages/beginVerifying';
 import { ChainSelection } from './pages/chainSelectionStep';
-import { AgreementStep } from './pages/connectStep';
+import { AgreementStep } from './pages/agreementStep';
 import { EmailDiscordVerificationStep } from './pages/emailDiscordVerificationStep';
 import { FinalStep } from './pages/finalStep';
 import { Loading } from './pages/loading';
@@ -13,38 +13,40 @@ import { NftSelection } from './pages/nftArtSelection';
 import { TaxResidenceStep } from './pages/taxResidence';
 import { VerificationStep } from './pages/verificationStep';
 import './style/style.scss';
+import { MovingDirection, StepAnimation } from './components/step/step';
+import { Header } from './components/header/header';
 
-export const StepSelector: FC<{ stepID: StepID }> = ({ stepID }) => {
+const GetStep = (stepID: StepID, animation?: StepAnimation, disabled = false) => {
     switch (stepID) {
         case StepID.AgreementStep: {
-            return <AgreementStep />
+            return <AgreementStep disabled={disabled} animation={animation} />
         }
         case StepID.kycDAOMembershipStep: {
-            return <KycDAOMembershipStep />
+            return <KycDAOMembershipStep disabled={disabled} animation={animation} />
         }
         case StepID.verificationStep: {
-            return <VerificationStep />
+            return <VerificationStep disabled={disabled} animation={animation} />
         }
         case StepID.emailDiscordVerificationStep: {
-            return <EmailDiscordVerificationStep />
+            return <EmailDiscordVerificationStep disabled={disabled} animation={animation} />
         }
         case StepID.taxResidenceStep: {
-            return <TaxResidenceStep />
+            return <TaxResidenceStep disabled={disabled} animation={animation} />
         }
         case StepID.beginVerificationStep: {
-            return <BeginVerifyingStep />
+            return <BeginVerifyingStep disabled={disabled} animation={animation} />
         }
         case StepID.nftArtSelection: {
-            return <NftSelection />
+            return <NftSelection disabled={disabled} animation={animation} />
         }
         case StepID.chainSelection: {
-            return <ChainSelection />
+            return <ChainSelection disabled={disabled} animation={animation} />
         }
         case StepID.finalStep: {
-            return <FinalStep />
+            return <FinalStep disabled={disabled} animation={animation} />
         }
         case StepID.loading: {
-            return <Loading />
+            return <Loading animation={animation} />
         }
         default: {
             return <>Something went wrong</>
@@ -52,12 +54,31 @@ export const StepSelector: FC<{ stepID: StepID }> = ({ stepID }) => {
     }
 }
 
+function GetMovingAnimation(prevStep?: StepID, nextStep?: StepID): MovingDirection {
+    if (prevStep) {
+        return 'moving-in'
+    } else if (nextStep) {
+        return 'moving-out'
+    }
+    return 'moving-center'
+}
+
+export const StepSelector: FC = () => {
+    const { data: { prevPage, nextPage, currentPage } } = useContext(StateContext)
+
+    return <div style={{ display: 'block', width: '800px', height: '586px' }}>
+        {prevPage ? GetStep(prevPage, { from: 'moving-center', to: 'moving-out' }, true) : null}
+        {GetStep(currentPage, (prevPage || nextPage) ? { to: 'moving-center', from: GetMovingAnimation(prevPage, nextPage) } : undefined)}
+        {nextPage ? GetStep(nextPage, { from: 'moving-center', to: 'moving-in' }, true) : null}
+    </div>
+}
+
 export type KycDaoModalProps = {
     width?: number | string
     height?: number | string
 }
 
-export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({ 
+export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({
     baseUrl,
     enabledVerificationTypes,
     height = 400,
@@ -67,7 +88,7 @@ export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({
     enabledBlockchainNetworks,
     environment,
     evmProvider }) => {
-    const [data, dispatch] = useReducer(reducer, { currentPage: StepID.AgreementStep, email: '', verifyingModalOpen: false } as Data)
+    const [data, dispatch] = useReducer(reducer, DefaultData)
     const [kycDao, setKycDao] = useState<KycDaoState>()
 
     useEffect(() => {
@@ -84,17 +105,21 @@ export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({
         })
     }, [])
 
+    useEffect(() => {
+        const close = data.onClose.subscribe(() => window.parent.postMessage('closeModal', 'https://localhost:5000'))
+        return close.unsubscribe.bind(close)
+    }, [])
+
     if (!kycDao) {
-        return <>Loading...</>
+        return <Loading />
     }
 
-    const { currentPage } = data
-
     return <KycDaoContext.Provider value={kycDao}>
-            <StateContext.Provider value={{ data, dispatch }} >
-                <StepSelector stepID={currentPage} />
-            </StateContext.Provider>
-        </KycDaoContext.Provider>
+        <StateContext.Provider value={{ data, dispatch }} >
+            <Header />
+            <StepSelector />
+        </StateContext.Provider>
+    </KycDaoContext.Provider>
 }
 
 export default KycDaoModal;

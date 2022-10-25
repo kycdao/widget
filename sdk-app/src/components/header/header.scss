@@ -1,0 +1,57 @@
+@import "../../style/variables.scss";
+
+.step-header {
+    display: flex;
+    width: 100%;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+
+    .button-wrapper {
+      display: flex;
+      align-items: center;
+      margin-left: -0.5rem;
+
+      button {
+        width: 2rem;
+        height: 2rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        color: $--kyc-normal-blue;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: $--border-radius-light;
+        @extend .tr2;
+
+        &:hover {
+          background: $--kyc-normal-blue-15;
+        }
+      }
+    }
+
+    .close-button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+
+      display: flex;
+      width: 2rem;
+      height: 2rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999rem;
+
+      font-size: 24px;
+      color: $--kyc-normal-blue;
+      @extend .tr2;
+
+      &:hover {
+        background: $--kyc-normal-blue-15;
+      }
+    }
+  }

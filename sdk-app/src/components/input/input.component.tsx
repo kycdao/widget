@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FC, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEventHandler, FC, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import './input.component.scss'
 
@@ -28,7 +28,7 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
   }, [])
 
   useEffect(() => {
-    function closeEventHndlr(this: Document, { target }: MouseEvent) {
+    const closeEventHndlr = ({ target }: MouseEvent) => {
       if (autocompleteRef.current && !autocompleteRef.current.contains(target as Node)) {
         setShowAutoComplete(false)
       }
@@ -40,7 +40,7 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
   }, [autocompleteRef])
 
   useEffect(() => {
-    function hndlr() {
+    const hndlr = () => {
       if (!showAutoComplete) {
         setShowAutoComplete(true)
       }
@@ -59,27 +59,32 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
   }, [onChange])
 
   const onClear = useCallback(() => {
-    if(onChange && value) {
+    if (onChange && value) {
       onChange('')
     }
   }, [onChange, value])
 
+  useEffect(() => {
+    if (!disabled && autoFocus) {
+      inputRef.current?.focus({ preventScroll: true })
+    }
+  }, [disabled, autoFocus])
+
   return <>
     {showAutoComplete && autoCompleteData && <div ref={autocompleteRef} className="autocomplete">
       {autoCompleteData.filter(v => v.match(new RegExp(value.replace(specialRegex, ''), 'ig'))).map((v, i) =>
-        <div dangerouslySetInnerHTML={{ __html: v.replace(new RegExp(`(${value.replace(specialRegex, '')})`, 'ig'), '<strong>$1</strong>')}} className={`kyc-option full-width${i === 0 ? ' first' : ''}`} onClick={onAutocompleteHndlr(v)} key={v} />)}
+        <div dangerouslySetInnerHTML={{ __html: v.replace(new RegExp(`(${value.replace(specialRegex, '')})`, 'ig'), '<strong>$1</strong>') }} className={`kyc-option full-width${i === 0 ? ' first' : ''}`} onClick={onAutocompleteHndlr(v)} key={v} />)}
     </div>}
-          <input
-            autoFocus={autoFocus}
-            ref={inputRef}
-            id={id}
-            className={`kyc-input ${disabled ? 'disabled' : ''} ${className}`}
-            type="text"
-            placeholder={placeholder}
-            onChange={onChangeEventHndlr}
-            disabled={disabled}
-            value={value}
-          />
-          <div className={`clear${value === '' ? ' disabled' : ''}`} onClick={onClear}>&times;</div>
+    <input
+      ref={inputRef}
+      id={id}
+      className={`kyc-input ${disabled ? 'disabled' : ''} ${className}`}
+      type="text"
+      placeholder={placeholder}
+      onChange={onChangeEventHndlr}
+      disabled={disabled}
+      value={value}
+    />
+    <div className={`clear${value === '' ? ' disabled' : ''}`} onClick={onClear}>&times;</div>
   </>
 }

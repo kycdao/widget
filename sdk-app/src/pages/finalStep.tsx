@@ -1,10 +1,10 @@
-import { useContext, useCallback, useState, useEffect } from "react"
-import { Step } from "../components/step/step"
+import { useContext, useCallback, useState, useEffect, FC } from "react"
+import { Step, StepAnimation } from "../components/step/step"
 import { Button } from "../components/button/button"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { Placeholder } from "../components/placeholder/placeholder"
 
-export const FinalStep = () => {
+export const FinalStep: FC<{ className?: string, animation?: StepAnimation, disabled: boolean }> = ({ className, animation, disabled = false }) => {
     const kycDao = useContext(KycDaoContext)
 
     const [nftImageUrl, setNftImageUrl] = useState('')
@@ -21,8 +21,8 @@ export const FinalStep = () => {
         setNftImageUrl(kycDao.kycDao.getNftImageUrl())
     }, [])
 
-    return <Step header={<h1>Congrats!</h1>}>
-        <h1 style={{ textAlign: 'center' }}>You have successfully minted your kycNFT on { kycDao.kycDao.connectedWallet?.blockchainNetwork }</h1>
+    return <Step disabled={disabled} animation={animation} className={className} header={() => <h1>Congrats!</h1>}>
+        <h1 style={{ textAlign: 'center' }}>You have successfully minted your kycNFT on {kycDao.kycDao.connectedWallet?.blockchainNetwork}</h1>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
             {nftImageUrl ? <img src={nftImageUrl} width="300px" height="300px" /> : <Placeholder width="300px" height="300px" />}
         </div>

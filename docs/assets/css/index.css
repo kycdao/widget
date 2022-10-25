@@ -28,7 +28,7 @@
 
 .lds-ring div:nth-child(2) {
   animation-delay: -0.3s;
-  border-color: var(&kyc-normal-blue);
+  border-color: var(#3a4be9);
 }
 
 .lds-ring div:nth-child(3) {

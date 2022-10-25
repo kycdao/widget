@@ -1,6 +1,5 @@
 @import "../../style/variables.scss";
 
-
 .step-part {
   display: flex;
   width: 100%;
@@ -14,65 +13,27 @@
   flex-direction: column;
   padding: 1em;
   justify-content: space-between;
-  height: 650px;
+  height: 100%;
   padding-top: 0;
   padding-bottom: 0;
   align-items: center;
+  right: 0;
+  width: 400px;
 
-  .step-header {
-    display: flex;
-    width: 100%;
-    flex-flow: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 0;
+  position: relative;
+  transition: right 0.25s;
+  overflow: hidden;
 
-    .button-wrapper {
-      display: flex;
-      align-items: center;
-      margin-left: -0.5rem;
+  &.moving-center {
+    right: 0px;
+  }
 
-      button {
-        width: 2rem;
-        height: 2rem;
-        background: none;
-        border: none;
-        cursor: pointer;
+  &.moving-in {
+    right: -100%;
+  }
 
-        color: $--kyc-normal-blue;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: $--border-radius-light;
-        @extend .tr2;
-
-        &:hover {
-          background: $--kyc-normal-blue-15;
-        }
-      }
-    }
-
-    .close-button {
-      border: none;
-      background: transparent;
-      cursor: pointer;
-
-      display: flex;
-      width: 2rem;
-      height: 2rem;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999rem;
-
-      font-size: 24px;
-      color: $--kyc-normal-blue;
-      @extend .tr2;
-
-      &:hover {
-        background: $--kyc-normal-blue-15;
-      }
-    }
+  &.moving-out {
+    right: 100%;
   }
 
   h1 {
