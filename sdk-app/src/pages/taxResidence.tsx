@@ -7,8 +7,8 @@ import { SubmitButton } from "../components/submitButton/submitButton"
 
 export const TaxResidenceStep: FC<{ className?: string, animation?: StepAnimation, disabled?: boolean }> = ({ className, animation, disabled = false }) => {
     const [value, setValue] = useState<string>()
-    const { dispatch, data: { taxResidency, onPrev } } = useContext(StateContext)
-    const submitDisabled = useMemo(() => !Countries.find((c) => c.name === value), [value])
+    const { dispatch, data: { taxResidency, onPrev, onNext } } = useContext(StateContext)
+    const submitDisabled = useMemo(() => !Countries.find((c) => c.name === value), [value] || taxResidency)
     const [taxResidence, setTaxResidence] = useState(taxResidency)
     const [autoFocus, setAutoFocus] = useState(false)
 
@@ -28,7 +28,13 @@ export const TaxResidenceStep: FC<{ className?: string, animation?: StepAnimatio
                 dispatch({ payload: { current: StepID.emailDiscordVerificationStep, next: StepID.taxResidenceStep }, type: DataActionTypes.changePage })
                 dispatch({ payload: taxResidence, type: DataActionTypes.taxResidenceChange })
             })
-            return prev.unsubscribe.bind(prev)
+
+            const next = onNext.subscribe(onSubmit)
+
+            return () => {
+                prev.unsubscribe()
+                next.unsubscribe()
+            }
         }
     }, [taxResidence, disabled])
 
@@ -47,7 +53,7 @@ export const TaxResidenceStep: FC<{ className?: string, animation?: StepAnimatio
     }, [])
     
     useEffect(() => {
-        dispatch({ type: DataActionTypes.SetHeaderButtonState, payload: { button: HeaderButtons.next, state: submitDisabled ? 'disabled' : 'hidden' } })
+        dispatch({ type: DataActionTypes.SetHeaderButtonState, payload: { button: HeaderButtons.next, state: submitDisabled ? 'hidden' : 'enabled' } })
     }, [submitDisabled])
 
     return <Step onAnimationDone={onAnimationDone} disabled={disabled} animation={animation} className={className} onEnter={onSubmit} footer={

@@ -29,7 +29,7 @@
         @extend .tr2;
 
         &.hidden {
-          display: none;
+          visibility: hidden;
         }
 
         &:hover {

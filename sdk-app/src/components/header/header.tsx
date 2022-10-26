@@ -3,7 +3,7 @@ import { DataActionTypes, HeaderButtons, StateContext } from "../stateContext"
 import './header.scss'
 
 export const Header: FC = () => {
-    const { data: { closeButtonState, prevButtonState, nextButtonState }, dispatch } = useContext(StateContext)
+    const { data: { closeButtonState, nextButtonState, prevButtonState }, dispatch } = useContext(StateContext)
 
     const onPrev = useCallback(() => {
         dispatch({ payload: { button: HeaderButtons.prev }, type: DataActionTypes.OnClickHeaderButton })
@@ -20,10 +20,10 @@ export const Header: FC = () => {
     return <>
         <div className="step-header">
             <div className="button-wrapper">
-                {<button disabled={prevButtonState === 'disabled'} className={`material-icons${prevButtonState !== "hidden" ? " hidden" : '' }`} onClick={onPrev}>chevron_left</button>}
-                {<button disabled={nextButtonState === 'disabled'} className={`material-icons${nextButtonState !== "hidden" ? " hidden" : '' }`} onClick={OnNext}>chevron_right</button>}
+                <button disabled={prevButtonState === 'disabled'} className={`material-icons${prevButtonState === "hidden" ? " hidden" : '' }`} onClick={onPrev}>chevron_left</button>
+                <button disabled={nextButtonState === 'disabled'} className={`material-icons${nextButtonState === "hidden" ? " hidden" : '' }`} onClick={OnNext}>chevron_right</button>
             </div>
-            {closeButtonState !== 'hidden' && <button disabled={closeButtonState === 'disabled'} className="close-button" onClick={OnClose}>&times;</button>}
+            <button disabled={closeButtonState === 'disabled'} className={`material-icons${closeButtonState === "hidden" ? " hidden" : '' }`} onClick={OnClose}>&times;</button>
         </div>
     </>
 }
