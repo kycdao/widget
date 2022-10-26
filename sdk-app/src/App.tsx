@@ -1,7 +1,7 @@
 import { KycDao, SdkConfiguration } from '@kycdao/kycdao-sdk';
 import { FC, useContext, useEffect, useReducer, useState } from 'react';
 import { KycDaoContext, KycDaoState } from './components/kycDao.provider';
-import { StepID, reducer, Data, StateContext, DefaultData } from './components/stateContext';
+import { StepID, reducer, StateContext, DefaultData } from './components/stateContext';
 import { BeginVerifyingStep } from './pages/beginVerifying';
 import { ChainSelection } from './pages/chainSelectionStep';
 import { AgreementStep } from './pages/agreementStep';
@@ -66,9 +66,11 @@ function GetMovingAnimation(prevStep?: StepID, nextStep?: StepID): MovingDirecti
 export const StepSelector: FC = () => {
     const { data: { prevPage, nextPage, currentPage } } = useContext(StateContext)
 
+    console.log(!!prevPage || !!nextPage)
+
     return <div style={{ display: 'block', width: '800px', height: '586px' }}>
         {prevPage ? GetStep(prevPage, { from: 'moving-center', to: 'moving-out' }, true) : null}
-        {GetStep(currentPage, (prevPage || nextPage) ? { to: 'moving-center', from: GetMovingAnimation(prevPage, nextPage) } : undefined)}
+        {GetStep(currentPage, (!!prevPage || !!nextPage) ? { to: 'moving-center', from: GetMovingAnimation(prevPage, nextPage) } : undefined)}
         {nextPage ? GetStep(nextPage, { from: 'moving-center', to: 'moving-in' }, true) : null}
     </div>
 }

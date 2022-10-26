@@ -8,11 +8,13 @@ export const KycDAOMembershipStep: FC<{ className?: string, animation?: StepAnim
     const { dispatch, data: { onPrev, onNext } } = useContext(StateContext)
 
     useEffect(() => {
-        const prev = onPrev.subscribe(() => {
-            dispatch({ payload: { current: StepID.AgreementStep, next: StepID.kycDAOMembershipStep }, type: DataActionTypes.changePage })
-        })
-        return prev.unsubscribe.bind(prev)
-    }, [])
+        if (!disabled) {
+            const prev = onPrev.subscribe(() => {
+                dispatch({ payload: { current: StepID.AgreementStep, next: StepID.kycDAOMembershipStep }, type: DataActionTypes.changePage })
+            })
+            return prev.unsubscribe.bind(prev)
+        }
+    }, [disabled])
 
     const onSubmit = useCallback(() => {
         dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.verificationStep, prev: StepID.kycDAOMembershipStep } })
@@ -20,9 +22,11 @@ export const KycDAOMembershipStep: FC<{ className?: string, animation?: StepAnim
     }, [])
 
     useEffect(() => {
-        const next = onNext.subscribe(onSubmit)
-        return next.unsubscribe.bind(next)
-    }, [])
+        if (!disabled) {
+            const next = onNext.subscribe(onSubmit)
+            return next.unsubscribe.bind(next)
+        }
+    }, [disabled])
 
     return <Step disabled={disabled} animation={animation} className={className} onEnter={onSubmit} footer={(disabled) =>
         <>

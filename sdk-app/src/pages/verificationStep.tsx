@@ -11,16 +11,20 @@ export const VerificationStep: FC<{ className?: string, animation?: StepAnimatio
     }, [])
 
     useEffect(() => {
-        const next = onNext.subscribe(onSubmit)
-        return next.unsubscribe.bind(next)
-    }, [])
+        if (!disabled) {
+            const next = onNext.subscribe(onSubmit)
+            return next.unsubscribe.bind(next)
+        }
+    }, [disabled])
 
     useEffect(() => {
-        const prev = onPrev.subscribe(() => {
-            dispatch({ payload: { current: StepID.kycDAOMembershipStep, next: StepID.verificationStep }, type: DataActionTypes.changePage })
-        })
-        return prev.unsubscribe.bind(prev)
-    }, [])
+        if (!disabled) {
+            const prev = onPrev.subscribe(() => {
+                dispatch({ payload: { current: StepID.kycDAOMembershipStep, next: StepID.verificationStep }, type: DataActionTypes.changePage })
+            })
+            return prev.unsubscribe.bind(prev)
+        }
+    }, [disabled])
 
     return <Step disabled={disabled} animation={animation} className={className} onEnter={onSubmit} footer={(disabled) => <SubmitButton disabled={disabled} className="full-width blue" onClick={onSubmit} />}>
         <h1 className="h1">02 - ID Verification</h1>

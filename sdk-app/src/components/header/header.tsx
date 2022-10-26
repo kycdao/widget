@@ -14,7 +14,7 @@ export const Header: FC = () => {
     }, [])
 
     const OnClose = useCallback(() => {
-        dispatch({ payload: { button: HeaderButtons.next }, type: DataActionTypes.OnClickHeaderButton })
+        dispatch({ payload: { button: HeaderButtons.close }, type: DataActionTypes.OnClickHeaderButton })
     }, [])
 
     return <>

@@ -10,6 +10,11 @@ export const TaxResidenceStep: FC<{ className?: string, animation?: StepAnimatio
     const { dispatch, data: { taxResidency, onPrev } } = useContext(StateContext)
     const submitDisabled = useMemo(() => !Countries.find((c) => c.name === value), [value])
     const [taxResidence, setTaxResidence] = useState(taxResidency)
+    const [autoFocus, setAutoFocus] = useState(false)
+
+    const onAnimationDone = useCallback(() => {
+        setAutoFocus(true)
+    }, [])
 
     useEffect(() => {
         if (taxResidency) {
@@ -18,12 +23,14 @@ export const TaxResidenceStep: FC<{ className?: string, animation?: StepAnimatio
     }, [])
 
     useEffect(() => {
-        const prev = onPrev.subscribe(() => {
-            dispatch({ payload: { current: StepID.emailDiscordVerificationStep, next: StepID.taxResidenceStep }, type: DataActionTypes.changePage })
-            dispatch({ payload: taxResidence, type: DataActionTypes.taxResidenceChange })
-        })
-        return prev.unsubscribe.bind(prev)
-    }, [taxResidence])
+        if (!disabled) {
+            const prev = onPrev.subscribe(() => {
+                dispatch({ payload: { current: StepID.emailDiscordVerificationStep, next: StepID.taxResidenceStep }, type: DataActionTypes.changePage })
+                dispatch({ payload: taxResidence, type: DataActionTypes.taxResidenceChange })
+            })
+            return prev.unsubscribe.bind(prev)
+        }
+    }, [taxResidence, disabled])
 
     const onSubmit = useCallback(() => {
         if (!submitDisabled) {
@@ -40,10 +47,10 @@ export const TaxResidenceStep: FC<{ className?: string, animation?: StepAnimatio
         setValue(newValue)
     }, [])
 
-    return <Step disabled={disabled} animation={animation} className={className} onEnter={onSubmit} footer={
+    return <Step onAnimationDone={onAnimationDone} disabled={disabled} animation={animation} className={className} onEnter={onSubmit} footer={
         (disabled) =>
             <>
-                <Input autoFocus={!disabled} disabled={disabled} autoCompleteData={autoCompleteData} value={value} placeholder={"Type your tax residence here"} className="full-width" onChange={onChange} />
+                <Input autoFocus={autoFocus} disabled={disabled} autoCompleteData={autoCompleteData} value={value} placeholder={"Type your tax residence here"} className="full-width" onChange={onChange} />
                 <SubmitButton disabled={submitDisabled || disabled} className="full-width blue" onClick={onSubmit} />
             </>
     }>

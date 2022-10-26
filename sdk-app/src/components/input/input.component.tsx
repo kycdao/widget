@@ -68,6 +68,9 @@ export const Input: FC<InputProps> = ({ disabled, placeholder, onChange, id, cla
     if (!disabled && autoFocus) {
       inputRef.current?.focus({ preventScroll: true })
     }
+    else if (disabled && autoFocus) {
+      inputRef.current?.blur()
+    }
   }, [disabled, autoFocus])
 
   return <>

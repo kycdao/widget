@@ -117,8 +117,7 @@ export const reducer = (data: Data, { payload, type }: DataChangeActions): Data 
         case DataActionTypes.emailChange:
             return { ...data, email: payload }
         case DataActionTypes.changePage:
-            console.log({nextPage: payload.next, prevPage: payload.prev, currentPage: payload.current})
-            return { ...data, nextPage: payload.next, prevPage: payload.prev, currentPage: payload.current }
+            return { ...data, closeButtonState: 'enabled', prevButtonState: 'enabled', nextButtonState: 'enabled', nextPage: payload.next, prevPage: payload.prev, currentPage: payload.current }
         case DataActionTypes.taxResidenceChange:
             return { ...data, taxResidency: payload }
         case DataActionTypes.termsAcceptedChange:
@@ -151,7 +150,7 @@ export const reducer = (data: Data, { payload, type }: DataChangeActions): Data 
 }
 
 export const DefaultData = {
-    closeButtonState: 'hidden',
+    closeButtonState: 'enabled',
     currentPage: StepID.AgreementStep,
     email: '',
     taxResidency: '',

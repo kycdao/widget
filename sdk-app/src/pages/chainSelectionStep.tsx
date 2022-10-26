@@ -25,15 +25,17 @@ export const ChainSelection: FC<{ className?: string, animation?: StepAnimation,
     useEffect(() => {
         const next = onNext.subscribe(onSubmit)
         return next.unsubscribe.bind(next)
-    })
+    }, [])
 
     useEffect(() => {
-        const prev = onPrev.subscribe(() => {
-            dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.taxResidenceStep, next: StepID.chainSelection } })
-        })
-
-        return prev.unsubscribe.bind(prev)
-    }, [])
+        if(!disabled) {
+            const prev = onPrev.subscribe(() => {
+                dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.taxResidenceStep, next: StepID.chainSelection } })
+            })
+    
+            return prev.unsubscribe.bind(prev)
+        }
+    }, [disabled])
 
     const onSubmit = useCallback(async () => {
         if (connectedWallet) {

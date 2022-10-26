@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import './style/style.scss';
 import KycDaoModal from './App';
@@ -11,7 +11,7 @@ export function BootstrapKycDaoModal(element: string | HTMLElement, height: numb
   const root = createRoot(
     typeof element === 'string' ? document.querySelector(element) as HTMLElement : element
   )
-  
+
   root.render(
     <React.StrictMode>
       <ErrorBoundary FallbackComponent={ErrorPage}>
