@@ -6,7 +6,7 @@
     flex-flow: row;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 0;
+    padding: 1rem;
 
     .button-wrapper {
       display: flex;
@@ -27,6 +27,10 @@
         justify-content: center;
         border-radius: $--border-radius-light;
         @extend .tr2;
+
+        &.hidden {
+          display: none;
+        }
 
         &:hover {
           background: $--kyc-normal-blue-15;

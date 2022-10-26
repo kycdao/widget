@@ -1,7 +1,7 @@
 import { Countries } from "@kycdao/kycdao-sdk"
 import { useState, useContext, useCallback, useMemo, useEffect, FC } from "react"
 import { Input } from "../components/input/input.component"
-import { StateContext, StepID, DataActionTypes } from "../components/stateContext"
+import { StateContext, StepID, DataActionTypes, HeaderButtons } from "../components/stateContext"
 import { Step, StepAnimation } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 
@@ -36,7 +36,6 @@ export const TaxResidenceStep: FC<{ className?: string, animation?: StepAnimatio
         if (!submitDisabled) {
             dispatch({ type: DataActionTypes.taxResidenceChange, payload: taxResidence })
             dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.chainSelection, prev: StepID.taxResidenceStep } })
-            //dispatch({ type: DataActionTypes.nexPage, payload: StepID.beginVerificationStep })
         }
     }, [taxResidence, submitDisabled])
 
@@ -46,6 +45,10 @@ export const TaxResidenceStep: FC<{ className?: string, animation?: StepAnimatio
         setTaxResidence(Countries.find((country) => country.name === newValue)?.iso_cca2 || '')
         setValue(newValue)
     }, [])
+    
+    useEffect(() => {
+        dispatch({ type: DataActionTypes.SetHeaderButtonState, payload: { button: HeaderButtons.next, state: submitDisabled ? 'disabled' : 'hidden' } })
+    }, [submitDisabled])
 
     return <Step onAnimationDone={onAnimationDone} disabled={disabled} animation={animation} className={className} onEnter={onSubmit} footer={
         (disabled) =>

@@ -20,8 +20,8 @@ export const Header: FC = () => {
     return <>
         <div className="step-header">
             <div className="button-wrapper">
-                {prevButtonState !== "hidden" && <button disabled={prevButtonState === 'disabled'} className="material-icons" onClick={onPrev}>chevron_left</button>}
-                {nextButtonState !== "hidden" && <button disabled={nextButtonState === 'disabled'} className="material-icons" onClick={OnNext}>chevron_right</button>}
+                {<button disabled={prevButtonState === 'disabled'} className={`material-icons${prevButtonState !== "hidden" ? " hidden" : '' }`} onClick={onPrev}>chevron_left</button>}
+                {<button disabled={nextButtonState === 'disabled'} className={`material-icons${nextButtonState !== "hidden" ? " hidden" : '' }`} onClick={OnNext}>chevron_right</button>}
             </div>
             {closeButtonState !== 'hidden' && <button disabled={closeButtonState === 'disabled'} className="close-button" onClick={OnClose}>&times;</button>}
         </div>

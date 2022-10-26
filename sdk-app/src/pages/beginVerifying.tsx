@@ -2,11 +2,10 @@ import { useContext, useCallback, useEffect, FC } from "react"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
-import { StepAnimation } from "../components/step/step"
 
 let verifyingModalOpen = false
 
-export const BeginVerifyingStep: FC<{ className?: string, animation?: StepAnimation, disabled: boolean }> = ({ className, animation, disabled = false }) => {
+export const BeginVerifyingStep: FC = () => {
     const { dispatch, data: { email, termsAccepted, taxResidency } } = useContext(StateContext)
     const kycDao = useContext(KycDaoContext)
 

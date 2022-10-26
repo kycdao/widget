@@ -34,7 +34,7 @@ const GetStep = (stepID: StepID, animation?: StepAnimation, disabled = false) =>
             return <TaxResidenceStep disabled={disabled} animation={animation} />
         }
         case StepID.beginVerificationStep: {
-            return <BeginVerifyingStep disabled={disabled} animation={animation} />
+            return <BeginVerifyingStep/>
         }
         case StepID.nftArtSelection: {
             return <NftSelection disabled={disabled} animation={animation} />
@@ -65,8 +65,6 @@ function GetMovingAnimation(prevStep?: StepID, nextStep?: StepID): MovingDirecti
 
 export const StepSelector: FC = () => {
     const { data: { prevPage, nextPage, currentPage } } = useContext(StateContext)
-
-    console.log(!!prevPage || !!nextPage)
 
     return <div style={{ display: 'block', width: '800px', height: '586px' }}>
         {prevPage ? GetStep(prevPage, { from: 'moving-center', to: 'moving-out' }, true) : null}
