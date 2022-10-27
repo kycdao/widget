@@ -3,11 +3,11 @@ import { useContext, useState, useCallback, FC } from "react"
 import { Button } from "../components/button/button"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { Placeholder } from "../components/placeholder/placeholder"
-import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
+import { StateContext, DataActionTypes, StepID, HeaderButtons } from "../components/stateContext"
 import { Step, StepAnimation } from "../components/step/step"
 
 
-export const NftSelection: FC<{ className?: string, animation?: StepAnimation, disabled: boolean }> = ({ className, animation, disabled }) => {
+export const NftSelection: FC<{ className?: string, animation?: StepAnimation, disabled?: boolean }> = ({ className, animation, disabled = false }) => {
     const { dispatch, data: { termsAccepted, } } = useContext(StateContext)
     const kycDao = useContext(KycDaoContext)
 
@@ -30,6 +30,13 @@ export const NftSelection: FC<{ className?: string, animation?: StepAnimation, d
         }
     }, [])
 
+    const onTransitionDone = () => {
+        if (!disabled) {
+            dispatch({ payload: { button: HeaderButtons.prev, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
+            dispatch({ payload: { button: HeaderButtons.next, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
+        }
+    }
+
     const onRegenerate = useCallback(() => {
         kycDao?.kycDao.regenerateNftImage().then(() => {
             setNftImages([{ src: kycDao.kycDao.getNftImageUrl(), hash: Date.now() }])
@@ -40,7 +47,7 @@ export const NftSelection: FC<{ className?: string, animation?: StepAnimation, d
         return <>Error</>
     }
 
-    return <Step animation={animation} className={className} header={() => <h1>Select your KYC NFT art</h1>} >
+    return <Step onTransitionDone={onTransitionDone} animation={animation} className={className} header={() => <h1>Select your KYC NFT art</h1>} >
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2em', justifyContent: 'space-around', alignContent: 'center', height: '75%' }}>
             <div onClick={onSubmit('')} style={{ cursor: 'pointer', height: "150px", width: "150px" }} >
                 <img src={`${nftImages[0].src}?${nftImages[0].hash}`} />

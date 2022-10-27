@@ -1,15 +1,15 @@
 import { FC, useContext, useCallback, useEffect } from "react"
-import { DataActionTypes, StateContext, StepID } from "../components/stateContext"
+import { DataActionTypes, HeaderButtons, OnNext, OnPrev, StateContext, StepID } from "../components/stateContext"
 import { Step, StepAnimation } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 
 
-export const KycDAOMembershipStep: FC<{ className?: string, animation?: StepAnimation, disabled: boolean }> = ({ className, animation, disabled = false }) => {
-    const { dispatch, data: { onPrev, onNext } } = useContext(StateContext)
+export const KycDAOMembershipStep: FC<{ className?: string, animation?: StepAnimation, disabled?: boolean }> = ({ className, animation, disabled = false }) => {
+    const { dispatch } = useContext(StateContext)
 
     useEffect(() => {
         if (!disabled) {
-            const prev = onPrev.subscribe(() => {
+            const prev = OnPrev.subscribe(() => {
                 dispatch({ payload: { current: StepID.AgreementStep, next: StepID.kycDAOMembershipStep }, type: DataActionTypes.changePage })
             })
             return prev.unsubscribe.bind(prev)
@@ -23,15 +23,22 @@ export const KycDAOMembershipStep: FC<{ className?: string, animation?: StepAnim
 
     useEffect(() => {
         if (!disabled) {
-            const next = onNext.subscribe(onSubmit)
+            const next = OnNext.subscribe(onSubmit)
             return next.unsubscribe.bind(next)
         }
     }, [disabled])
 
-    return <Step disabled={disabled} animation={animation} className={className} onEnter={onSubmit} footer={(disabled) =>
+    const onTransitionDone = () => {
+        if (!disabled) {
+            dispatch({ payload: { button: HeaderButtons.prev, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
+            dispatch({ payload: { button: HeaderButtons.next, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
+        }
+    }
+
+    return <Step onTransitionDone={onTransitionDone} disabled={disabled} animation={animation} className={className} onEnter={onSubmit} footer={(disabled, transitionDone) =>
         <>
             <div className="policy">By starting verification you accept <a href="#">Privacy Policy</a> and <a href="#">Terms &#38; Conditions.</a></div>
-            <SubmitButton disabled={disabled} className="full-width blue" onClick={onSubmit} />
+            <SubmitButton autoFocus={transitionDone} disabled={disabled} className="full-width blue" onClick={onSubmit} />
         </>
     }>
         <h1 className="h1">01 - KycDAO Membership</h1>

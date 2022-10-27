@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './style/style.scss';
 import KycDaoModal from './App';
 import { BlockchainNetworks, VerificationTypes } from '@kycdao/kycdao-sdk';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorPage } from './pages/ErrorPage';
-import { KycDaoClient } from './KycDaoClient';
 
 export function BootstrapKycDaoModal(element: string | HTMLElement, height: number | string, width: number | string) {
   const root = createRoot(
@@ -13,7 +12,7 @@ export function BootstrapKycDaoModal(element: string | HTMLElement, height: numb
   )
 
   root.render(
-    <React.StrictMode>
+    <StrictMode>
       <ErrorBoundary FallbackComponent={ErrorPage}>
         <KycDaoModal baseUrl="https://staging.kycdao.xyz"
           enabledBlockchainNetworks={[BlockchainNetworks.NearTestnet, BlockchainNetworks.PolygonMumbai]}
@@ -24,9 +23,8 @@ export function BootstrapKycDaoModal(element: string | HTMLElement, height: numb
           width={width}
         />
       </ErrorBoundary>
-    </React.StrictMode>
+    </StrictMode>
   )
 }
 
 globalThis.BootstrapKycDaoModal = BootstrapKycDaoModal
-globalThis.KycDaoClient = KycDaoClient

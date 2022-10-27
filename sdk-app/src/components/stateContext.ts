@@ -1,5 +1,4 @@
 import { createContext } from "react";
-import { Observable } from "rxjs";
 import { Subject } from "rxjs/internal/Subject";
 
 export type HeaderButtonState = 'enabled' | 'disabled' | 'hidden'
@@ -8,9 +7,9 @@ const onNextSubject = new Subject<void>()
 const onPrevSubject = new Subject<void>()
 const onCloseSubject = new Subject<void>()
 
-const OnNext = onNextSubject.asObservable()
-const OnPrev = onPrevSubject.asObservable()
-const OnClose = onCloseSubject.asObservable()
+export const OnNext = onNextSubject.asObservable()
+export const OnPrev = onPrevSubject.asObservable()
+export const OnClose = onCloseSubject.asObservable()
 
 export type Data = {
     chain?: string
@@ -25,9 +24,9 @@ export type Data = {
     prevButtonState: HeaderButtonState
     nextButtonState: HeaderButtonState
     closeButtonState: HeaderButtonState
-    onNext: Observable<void>
+    /*onNext: Observable<void>
     onPrev: Observable<void>
-    onClose: Observable<void>
+    onClose: Observable<void>*/
 }
 
 export enum DataActionTypes {
@@ -111,6 +110,7 @@ export enum StepID {
 }
 
 export const reducer = (data: Data, { payload, type }: DataChangeActions): Data => {
+    console.log(type)
     switch (type) {
         case DataActionTypes.chainChange:
             return { ...data, chain: payload }
@@ -119,9 +119,8 @@ export const reducer = (data: Data, { payload, type }: DataChangeActions): Data 
         case DataActionTypes.changePage:
             return {
                 ...data,
-                closeButtonState: 'enabled',
-                prevButtonState: 'enabled',
-                nextButtonState: 'enabled',
+                /*prevButtonState: 'disabled',
+                nextButtonState: 'disabled',*/
                 nextPage: payload.next,
                 prevPage: payload.prev,
                 currentPage: payload.current
