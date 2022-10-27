@@ -6,7 +6,7 @@ function KycDaoClient(url, width, height, parent) {
     this.modal = null
     this.isOpen = false
     this.onOutsideClick = (function (event) {
-        if (this.modal && event.target !== this.modal) {
+        if (this.modal && event.target !== this.modal.getElementsByClassName('KycDaoModalBody')) {
             this.close()
         }
     }).bind(this)
