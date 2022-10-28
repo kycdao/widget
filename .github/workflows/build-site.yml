@@ -10,7 +10,7 @@ jobs:
           node-version: 18
           cache: 'yarn'
       - run: cd sdk-app
-      - run: yarn set version 4.0.0-rc.26 
+      - run: pwd && yarn set version 4.0.0-rc.26 
       - run: yarn install --immutable
       - run: yarn build
       - uses: actions/upload-pages-artifact@v1
