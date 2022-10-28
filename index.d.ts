@@ -1,4 +1,4 @@
-declare module '@kycdao/kycdaow-web-sdk/App' {
+declare module '@kycdao/kycdao-web-sdk/App' {
   import { SdkConfiguration } from '@kycdao/kycdao-sdk';
   import { FC } from 'react';
   import './style/style.scss';
@@ -12,7 +12,7 @@ declare module '@kycdao/kycdaow-web-sdk/App' {
   export default KycDaoModal;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/components/button/button' {
+declare module '@kycdao/kycdao-web-sdk/components/button/button' {
   import { CSSProperties, FC } from "react";
   import './button.scss';
   export type ButtonProps = {
@@ -25,13 +25,13 @@ declare module '@kycdao/kycdaow-web-sdk/components/button/button' {
   export const Button: FC<ButtonProps>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/components/header/header' {
+declare module '@kycdao/kycdao-web-sdk/components/header/header' {
   import { FC } from "react";
   import './header.scss';
   export const Header: FC;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/components/input/input.component' {
+declare module '@kycdao/kycdao-web-sdk/components/input/input.component' {
   import { FC } from 'react';
   import './input.component.scss';
   type InputProps = {
@@ -48,7 +48,7 @@ declare module '@kycdao/kycdaow-web-sdk/components/input/input.component' {
   export {};
 
 }
-declare module '@kycdao/kycdaow-web-sdk/components/kycDao.provider' {
+declare module '@kycdao/kycdao-web-sdk/components/kycDao.provider' {
   /// <reference types="react" />
   import { KycDaoInitializationResult } from '@kycdao/kycdao-sdk';
   export type KycDaoState = KycDaoInitializationResult & {
@@ -58,7 +58,7 @@ declare module '@kycdao/kycdaow-web-sdk/components/kycDao.provider' {
   export const KycDaoContext: import("react").Context<KycDaoState | undefined>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/components/placeholder/placeholder' {
+declare module '@kycdao/kycdao-web-sdk/components/placeholder/placeholder' {
   import { CSSProperties, FC } from "react";
   import './placeholder.css';
   export type PlaceholderProps = {
@@ -70,13 +70,13 @@ declare module '@kycdao/kycdaow-web-sdk/components/placeholder/placeholder' {
   export const Placeholder: FC<PlaceholderProps>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/components/select/option' {
+declare module '@kycdao/kycdao-web-sdk/components/select/option' {
   import { FC, PropsWithChildren } from "react";
   import './input.component.scss';
   export const Option: FC<PropsWithChildren>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/components/select/select' {
+declare module '@kycdao/kycdao-web-sdk/components/select/select' {
   import { FC, PropsWithChildren } from 'react';
   import './input.component.scss';
   type InputProps = {
@@ -95,7 +95,7 @@ declare module '@kycdao/kycdaow-web-sdk/components/select/select' {
   export {};
 
 }
-declare module '@kycdao/kycdaow-web-sdk/components/stateContext' {
+declare module '@kycdao/kycdao-web-sdk/components/stateContext' {
   /// <reference types="react" />
   export type HeaderButtonState = 'enabled' | 'disabled' | 'hidden';
   export const OnNext: import("rxjs/internal/Observable").Observable<void>;
@@ -200,7 +200,7 @@ declare module '@kycdao/kycdaow-web-sdk/components/stateContext' {
   }>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/components/step/step' {
+declare module '@kycdao/kycdao-web-sdk/components/step/step' {
   import { FC, PropsWithChildren } from "react";
   import './step.scss';
   export type MovingDirection = "moving-out" | "moving-in" | "moving-center";
@@ -221,7 +221,7 @@ declare module '@kycdao/kycdaow-web-sdk/components/step/step' {
   export {};
 
 }
-declare module '@kycdao/kycdaow-web-sdk/components/submitButton/submitButton' {
+declare module '@kycdao/kycdao-web-sdk/components/submitButton/submitButton' {
   import { CSSProperties, FC } from "react";
   import './button.scss';
   export type ButtonProps = {
@@ -235,7 +235,7 @@ declare module '@kycdao/kycdaow-web-sdk/components/submitButton/submitButton' {
   export const SubmitButton: FC<ButtonProps>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/components/toggleButton/toggleButton' {
+declare module '@kycdao/kycdao-web-sdk/components/toggleButton/toggleButton' {
   import { CSSProperties, FC } from "react";
   import './toggleButton.scss';
   export type ToggleButton = {
@@ -251,20 +251,20 @@ declare module '@kycdao/kycdaow-web-sdk/components/toggleButton/toggleButton' {
   export const ToggleButton: FC<ToggleButton>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/index' {
+declare module '@kycdao/kycdao-web-sdk/index' {
   import './style/style.scss';
   export function BootstrapKycDaoModal(element: string | HTMLElement, height: number | string, width: number | string): void;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/pages/ErrorPage' {
+declare module '@kycdao/kycdao-web-sdk/pages/ErrorPage' {
   import { FC } from "react";
   import { FallbackProps } from "react-error-boundary";
   export const ErrorPage: FC<FallbackProps>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/pages/agreementStep' {
+declare module '@kycdao/kycdao-web-sdk/pages/agreementStep' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
   export const AgreementStep: FC<{
       className?: string;
       animation?: StepAnimation;
@@ -272,14 +272,14 @@ declare module '@kycdao/kycdaow-web-sdk/pages/agreementStep' {
   }>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/pages/beginVerifying' {
+declare module '@kycdao/kycdao-web-sdk/pages/beginVerifying' {
   import { FC } from "react";
   export const BeginVerifyingStep: FC;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/pages/chainSelectionStep' {
+declare module '@kycdao/kycdao-web-sdk/pages/chainSelectionStep' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
   export const ChainSelection: FC<{
       className?: string;
       animation?: StepAnimation;
@@ -287,9 +287,9 @@ declare module '@kycdao/kycdaow-web-sdk/pages/chainSelectionStep' {
   }>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/pages/emailDiscordVerificationStep' {
+declare module '@kycdao/kycdao-web-sdk/pages/emailDiscordVerificationStep' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
   export const EmailDiscordVerificationStep: FC<{
       className?: string;
       animation?: StepAnimation;
@@ -297,9 +297,9 @@ declare module '@kycdao/kycdaow-web-sdk/pages/emailDiscordVerificationStep' {
   }>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/pages/finalStep' {
+declare module '@kycdao/kycdao-web-sdk/pages/finalStep' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
   export const FinalStep: FC<{
       className?: string;
       animation?: StepAnimation;
@@ -307,9 +307,9 @@ declare module '@kycdao/kycdaow-web-sdk/pages/finalStep' {
   }>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/pages/loading' {
+declare module '@kycdao/kycdao-web-sdk/pages/loading' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
   export const Loading: FC<{
       className?: string;
       animation?: StepAnimation;
@@ -317,9 +317,9 @@ declare module '@kycdao/kycdaow-web-sdk/pages/loading' {
   }>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/pages/membershipStep' {
+declare module '@kycdao/kycdao-web-sdk/pages/membershipStep' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
   export const KycDAOMembershipStep: FC<{
       className?: string;
       animation?: StepAnimation;
@@ -327,9 +327,9 @@ declare module '@kycdao/kycdaow-web-sdk/pages/membershipStep' {
   }>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/pages/nftArtSelection' {
+declare module '@kycdao/kycdao-web-sdk/pages/nftArtSelection' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
   export const NftSelection: FC<{
       className?: string;
       animation?: StepAnimation;
@@ -337,9 +337,9 @@ declare module '@kycdao/kycdaow-web-sdk/pages/nftArtSelection' {
   }>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/pages/taxResidence' {
+declare module '@kycdao/kycdao-web-sdk/pages/taxResidence' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
   export const TaxResidenceStep: FC<{
       className?: string;
       animation?: StepAnimation;
@@ -347,9 +347,9 @@ declare module '@kycdao/kycdaow-web-sdk/pages/taxResidence' {
   }>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/pages/verificationStep' {
+declare module '@kycdao/kycdao-web-sdk/pages/verificationStep' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
   export const VerificationStep: FC<{
       className?: string;
       animation?: StepAnimation;
@@ -357,11 +357,11 @@ declare module '@kycdao/kycdaow-web-sdk/pages/verificationStep' {
   }>;
 
 }
-declare module '@kycdao/kycdaow-web-sdk/setupTests' {
+declare module '@kycdao/kycdao-web-sdk/setupTests' {
   import '@testing-library/jest-dom';
 
 }
-declare module '@kycdao/kycdaow-web-sdk' {
-  import main = require('@kycdao/kycdaow-web-sdk/index');
+declare module '@kycdao/kycdao-web-sdk' {
+  import main = require('@kycdao/kycdao-web-sdk/index');
   export = main;
 }
