@@ -47,14 +47,21 @@
     "eslint-plugin-react": "latest",
     "eslint-plugin-react-hooks": "^4.6.0",
     "react-app-rewired": "^2.2.1",
-    "create-react-app": "5.0.1"
+    "create-react-app": "5.0.1",
+    "rimraf": "^3.0.2",
+    "babel-cli": "^6.23.0",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-env": "^7.19.4",
+    "@babel/plugin-transform-typescript": "^7.20.0"
   },
   "scripts": {
     "start": "cross-env HTTPS=true GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
     "build": "react-app-rewired build dist --library",
     "test": "react-app-rewired test",
     "eject": "create-react-app eject",
-    "lint": "eslint --ext ts,tsx src/*/*.*"
+    "lint": "eslint --ext ts,tsx src/*/*.*",
+    "clean": "rimraf dist",
+    "compile": "npm run clean && yarn build"
   },
   "eslintConfig": {
     "extends": [
