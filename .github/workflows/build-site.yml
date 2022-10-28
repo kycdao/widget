@@ -18,7 +18,7 @@ jobs:
           yarn build
       - uses: actions/upload-pages-artifact@v1
         with:
-          path: build/
+          path: sdk-app/build/
 
 
   deploy:
