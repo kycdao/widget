@@ -13,7 +13,8 @@ export const NftSelection: FC<{ className?: string, animation?: StepAnimation, d
 
     const [nftImages, setNftImages] = useState([{ src: kycDao?.kycDao.getNftImageUrl(), hash: Date.now() }])
 
-    const onSubmit = useCallback((ID: string) => async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const onSubmit = useCallback((_ID: string) => async () => {
         if (kycDao) {
             try {
                 dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.loading, prev: StepID.nftArtSelection } })
@@ -22,10 +23,14 @@ export const NftSelection: FC<{ className?: string, animation?: StepAnimation, d
                     verificationType: VerificationTypes.KYC
                 })
                 dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.finalStep, prev: StepID.loading } })
-            } catch (e: any) {
-                if (e.code && e.code === 4001) {
-                    dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.nftArtSelection } })
+            } catch (e: unknown) {
+                if (typeof e === 'object') {
+                    const f = e as Record<string, unknown>;
+                    if (f.code && f.code === 4001) {
+                        dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.nftArtSelection } })
+                    }
                 }
+
             }
         }
     }, [])

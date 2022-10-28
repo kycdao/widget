@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FC, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { ChangeEventHandler, FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import './input.component.scss'
 

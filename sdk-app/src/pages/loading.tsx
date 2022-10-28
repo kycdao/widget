@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from "react"
+import { FC, useContext } from "react"
 import { DataActionTypes, HeaderButtons, StateContext } from "../components/stateContext"
 import { Step, StepAnimation } from "../components/step/step"
 
