@@ -3,7 +3,16 @@
   "version": "0.1.0",
   "license": "unlicensed",
   "private": true,
-  "files": ["src"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "module": "dist/index.js",
+  "repository": {
+    "url": "https://github.com/kycdao/web-sdk",
+    "type": "git"
+  },
+  "main": "dist/index.tsx",
   "dependencies": {
     "@kycdao/kycdao-sdk": "^0.2.7",
     "@testing-library/jest-dom": "^5.16.5",
@@ -37,13 +46,14 @@
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "latest",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "react-app-rewired": "^2.2.1"
+    "react-app-rewired": "^2.2.1",
+    "create-react-app": "5.0.1"
   },
   "scripts": {
     "start": "cross-env HTTPS=true GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build dist --library",
     "test": "react-app-rewired test",
-    "eject": "react-app-rewired eject",
+    "eject": "create-react-app eject",
     "lint": "eslint --ext ts,tsx src/*/*.*"
   },
   "eslintConfig": {

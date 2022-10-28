@@ -15,9 +15,9 @@ import { VerificationStep } from './pages/verificationStep';
 import './style/style.scss';
 import { MovingDirection, StepAnimation } from './components/step/step';
 import { Header } from './components/header/header';
+import './fonts.css'
 
 const GetStep = ({ stepID, ...options }: { stepID: StepID, animation?: StepAnimation, disabled?: boolean }) => {
-
     switch (stepID) {
         case StepID.AgreementStep: {
             return <AgreementStep {...options} />
