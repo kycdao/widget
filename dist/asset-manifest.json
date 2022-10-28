@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.js": "/index.js",
+    "main.css": "/static/css/main.31491d1c.css",
+    "static/media/ITCAvantGardePro-Book.ttf": "/static/media/ITCAvantGardePro-Book.241dc78d18d62e0710f1.ttf",
+    "static/media/ITCAvantGardePro-Book.woff": "/static/media/ITCAvantGardePro-Book.bb1525f8f53ca5507a71.woff",
+    "static/media/Gilroy-Regular.woff": "/static/media/Gilroy-Regular.ebe86c0337572553acea.woff",
+    "static/media/Gilroy-Light.woff": "/static/media/Gilroy-Light.9d14c4c8c31199273e52.woff",
+    "static/media/Gilroy-ExtraBold.woff": "/static/media/Gilroy-ExtraBold.cc64c8c732c3a25f027d.woff",
+    "static/media/ITCAvantGardePro-Book.woff2": "/static/media/ITCAvantGardePro-Book.562f5fb3f86ac8c69a75.woff2",
+    "static/media/Gilroy-Regular.woff2": "/static/media/Gilroy-Regular.f6c9931fabe5a6eb3307.woff2",
+    "static/media/Gilroy-Light.woff2": "/static/media/Gilroy-Light.5119de73f5e3924459e1.woff2",
+    "static/media/Gilroy-ExtraBold.woff2": "/static/media/Gilroy-ExtraBold.c55a04ffbf7e62cba3c7.woff2",
+    "index.html": "/index.html",
+    "static/media/Gilroy-ExtraBold.ttf": "/static/media/Gilroy-ExtraBold.31d6cfe0d16ae931b73c.ttf",
+    "static/media/Gilroy-Light.ttf": "/static/media/Gilroy-Light.31d6cfe0d16ae931b73c.ttf",
+    "static/media/Gilroy-Regular.ttf": "/static/media/Gilroy-Regular.31d6cfe0d16ae931b73c.ttf",
+    "index.js.map": "/index.js.map",
+    "main.31491d1c.css.map": "/static/css/main.31491d1c.css.map"
+  },
+  "entrypoints": [
+    "index.js",
+    "static/css/main.31491d1c.css"
+  ]
+}

@@ -10839,6 +10839,11 @@ react-app-polyfill@^3.0.0:
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
 
+react-app-rewire-create-react-library@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-app-rewire-create-react-library/-/react-app-rewire-create-react-library-0.1.1.tgz#2909b1aaf8a0f20d678d5be7867d5fb92550b0d3"
+  integrity sha512-T2cBv0H5dnvT/PeysjVJtBHURFyx9oa2RczKHFNPiJlW4mmW+IGogU3YnYPlJz4/ShoaBxqJH63eJJpCBbkDnQ==
+
 react-app-rewired@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-app-rewired/-/react-app-rewired-2.2.1.tgz#84901ee1e3f26add0377ebec0b41bcdfce9fc211"

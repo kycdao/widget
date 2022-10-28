@@ -110,7 +110,6 @@ export enum StepID {
 }
 
 export const reducer = (data: Data, { payload, type }: DataChangeActions): Data => {
-    console.log(type)
     switch (type) {
         case DataActionTypes.chainChange:
             return { ...data, chain: payload }
