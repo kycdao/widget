@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path')
+const NpmDtsPlugin = require('npm-dts-webpack-plugin')
 
 module.exports = function override(config) {
     const fallback = config.resolve.fallback || {};
@@ -16,7 +17,9 @@ module.exports = function override(config) {
             process: 'process/browser',
             Buffer: ['buffer', 'Buffer'],
             ethereum: ['ethereum', 'ethereum']
-        })
+        }),
+        new NpmDtsPlugin()
     ])
+
     return config;
 }

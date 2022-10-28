@@ -1,0 +1,367 @@
+declare module '@kycdao/kycdaow-web-sdk/App' {
+  import { SdkConfiguration } from '@kycdao/kycdao-sdk';
+  import { FC } from 'react';
+  import './style/style.scss';
+  import './fonts.css';
+  export const Router: FC;
+  export type KycDaoModalProps = {
+      width?: number | string;
+      height?: number | string;
+  };
+  export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration>;
+  export default KycDaoModal;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/components/button/button' {
+  import { CSSProperties, FC } from "react";
+  import './button.scss';
+  export type ButtonProps = {
+      onClick?: () => void;
+      className?: string;
+      disabled?: boolean;
+      style?: CSSProperties;
+      label: string;
+  };
+  export const Button: FC<ButtonProps>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/components/header/header' {
+  import { FC } from "react";
+  import './header.scss';
+  export const Header: FC;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/components/input/input.component' {
+  import { FC } from 'react';
+  import './input.component.scss';
+  type InputProps = {
+      placeholder: string;
+      onChange?: (value: string) => void;
+      disabled?: boolean;
+      id?: string;
+      className?: string;
+      value?: string;
+      autoCompleteData?: string[];
+      autoFocus?: boolean;
+  };
+  export const Input: FC<InputProps>;
+  export {};
+
+}
+declare module '@kycdao/kycdaow-web-sdk/components/kycDao.provider' {
+  /// <reference types="react" />
+  import { KycDaoInitializationResult } from '@kycdao/kycdao-sdk';
+  export type KycDaoState = KycDaoInitializationResult & {
+      width?: number | string;
+      height?: number | string;
+  };
+  export const KycDaoContext: import("react").Context<KycDaoState | undefined>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/components/placeholder/placeholder' {
+  import { CSSProperties, FC } from "react";
+  import './placeholder.css';
+  export type PlaceholderProps = {
+      width: string;
+      height: string;
+      onClick?: () => void;
+      style?: CSSProperties;
+  };
+  export const Placeholder: FC<PlaceholderProps>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/components/select/option' {
+  import { FC, PropsWithChildren } from "react";
+  import './input.component.scss';
+  export const Option: FC<PropsWithChildren>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/components/select/select' {
+  import { FC, PropsWithChildren } from 'react';
+  import './input.component.scss';
+  type InputProps = {
+      placeholder?: string;
+      onChange: (value: string) => void;
+      disabled?: boolean;
+      id?: string;
+      className?: string;
+      value?: string;
+      values: {
+          value: string;
+          label: string;
+      }[];
+  };
+  export const Select: FC<PropsWithChildren<InputProps>>;
+  export {};
+
+}
+declare module '@kycdao/kycdaow-web-sdk/components/stateContext' {
+  /// <reference types="react" />
+  export type HeaderButtonState = 'enabled' | 'disabled' | 'hidden';
+  export const OnNext: import("rxjs/internal/Observable").Observable<void>;
+  export const OnPrev: import("rxjs/internal/Observable").Observable<void>;
+  export const OnClose: import("rxjs/internal/Observable").Observable<void>;
+  export type Data = {
+      chain?: string;
+      email: string;
+      taxResidency: string;
+      currentPage: number;
+      prevPage?: number;
+      nextPage?: number;
+      reversePaging?: boolean;
+      termsAccepted: boolean;
+      verifyingModalOpen: boolean;
+      prevButtonState: HeaderButtonState;
+      nextButtonState: HeaderButtonState;
+      closeButtonState: HeaderButtonState;
+  };
+  export enum DataActionTypes {
+      chainChange = 0,
+      changePage = 1,
+      prevPage = 2,
+      emailChange = 3,
+      taxResidenceChange = 4,
+      termsAcceptedChange = 5,
+      SetHeaderButtonState = 6,
+      setVerifyingModalOpen = 7,
+      OnClickHeaderButton = 8
+  }
+  export enum HeaderActionTypes {
+      setNextButtonState = 0,
+      setPrevButtonState = 1,
+      setCloseButtonState = 2
+  }
+  export enum HeaderButtons {
+      prev = 0,
+      next = 1,
+      close = 2
+  }
+  export type SetVerifyingModalOpen = {
+      type: DataActionTypes.setVerifyingModalOpen;
+      payload: boolean;
+  };
+  export type ChainChangeAction = {
+      type: DataActionTypes.chainChange;
+      payload: string;
+  };
+  export type EmailChangeAction = {
+      type: DataActionTypes.emailChange;
+      payload: string;
+  };
+  export type ChangePageAction = {
+      type: DataActionTypes.changePage;
+      payload: {
+          next?: StepID;
+          current: StepID;
+          prev?: StepID;
+          reversePaging?: boolean;
+      };
+  };
+  export type TaxResidentChangeAction = {
+      type: DataActionTypes.taxResidenceChange;
+      payload: string;
+  };
+  export type TermsAcceptedChangeAction = {
+      type: DataActionTypes.termsAcceptedChange;
+      payload: boolean;
+  };
+  export type SetHeaderButtonStateAction = {
+      type: DataActionTypes.SetHeaderButtonState;
+      payload: {
+          state: HeaderButtonState;
+          button: HeaderButtons;
+      };
+  };
+  export type HeaderButtonClickAction = {
+      type: DataActionTypes.OnClickHeaderButton;
+      payload: {
+          button: HeaderButtons;
+      };
+  };
+  export type DataChangeActions = HeaderButtonClickAction | SetHeaderButtonStateAction | SetHeaderButtonStateAction | SetVerifyingModalOpen | TermsAcceptedChangeAction | ChainChangeAction | EmailChangeAction | ChangePageAction | TaxResidentChangeAction;
+  export enum StepID {
+      AgreementStep = 1,
+      kycDAOMembershipStep = 2,
+      verificationStep = 3,
+      emailDiscordVerificationStep = 4,
+      taxResidenceStep = 5,
+      beginVerificationStep = 6,
+      nftArtSelection = 7,
+      finalStep = 8,
+      chainSelection = 9,
+      termsAccepted = 10,
+      loading = 11
+  }
+  export const reducer: (data: Data, { payload, type }: DataChangeActions) => Data;
+  export const DefaultData: Data;
+  export const StateContext: import("react").Context<{
+      data: Data;
+      dispatch: React.Dispatch<DataChangeActions>;
+  }>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/components/step/step' {
+  import { FC, PropsWithChildren } from "react";
+  import './step.scss';
+  export type MovingDirection = "moving-out" | "moving-in" | "moving-center";
+  export type StepAnimation = {
+      from: MovingDirection;
+      to: MovingDirection;
+  };
+  type StepProps = {
+      header?: (disabled: boolean, onTransitionDone: boolean) => JSX.Element;
+      footer?: (disabled: boolean, onTransitionDone: boolean) => JSX.Element;
+      onEnter?: () => void;
+      className?: string;
+      disabled?: boolean;
+      animation?: StepAnimation;
+      onTransitionDone?: () => void;
+  };
+  export const Step: FC<PropsWithChildren<StepProps>>;
+  export {};
+
+}
+declare module '@kycdao/kycdaow-web-sdk/components/submitButton/submitButton' {
+  import { CSSProperties, FC } from "react";
+  import './button.scss';
+  export type ButtonProps = {
+      onClick?: () => void;
+      className?: string;
+      label?: string;
+      disabled?: boolean;
+      style?: CSSProperties;
+      autoFocus?: boolean;
+  };
+  export const SubmitButton: FC<ButtonProps>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/components/toggleButton/toggleButton' {
+  import { CSSProperties, FC } from "react";
+  import './toggleButton.scss';
+  export type ToggleButton = {
+      onClick?: () => void;
+      className?: string;
+      label?: string;
+      hoverLabel?: string;
+      hideArrow?: boolean;
+      disabled?: boolean;
+      style?: CSSProperties;
+      toggle?: boolean;
+  };
+  export const ToggleButton: FC<ToggleButton>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/index' {
+  import './style/style.scss';
+  export function BootstrapKycDaoModal(element: string | HTMLElement, height: number | string, width: number | string): void;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/pages/ErrorPage' {
+  import { FC } from "react";
+  import { FallbackProps } from "react-error-boundary";
+  export const ErrorPage: FC<FallbackProps>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/pages/agreementStep' {
+  import { FC } from "react";
+  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  export const AgreementStep: FC<{
+      className?: string;
+      animation?: StepAnimation;
+      disabled?: boolean;
+  }>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/pages/beginVerifying' {
+  import { FC } from "react";
+  export const BeginVerifyingStep: FC;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/pages/chainSelectionStep' {
+  import { FC } from "react";
+  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  export const ChainSelection: FC<{
+      className?: string;
+      animation?: StepAnimation;
+      disabled?: boolean;
+  }>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/pages/emailDiscordVerificationStep' {
+  import { FC } from "react";
+  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  export const EmailDiscordVerificationStep: FC<{
+      className?: string;
+      animation?: StepAnimation;
+      disabled?: boolean;
+  }>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/pages/finalStep' {
+  import { FC } from "react";
+  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  export const FinalStep: FC<{
+      className?: string;
+      animation?: StepAnimation;
+      disabled?: boolean;
+  }>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/pages/loading' {
+  import { FC } from "react";
+  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  export const Loading: FC<{
+      className?: string;
+      animation?: StepAnimation;
+      disabled?: boolean;
+  }>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/pages/membershipStep' {
+  import { FC } from "react";
+  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  export const KycDAOMembershipStep: FC<{
+      className?: string;
+      animation?: StepAnimation;
+      disabled?: boolean;
+  }>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/pages/nftArtSelection' {
+  import { FC } from "react";
+  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  export const NftSelection: FC<{
+      className?: string;
+      animation?: StepAnimation;
+      disabled?: boolean;
+  }>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/pages/taxResidence' {
+  import { FC } from "react";
+  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  export const TaxResidenceStep: FC<{
+      className?: string;
+      animation?: StepAnimation;
+      disabled?: boolean;
+  }>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/pages/verificationStep' {
+  import { FC } from "react";
+  import { StepAnimation } from "@kycdao/kycdaow-web-sdk/components/step/step";
+  export const VerificationStep: FC<{
+      className?: string;
+      animation?: StepAnimation;
+      disabled?: boolean;
+  }>;
+
+}
+declare module '@kycdao/kycdaow-web-sdk/setupTests' {
+  import '@testing-library/jest-dom';
+
+}
+declare module '@kycdao/kycdaow-web-sdk' {
+  import main = require('@kycdao/kycdaow-web-sdk/index');
+  export = main;
+}
