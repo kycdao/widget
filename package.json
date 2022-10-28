@@ -1,16 +1,68 @@
 {
-  "name": "kycdao-web-integration-example",
-  "version": "0.0.1",
-  "description": "kycDAO web3 integration example",
-  "repository": "https://github.com/kycdao/sdk-example",
-  "author": "kycDAO",
-  "license": "UNLICENSED",
-  "scripts": {
-    "serve": "node ./serve.js --chdir=docs/",
-    "start": "node ./serve.js --chdir=docs/ & yarn --cwd sdk-app start"
+  "name": "@kycdao/kycdaow-web-sdk",
+  "version": "0.1.0",
+  "license": "unlicensed",
+  "private": true,
+  "files": ["src"],
+  "dependencies": {
+    "@kycdao/kycdao-sdk": "^0.2.7",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/jest": "^29.2.0",
+    "@types/node": "^18.11.6",
+    "@types/react": "^18.0.23",
+    "@types/react-dom": "^18.0.7",
+    "buffer": "^6.0.3",
+    "material-icons": "^1.12.0",
+    "near-api-js": "^1.1.0",
+    "persona": "^4.6.0",
+    "process": "^0.11.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^3.1.4",
+    "react-scripts": "^5.0.1",
+    "rxjs": "^7.5.7",
+    "sass": "^1.55.0",
+    "styled-components": "^5.3.6",
+    "typescript": "^4.8.4"
   },
   "devDependencies": {
-    "livereload": "^0.9.3",
-    "mime-types": "^2.1.35"
-  }
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "latest",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "react-app-rewired": "^2.2.1"
+  },
+  "scripts": {
+    "start": "cross-env HTTPS=true GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
+    "lint": "eslint --ext ts,tsx src/*/*.*"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "packageManager": "yarn@4.0.0-rc.26"
 }

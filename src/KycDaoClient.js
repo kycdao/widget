@@ -1,15 +1,41 @@
-function KycDaoClient(url, width, height, parent) {
+function KycDaoClient(url, width, height, parent, messageTargetOrigin) {
+    this.messageTargetOrigin = messageTargetOrigin
     this.parent = parent || document.body
     this.url = url
     this.width = width || 400
     this.height = height || 650
     this.modal = null
     this.isOpen = false
+    this.result = false
     this.onOutsideClick = (function (event) {
         if (this.modal && event.target !== this.modal.getElementsByClassName('KycDaoModalBody')) {
             this.close()
         }
     }).bind(this)
+    this.messageHndlr = (function ({ origin, data }) {
+        if (origin === this.url) {
+            switch (data) {
+                case 'kycDaoCloseModal':
+                    this.close()
+                    break
+                case 'kycDaoSuccess': {
+                    if (this.onSuccess) {
+                        this.onSuccess(this.result)
+                    }
+                    this.close()
+                }
+                    break
+                case 'kycDaoFail': {
+                    if (this.onFail) {
+                        this.onFail(this.result)
+                    }
+                    this.close()
+                }
+            }
+        }
+    }).bind(this)
+    this.onSuccess = null
+    this.onFail = null
 }
 
 KycDaoClient.prototype.open = function () {
@@ -44,6 +70,7 @@ KycDaoClient.prototype.open = function () {
 
     setTimeout(() => {
         window.addEventListener('click', this.onOutsideClick)
+        window.addEventListener('message', this.messageHndlr)
     }, 0);
 }
 
@@ -57,6 +84,7 @@ KycDaoClient.prototype.close = function () {
     }
 
     window.removeEventListener('click', this.onOutsideClick)
+    window.removeEventListener('message', this.closHndlr)
     this.isOpen = false
 }
 
