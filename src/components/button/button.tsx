@@ -7,11 +7,11 @@ export type ButtonProps = {
     disabled?: boolean
     style?: CSSProperties
     label: string
+    inactive?: boolean
 }
 
-export const Button: FC<ButtonProps> = ({ style, disabled = false, onClick, className, label }) => {
-
-    return <button style={style} disabled={disabled} className={`kyc-button ${className}`} onClick={onClick}>
+export const Button: FC<ButtonProps> = ({ style, disabled = false, onClick, className, label, inactive }) => {
+    return <button style={style} disabled={disabled} className={`kyc-button ${className}`} onClick={inactive ? undefined : onClick}>
         <span>
             {label}
         </span>

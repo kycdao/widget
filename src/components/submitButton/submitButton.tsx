@@ -8,23 +8,27 @@ export type ButtonProps = {
     disabled?: boolean
     style?: CSSProperties
     autoFocus?: boolean
+    inactive?: boolean
 }
 
-export const SubmitButton: FC<ButtonProps> = ({ style, disabled = false, onClick, className, autoFocus }) => {
+export const SubmitButton: FC<ButtonProps> = ({ style, disabled = false, onClick, className, autoFocus, inactive = false }) => {
     const ref = useRef<HTMLButtonElement>(null)
     const [innerHtml, setInnerHtml] = useState('Submit')
 
-    const innerHtmlSetter = useCallback((label: string) => () => {
-        setInnerHtml(label)
-    }, [])
-
     useEffect(() => {
-        if(autoFocus && !disabled) {
+        if (autoFocus && !disabled) {
             ref.current?.focus({ preventScroll: true })
         }
-    }, [])
+    }, [disabled, autoFocus])
 
-    return <button style={style} disabled={disabled} ref={ref} onMouseEnter={innerHtmlSetter('Next')} onMouseLeave={innerHtmlSetter('Submit')} className={`kyc-button ${className}`} onClick={onClick}>
+    return <button
+        style={style}
+        disabled={disabled}
+        ref={ref}
+        onMouseEnter={() => setInnerHtml('Next')}
+        onMouseLeave={() => setInnerHtml('Submit')}
+        className={`kyc-button ${className}`}
+        onClick={inactive ? undefined : onClick}>
         <i className="material-icons first-arrow"> chevron_right </i>
         <span>
             {innerHtml}

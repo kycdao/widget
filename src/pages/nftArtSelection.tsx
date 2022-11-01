@@ -4,10 +4,11 @@ import { Button } from "../components/button/button"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { Placeholder } from "../components/placeholder/placeholder"
 import { StateContext, DataActionTypes, StepID, HeaderButtons } from "../components/stateContext"
-import { Step, StepAnimation } from "../components/step/step"
+import { Step } from "../components/step/step"
+import { PageProps } from "./pageProps"
 
 
-export const NftSelection: FC<{ className?: string, animation?: StepAnimation, disabled?: boolean }> = ({ className, animation, disabled = false }) => {
+export const NftSelection: FC<PageProps> = ({ className, animation, disabled = false, inactive }) => {
     const { dispatch, data: { termsAccepted, } } = useContext(StateContext)
     const kycDao = useContext(KycDaoContext)
 
@@ -52,15 +53,19 @@ export const NftSelection: FC<{ className?: string, animation?: StepAnimation, d
         return <>Error</>
     }
 
-    return <Step onTransitionDone={onTransitionDone} animation={animation} className={className} header={() => <h1>Select your KYC NFT art</h1>} >
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2em', justifyContent: 'space-around', alignContent: 'center', height: '75%' }}>
-            <div onClick={onSubmit('')} style={{ cursor: 'pointer', height: "150px", width: "150px" }} >
-                <img src={`${nftImages[0].src}?${nftImages[0].hash}`} />
+    return <Step inactive={inactive} disabled={disabled} onTransitionDone={onTransitionDone} animation={animation} className={className} header={() => <h1>Select your KYC NFT art</h1>}
+        body={({ disabled, inactive }) => <>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2em', justifyContent: 'space-around', alignContent: 'center', height: '75%' }}>
+                <div onClick={onSubmit('')} style={{ cursor: 'pointer', height: "150px", width: "150px" }} >
+                    <img src={`${nftImages[0].src}?${nftImages[0].hash}`} />
+                </div>
+                <Placeholder style={{ borderRadius: '100%' }} onClick={onSubmit('')} height="150px" width="150px" />
+                <Placeholder style={{ borderRadius: '100%' }} onClick={onSubmit('')} height="150px" width="150px" />
+                <Placeholder style={{ borderRadius: '100%' }} onClick={onSubmit('')} height="150px" width="150px" />
             </div>
-            <Placeholder style={{ borderRadius: '100%' }} onClick={onSubmit('')} height="150px" width="150px" />
-            <Placeholder style={{ borderRadius: '100%' }} onClick={onSubmit('')} height="150px" width="150px" />
-            <Placeholder style={{ borderRadius: '100%' }} onClick={onSubmit('')} height="150px" width="150px" />
-        </div>
-        <Button disabled={disabled} label="Regenerate ↻" className="full-width underline centered" onClick={onRegenerate} />
+            <Button inactive={inactive} disabled={disabled} label="Regenerate ↻" className="full-width underline centered" onClick={onRegenerate}  />
+        </>
+        }
+    >
     </Step>
 }

@@ -1,4 +1,4 @@
-function KycDaoClient(url, width, height, parent, messageTargetOrigin) {
+function KycDaoClient(width, height, parent, isIframe = true, url, messageTargetOrigin) {
     this.messageTargetOrigin = messageTargetOrigin
     this.parent = parent || document.body
     this.url = url
@@ -6,30 +6,30 @@ function KycDaoClient(url, width, height, parent, messageTargetOrigin) {
     this.height = height || 650
     this.modal = null
     this.isOpen = false
-    this.result = false
+    // this.result = false
     this.onOutsideClick = (function (event) {
-        if (this.modal && event.target !== this.modal.getElementsByClassName('KycDaoModalBody')) {
+        if (this.modal && !event.composedPath().includes(document.getElementsByClassName('KycDaoModal').item(0))) {
             this.close()
         }
     }).bind(this)
-    this.messageHndlr = (function ({ origin, data }) {
+    this.isIframe = isIframe
+    this.messageHndlr = (function ({ origin, data: { data, type } }) {
         if (origin === this.url) {
-            switch (data) {
+            switch (type) {
                 case 'kycDaoCloseModal':
                     this.close()
+                    this.onFail('cancelled')
                     break
                 case 'kycDaoSuccess': {
                     if (this.onSuccess) {
-                        this.onSuccess(this.result)
+                        this.onSuccess(data)
                     }
-                    this.close()
                 }
                     break
                 case 'kycDaoFail': {
                     if (this.onFail) {
-                        this.onFail(this.result)
+                        this.onFail(data)
                     }
-                    this.close()
                 }
             }
         }
@@ -49,15 +49,15 @@ KycDaoClient.prototype.open = function () {
     modalBody.className = 'modal-body'
     modalBody.classList.add("KycDaoModalBody")
 
-    const iframe = document.createElement('iframe')
-    iframe.allow = "encrypted-media; camera"
-    iframe.style = "border: 0px"
-    iframe.src = this.url
-    iframe.width = this.width
-    iframe.height = this.height
-    iframe.classList.add('KycDaoModalIframe')
+    const container = this.isIframe ? document.createElement('iframe') : document.createElement('div')
+    container.allow = "encrypted-media; camera"
+    container.style = "border: 0px"
+    container.src = this.url
+    container.width = this.width
+    container.height = this.height
+    container.classList.add('KycDaoModalIframe')
 
-    modalBody.appendChild(iframe)
+    modalBody.appendChild(container)
     modalContent.appendChild(modalBody)
     this.modal.appendChild(modalContent)
 
@@ -71,6 +71,9 @@ KycDaoClient.prototype.open = function () {
     setTimeout(() => {
         window.addEventListener('click', this.onOutsideClick)
         window.addEventListener('message', this.messageHndlr)
+        if(!this.isIframe) {
+            window.BootstrapKycDaoModal(container, this.height, this.width, this.messageTargetOrigin)
+        }
     }, 0);
 }
 
@@ -87,5 +90,3 @@ KycDaoClient.prototype.close = function () {
     window.removeEventListener('message', this.closHndlr)
     this.isOpen = false
 }
-
-globalThis.KycDaoClient = KycDaoClient

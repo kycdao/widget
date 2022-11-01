@@ -6,46 +6,58 @@ export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
 
 export type StepAnimation = { from: MovingDirection, to: MovingDirection }
 
+export type StepState = 'inTransition' | 'transitionDone'
+
 type StepProps = {
-    header?: (disabled: boolean, onTransitionDone: boolean) => JSX.Element
-    footer?: (disabled: boolean, onTransitionDone: boolean) => JSX.Element
+    header?: (props: { disabled: boolean, inactive: boolean }) => JSX.Element
+    footer?: (props: { disabled: boolean, inactive: boolean }) => JSX.Element
+    body?: (props: { disabled: boolean, inactive: boolean }) => JSX.Element
     onEnter?: () => void
     className?: string
-    disabled?: boolean
+    disabled: boolean
+    stepState?: StepState
     animation?: StepAnimation
-    onTransitionDone?: () => void
+    onTransitionDone?: (newState: StepState) => void
+    inactive?: boolean
 }
 
-export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, footer, onEnter, className, disabled = false, animation, onTransitionDone }) => {
+export const Step: FC<PropsWithChildren<StepProps>> = ({ inactive = false, disabled = false, children, body, header, footer, onEnter, className, animation, onTransitionDone }) => {
     const state = useContext(StateContext)
     const [animatedClass, setAnimatedClass] = useState<MovingDirection>()
-    const [transitionDone, setTransitionDone] = useState(false)
+    const [transitionState, setTransitionState] = useState<StepState | undefined>()
 
     useLayoutEffect(() => {
         if (animation) {
             setAnimatedClass(animation.from)
+            setTransitionState('inTransition')
+            const timeout = setTimeout(() => {
+                setAnimatedClass(animation.to)
+            }, 0);
+
+            return () => clearTimeout(timeout)
+        } else {
+            setTransitionState('transitionDone')
+            if(onTransitionDone) {
+                onTransitionDone('transitionDone')
+            }
         }
     }, [])
 
     useLayoutEffect(() => {
-        if (animation) {
-            setTimeout(() => {
-                setAnimatedClass(animation.to)
-            }, 0);
-        }
-    }, [animatedClass])
-
-    useLayoutEffect(() => {
-        setTimeout(() => {
-            if (onTransitionDone && animatedClass === animation?.to) {
-                onTransitionDone()
-                setTransitionDone(true)
+        const timeout = setTimeout(() => {
+            if ( animation && !!transitionState && animatedClass === animation?.to) {
+                if (onTransitionDone) {
+                    onTransitionDone('transitionDone')
+                }
+                setTransitionState('transitionDone')
             }
         }, 250);
-    }, [animatedClass, animation?.to])
+
+        return () => clearTimeout(timeout)
+    }, [animatedClass, transitionState])
 
     useEffect(() => {
-        if (!onEnter || disabled) {
+        if (inactive || !onEnter || (transitionState && transitionState !== 'transitionDone')) {
             return
         }
 
@@ -58,7 +70,7 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, foote
         document.addEventListener('keyup', enterHndlr)
 
         return () => document.removeEventListener('keyup', enterHndlr)
-    }, [onEnter, state, disabled])
+    }, [onEnter, state, transitionState])
 
     if (!state) {
         return <>Something went seriously wrong! Probably you did not provided the data! Check your data provider!</>
@@ -66,13 +78,14 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, foote
 
     return <div className={`step${animatedClass ? ` ${animatedClass}` : ''} ${className}`} style={{ position: 'absolute' }}>
         <div>
-            {header ? header(disabled, transitionDone) : null}
+            {header ? header({ disabled, inactive: inactive || transitionState !== 'transitionDone' }) : null}
         </div>
         <div className={`step-body`} >
             {children}
+            {body ? body({ disabled, inactive: inactive || transitionState !== 'transitionDone' }) : null}
         </div>
         <div className={`step-footer`}>
-            {footer ? footer(disabled, transitionDone) : null}
+            {footer ? footer({ disabled, inactive: inactive || transitionState !== 'transitionDone' }) : null}
         </div>
     </div>
 }

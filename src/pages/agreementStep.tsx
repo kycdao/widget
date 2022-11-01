@@ -1,9 +1,10 @@
 import { useContext, useCallback, FC, useEffect } from "react"
 import { DataActionTypes, HeaderButtons, OnNext, StateContext, StepID } from "../components/stateContext"
-import { Step, StepAnimation } from "../components/step/step"
+import { Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
+import { PageProps } from "./pageProps"
 
-export const AgreementStep: FC<{ className?: string, animation?: StepAnimation, disabled?: boolean }> = ({ className, animation, disabled = false }) => {
+export const AgreementStep: FC<PageProps> = ({ className, animation, disabled = false, inactive }) => {
     const { dispatch } = useContext(StateContext)
 
     const onSubmit = useCallback(() => {
@@ -11,14 +12,14 @@ export const AgreementStep: FC<{ className?: string, animation?: StepAnimation, 
     }, [])
 
     const onTransitionDone = () => {
-        if (!disabled) {
+        if (!disabled && !inactive) {
             dispatch({ payload: { button: HeaderButtons.prev, state: 'hidden' }, type: DataActionTypes.SetHeaderButtonState })
             dispatch({ payload: { button: HeaderButtons.next, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
         }
     }
 
     useEffect(() => {
-        if (!disabled) {
+        if (!disabled && !inactive) {
             const next = OnNext.subscribe(onSubmit)
             return next.unsubscribe.bind(next)
         }
@@ -28,10 +29,16 @@ export const AgreementStep: FC<{ className?: string, animation?: StepAnimation, 
         onTransitionDone={onTransitionDone}
         disabled={disabled}
         className={className}
+        inactive={inactive}
         animation={animation}
         header={() => <h1 className="h1">KycDAO</h1>}
         onEnter={onSubmit}
-        footer={(disabled, transitionDone) => <SubmitButton autoFocus={transitionDone} disabled={disabled} className="full-width blue" onClick={onSubmit} />}>
+        footer={({ disabled, inactive }) => <SubmitButton
+            autoFocus={!inactive && !disabled}
+            disabled={disabled}
+            className="full-width blue"
+            onClick={onSubmit}
+            inactive={inactive} />}>
         <p>Lorem ipsum</p>
     </Step>
 }

@@ -6,7 +6,7 @@ import { VerificationTypes } from "@kycdao/kycdao-sdk"
 let verifyingModalOpen = false
 
 export const BeginVerifyingStep: FC = () => {
-    const { dispatch, data: { email, termsAccepted, taxResidency } } = useContext(StateContext)
+    const { dispatch, data: { email, termsAccepted, taxResidency, messageTargetOrigin } } = useContext(StateContext)
     const kycDao = useContext(KycDaoContext)
 
     useEffect(() => {
@@ -31,8 +31,8 @@ export const BeginVerifyingStep: FC = () => {
                         onCancel,
                         onComplete,
                         onError,
-                        frameAncestors: ['https://localhost:3000', 'https://localhost:5000'],
-                        messageTargetOrigin: 'https://localhost:3000'
+                        frameAncestors: messageTargetOrigin ? [messageTargetOrigin] : undefined,
+                        messageTargetOrigin: window.self.origin
                     }
                 })
             } catch (e) {

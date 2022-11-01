@@ -24,6 +24,7 @@ export type Data = {
     prevButtonState: HeaderButtonState
     nextButtonState: HeaderButtonState
     closeButtonState: HeaderButtonState
+    messageTargetOrigin?: string
     /*onNext: Observable<void>
     onPrev: Observable<void>
     onClose: Observable<void>*/
@@ -164,9 +165,6 @@ export const DefaultData = {
     verifyingModalOpen: false,
     nextButtonState: 'enabled',
     prevButtonState: 'enabled',
-    onClose: OnClose,
-    onNext: OnNext,
-    onPrev: OnPrev,
 } as Data
 
 export const StateContext = createContext<{ data: Data, dispatch: React.Dispatch<DataChangeActions> }>({

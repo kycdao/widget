@@ -6,6 +6,10 @@ declare global {
         ethereum: MetaMaskInpageProvider
     }
     // eslint-disable-next-line no-var
-    function BootstrapKycDaoModal(elementSelector: string | HTMLElement, height: number | string, width: number | string): void
+    function BootstrapKycDaoModal(elementSelector: string | HTMLElement, height: number | string, width: number | string,
+        demoMode: boolean,
+        enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"],
+        enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"],
+        messageTargetOrigin: string): void
     function KycDaoClient(url: string, width: number | string, height: string | number, parent: HTMLElement)
 }

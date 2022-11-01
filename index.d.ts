@@ -7,6 +7,7 @@ declare module '@kycdao/kycdao-web-sdk/App' {
   export type KycDaoModalProps = {
       width?: number | string;
       height?: number | string;
+      messageTargetOrigin?: string;
   };
   export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration>;
   export default KycDaoModal;
@@ -21,6 +22,7 @@ declare module '@kycdao/kycdao-web-sdk/components/button/button' {
       disabled?: boolean;
       style?: CSSProperties;
       label: string;
+      inactive?: boolean;
   };
   export const Button: FC<ButtonProps>;
 
@@ -114,6 +116,7 @@ declare module '@kycdao/kycdao-web-sdk/components/stateContext' {
       prevButtonState: HeaderButtonState;
       nextButtonState: HeaderButtonState;
       closeButtonState: HeaderButtonState;
+      messageTargetOrigin?: string;
   };
   export enum DataActionTypes {
       chainChange = 0,
@@ -208,14 +211,27 @@ declare module '@kycdao/kycdao-web-sdk/components/step/step' {
       from: MovingDirection;
       to: MovingDirection;
   };
+  export type StepState = 'inTransition' | 'transitionDone';
   type StepProps = {
-      header?: (disabled: boolean, onTransitionDone: boolean) => JSX.Element;
-      footer?: (disabled: boolean, onTransitionDone: boolean) => JSX.Element;
+      header?: (props: {
+          disabled: boolean;
+          inactive: boolean;
+      }) => JSX.Element;
+      footer?: (props: {
+          disabled: boolean;
+          inactive: boolean;
+      }) => JSX.Element;
+      body?: (props: {
+          disabled: boolean;
+          inactive: boolean;
+      }) => JSX.Element;
       onEnter?: () => void;
       className?: string;
-      disabled?: boolean;
+      disabled: boolean;
+      stepState?: StepState;
       animation?: StepAnimation;
-      onTransitionDone?: () => void;
+      onTransitionDone?: (newState: StepState) => void;
+      inactive?: boolean;
   };
   export const Step: FC<PropsWithChildren<StepProps>>;
   export {};
@@ -231,6 +247,7 @@ declare module '@kycdao/kycdao-web-sdk/components/submitButton/submitButton' {
       disabled?: boolean;
       style?: CSSProperties;
       autoFocus?: boolean;
+      inactive?: boolean;
   };
   export const SubmitButton: FC<ButtonProps>;
 
@@ -253,7 +270,11 @@ declare module '@kycdao/kycdao-web-sdk/components/toggleButton/toggleButton' {
 }
 declare module '@kycdao/kycdao-web-sdk/index' {
   import './style/style.scss';
-  export function BootstrapKycDaoModal(element: string | HTMLElement, height: number | string, width: number | string): void;
+  import './fonts.css';
+  import './index.css';
+  import { SdkConfiguration } from '@kycdao/kycdao-sdk';
+  import "material-icons";
+  export function BootstrapKycDaoModal(element: string | HTMLElement, height: number | string, width: number | string, demoMode?: boolean, enabledBlockchainNetworks?: SdkConfiguration["enabledBlockchainNetworks"], enabledVerificationTypes?: SdkConfiguration["enabledVerificationTypes"], messageTargetOrigin?: string): void;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/ErrorPage' {
@@ -264,12 +285,8 @@ declare module '@kycdao/kycdao-web-sdk/pages/ErrorPage' {
 }
 declare module '@kycdao/kycdao-web-sdk/pages/agreementStep' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
-  export const AgreementStep: FC<{
-      className?: string;
-      animation?: StepAnimation;
-      disabled?: boolean;
-  }>;
+  import { PageProps } from "@kycdao/kycdao-web-sdk/pages/pageProps";
+  export const AgreementStep: FC<PageProps>;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/beginVerifying' {
@@ -279,82 +296,60 @@ declare module '@kycdao/kycdao-web-sdk/pages/beginVerifying' {
 }
 declare module '@kycdao/kycdao-web-sdk/pages/chainSelectionStep' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
-  export const ChainSelection: FC<{
-      className?: string;
-      animation?: StepAnimation;
-      disabled?: boolean;
-  }>;
+  import { PageProps } from "@kycdao/kycdao-web-sdk/pages/pageProps";
+  export const ChainSelection: FC<PageProps>;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/emailDiscordVerificationStep' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
-  export const EmailDiscordVerificationStep: FC<{
-      className?: string;
-      animation?: StepAnimation;
-      disabled?: boolean;
-  }>;
+  import { PageProps } from "@kycdao/kycdao-web-sdk/pages/pageProps";
+  export const EmailDiscordVerificationStep: FC<PageProps>;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/finalStep' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
-  export const FinalStep: FC<{
-      className?: string;
-      animation?: StepAnimation;
-      disabled?: boolean;
-  }>;
+  import { PageProps } from "@kycdao/kycdao-web-sdk/pages/pageProps";
+  export const FinalStep: FC<PageProps>;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/loading' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
-  export const Loading: FC<{
-      className?: string;
-      animation?: StepAnimation;
-      disabled?: boolean;
-  }>;
+  import { PageProps } from "@kycdao/kycdao-web-sdk/pages/pageProps";
+  export const Loading: FC<PageProps>;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/membershipStep' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
-  export const KycDAOMembershipStep: FC<{
-      className?: string;
-      animation?: StepAnimation;
-      disabled?: boolean;
-  }>;
+  import { PageProps } from "@kycdao/kycdao-web-sdk/pages/pageProps";
+  export const KycDAOMembershipStep: FC<PageProps>;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/nftArtSelection' {
   import { FC } from "react";
+  import { PageProps } from "@kycdao/kycdao-web-sdk/pages/pageProps";
+  export const NftSelection: FC<PageProps>;
+
+}
+declare module '@kycdao/kycdao-web-sdk/pages/pageProps' {
   import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
-  export const NftSelection: FC<{
+  export type PageProps = {
       className?: string;
       animation?: StepAnimation;
       disabled?: boolean;
-  }>;
+      inactive?: boolean;
+  };
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/taxResidence' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
-  export const TaxResidenceStep: FC<{
-      className?: string;
-      animation?: StepAnimation;
-      disabled?: boolean;
-  }>;
+  import { PageProps } from "@kycdao/kycdao-web-sdk/pages/pageProps";
+  export const TaxResidenceStep: FC<PageProps>;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/verificationStep' {
   import { FC } from "react";
-  import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
-  export const VerificationStep: FC<{
-      className?: string;
-      animation?: StepAnimation;
-      disabled?: boolean;
-  }>;
+  import { PageProps } from "@kycdao/kycdao-web-sdk/pages/pageProps";
+  export const VerificationStep: FC<PageProps>;
 
 }
 declare module '@kycdao/kycdao-web-sdk/setupTests' {

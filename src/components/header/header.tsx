@@ -23,7 +23,7 @@ export const Header: FC = () => {
                 <button disabled={prevButtonState === 'disabled'} className={`material-icons${prevButtonState === "hidden" ? " hidden" : '' }`} onClick={onPrev}>chevron_left</button>
                 <button disabled={nextButtonState === 'disabled'} className={`material-icons${nextButtonState === "hidden" ? " hidden" : '' }`} onClick={OnNext}>chevron_right</button>
             </div>
-            <button disabled={closeButtonState === 'disabled'} className={`material-icons close-button${closeButtonState === "hidden" ? " hidden" : '' }`} onClick={OnClose}>&times;</button>
+            <button disabled={closeButtonState === 'disabled'} className={`material-icons close-button${closeButtonState === "hidden" ? " hidden" : '' }`} onClick={OnClose}>close</button>
         </div>
     </>
 }

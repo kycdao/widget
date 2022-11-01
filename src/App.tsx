@@ -17,7 +17,7 @@ import { MovingDirection, StepAnimation } from './components/step/step';
 import { Header } from './components/header/header';
 import './fonts.css'
 
-const GetStep = ({ stepID, ...options }: { stepID: StepID, animation?: StepAnimation, disabled?: boolean }) => {
+const GetStep = ({ stepID, ...options }: { stepID: StepID, animation?: StepAnimation, disabled?: boolean, inactive?: boolean }) => {
     switch (stepID) {
         case StepID.AgreementStep: {
             return <AgreementStep {...options} />
@@ -68,7 +68,7 @@ export const Router: FC = () => {
     const { data: { prevPage, nextPage, currentPage } } = useContext(StateContext)
 
     return <div style={{ display: 'block', width: '800px', height: '586px' }}>
-        {prevPage ? GetStep({ stepID: prevPage, animation: { from: 'moving-center', to: 'moving-out' }, disabled: true }) : null}
+        {prevPage ? GetStep({ stepID: prevPage, animation: { from: 'moving-center', to: 'moving-out' }, inactive: true}) : null}
         {GetStep({
             stepID: currentPage,
             animation: (prevPage || nextPage) ? {
@@ -76,13 +76,14 @@ export const Router: FC = () => {
                 from: GetMovingAnimation(prevPage, nextPage)
             } : undefined
         })}
-        {nextPage ? GetStep({ stepID: nextPage, animation: { from: 'moving-center', to: 'moving-in' }, disabled: true }) : null}
+        {nextPage ? GetStep({ stepID: nextPage, animation: { from: 'moving-center', to: 'moving-in' }, inactive: true}) : null}
     </div>
 }
 
 export type KycDaoModalProps = {
     width?: number | string
     height?: number | string
+    messageTargetOrigin?: string
 }
 
 export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({
@@ -94,6 +95,7 @@ export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({
     demoMode,
     enabledBlockchainNetworks,
     environment,
+    messageTargetOrigin,
     evmProvider }) => {
     const [data, dispatch] = useReducer(reducer, DefaultData)
     const [kycDao, setKycDao] = useState<KycDaoState>()
@@ -114,7 +116,7 @@ export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({
 
     useEffect(() => {
         const close = OnClose.subscribe(() => {
-            window.parent.postMessage('closeModal', 'https://localhost:5000')
+            window.parent.postMessage('kycDaoCloseModal', messageTargetOrigin || window.location.origin)
         })
         return close.unsubscribe.bind(close)
     }, [])

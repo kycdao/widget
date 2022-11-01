@@ -1,8 +1,9 @@
 import { FC, useContext } from "react"
 import { DataActionTypes, HeaderButtons, StateContext } from "../components/stateContext"
-import { Step, StepAnimation } from "../components/step/step"
+import { Step } from "../components/step/step"
+import { PageProps } from "./pageProps"
 
-export const Loading: FC<{className?: string, animation?: StepAnimation, disabled?: boolean}> = ({className, animation, disabled = false}) => {
+export const Loading: FC<PageProps> = ({className, animation, disabled = false}) => {
     const { dispatch } = useContext(StateContext)
 
     const onTransitionDone = () => {
@@ -12,7 +13,7 @@ export const Loading: FC<{className?: string, animation?: StepAnimation, disable
         }
     }
 
-    return <Step onTransitionDone={onTransitionDone} className={className} animation={animation} header={() => <h1 className="h1">Loading</h1>}>
+    return <Step disabled={disabled} onTransitionDone={onTransitionDone} className={className} animation={animation} header={() => <h1 className="h1">Loading</h1>}>
         <h1 className="h1">
             Loading
         </h1>

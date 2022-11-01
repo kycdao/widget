@@ -1,9 +1,12 @@
 const webpack = require('webpack');
 const path = require('path')
-const NpmDtsPlugin = require('npm-dts-webpack-plugin')
+const NpmDtsPlugin = require('npm-dts-webpack-plugin');
+const { argv } = require('process');
 
-module.exports = function override(config) {
-    const fallback = config.resolve.fallback || {};
+module.exports = function override(config, env) {
+    const fallback = config.resolve.fallback
+        ? { ...config.resolve.fallback, crypto: require.resolve("crypto-browserify") }
+        : { crypto: require.resolve("crypto-browserify") }
 
     const outFile = path.basename(process.env.npm_package_main);
     const outDir = "./build"
@@ -16,10 +19,14 @@ module.exports = function override(config) {
         new webpack.ProvidePlugin({
             process: 'process/browser',
             Buffer: ['buffer', 'Buffer'],
-            ethereum: ['ethereum', 'ethereum']
-        }),
-        new NpmDtsPlugin()
+            ethereum: ['ethereum', 'ethereum'],
+            crypto: ['crypto', 'crypto-browserify']
+        })
     ])
+
+    if (env === 'production') {
+        config.plugins.push(new NpmDtsPlugin())
+    }
 
     return config;
 }
