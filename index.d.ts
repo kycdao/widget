@@ -312,12 +312,6 @@ declare module '@kycdao/kycdao-web-sdk/index' {
   export default function BootstrapKycDaoModal(element: string | HTMLElement, height: number | string, width: number | string, demoMode?: boolean, enabledBlockchainNetworks?: SdkConfiguration["enabledBlockchainNetworks"], enabledVerificationTypes?: SdkConfiguration["enabledVerificationTypes"], messageTargetOrigin?: string): void;
 
 }
-declare module '@kycdao/kycdao-web-sdk/pages/ErrorPage' {
-  import { FC } from "react";
-  import { FallbackProps } from "react-error-boundary";
-  export const ErrorPage: FC<FallbackProps>;
-
-}
 declare module '@kycdao/kycdao-web-sdk/pages/agreementStep' {
   import { FC } from "react";
   import { PageProps } from "@kycdao/kycdao-web-sdk/pages/pageProps";
@@ -339,6 +333,12 @@ declare module '@kycdao/kycdao-web-sdk/pages/emailDiscordVerificationStep' {
   import { FC } from "react";
   import { PageProps } from "@kycdao/kycdao-web-sdk/pages/pageProps";
   export const EmailDiscordVerificationStep: FC<PageProps>;
+
+}
+declare module '@kycdao/kycdao-web-sdk/pages/ErrorPage' {
+  import { FC } from "react";
+  import { FallbackProps } from "react-error-boundary";
+  export const ErrorPage: FC<FallbackProps>;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/finalStep' {

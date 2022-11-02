@@ -15,7 +15,6 @@ export const Loading: FC<PageProps> = ({className, animation, disabled = false})
 
     return <Step disabled={disabled} onTransitionDone={onTransitionDone} className={className} animation={animation} header={() => <h1 className="h1">Loading</h1>}>
         <h1 className="h1">
-            Loading
         </h1>
         <h2 className="h2">...</h2>
     </Step>

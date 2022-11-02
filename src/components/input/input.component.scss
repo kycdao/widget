@@ -61,7 +61,7 @@
 div.clear {
   position: absolute;
   right: 2px;
-  top: 1.5rem;
+  bottom: 88px;
   font-size: 24px;
   height: 2rem;
   width: 2rem;
@@ -71,6 +71,7 @@ div.clear {
   color: $--kyc-normal-blue;
   cursor: pointer;
   border-radius: $--border-radius-light;
+  @extend .tr2;
 
   &:hover {
     background: $--kyc-normal-blue-35;
