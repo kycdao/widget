@@ -14,7 +14,6 @@ export const Loading: FC<{className?: string, animation?: StepAnimation, disable
 
     return <Step onTransitionDone={onTransitionDone} className={className} animation={animation} header={() => <h1 className="h1">Loading</h1>}>
         <h1 className="h1">
-            Loading
         </h1>
         <h2 className="h2">...</h2>
     </Step>

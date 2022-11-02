@@ -256,12 +256,6 @@ declare module '@kycdao/kycdao-web-sdk/index' {
   export function BootstrapKycDaoModal(element: string | HTMLElement, height: number | string, width: number | string): void;
 
 }
-declare module '@kycdao/kycdao-web-sdk/pages/ErrorPage' {
-  import { FC } from "react";
-  import { FallbackProps } from "react-error-boundary";
-  export const ErrorPage: FC<FallbackProps>;
-
-}
 declare module '@kycdao/kycdao-web-sdk/pages/agreementStep' {
   import { FC } from "react";
   import { StepAnimation } from "@kycdao/kycdao-web-sdk/components/step/step";
@@ -295,6 +289,12 @@ declare module '@kycdao/kycdao-web-sdk/pages/emailDiscordVerificationStep' {
       animation?: StepAnimation;
       disabled?: boolean;
   }>;
+
+}
+declare module '@kycdao/kycdao-web-sdk/pages/ErrorPage' {
+  import { FC } from "react";
+  import { FallbackProps } from "react-error-boundary";
+  export const ErrorPage: FC<FallbackProps>;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/finalStep' {
