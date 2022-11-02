@@ -1,21 +1,42 @@
 import { SdkConfiguration } from "@kycdao/kycdao-sdk"
 
 export default class KycDaoClient {
-    modal?: HTMLElement
-    isOpen: boolean
-    width: string
-    height: string
+    protected modal?: HTMLElement
+    protected isOpen: boolean
 
-    constructor(
-        width: number | string = 400,
-        height: number | string = 650,
-        public enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"],
-        public enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"],
-        public parent: HTMLElement | string = document.body,
-        public demoMode = true,
-        public isIframe: boolean,
-        public url?: string,
-        public messageTargetOrigin?: string,
+    protected width = "400px"
+    protected height = "650px"
+
+    public get Open() {
+        return this.isOpen
+    }
+
+    public get Width() {
+        return this.width
+    }
+
+    public get Height () {
+        return this.height
+    }
+
+    public get EnabledBlockchainNetworks() {
+        return this.enabledBlockchainNetworks
+    }
+
+    public get EnabledVerificationTypes() {
+        return this.enabledVerificationTypes
+    }
+
+    public constructor(
+        protected enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"],
+        protected enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"],
+        width?: number | string,
+        height?: number | string,
+        protected parent: HTMLElement | string = document.body,
+        protected demoMode = true,
+        protected isIframe = true,
+        protected url?: string,
+        protected messageTargetOrigin?: string,
         public onFail?: (reason: any) => void,
         public onSuccess?: (data: any) => void
     ) {
@@ -28,7 +49,7 @@ export default class KycDaoClient {
         this.isOpen = false
     }
 
-    onOutsideClick = (event: MouseEvent) => {
+    protected onOutsideClick = (event: MouseEvent) => {
         if (this.modal && !event.composedPath().includes(document.getElementsByClassName('KycDaoModal').item(0) as EventTarget)) {
             this.close()
             if (this.onFail) {
@@ -37,7 +58,7 @@ export default class KycDaoClient {
         }
     }
 
-    messageHndlr = ({ origin, data: { data, type } }: { origin: string, data: { data: any, type: 'kycDaoCloseModal' | 'kycDaoSuccess' | 'kycDaoFail' } }) => {
+    protected messageHndlr = ({ origin, data: { data, type } }: { origin: string, data: { data: any, type: 'kycDaoCloseModal' | 'kycDaoSuccess' | 'kycDaoFail' } }) => {
         if ( this.url ? origin === this.url : true) {
             switch (type) {
                 case 'kycDaoCloseModal':
@@ -61,7 +82,7 @@ export default class KycDaoClient {
         }
     }
 
-    open = () => {
+    public open = () => {
         if (typeof this.parent === 'string') {
             const parentElement = document.querySelector(this.parent) as HTMLElement | null
             if (!parentElement) {
@@ -129,7 +150,7 @@ export default class KycDaoClient {
         }, 0);
     }
 
-    close = () => {
+    public close = () => {
         if (this.modal) {
             if (typeof this.parent !== 'string') {
                 this.parent.removeChild(this.modal)

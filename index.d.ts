@@ -16,22 +16,27 @@ declare module '@kycdao/kycdao-web-sdk/App' {
 declare module '@kycdao/kycdao-web-sdk/KycDaoClient' {
   import { SdkConfiguration } from "@kycdao/kycdao-sdk";
   export default class KycDaoClient {
-      enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"];
-      enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"];
-      parent: HTMLElement | string;
-      demoMode: boolean;
-      isIframe: boolean;
-      url?: string | undefined;
-      messageTargetOrigin?: string | undefined;
+      protected enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"];
+      protected enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"];
+      protected parent: HTMLElement | string;
+      protected demoMode: boolean;
+      protected isIframe: boolean;
+      protected url?: string | undefined;
+      protected messageTargetOrigin?: string | undefined;
       onFail?: ((reason: any) => void) | undefined;
       onSuccess?: ((data: any) => void) | undefined;
-      modal?: HTMLElement;
-      isOpen: boolean;
-      width: string;
-      height: string;
-      constructor(width: string | number | undefined, height: string | number | undefined, enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"], enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"], parent: HTMLElement | string, demoMode: boolean, isIframe: boolean, url?: string | undefined, messageTargetOrigin?: string | undefined, onFail?: ((reason: any) => void) | undefined, onSuccess?: ((data: any) => void) | undefined);
-      onOutsideClick: (event: MouseEvent) => void;
-      messageHndlr: ({ origin, data: { data, type } }: {
+      protected modal?: HTMLElement;
+      protected isOpen: boolean;
+      protected width: string;
+      protected height: string;
+      get Open(): boolean;
+      get Width(): string;
+      get Height(): string;
+      get EnabledBlockchainNetworks(): ("SolanaDevnet" | "SolanaMainnet" | "SolanaTestnet" | "NearMainnet" | "NearTestnet" | "EthereumGoerli" | "EthereumMainnet" | "PolygonMainnet" | "PolygonMumbai")[] | undefined;
+      get EnabledVerificationTypes(): ("KYC" | "AccreditedInvestor")[];
+      constructor(enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"], enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"], width?: number | string, height?: number | string, parent?: HTMLElement | string, demoMode?: boolean, isIframe?: boolean, url?: string | undefined, messageTargetOrigin?: string | undefined, onFail?: ((reason: any) => void) | undefined, onSuccess?: ((data: any) => void) | undefined);
+      protected onOutsideClick: (event: MouseEvent) => void;
+      protected messageHndlr: ({ origin, data: { data, type } }: {
           origin: string;
           data: {
               data: any;
