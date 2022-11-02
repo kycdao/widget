@@ -29,6 +29,7 @@ jobs:
           name: dist
           path: |
             dist
+            index.d.ts
             package.json
             README.md
 

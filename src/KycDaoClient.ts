@@ -37,8 +37,8 @@ export default class KycDaoClient {
         protected isIframe = true,
         protected url?: string,
         protected messageTargetOrigin?: string,
-        public onFail?: (reason: any) => void,
-        public onSuccess?: (data: any) => void
+        public onFail?: (reason: string) => void,
+        public onSuccess?: (data: string | null) => void
     ) {
 
         this.messageTargetOrigin = messageTargetOrigin
@@ -58,7 +58,7 @@ export default class KycDaoClient {
         }
     }
 
-    protected messageHndlr = ({ origin, data: { data, type } }: { origin: string, data: { data: any, type: 'kycDaoCloseModal' | 'kycDaoSuccess' | 'kycDaoFail' } }) => {
+    protected messageHndlr = ({ origin, data: { data, type } }: { origin: string, data: { data: string, type: 'kycDaoCloseModal' | 'kycDaoSuccess' | 'kycDaoFail' } }) => {
         if ( this.url ? origin === this.url : true) {
             switch (type) {
                 case 'kycDaoCloseModal':
@@ -163,4 +163,5 @@ export default class KycDaoClient {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (global as any).KycDaoClient = KycDaoClient
