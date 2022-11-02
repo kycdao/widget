@@ -2,6 +2,7 @@ import { useContext, useCallback, useEffect, FC } from "react"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
+import { ChainSelection } from "./chainSelectionStep"
 
 let verifyingModalOpen = false
 
@@ -61,5 +62,5 @@ export const BeginVerifyingStep: FC = () => {
         return <>Error</>
     }
 
-    return <></>
+    return <ChainSelection disabled />
 }

@@ -12,17 +12,29 @@ declare global {
         enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"],
         messageTargetOrigin?: string): void
     class KycDaoClient {
-        constructor(
-            width: number | string = 400,
-            height: number | string = 650,
-            public enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"],
-            public enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"],
-            parent: HTMLElement | string = document.body,
-            public demoMode = true,
-            public isIframe: boolean,
-            public url?: string,
-            public messageTargetOrigin?: string)
-        open: () => void
-        open: () => close
+        enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"];
+        enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"];
+        demoMode: boolean;
+        isIframe: boolean;
+        url?: string | undefined;
+        messageTargetOrigin?: string | undefined;
+        modal?: HTMLElement;
+        isOpen: boolean;
+        parent: HTMLElement;
+        messageHndlr: ({ origin, data: { data, type } }: {
+            origin: string;
+            data: {
+                data: any;
+                type: string;
+            };
+        }) => void;
+        onOutsideClick: (event: MouseEvent) => void;
+        onFail?: (reason: any) => void;
+        onSuccess?: (data: any) => void;
+        width: string;
+        height: string;
+        constructor(width: string | number | undefined, height: string | number | undefined, enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"], enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"], parent: string | HTMLElement | undefined, demoMode: boolean, isIframe: boolean, url?: string | undefined, messageTargetOrigin?: string | undefined);
+        open: () => void;
+        close: () => void;
     }
 }

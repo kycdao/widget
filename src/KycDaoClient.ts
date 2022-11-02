@@ -1,13 +1,8 @@
 import { SdkConfiguration } from "@kycdao/kycdao-sdk"
 
-export class KycDaoClient {
+export default class KycDaoClient {
     modal?: HTMLElement
     isOpen: boolean
-    parent: HTMLElement
-    messageHndlr: ({ origin, data: { data, type } }: { origin: string, data: { data: any, type: string } }) => void
-    onOutsideClick: (event: MouseEvent) => void
-    onFail?: (reason: any) => void
-    onSuccess?: (data: any) => void
     width: string
     height: string
 
@@ -16,55 +11,50 @@ export class KycDaoClient {
         height: number | string = 650,
         public enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"],
         public enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"],
-        parent: HTMLElement | string = document.body,
+        public parent: HTMLElement | string = document.body,
         public demoMode = true,
         public isIframe: boolean,
         public url?: string,
-        public messageTargetOrigin?: string) {
+        public messageTargetOrigin?: string,
+        public onFail?: (reason: any) => void,
+        public onSuccess?: (data: any) => void
+    ) {
 
         this.messageTargetOrigin = messageTargetOrigin
 
         this.width = typeof width === 'string' ? width : `${width}px`
         this.height = typeof height === 'string' ? height : `${height}px`
 
-        if (typeof parent === 'string') {
-            const parentElement = document.querySelector(parent) as HTMLElement | null
-            if (!parentElement) {
-                throw `There is no such element as '${parent}', check your parent selector string!`
-            }
-
-            this.parent = parentElement
-        } else {
-            this.parent = parent
-        }
-
         this.isOpen = false
-        // this.result = false
-        this.onOutsideClick = (event: MouseEvent) => {
-            if (this.modal && !event.composedPath().includes(document.getElementsByClassName('KycDaoModal').item(0) as EventTarget)) {
-                this.close()
+    }
+
+    onOutsideClick = (event: MouseEvent) => {
+        if (this.modal && !event.composedPath().includes(document.getElementsByClassName('KycDaoModal').item(0) as EventTarget)) {
+            this.close()
+            if (this.onFail) {
+                this.onFail('cancelled')
             }
         }
+    }
 
-        this.messageHndlr = ({ origin, data: { data, type } }) => {
-            if (origin === this.url) {
-                switch (type) {
-                    case 'kycDaoCloseModal':
-                        this.close()
-                        if (this.onFail) {
-                            this.onFail('cancelled')
-                        }
-                        break
-                    case 'kycDaoSuccess': {
-                        if (this.onSuccess) {
-                            this.onSuccess(data)
-                        }
+    messageHndlr = ({ origin, data: { data, type } }: { origin: string, data: { data: any, type: 'kycDaoCloseModal' | 'kycDaoSuccess' | 'kycDaoFail' } }) => {
+        if ( this.url ? origin === this.url : true) {
+            switch (type) {
+                case 'kycDaoCloseModal':
+                    if (this.onFail) {
+                        this.onFail('cancelled')
                     }
-                        break
-                    case 'kycDaoFail': {
-                        if (this.onFail) {
-                            this.onFail(data)
-                        }
+                    this.close()
+                    break
+                case 'kycDaoSuccess': {
+                    if (this.onSuccess) {
+                        this.onSuccess(data)
+                    }
+                }
+                    break
+                case 'kycDaoFail': {
+                    if (this.onFail) {
+                        this.onFail(data)
                     }
                 }
             }
@@ -72,6 +62,15 @@ export class KycDaoClient {
     }
 
     open = () => {
+        if (typeof this.parent === 'string') {
+            const parentElement = document.querySelector(this.parent) as HTMLElement | null
+            if (!parentElement) {
+                throw `There is no such element as '${this.parent}', check your parent selector string!`
+            }
+
+            this.parent = parentElement
+        }
+
         this.modal = document.createElement('div')
         this.modal.classList.add("KycDaoModal")
 
@@ -132,10 +131,8 @@ export class KycDaoClient {
 
     close = () => {
         if (this.modal) {
-            if (this.parent) {
+            if (typeof this.parent !== 'string') {
                 this.parent.removeChild(this.modal)
-            } else {
-                document.removeChild(this.modal)
             }
         }
 
@@ -144,3 +141,5 @@ export class KycDaoClient {
         this.isOpen = false
     }
 }
+
+(global as any).KycDaoClient = KycDaoClient

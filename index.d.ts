@@ -15,29 +15,29 @@ declare module '@kycdao/kycdao-web-sdk/App' {
 }
 declare module '@kycdao/kycdao-web-sdk/KycDaoClient' {
   import { SdkConfiguration } from "@kycdao/kycdao-sdk";
-  export class KycDaoClient {
+  export default class KycDaoClient {
       enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"];
       enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"];
+      parent: HTMLElement | string;
       demoMode: boolean;
       isIframe: boolean;
       url?: string | undefined;
       messageTargetOrigin?: string | undefined;
+      onFail?: ((reason: any) => void) | undefined;
+      onSuccess?: ((data: any) => void) | undefined;
       modal?: HTMLElement;
       isOpen: boolean;
-      parent: HTMLElement;
+      width: string;
+      height: string;
+      constructor(width: string | number | undefined, height: string | number | undefined, enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"], enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"], parent: HTMLElement | string, demoMode: boolean, isIframe: boolean, url?: string | undefined, messageTargetOrigin?: string | undefined, onFail?: ((reason: any) => void) | undefined, onSuccess?: ((data: any) => void) | undefined);
+      onOutsideClick: (event: MouseEvent) => void;
       messageHndlr: ({ origin, data: { data, type } }: {
           origin: string;
           data: {
               data: any;
-              type: string;
+              type: 'kycDaoCloseModal' | 'kycDaoSuccess' | 'kycDaoFail';
           };
       }) => void;
-      onOutsideClick: (event: MouseEvent) => void;
-      onFail?: (reason: any) => void;
-      onSuccess?: (data: any) => void;
-      width: string;
-      height: string;
-      constructor(width: string | number | undefined, height: string | number | undefined, enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"], enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"], parent: string | HTMLElement | undefined, demoMode: boolean, isIframe: boolean, url?: string | undefined, messageTargetOrigin?: string | undefined);
       open: () => void;
       close: () => void;
   }
@@ -304,7 +304,7 @@ declare module '@kycdao/kycdao-web-sdk/index' {
   import './index.css';
   import { SdkConfiguration } from '@kycdao/kycdao-sdk';
   import "material-icons";
-  export function BootstrapKycDaoModal(element: string | HTMLElement, height: number | string, width: number | string, demoMode?: boolean, enabledBlockchainNetworks?: SdkConfiguration["enabledBlockchainNetworks"], enabledVerificationTypes?: SdkConfiguration["enabledVerificationTypes"], messageTargetOrigin?: string): void;
+  export default function BootstrapKycDaoModal(element: string | HTMLElement, height: number | string, width: number | string, demoMode?: boolean, enabledBlockchainNetworks?: SdkConfiguration["enabledBlockchainNetworks"], enabledVerificationTypes?: SdkConfiguration["enabledVerificationTypes"], messageTargetOrigin?: string): void;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/ErrorPage' {

@@ -59,11 +59,11 @@
   },
   "scripts": {
     "start": "cross-env HTTPS=true GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
-    "build:lib": "yarn clean && react-app-rewired build",
+    "build:lib": "yarn clean && react-app-rewired build && mv ./build ./dist",
     "test": "react-app-rewired test",
     "eject": "create-react-app --eject",
     "lint": "eslint --ext ts,tsx src/*/*.*",
-    "clean": "rimraf build"
+    "clean": "rimraf build dist"
   },
   "eslintConfig": {
     "extends": [
