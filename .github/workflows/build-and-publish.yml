@@ -3,7 +3,7 @@ name: Build and publish SDK package
 on: [push, pull_request]
 
 env:
-  PUBLISH: ${{ github.event_name == 'push' && github.ref_name == 'default' }}
+  PUBLISH: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
 
 jobs:
   build:
