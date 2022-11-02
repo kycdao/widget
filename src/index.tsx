@@ -8,6 +8,7 @@ import { BlockchainNetworks, SdkConfiguration, VerificationTypes } from '@kycdao
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorPage } from './pages/ErrorPage';
 import "material-icons"
+import { KycDaoClient } from "./KycDaoClient"
 
 export function BootstrapKycDaoModal(element: string | HTMLElement,
   height: number | string,

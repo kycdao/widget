@@ -8,7 +8,7 @@ import { PageProps } from "./pageProps"
 
 type Chains = 'Near' | 'Ethereum' | 'Solana'
 
-export const ChainSelection: FC<PageProps> = ({ className, animation, disabled = false }) => {
+export const ChainSelection: FC<PageProps> = ({ className, animation, disabled = false, inactive }) => {
     const kycDao = useContext(KycDaoContext)
     const [connectedWallet, setConnectedWallet] = useState<Chains>()
 
@@ -52,7 +52,7 @@ export const ChainSelection: FC<PageProps> = ({ className, animation, disabled =
     }, [connectedWallet, disabled])
 
     const onTransitionDone = () => {
-        if (!disabled) {
+        if (!disabled && !inactive) {
             dispatch({ payload: { button: HeaderButtons.prev, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
             dispatch({ payload: { button: HeaderButtons.next, state: 'hidden' }, type: DataActionTypes.SetHeaderButtonState })
         }

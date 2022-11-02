@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useCallback, useEffect, useRef, useState } from "react"
+import { CSSProperties, FC, useEffect, useRef, useState } from "react"
 import './button.scss'
 
 export type ButtonProps = {

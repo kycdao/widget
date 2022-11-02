@@ -13,6 +13,36 @@ declare module '@kycdao/kycdao-web-sdk/App' {
   export default KycDaoModal;
 
 }
+declare module '@kycdao/kycdao-web-sdk/KycDaoClient' {
+  import { SdkConfiguration } from "@kycdao/kycdao-sdk";
+  export class KycDaoClient {
+      enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"];
+      enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"];
+      demoMode: boolean;
+      isIframe: boolean;
+      url?: string | undefined;
+      messageTargetOrigin?: string | undefined;
+      modal?: HTMLElement;
+      isOpen: boolean;
+      parent: HTMLElement;
+      messageHndlr: ({ origin, data: { data, type } }: {
+          origin: string;
+          data: {
+              data: any;
+              type: string;
+          };
+      }) => void;
+      onOutsideClick: (event: MouseEvent) => void;
+      onFail?: (reason: any) => void;
+      onSuccess?: (data: any) => void;
+      width: string;
+      height: string;
+      constructor(width: string | number | undefined, height: string | number | undefined, enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"], enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"], parent: string | HTMLElement | undefined, demoMode: boolean, isIframe: boolean, url?: string | undefined, messageTargetOrigin?: string | undefined);
+      open: () => void;
+      close: () => void;
+  }
+
+}
 declare module '@kycdao/kycdao-web-sdk/components/button/button' {
   import { CSSProperties, FC } from "react";
   import './button.scss';
