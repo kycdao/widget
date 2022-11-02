@@ -1,14 +1,8 @@
 @font-face {
   font-family: "gilroyRegular";
   src:
-    /* Modern Browsers */
-    url("./fonts/ITCAvantGardePro-Book.woff2") format("woff2"),
-
-    /* Safari, Android, iOS */
-    url("./fonts/ITCAvantGardePro-Book.woff") format("woff"),
-
-    /* Modern Browsers */
-    url("./fonts/ITCAvantGardePro-Book.ttf") format("truetype");
+    /* Modern Browsers, all of them! https://caniuse.com/woff2  */
+    url("./fonts/ITCAvantGardePro-Book.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
@@ -17,13 +11,7 @@
   font-family: "gilroyRegular";
   src:
     /* Modern Browsers */
-    url("./fonts/Gilroy-Regular.woff2") format("woff2"),
-
-    /* Modern Browsers */
-    url("./fonts/Gilroy-Regular.woff") format("woff"),
-
-    /* Safari, Android, iOS */
-    url("./fonts/Gilroy-Regular.ttf") format("truetype");
+    url("./fonts/Gilroy-Regular.woff2") format("woff2");
 
   font-weight: normal;
   font-style: normal;
@@ -33,13 +21,7 @@
   font-family: "gilroyLight";
   src:
     /* Modern Browsers */
-    url("./fonts/Gilroy-Light.woff2") format("woff2"),
-
-    /* Modern Browsers */
-    url("./fonts/Gilroy-Light.woff") format("woff"),
-
-    /* Safari, Android, iOS */
-    url("./fonts/Gilroy-Light.ttf") format("truetype");
+    url("./fonts/Gilroy-Light.woff2") format("woff2");
 
   font-weight: normal;
   font-style: normal;
@@ -50,13 +32,7 @@
   font-family: "gilroyBold";
   src:
     /* Modern Browsers */
-    url("./fonts/Gilroy-ExtraBold.woff2") format("woff2"),
-
-    /* Modern Browsers */
-    url("./fonts/Gilroy-ExtraBold.woff") format("woff"),
-
-    /* Safari, Android, iOS */
-    url("./fonts/Gilroy-ExtraBold.ttf") format("truetype");
+    url("./fonts/Gilroy-ExtraBold.woff2") format("woff2");
 
   font-weight: normal;
   font-style: normal;
