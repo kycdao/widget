@@ -22,7 +22,9 @@ jobs:
             .yarn
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
-      - run: yarn set version $( grep -Po  'packageManager": "yarn@\K[^"]+' package.json )
+      - run: |
+             yarn set version $( grep -Po  'packageManager": "yarn@\K[^"]+' package.json )
+
       - run: yarn install --immutable
       # - run: yarn build
       # - run: yarn bundle
