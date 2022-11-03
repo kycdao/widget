@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path')
 const NpmDtsPlugin = require('npm-dts-webpack-plugin');
-const { argv } = require('process');
+const process = require('process');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 
@@ -43,8 +43,9 @@ module.exports = function override(config, env) {
     })
 
     if (env === 'production') {
-	console.log('PROD')
-//        config.plugins.push(new NpmDtsPlugin())
+        if (process.env.NODE_ENV !== 'develoment') {
+            config.plugins.push(new NpmDtsPlugin())
+	}
     }
 
     //missing sourcemaps 

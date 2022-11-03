@@ -1,10 +1,11 @@
 {
   "name": "@kycdao/kycdao-web-sdk",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "license": "unlicensed",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "index.d.ts"
   ],
   "repository": {
     "url": "https://github.com/kycdao/web-sdk",
