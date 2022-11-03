@@ -2,7 +2,6 @@ import { useContext, useCallback, useEffect, FC } from "react"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
-import { ChainSelection } from "./chainSelectionStep"
 import { Loading } from "./loading"
 
 let verifyingModalOpen = false

@@ -13,7 +13,7 @@ import { NftSelection } from './pages/nftArtSelection';
 import { TaxResidenceStep } from './pages/taxResidence';
 import { VerificationStep } from './pages/verificationStep';
 import './style/style.scss';
-import { MovingDirection, Step, StepAnimation } from './components/step/step';
+import { MovingDirection, StepAnimation } from './components/step/step';
 import { Header } from './components/header/header';
 import './fonts.css'
 
