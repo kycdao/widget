@@ -94,7 +94,15 @@ export type HeaderButtonClickAction = {
     payload: { button: HeaderButtons }
 }
 
-export type DataChangeActions = HeaderButtonClickAction | SetHeaderButtonStateAction | SetHeaderButtonStateAction | SetVerifyingModalOpen | TermsAcceptedChangeAction | ChainChangeAction | EmailChangeAction | ChangePageAction | TaxResidentChangeAction
+export type DataChangeActions = HeaderButtonClickAction
+    | SetHeaderButtonStateAction
+    | SetHeaderButtonStateAction
+    | SetVerifyingModalOpen
+    | TermsAcceptedChangeAction
+    | ChainChangeAction
+    | EmailChangeAction
+    | ChangePageAction
+    | TaxResidentChangeAction
 
 export enum StepID {
     AgreementStep = 1,
@@ -158,7 +166,7 @@ export const reducer = (data: Data, { payload, type }: DataChangeActions): Data 
 
 export const DefaultData = {
     closeButtonState: 'enabled',
-    currentPage: StepID.AgreementStep,
+    currentPage: StepID.loading,
     email: '',
     taxResidency: '',
     termsAccepted: false,

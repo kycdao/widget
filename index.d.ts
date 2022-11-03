@@ -15,37 +15,46 @@ declare module '@kycdao/kycdao-web-sdk/App' {
 }
 declare module '@kycdao/kycdao-web-sdk/KycDaoClient' {
   import { SdkConfiguration } from "@kycdao/kycdao-sdk";
-  export default class KycDaoClient {
-      protected enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"];
-      protected enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"];
-      protected parent: HTMLElement | string;
-      protected demoMode: boolean;
-      protected isIframe: boolean;
-      protected url?: string | undefined;
-      protected messageTargetOrigin?: string | undefined;
-      onFail?: ((reason: string) => void) | undefined;
-      onSuccess?: ((data: string | null) => void) | undefined;
-      protected modal?: HTMLElement;
-      protected isOpen: boolean;
-      protected width: string;
-      protected height: string;
-      get Open(): boolean;
-      get Width(): string;
-      get Height(): string;
-      get EnabledBlockchainNetworks(): ("SolanaDevnet" | "SolanaMainnet" | "SolanaTestnet" | "NearMainnet" | "NearTestnet" | "EthereumGoerli" | "EthereumMainnet" | "PolygonMainnet" | "PolygonMumbai")[] | undefined;
-      get EnabledVerificationTypes(): ("KYC" | "AccreditedInvestor")[];
-      constructor(enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"], enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"], width?: number | string, height?: number | string, parent?: HTMLElement | string, demoMode?: boolean, isIframe?: boolean, url?: string | undefined, messageTargetOrigin?: string | undefined, onFail?: ((reason: string) => void) | undefined, onSuccess?: ((data: string | null) => void) | undefined);
-      protected onOutsideClick: (event: MouseEvent) => void;
-      protected messageHndlr: ({ origin, data: { data, type } }: {
+  export type KycDaoClientMessages = 'kycDaoCloseModal' | 'kycDaoSuccess' | 'kycDaoFail';
+  export type KycDaoClientInterface = {
+      messageTargetOrigin?: string;
+      width: string;
+      height: string;
+      isOpen: boolean;
+      modal?: HTMLElement;
+      parent: string | HTMLElement;
+      enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"];
+      enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"];
+      isIframe: boolean;
+      demoMode: boolean;
+      onFail?: (reason: string) => void;
+      onSuccess?: (data: string | null) => void;
+      url?: string;
+      open: () => void;
+      close: () => void;
+      onOutsideClick: (event: MouseEvent) => void;
+      messageHndlr: ({ origin, data: { data, type } }: {
           origin: string;
           data: {
               data: string;
-              type: 'kycDaoCloseModal' | 'kycDaoSuccess' | 'kycDaoFail';
+              type: KycDaoClientMessages;
           };
       }) => void;
-      open: () => void;
-      close: () => void;
-  }
+  };
+  export type KycDaoClientOptions = {
+      enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"];
+      enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"];
+      width: number | string;
+      height: number | string;
+      parent: HTMLElement | string;
+      demoMode: boolean;
+      isIframe: boolean;
+      url?: string;
+      messageTargetOrigin?: string;
+      onFail?: (reason: string) => void;
+      onSuccess?: (data: string | null) => void;
+  };
+  export default function KycDaoClient(this: KycDaoClientInterface, { demoMode, enabledBlockchainNetworks, enabledVerificationTypes, height, width, isIframe, parent, messageTargetOrigin, onFail, onSuccess, url }: KycDaoClientOptions): void;
 
 }
 declare module '@kycdao/kycdao-web-sdk/components/button/button' {
@@ -305,11 +314,15 @@ declare module '@kycdao/kycdao-web-sdk/components/toggleButton/toggleButton' {
 }
 declare module '@kycdao/kycdao-web-sdk/index' {
   import './style/style.scss';
-  import './fonts.css';
   import './index.css';
   import { SdkConfiguration } from '@kycdao/kycdao-sdk';
-  import "material-icons";
   export default function BootstrapKycDaoModal(element: string | HTMLElement, height: number | string, width: number | string, demoMode?: boolean, enabledBlockchainNetworks?: SdkConfiguration["enabledBlockchainNetworks"], enabledVerificationTypes?: SdkConfiguration["enabledVerificationTypes"], messageTargetOrigin?: string): void;
+
+}
+declare module '@kycdao/kycdao-web-sdk/pages/ErrorPage' {
+  import { FC } from "react";
+  import { FallbackProps } from "react-error-boundary";
+  export const ErrorPage: FC<FallbackProps>;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/agreementStep' {
@@ -333,12 +346,6 @@ declare module '@kycdao/kycdao-web-sdk/pages/emailDiscordVerificationStep' {
   import { FC } from "react";
   import { PageProps } from "@kycdao/kycdao-web-sdk/pages/pageProps";
   export const EmailDiscordVerificationStep: FC<PageProps>;
-
-}
-declare module '@kycdao/kycdao-web-sdk/pages/ErrorPage' {
-  import { FC } from "react";
-  import { FallbackProps } from "react-error-boundary";
-  export const ErrorPage: FC<FallbackProps>;
 
 }
 declare module '@kycdao/kycdao-web-sdk/pages/finalStep' {

@@ -1,13 +1,21 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './style/style.scss';
-import './fonts.css';
 import './index.css';
 import KycDaoModal from './App';
 import { BlockchainNetworks, SdkConfiguration, VerificationTypes } from '@kycdao/kycdao-sdk';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorPage } from './pages/ErrorPage';
-import "material-icons"
+
+new FontFace('gilroyRegular', 'url(fonts/ITCAvantGardePro-Book.woff2)').load().then((f) => document.fonts.add(f)).catch(console.error)
+new FontFace('gilroyRegular', 'url(fonts/Gilroy-Regular.woff2)').load().then((f) => document.fonts.add(f)).catch(console.error)
+new FontFace('gilroyLight', 'url(fonts/Gilroy-Light.woff2)').load().then((f) => document.fonts.add(f)).catch(console.error)
+new FontFace('Pacifico', 'url(fonts/Gilroy-ExtraBold.woff2)').load().then((f) => document.fonts.add(f)).catch(console.error)
+
+new FontFace('Material Icons', 'url(https://fonts.gstatic.com/s/materialicons/v139/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)', {
+  style: 'normal',
+  weight: '400',
+}).load().then((f) => document.fonts.add(f)).catch(console.error)
 
 export default function BootstrapKycDaoModal(element: string | HTMLElement,
   height: number | string,

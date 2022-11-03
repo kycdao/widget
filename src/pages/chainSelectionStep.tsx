@@ -63,13 +63,14 @@ export const ChainSelection: FC<PageProps> = ({ className, animation, disabled =
     }
 
     return <Step
+        inactive={inactive}
         onTransitionDone={onTransitionDone}
         disabled={disabled}
         animation={animation}
         className={className}
         onEnter={onSubmit}
         header={() => <h1 className="h1">Mint</h1>}
-        footer={({disabled, inactive}) => <>
+        footer={({ disabled, inactive }) => <>
             <SubmitButton inactive={inactive} autoFocus={!!connectedWallet && !inactive} disabled={!connectedWallet || disabled} className="full-width blue" onClick={onSubmit} />
         </>}
         body={() => <>
