@@ -123,7 +123,7 @@ export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({
 
     useEffect(() => {
         if (kycDao) {
-            dispatch({ payload: { current: StepID.AgreementStep, next: StepID.loading }, type: DataActionTypes.changePage })
+            dispatch({ payload: { current: StepID.AgreementStep, prev: StepID.loading }, type: DataActionTypes.changePage })
         }
     }, [kycDao])
 
