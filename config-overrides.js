@@ -27,7 +27,7 @@ module.exports = function override(config, env) {
             process: 'process/browser',
             Buffer: ['buffer', 'Buffer'],
             ethereum: ['ethereum', 'ethereum'],
-            crypto: ['crypto', 'crypto-browserify']
+//            crypto: ['crypto', 'crypto-browserify']
         })
     ])
 
@@ -43,7 +43,8 @@ module.exports = function override(config, env) {
     })
 
     if (env === 'production') {
-        config.plugins.push(new NpmDtsPlugin())
+	console.log('PROD')
+//        config.plugins.push(new NpmDtsPlugin())
     }
 
     //missing sourcemaps 
