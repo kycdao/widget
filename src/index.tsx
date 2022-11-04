@@ -28,7 +28,7 @@ export default function BootstrapKycDaoModal(element: string | HTMLElement,
   height: number | string,
   width: number | string,
   demoMode = true,
-  enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"] = [BlockchainNetworks.SolanaDevnet],
+  enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"] = [BlockchainNetworks.SolanaMainnet],
   enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"] = [VerificationTypes.KYC],
   messageTargetOrigin?: string) {
   const root = createRoot(
