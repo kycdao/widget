@@ -44,10 +44,16 @@ export const ChainSelection: FC<PageProps> = ({ className, animation, disabled =
         if (!disabled && connectedWallet) {
             try {
                 await kycDao?.kycDao.registerOrLogin()
+
+                const verificationStatus = await kycDao?.kycDao.checkVerificationStatus()
+                if(verificationStatus?.KYC) {
+                    dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.nftArtSelection, prev: StepID.chainSelection } })
+                } else {
+                    dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.beginVerificationStep, prev: StepID.chainSelection } })
+                }
             } catch (err) {
                 console.error(err)
             }
-            dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.beginVerificationStep, prev: StepID.chainSelection } })
         }
     }, [connectedWallet, disabled])
 
