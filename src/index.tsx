@@ -38,7 +38,7 @@ export default function BootstrapKycDaoModal(element: string | HTMLElement,
   root.render(
     <StrictMode>
       <ErrorBoundary FallbackComponent={ErrorPage}>
-        <KycDaoModal baseUrl="https://staging.kycdao.xyz"
+        <KycDaoModal baseUrl="https://prod-test.kycdao.xyz"
           enabledBlockchainNetworks={enabledBlockchainNetworks}
           enabledVerificationTypes={enabledVerificationTypes}
           demoMode={demoMode}
