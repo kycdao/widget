@@ -19,10 +19,15 @@ export const NftSelection: FC<PageProps> = ({ className, animation, disabled = f
         if (kycDao) {
             try {
                 dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.loading, prev: StepID.nftArtSelection } })
-                await kycDao.kycDao.startMinting({
-                    disclaimerAccepted: termsAccepted,
-                    verificationType: VerificationTypes.KYC
-                })
+                try {
+                    await kycDao.kycDao.startMinting({
+                        disclaimerAccepted: termsAccepted,
+                        verificationType: VerificationTypes.KYC
+                    })
+                } catch (error) {
+                    console.error(error)
+                    alert(error)
+                }
                 dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.finalStep, prev: StepID.loading } })
             } catch (e: unknown) {
                 if (typeof e === 'object') {
