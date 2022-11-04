@@ -3,7 +3,7 @@ import { useContext, useState, useCallback, FC, useEffect } from "react"
 import { Button } from "../components/button/button"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { Placeholder } from "../components/placeholder/placeholder"
-import { StateContext, DataActionTypes, StepID, HeaderButtons, OnNext, OnPrev } from "../components/stateContext"
+import { StateContext, DataActionTypes, StepID, HeaderButtons, OnPrev } from "../components/stateContext"
 import { Step } from "../components/step/step"
 import { PageProps } from "./pageProps"
 
