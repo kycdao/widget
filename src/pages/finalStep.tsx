@@ -24,17 +24,16 @@ export const FinalStep: FC<PageProps> = ({ className, animation, disabled = fals
     }, [])
 
     useEffect(() => {
-        window.parent.postMessage({ type: 'kycDaoSuccess' }, messageTargetOrigin || window.location.origin)
-    })
+        if(kycDao) {
+            window.parent.postMessage({ type: 'kycDaoSuccess' }, messageTargetOrigin || window.location.origin)
+            setNftImageUrl(kycDao.kycDao.getNftImageUrl())
+        }
+    }, [])
 
     if (!kycDao) {
         return <>error</>
     }
-
-    useEffect(() => {
-        setNftImageUrl(kycDao.kycDao.getNftImageUrl())
-    }, [])
-
+    
     return <Step onTransitionDone={onTransitionDone} disabled={disabled} animation={animation} className={className} header={() => <h1>Congrats!</h1>}
         body={(props) => <>
             <h1 style={{ textAlign: 'center' }}>You have successfully minted your kycNFT on {kycDao.kycDao.connectedWallet?.blockchainNetwork}</h1>
