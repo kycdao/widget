@@ -7,7 +7,7 @@ export type PlaceholderProps = {
     height: string
     onClick?: () => void
     style?: CSSProperties
-    showSize: boolean
+    showSize?: boolean
 }
 
 export const Placeholder: FC<PlaceholderProps> = ({ height, width, onClick, style, showSize = false }) => {
