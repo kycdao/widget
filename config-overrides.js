@@ -3,7 +3,6 @@ const path = require('path')
 const NpmDtsPlugin = require('npm-dts-webpack-plugin');
 const process = require('process');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 
 module.exports = function override(config, env) {
     const fallback = config.resolve.fallback
@@ -15,7 +14,6 @@ module.exports = function override(config, env) {
     config.entry = ["./src/KycDaoClient.ts", "./src/index.tsx"]
     config.output = {
         filename: "index.js",
-        // publicPath: './dist/',
         library: { name: "@kycdao/kycdao-web-sdk", type: "umd" }
     }
 
@@ -43,7 +41,7 @@ module.exports = function override(config, env) {
     })
 
     if (env === 'production') {
-        if (process.env.NODE_ENV !== 'develoment') {
+        if (process.env.NODE_ENV !== 'development') {
             config.plugins.push(new NpmDtsPlugin())
 	}
     }

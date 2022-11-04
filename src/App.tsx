@@ -116,7 +116,7 @@ export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({
 
     useEffect(() => {
         const close = OnClose.subscribe(() => {
-            window.parent.postMessage('kycDaoCloseModal', messageTargetOrigin || window.location.origin)
+            window.parent.postMessage({ type: 'kycDaoCloseModal'}, messageTargetOrigin || window.location.origin)
         })
         return close.unsubscribe.bind(close)
     }, [])

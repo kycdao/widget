@@ -25,9 +25,7 @@ export type Data = {
     nextButtonState: HeaderButtonState
     closeButtonState: HeaderButtonState
     messageTargetOrigin?: string
-    /*onNext: Observable<void>
-    onPrev: Observable<void>
-    onClose: Observable<void>*/
+    translations: { [key: string]: { [key: string]: string } }
 }
 
 export enum DataActionTypes {
@@ -127,8 +125,6 @@ export const reducer = (data: Data, { payload, type }: DataChangeActions): Data 
         case DataActionTypes.changePage:
             return {
                 ...data,
-                /*prevButtonState: 'disabled',
-                nextButtonState: 'disabled',*/
                 nextPage: payload.next,
                 prevPage: payload.prev,
                 currentPage: payload.current
@@ -173,6 +169,12 @@ export const DefaultData = {
     verifyingModalOpen: false,
     nextButtonState: 'enabled',
     prevButtonState: 'enabled',
+    translations: {
+        agreementStep: {
+            body1: 'Ha Ho’',
+            body2: 'To buy this coffee you will have to get verified and onboard with kycDAO.'
+        }
+    }
 } as Data
 
 export const StateContext = createContext<{ data: Data, dispatch: React.Dispatch<DataChangeActions> }>({

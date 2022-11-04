@@ -5,7 +5,7 @@ import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 
 export const AgreementStep: FC<PageProps> = ({ className, animation, disabled = false, inactive }) => {
-    const { dispatch } = useContext(StateContext)
+    const { dispatch, data: { translations: {agreementStep: translations } } } = useContext(StateContext)
 
     const onSubmit = useCallback(() => {
         dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.kycDAOMembershipStep, prev: StepID.AgreementStep } })
@@ -39,6 +39,7 @@ export const AgreementStep: FC<PageProps> = ({ className, animation, disabled = 
             className="full-width blue"
             onClick={onSubmit}
             inactive={inactive} />}>
-        <p>Lorem ipsum</p>
+        <p>{translations?.body1}</p>
+        <p>{translations?.body2}</p>
     </Step>
 }

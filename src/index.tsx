@@ -6,6 +6,7 @@ import KycDaoModal from './App';
 import { BlockchainNetworks, SdkConfiguration, VerificationTypes } from '@kycdao/kycdao-sdk';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorPage } from './pages/ErrorPage';
+import buffer from 'buffer';
 
 new FontFace('gilroyRegular', 'url(fonts/ITCAvantGardePro-Book.woff2)').load().then((f) => document.fonts.add(f)).catch(console.error)
 new FontFace('gilroyRegular', 'url(fonts/Gilroy-Regular.woff2)').load().then((f) => document.fonts.add(f)).catch(console.error)
@@ -16,6 +17,12 @@ new FontFace('Material Icons', 'url(https://fonts.gstatic.com/s/materialicons/v1
   style: 'normal',
   weight: '400',
 }).load().then((f) => document.fonts.add(f)).catch(console.error)
+
+// don't know why this stopped working, so I do a manual polyfill
+if(!window.Buffer) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (window as any).Buffer = (buffer as any).Buffer
+}
 
 export default function BootstrapKycDaoModal(element: string | HTMLElement,
   height: number | string,

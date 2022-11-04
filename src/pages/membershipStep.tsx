@@ -62,7 +62,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({ className, animation, disa
                 </li>
                 <li>
                     <span>3</span>
-                    <p>Verify</p>
+                    <p>Mint</p>
                 </li>
             </ul>
 

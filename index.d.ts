@@ -22,11 +22,12 @@ declare module '@kycdao/kycdao-web-sdk/KycDaoClient' {
       height: string;
       isOpen: boolean;
       modal?: HTMLElement;
-      parent: string | HTMLElement;
+      parent: HTMLElement | string;
       enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"];
       enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"];
       isIframe: boolean;
       demoMode: boolean;
+      isSuccessful: boolean;
       onFail?: (reason: string) => void;
       onSuccess?: (data: string | null) => void;
       url?: string;
@@ -161,6 +162,11 @@ declare module '@kycdao/kycdao-web-sdk/components/stateContext' {
       nextButtonState: HeaderButtonState;
       closeButtonState: HeaderButtonState;
       messageTargetOrigin?: string;
+      translations: {
+          [key: string]: {
+              [key: string]: string;
+          };
+      };
   };
   export enum DataActionTypes {
       chainChange = 0,
