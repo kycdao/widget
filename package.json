@@ -4,14 +4,14 @@
   "license": "unlicensed",
   "files": [
     "dist",
-    "README.md",
-    "index.d.ts"
+    "README.md"
   ],
   "repository": {
     "url": "https://github.com/kycdao/web-sdk",
     "type": "git"
   },
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "dependencies": {
     "@kycdao/kycdao-sdk": "^0.3.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -59,7 +59,7 @@
   },
   "scripts": {
     "start": "cross-env HTTPS=true GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
-    "build:lib": "yarn clean && GENERATE_SOURCEMAP=false react-app-rewired build && mv ./build ./dist",
+    "build:lib": "yarn clean && GENERATE_SOURCEMAP=false react-app-rewired build && mv ./build ./dist && mv index.d.ts dist/",
     "test": "react-app-rewired test",
     "eject": "create-react-app --eject",
     "lint": "eslint --ext ts,tsx src/*/*.*",
