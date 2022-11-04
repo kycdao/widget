@@ -15,9 +15,9 @@ export const ChainSelection: FC<PageProps> = ({ className, animation, disabled =
     const { dispatch } = useContext(StateContext)
 
     const chains = useMemo<{ value: Chains, label: string, isAvailable: boolean }[]>(() => [
-        { label: 'SOLANA', value: 'Solana', isAvailable: true },
-        { label: 'NEAR', value: 'Near', isAvailable: true },
-        { label: 'EVM', value: 'Ethereum', isAvailable: true },
+        { label: 'SOLANA', value: 'Solana', isAvailable: !!kycDao?.sdkStatus.availableBlockchainNetworks.find(bc => bc.includes('Solana')) },
+        { label: 'NEAR', value: 'Near', isAvailable: !!kycDao?.sdkStatus.availableBlockchainNetworks.find(bc => bc.includes('Near'))  },
+        { label: 'EVM', value: 'Ethereum', isAvailable: !!kycDao?.sdkStatus.availableBlockchainNetworks.find(bc => bc.match(/Ethereum|Polygon/g))  },
     ], [kycDao])
 
     const onChange = useCallback((value: Chains) => async () => {
