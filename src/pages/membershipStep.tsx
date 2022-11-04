@@ -28,12 +28,12 @@ export const KycDAOMembershipStep: FC<PageProps> = ({ className, animation, disa
         }
     }, [disabled])
 
-    const onTransitionDone = () => {
+    const onTransitionDone = useCallback(() => {
         if (!disabled && !inactive) {
             dispatch({ payload: { button: HeaderButtons.prev, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
             dispatch({ payload: { button: HeaderButtons.next, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
         }
-    }
+    }, [disabled, inactive])
 
     return <Step inactive={inactive}
         onTransitionDone={onTransitionDone}

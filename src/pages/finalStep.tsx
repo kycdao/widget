@@ -6,7 +6,7 @@ import { Placeholder } from "../components/placeholder/placeholder"
 import { DataActionTypes, HeaderButtons, StateContext } from "../components/stateContext"
 import { PageProps } from "./pageProps"
 
-export const FinalStep: FC<PageProps> = ({ className, animation, disabled = false }) => {
+export const FinalStep: FC<PageProps> = ({ className, animation, disabled = false, inactive = false }) => {
     const kycDao = useContext(KycDaoContext)
     const { dispatch, data: { messageTargetOrigin } } = useContext(StateContext)
 
@@ -15,7 +15,7 @@ export const FinalStep: FC<PageProps> = ({ className, animation, disabled = fals
             dispatch({ payload: { button: HeaderButtons.prev, state: 'hidden' }, type: DataActionTypes.SetHeaderButtonState })
             dispatch({ payload: { button: HeaderButtons.next, state: 'hidden' }, type: DataActionTypes.SetHeaderButtonState })
         }
-    }, [])
+    }, [inactive, disabled])
 
     const [nftImageUrl, setNftImageUrl] = useState('')
 

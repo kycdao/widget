@@ -74,7 +74,8 @@ export const Router: FC = () => {
             animation: (prevPage || nextPage) ? {
                 to: 'moving-center',
                 from: GetMovingAnimation(prevPage, nextPage)
-            } : undefined
+            } : undefined,
+            inactive: false
         })}
         {nextPage ? GetStep({ stepID: nextPage, animation: { from: 'moving-center', to: 'moving-in' }, inactive: true }) : null}
     </div>

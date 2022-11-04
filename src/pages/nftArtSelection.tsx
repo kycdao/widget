@@ -1,14 +1,14 @@
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
-import { useContext, useState, useCallback, FC } from "react"
+import { useContext, useState, useCallback, FC, useEffect } from "react"
 import { Button } from "../components/button/button"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { Placeholder } from "../components/placeholder/placeholder"
-import { StateContext, DataActionTypes, StepID, HeaderButtons } from "../components/stateContext"
+import { StateContext, DataActionTypes, StepID, HeaderButtons, OnNext, OnPrev } from "../components/stateContext"
 import { Step } from "../components/step/step"
 import { PageProps } from "./pageProps"
 
 
-export const NftSelection: FC<PageProps> = ({ className, animation, disabled = false, inactive }) => {
+export const NftSelection: FC<PageProps> = ({ className, animation, disabled = false, inactive = false }) => {
     const { dispatch, data: { termsAccepted, } } = useContext(StateContext)
     const kycDao = useContext(KycDaoContext)
 
@@ -24,11 +24,12 @@ export const NftSelection: FC<PageProps> = ({ className, animation, disabled = f
                         disclaimerAccepted: termsAccepted,
                         verificationType: VerificationTypes.KYC
                     })
+                    dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.finalStep, prev: StepID.loading } })
                 } catch (error) {
+                    dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.chainSelection, prev: StepID.loading } })
                     console.error(error)
                     alert(error)
                 }
-                dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.finalStep, prev: StepID.loading } })
             } catch (e: unknown) {
                 if (typeof e === 'object') {
                     const f = e as Record<string, unknown>;
@@ -41,12 +42,24 @@ export const NftSelection: FC<PageProps> = ({ className, animation, disabled = f
         }
     }, [])
 
-    const onTransitionDone = () => {
-        if (!disabled) {
-            dispatch({ payload: { button: HeaderButtons.prev, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
-            dispatch({ payload: { button: HeaderButtons.next, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
+    useEffect(() => {
+        if (!disabled && !inactive) {
+            const prev = OnPrev.subscribe(() => {
+                dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.chainSelection, next: StepID.nftArtSelection } })
+            })
+
+            return () => {
+                prev.unsubscribe()
+            }
         }
-    }
+    }, [])
+
+    const onTransitionDone = useCallback(() => {
+        if (!disabled && !inactive) {
+            dispatch({ payload: { button: HeaderButtons.prev, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
+            dispatch({ payload: { button: HeaderButtons.next, state: 'hidden' }, type: DataActionTypes.SetHeaderButtonState })
+        }
+    }, [disabled, inactive])
 
     const onRegenerate = useCallback(() => {
         kycDao?.kycDao.regenerateNftImage().then(() => {
@@ -68,7 +81,7 @@ export const NftSelection: FC<PageProps> = ({ className, animation, disabled = f
                 <Placeholder style={{ borderRadius: '100%' }} onClick={onSubmit('')} height="150px" width="150px" />
                 <Placeholder style={{ borderRadius: '100%' }} onClick={onSubmit('')} height="150px" width="150px" />
             </div>
-            <Button inactive={inactive} disabled={disabled} label="Regenerate ↻" className="full-width underline centered" onClick={onRegenerate}  />
+            <Button inactive={inactive} disabled={disabled} label="Regenerate ↻" className="full-width underline centered" onClick={onRegenerate} />
         </>
         }
     >

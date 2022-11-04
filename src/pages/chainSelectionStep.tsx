@@ -16,8 +16,8 @@ export const ChainSelection: FC<PageProps> = ({ className, animation, disabled =
 
     const chains = useMemo<{ value: Chains, label: string, isAvailable: boolean }[]>(() => [
         { label: 'SOLANA', value: 'Solana', isAvailable: !!kycDao?.sdkStatus.availableBlockchainNetworks.find(bc => bc.includes('Solana')) },
-        { label: 'NEAR', value: 'Near', isAvailable: !!kycDao?.sdkStatus.availableBlockchainNetworks.find(bc => bc.includes('Near'))  },
-        { label: 'EVM', value: 'Ethereum', isAvailable: !!kycDao?.sdkStatus.availableBlockchainNetworks.find(bc => bc.match(/Ethereum|Polygon/g))  },
+        { label: 'NEAR', value: 'Near', isAvailable: !!kycDao?.sdkStatus.availableBlockchainNetworks.find(bc => bc.includes('Near')) },
+        { label: 'EVM', value: 'Ethereum', isAvailable: !!kycDao?.sdkStatus.availableBlockchainNetworks.find(bc => bc.match(/Ethereum|Polygon/g)) },
     ], [kycDao])
 
     const onChange = useCallback((value: Chains) => async () => {
@@ -28,15 +28,17 @@ export const ChainSelection: FC<PageProps> = ({ className, animation, disabled =
     }, [])
 
     useEffect(() => {
-        const next = OnNext.subscribe(onSubmit)
+        if (!disabled && !inactive) {
+            const next = OnNext.subscribe(onSubmit)
 
-        const prev = OnPrev.subscribe(() => {
-            dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.taxResidenceStep, next: StepID.chainSelection } })
-        })
+            const prev = OnPrev.subscribe(() => {
+                dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.taxResidenceStep, next: StepID.chainSelection } })
+            })
 
-        return () => {
-            next.unsubscribe()
-            prev.unsubscribe()
+            return () => {
+                next.unsubscribe()
+                prev.unsubscribe()
+            }
         }
     }, [])
 
@@ -46,23 +48,24 @@ export const ChainSelection: FC<PageProps> = ({ className, animation, disabled =
                 await kycDao?.kycDao.registerOrLogin()
 
                 const verificationStatus = await kycDao?.kycDao.checkVerificationStatus()
-                if(verificationStatus?.KYC) {
+                if (verificationStatus?.KYC) {
                     dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.nftArtSelection, prev: StepID.chainSelection } })
                 } else {
                     dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.beginVerificationStep, prev: StepID.chainSelection } })
                 }
             } catch (err) {
+
                 console.error(err)
             }
         }
     }, [connectedWallet, disabled])
 
-    const onTransitionDone = () => {
+    const onTransitionDone = useCallback(() => {
         if (!disabled && !inactive) {
             dispatch({ payload: { button: HeaderButtons.prev, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
             dispatch({ payload: { button: HeaderButtons.next, state: 'hidden' }, type: DataActionTypes.SetHeaderButtonState })
         }
-    }
+    }, [inactive, disabled])
 
     if (!kycDao) {
         return <>Error</>
@@ -75,7 +78,7 @@ export const ChainSelection: FC<PageProps> = ({ className, animation, disabled =
         animation={animation}
         className={className}
         onEnter={onSubmit}
-        header={() => <h1 className="h1">Mint</h1>}
+        header={() => <h1 className="h1">Connect</h1>}
         footer={({ disabled, inactive }) => <>
             <SubmitButton inactive={inactive} autoFocus={!!connectedWallet && !inactive} disabled={!connectedWallet || disabled} className="full-width blue" onClick={onSubmit} />
         </>}

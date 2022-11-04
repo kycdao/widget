@@ -20,7 +20,7 @@ export const TaxResidenceStep: FC<PageProps> = ({ className, animation, disabled
         if (taxResidency) {
             setValue(Countries.find((country) => country.iso_cca2 === taxResidency)?.name || '')
         }
-    }, [])
+    }, [inactive, disabled])
 
     const onSubmit = useCallback(() => {
         if (!submitDisabled && !inactive) {

@@ -7,7 +7,7 @@ import { PageProps } from "./pageProps"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
-export const EmailDiscordVerificationStep: FC<PageProps> = ({ className, animation, disabled = false, inactive }) => {
+export const EmailDiscordVerificationStep: FC<PageProps> = ({ className, animation, disabled = false, inactive = false }) => {
     const { data: { email }, dispatch } = useContext(StateContext)
     const [autoFocus, setAutoFocus] = useState(false)
 
@@ -22,7 +22,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({ className, animati
             dispatch({ payload: { button: HeaderButtons.prev, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
             dispatch({ payload: { button: HeaderButtons.next, state: email ? 'enabled' : 'hidden' }, type: DataActionTypes.SetHeaderButtonState })
         }
-    }, [])
+    }, [inactive, disabled])
 
     const disableSubmit = useMemo(() => !emailRegex.test(emailValue), [emailValue])
 

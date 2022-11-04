@@ -4,26 +4,26 @@ import { Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 
-export const AgreementStep: FC<PageProps> = ({ className, animation, disabled = false, inactive }) => {
+export const AgreementStep: FC<PageProps> = ({ className, animation, disabled = false, inactive = false }) => {
     const { dispatch, data: { translations: {agreementStep: translations } } } = useContext(StateContext)
 
     const onSubmit = useCallback(() => {
         dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.kycDAOMembershipStep, prev: StepID.AgreementStep } })
     }, [])
 
-    const onTransitionDone = () => {
+    const onTransitionDone = useCallback(() => {
         if (!disabled && !inactive) {
             dispatch({ payload: { button: HeaderButtons.prev, state: 'hidden' }, type: DataActionTypes.SetHeaderButtonState })
             dispatch({ payload: { button: HeaderButtons.next, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
         }
-    }
+    }, [disabled, inactive])
 
     useEffect(() => {
         if (!disabled && !inactive) {
             const next = OnNext.subscribe(onSubmit)
             return next.unsubscribe.bind(next)
         }
-    }, [disabled])
+    }, [disabled, inactive])
 
     return <Step
         onTransitionDone={onTransitionDone}
