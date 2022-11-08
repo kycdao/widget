@@ -2,78 +2,78 @@ import { SdkConfiguration } from "@kycdao/kycdao-sdk"
 
 export type KycDaoClientMessages = 'kycDaoCloseModal' | 'kycDaoSuccess' | 'kycDaoFail'
 
+export type KycDaoClientMessage = {
+    origin: string,
+    data: { data: string, type: KycDaoClientMessages }
+}
+
+export type KycDaoClientMessageHandler = (message: KycDaoClientMessage) => void
+
 export type KycDaoClientInterface = {
-    messageTargetOrigin?: string
+    config: SdkConfiguration
+    iframeOptions?: IframeOptions
     width: string
     height: string
     isOpen: boolean
     modal?: HTMLElement
     parent: HTMLElement | string
-    enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"]
-    enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"]
-    isIframe: boolean
-    demoMode: boolean
     isSuccessful: boolean
     onFail?: (reason: string) => void,
-    onSuccess?: (data: string | null) => void
-    url?: string
+    onSuccess?: (data?: string) => void
     open: () => void
     close: () => void
     onOutsideClick: (event: MouseEvent) => void
-    messageHndlr: ({ origin, data: { data, type } }: { origin: string, data: { data: string, type: KycDaoClientMessages } }) => void
+    messageHndlr: () => KycDaoClientMessageHandler
+    getParentElement: () => HTMLElement
 }
 
 export type KycDaoClientOptions = {
-    enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"],
-    enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"],
     width: number | string,
     height: number | string,
     parent: HTMLElement | string,
-    demoMode: boolean,
-    isIframe: boolean,
-    url?: string,
-    messageTargetOrigin?: string,
+    config: SdkConfiguration,
+    iframeOptions?: IframeOptions,
     onFail?: (reason: string) => void,
-    onSuccess?: (data: string | null) => void
+    onSuccess?: (data?: string) => void
+}
+
+export type IframeOptions = {
+    url: string
+    messageTargetOrigin: string
 }
 
 export default function KycDaoClient(
     this: KycDaoClientInterface, {
-        demoMode,
-        enabledBlockchainNetworks,
-        enabledVerificationTypes,
-        height = "400px",
-        width = '650px',
-        isIframe = true,
+        height = "650px",
+        width = '400px',
         parent = document.body,
-        messageTargetOrigin,
         onFail,
         onSuccess,
-        url
+        iframeOptions,
+        config,
     }: KycDaoClientOptions
 ) {
-    this.messageTargetOrigin = messageTargetOrigin
+    this.config = config
+    this.iframeOptions = iframeOptions
 
     this.width = typeof width === 'string' ? width : `${width}px`
     this.height = typeof height === 'string' ? height : `${height}px`
 
     this.isOpen = false
-    this.enabledBlockchainNetworks = enabledBlockchainNetworks
-    this.enabledVerificationTypes = enabledVerificationTypes
-    this.demoMode = demoMode
-    this.isIframe = isIframe
     this.parent = parent
     this.onFail = onFail
     this.onSuccess = onSuccess
-    this.url = url
     this.isSuccessful = false
 
     this.onOutsideClick = this.onOutsideClick.bind(this)
     this.messageHndlr = this.messageHndlr.bind(this)
+    this.open = this.open.bind(this)
+    this.close = this.close.bind(this)
+    this.getParentElement = this.getParentElement.bind(this)
 }
 
 KycDaoClient.prototype.onOutsideClick = function (this: KycDaoClientInterface, event: MouseEvent) {
-    if (this.modal && !event.composedPath().includes(document.getElementsByClassName('KycDaoModal').item(0) as EventTarget)) {
+    if (this.modal && !event.composedPath().includes(this.modal as EventTarget)) {
         this.close()
         if (this.onFail) {
             this.onFail('cancelled')
@@ -81,8 +81,8 @@ KycDaoClient.prototype.onOutsideClick = function (this: KycDaoClientInterface, e
     }
 }
 
-KycDaoClient.prototype.messageHndlr = function (this: KycDaoClientInterface, { origin, data: { data, type } }: { origin: string, data: { data: string, type: KycDaoClientMessages } }) {
-    if (this.url ? origin === this.url : true) {
+KycDaoClient.prototype.messageHndlr = function (this: KycDaoClientInterface, { data: { data, type }, origin }: KycDaoClientMessage) {
+    if (!this.iframeOptions && origin === window.location.origin || (this.iframeOptions && origin === this.iframeOptions.messageTargetOrigin)) {
         switch (type) {
             case 'kycDaoCloseModal':
                 if (this.onFail) {
@@ -108,16 +108,20 @@ KycDaoClient.prototype.messageHndlr = function (this: KycDaoClientInterface, { o
     }
 }
 
+KycDaoClient.prototype.getParentElement = function (this: KycDaoClientInterface) {
+    if (typeof this.parent === 'string') {
+        const parentElement = document.querySelector(this.parent) as HTMLElement | null
+        if (!parentElement) {
+            throw `There is no such element as '${parent}', check your parent selector string!`
+        }
+
+        return parentElement
+    }
+}
+
 KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
     if (!this.isOpen) {
-        if (typeof this.parent === 'string') {
-            const parentElement = document.querySelector(this.parent) as HTMLElement | null
-            if (!parentElement) {
-                throw `There is no such element as '${this.parent}', check your parent selector string!`
-            }
-
-            this.parent = parentElement
-        }
+        this.parent = this.getParentElement() || document.body
 
         this.modal = document.createElement('div')
         this.modal.classList.add("KycDaoModal")
@@ -129,17 +133,17 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
         modalBody.className = 'modal-body'
         modalBody.classList.add("KycDaoModalBody")
 
-        const container = this.isIframe ? document.createElement('iframe') : document.createElement('div')
-        if (this.isIframe) {
+        const container = this.iframeOptions ? document.createElement('iframe') : document.createElement('div')
+        if (this.iframeOptions) {
             const container2 = container as HTMLIFrameElement
 
-            if (!this.url) {
+            if (!this.iframeOptions.url) {
                 throw 'An URL is needed if you want to use an iframe! What do you want to display?'
             }
 
             container2.allow = "encrypted-media; camera"
             container2.style.border = "border: 0px"
-            container2.src = this.url
+            container2.src = this.iframeOptions.url
             container2.style.width = this.width
             container2.style.height = this.height
         }
@@ -152,36 +156,25 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
         this.parent.appendChild(this.modal)
         this.isOpen = true
 
-        setTimeout(() => {
-            window.addEventListener('click', this.onOutsideClick)
-            window.addEventListener('message', this.messageHndlr)
-            if (!this.isIframe) {
-                globalThis.BootstrapKycDaoModal(
-                    container,
-                    this.height,
-                    this.width,
-                    this.demoMode,
-                    this.enabledBlockchainNetworks,
-                    this.enabledVerificationTypes,
-                    this.messageTargetOrigin)
-            } else {
-                globalThis.BootstrapKycDaoModal(
-                    container,
-                    this.height,
-                    this.width,
-                    this.demoMode,
-                    this.enabledBlockchainNetworks,
-                    this.enabledVerificationTypes,
-                    this.messageTargetOrigin)
-            }
-        }, 0);
+        window.addEventListener('click', this.onOutsideClick)
+        window.addEventListener('message', this.messageHndlr)
+        globalThis.BootstrapKycDaoModal({
+            config: this.config,
+            height: this.height,
+            parent: this.modal,
+            width: this.width,
+            onFail: this.onFail,
+            onSuccess: this.onSuccess,
+            iframeOptions: this.iframeOptions
+        })
     }
 }
 
 KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
+    console.log(document.getElementsByClassName('KycDaoModal').item(0))
     if (this.isOpen) {
         if (this.modal) {
-            const parentNode = typeof this.parent !== 'string' ? this.parent : document.querySelector(this.parent)
+            const parentNode = this.getParentElement()
 
             if (parentNode) {
                 parentNode.removeChild(this.modal)

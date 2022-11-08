@@ -1,15 +1,22 @@
 /// <reference types="react-scripts" />
+import { SdkConfiguration } from "@kycdao/kycdao-sdk";
 import { MetaMaskInpageProvider } from "@metamask/providers";
+import { IframeOptions } from './KycDaoClient'
 
 declare global {
     interface Window {
         ethereum: MetaMaskInpageProvider
     }
     // eslint-disable-next-line no-var
-    function BootstrapKycDaoModal(elementSelector: string | HTMLElement, height: number | string, width: number | string,
-        demoMode: boolean,
-        enabledBlockchainNetworks: SdkConfiguration["enabledBlockchainNetworks"],
-        enabledVerificationTypes: SdkConfiguration["enabledVerificationTypes"],
-        messageTargetOrigin?: string): void
+    function BootstrapKycDaoModal(
+        config: {
+            width: number | string,
+            height: number | string,
+            parent: HTMLElement | string,
+            config: SdkConfiguration,
+            iframeOptions?: IframeOptions,
+            onFail?: (reason: string) => void,
+            onSuccess?: (data?: string) => void
+        }): void
     function KycDaoClient(KycDaoClientOptions)
 }

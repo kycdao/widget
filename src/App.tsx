@@ -15,7 +15,9 @@ import { VerificationStep } from './pages/verificationStep';
 import './style/style.scss';
 import { MovingDirection, StepAnimation } from './components/step/step';
 import { Header } from './components/header/header';
-import './fonts.css'
+import './fonts.scss'
+import { IframeOptions } from './KycDaoClient';
+import 'material-icons'
 
 const GetStep = ({ stepID, ...options }: { stepID: StepID, animation?: StepAnimation, disabled?: boolean, inactive?: boolean }) => {
     switch (stepID) {
@@ -84,40 +86,28 @@ export const Router: FC = () => {
 export type KycDaoModalProps = {
     width?: number | string
     height?: number | string
-    messageTargetOrigin?: string
+    config: SdkConfiguration
+    iframeOptions?: IframeOptions
 }
 
-export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({
-    baseUrl,
-    enabledVerificationTypes,
-    height = 400,
-    width = 650,
-    apiKey,
-    demoMode,
-    enabledBlockchainNetworks,
-    environment,
-    messageTargetOrigin,
-    evmProvider }) => {
+export const KycDaoModal: FC<KycDaoModalProps> = ({
+    height = 650,
+    width = 400,
+    config,
+    iframeOptions
+}) => {
     const [data, dispatch] = useReducer(reducer, DefaultData)
     const [kycDao, setKycDao] = useState<KycDaoState>()
 
     useEffect(() => {
-        KycDao.initialize({
-            baseUrl,
-            enabledVerificationTypes,
-            apiKey,
-            demoMode,
-            enabledBlockchainNetworks,
-            environment,
-            evmProvider
-        }).then((results) => {
+        KycDao.initialize(config).then((results) => {
             setKycDao({ ...results, width, height })
         })
     }, [])
 
     useEffect(() => {
         const close = OnClose.subscribe(() => {
-            window.parent.postMessage({ type: 'kycDaoCloseModal'}, messageTargetOrigin || window.location.origin)
+            window.parent.postMessage({ type: 'kycDaoCloseModal' }, iframeOptions?.messageTargetOrigin || window.location.origin)
         })
         return close.unsubscribe.bind(close)
     }, [])
@@ -134,8 +124,10 @@ export const KycDaoModal: FC<KycDaoModalProps & SdkConfiguration> = ({
 
     return <KycDaoContext.Provider value={kycDao}>
         <StateContext.Provider value={{ data, dispatch }} >
-            <Header />
-            <Router />
+            <div style={{ width, height }}>
+                <Header />
+                <Router />
+            </div>
         </StateContext.Provider>
     </KycDaoContext.Provider>
 }

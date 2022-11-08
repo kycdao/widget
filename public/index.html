@@ -12,14 +12,23 @@
   <title>Sdk Example App</title>
   <script>
     window.onload = function () {
-      BootstrapKycDaoModal(document.querySelector('#modalRoot'), 400, 650)
+      const client = new KycDaoClient({parent: '#modalRoot',
+        config: {
+          demoMode: true,
+          enabledBlockchainNetworks: ["SolanaDevnet"],
+          enabledVerificationTypes: ["KYC"],
+          evmProvider: window.ethereum,
+          baseUrl: "https://staging.kycdao.xyz"
+        }})
+
+      client.open()
     }
   </script>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="modalRoot"></div>
+  <div style="width: 400px; height: 650px;" id="modalRoot"></div>
 </body>
 
 </html>
