@@ -1,74 +1,157 @@
-import { useContext, useCallback, useMemo, FC, useEffect, useState } from "react"
+import {
+	useContext,
+	useCallback,
+	useMemo,
+	FC,
+	useEffect,
+	useState,
+	useLayoutEffect,
+	useRef,
+} from "react"
 import { Input } from "../components/input/input.component"
-import { StateContext, StepID, DataActionTypes, HeaderButtons, OnNext, OnPrev } from "../components/stateContext"
+import {
+	StateContext,
+	StepID,
+	DataActionTypes,
+	HeaderButtons,
+	OnNext,
+	OnPrev,
+} from "../components/stateContext"
 import { Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
-export const EmailDiscordVerificationStep: FC<PageProps> = ({ className, animation, disabled = false, inactive = false }) => {
-    const { data: { email }, dispatch } = useContext(StateContext)
-    const [autoFocus, setAutoFocus] = useState(false)
+export const EmailDiscordVerificationStep: FC<PageProps> = ({
+	className,
+	animation,
+	disabled = false,
+	inactive = false,
+}) => {
+	const {
+		data: { email },
+		dispatch,
+	} = useContext(StateContext)
+	const [buttonAutofocus, setButtonAutoFocus] = useState(false)
 
-    const [emailValue, setEmailValue] = useState('')
+	const [emailValue, setEmailValue] = useState("")
 
-    const onTransitionDone = useCallback(() => {
-        if (email !== '') {
-            setEmailValue(email)
-        }
-        if (!disabled && !inactive) {
-            setAutoFocus(true)
-            dispatch({ payload: { button: HeaderButtons.prev, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
-            dispatch({ payload: { button: HeaderButtons.next, state: email ? 'enabled' : 'hidden' }, type: DataActionTypes.SetHeaderButtonState })
-        }
-    }, [inactive, disabled])
+	useLayoutEffect(() => {
+		if (email !== "") {
+			setEmailValue(email)
+			setButtonAutoFocus(true)
+		}
+	}, [])
 
-    const disableSubmit = useMemo(() => !emailRegex.test(emailValue), [emailValue])
+	const inputRef = useRef<HTMLInputElement>(null)
 
-    useEffect(() => {
-        dispatch({ payload: { button: HeaderButtons.next, state: disableSubmit ? 'hidden' : 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
-    }, [disableSubmit])
+	const onTransitionDone = useCallback(() => {
+		if (!disabled && !inactive) {
+			if (email === "") {
+				inputRef.current?.focus()
+			}
+			dispatch({
+				payload: { button: HeaderButtons.prev, state: "enabled" },
+				type: DataActionTypes.SetHeaderButtonState,
+			})
+			dispatch({
+				payload: {
+					button: HeaderButtons.next,
+					state: email ? "enabled" : "hidden",
+				},
+				type: DataActionTypes.SetHeaderButtonState,
+			})
+		}
+	}, [inactive, disabled])
 
-    const onSubmit = useCallback(() => {
-        if (!disableSubmit) {
-            dispatch({ type: DataActionTypes.emailChange, payload: emailValue })
-            dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.taxResidenceStep, prev: StepID.emailDiscordVerificationStep } })
-        }
-    }, [disableSubmit, emailValue])
+	const disableSubmit = useMemo(
+		() => !emailRegex.test(emailValue),
+		[emailValue]
+	)
 
-    useEffect(() => {
-        if (!disabled && !inactive) {
-            const next = OnNext.subscribe(onSubmit)
-            const prev = OnPrev.subscribe(() => {
-                dispatch({ payload: { current: StepID.verificationStep, next: StepID.emailDiscordVerificationStep }, type: DataActionTypes.changePage })
-            })
+	useEffect(() => {
+		dispatch({
+			payload: {
+				button: HeaderButtons.next,
+				state: disableSubmit ? "hidden" : "enabled",
+			},
+			type: DataActionTypes.SetHeaderButtonState,
+		})
+	}, [disableSubmit])
 
-            return () => {
-                prev.unsubscribe()
-                next.unsubscribe()
-            }
-        }
-    }, [onSubmit, disabled, inactive])
+	const onSubmit = useCallback(() => {
+		if (!disableSubmit) {
+			dispatch({ type: DataActionTypes.emailChange, payload: emailValue })
+			dispatch({
+				type: DataActionTypes.changePage,
+				payload: {
+					current: StepID.taxResidenceStep,
+					prev: StepID.emailDiscordVerificationStep,
+				},
+			})
+		}
+	}, [disableSubmit, emailValue])
 
-    const onEmailChange = useCallback((value: string) => {
-        setEmailValue(value)
-    }, [])
+	const onPrev = useCallback(() => {
+		dispatch({
+			payload: {
+				current: StepID.verificationStep,
+				next: StepID.emailDiscordVerificationStep,
+			},
+			type: DataActionTypes.changePage,
+		})
+	}, [])
 
-    return <Step
-        onTransitionDone={onTransitionDone}
-        disabled={disabled}
-        animation={animation}
-        className={className}
-        onEnter={onSubmit}
-        footer={
-            ({disabled, inactive}) =>
-                <>
-                    <Input autoFocus={autoFocus} disabled={disabled} value={emailValue} placeholder={"email"} className="full-width" onChange={onEmailChange} />
-                    <SubmitButton inactive={inactive} disabled={disableSubmit || disabled} className="full-width blue" onClick={onSubmit} />
-                </>
-        }>
-        <h1 className="h1">03 - Email / Discord verification</h1>
-        <p className="p">Verify your email / discord via the magic link sent to your address.</p>
-    </Step>
+	useEffect(() => {
+		if (!disabled && !inactive) {
+			const next = OnNext.subscribe(onSubmit)
+			const prev = OnPrev.subscribe(onPrev)
+
+			return () => {
+				prev.unsubscribe()
+				next.unsubscribe()
+			}
+		}
+	}, [onSubmit, disabled, inactive])
+
+	const onEmailChange = useCallback((value: string) => {
+		setEmailValue(value)
+	}, [])
+
+	return (
+		<Step
+			onNext={onSubmit}
+			onPrev={onPrev}
+			onTransitionDone={onTransitionDone}
+			disabled={disabled}
+			inactive={inactive}
+			animation={animation}
+			className={className}
+			onEnter={onSubmit}
+			footer={({ disabled, inactive }) => (
+				<>
+					<Input
+						inputRef={inputRef}
+						disabled={disabled}
+						value={emailValue}
+						placeholder={"email"}
+						className="full-width"
+						onChange={onEmailChange}
+					/>
+					<SubmitButton
+						autoFocus={buttonAutofocus}
+						inactive={inactive}
+						disabled={disableSubmit || disabled}
+						className="full-width blue"
+						onClick={onSubmit}
+					/>
+				</>
+			)}>
+			<h1 className="h1">03 - Email / Discord verification</h1>
+			<p className="p">
+				Verify your email / discord via the magic link sent to your address.
+			</p>
+		</Step>
+	)
 }

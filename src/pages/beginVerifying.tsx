@@ -1,66 +1,83 @@
 import { useContext, useCallback, useEffect, FC } from "react"
 import { KycDaoContext } from "../components/kycDao.provider"
-import { StateContext, DataActionTypes, StepID } from "../components/stateContext"
+import {
+	StateContext,
+	DataActionTypes,
+	StepID,
+} from "../components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { Loading } from "./loading"
 
 let verifyingModalOpen = false
 
 export const BeginVerifyingStep: FC = () => {
-    const { dispatch, data: { email, termsAccepted, taxResidency, messageTargetOrigin } } = useContext(StateContext)
-    const kycDao = useContext(KycDaoContext)
+	const {
+		dispatch,
+		data: { email, termsAccepted, taxResidency, messageTargetOrigin },
+	} = useContext(StateContext)
+	const kycDao = useContext(KycDaoContext)
 
-    useEffect(() => {
-        if (!kycDao || verifyingModalOpen) {
-            return
-        }
+	useEffect(() => {
+		if (!kycDao || verifyingModalOpen) {
+			return
+		}
 
-        verifyingModalOpen = true;
+		verifyingModalOpen = true
+		;(async () => {
+			try {
+				await kycDao.kycDao.registerOrLogin()
+				await kycDao.kycDao.startVerification(
+					{
+						email,
+						isEmailConfirmed: true, // @TODO
+						isLegalEntity: false, // @TODO
+						taxResidency,
+						termsAccepted,
+						verificationType: VerificationTypes.KYC,
+					},
+					{
+						personaOptions: {
+							onCancel,
+							onComplete,
+							onError,
+							frameAncestors: messageTargetOrigin
+								? [messageTargetOrigin]
+								: undefined,
+							messageTargetOrigin: window.self.origin,
+						},
+					}
+				)
+			} catch (e) {
+				console.error(e)
+			}
+		})()
+	}, [verifyingModalOpen, kycDao])
 
-        (async () => {
-            try {
-                await kycDao.kycDao.registerOrLogin()
-                await kycDao.kycDao.startVerification({
-                    email,
-                    isEmailConfirmed: true, // @TODO
-                    isLegalEntity: false, // @TODO
-                    taxResidency,
-                    termsAccepted,
-                    verificationType: VerificationTypes.KYC
-                }, {
-                    personaOptions: {
-                        onCancel,
-                        onComplete,
-                        onError,
-                        frameAncestors: messageTargetOrigin ? [messageTargetOrigin] : undefined,
-                        messageTargetOrigin: window.self.origin
-                    }
-                })
-            } catch (e) {
-                console.error(e)
-            }
-        })()
-    }, [verifyingModalOpen, kycDao])
+	const onComplete = useCallback(async () => {
+		dispatch({
+			type: DataActionTypes.changePage,
+			payload: { current: StepID.nftArtSelection },
+		})
+		verifyingModalOpen = false
+	}, [])
 
-    const onComplete = useCallback(async () => {
-        dispatch({ type: DataActionTypes.changePage, payload: { current: StepID.nftArtSelection } })
-        verifyingModalOpen = false
-    }, [])
+	const onCancel = useCallback(() => {
+		dispatch({
+			payload: { current: StepID.chainSelection },
+			type: DataActionTypes.changePage,
+		})
+		verifyingModalOpen = false
+	}, [])
 
-    const onCancel = useCallback(() => {
-        dispatch({ payload: { current: StepID.chainSelection }, type: DataActionTypes.changePage })
-        verifyingModalOpen = false
-    }, [])
+	const onError = useCallback((error: string) => {
+		console.log(error)
+		verifyingModalOpen = false
+		// what should be the error page?
+	}, [])
 
-    const onError = useCallback((error: string) => {
-        console.log(error)
-        verifyingModalOpen = false
-        // what should be the error page?
-    }, [])
+	if (!kycDao) {
+		return <>Error</>
+	}
 
-    if (!kycDao) {
-        return <>Error</>
-    }
-
-    return <Loading />
+	return <Loading />
 }

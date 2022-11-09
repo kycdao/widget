@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#000000" />
+		<meta
+			name="description"
+			content="Web site created using create-react-app" />
+		<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+		<link rel="manifest" href="%PUBLIC_URL%/asset-manifest.json" />
+		<title>Sdk Example App</title>
+		<script>
+			window.onload = function () {
+				const client = new KycDaoClient({
+					parent: "#modalRoot",
+					config: {
+						demoMode: true,
+						enabledBlockchainNetworks: ["SolanaDevnet"],
+						enabledVerificationTypes: ["KYC"],
+						evmProvider: window.ethereum,
+						baseUrl: "https://staging.kycdao.xyz",
+					},
+				})
 
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Web site created using create-react-app" />
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-  <link rel="manifest" href="%PUBLIC_URL%/asset-manifest.json" />
-  <title>Sdk Example App</title>
-  <script>
-    window.onload = function () {
-      const client = new KycDaoClient({parent: '#modalRoot',
-        config: {
-          demoMode: true,
-          enabledBlockchainNetworks: ["SolanaDevnet"],
-          enabledVerificationTypes: ["KYC"],
-          evmProvider: window.ethereum,
-          baseUrl: "https://staging.kycdao.xyz"
-        }})
+				client.open()
+			}
+		</script>
+	</head>
 
-      client.open()
-    }
-  </script>
-</head>
-
-<body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div style="width: 100%; height: 100%;" id="modalRoot"></div>
-</body>
-
+	<body>
+		<noscript>You need to enable JavaScript to run this app.</noscript>
+		<div style="width: 100%; height: 100%" id="modalRoot"></div>
+	</body>
 </html>
