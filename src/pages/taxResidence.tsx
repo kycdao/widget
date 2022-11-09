@@ -12,13 +12,16 @@ export const TaxResidenceStep: FC<PageProps> = ({ className, animation, disabled
     const submitDisabled = useMemo(() => !Countries.find((c) => c.name === value), [value])
     const taxResidence = useRef(taxResidency)
 
+    useEffect(() => {
+        if (taxResidency) {
+            setValue(Countries.find((country) => country.iso_cca2 === taxResidency)?.name || '')
+        }
+    }, [])
+
     const onTransitionDone = useCallback(() => {
         if (!disabled && !inactive) {
             dispatch({ payload: { button: HeaderButtons.prev, state: 'enabled' }, type: DataActionTypes.SetHeaderButtonState })
             dispatch({ payload: { button: HeaderButtons.next, state: taxResidency ? 'enabled' : 'hidden' }, type: DataActionTypes.SetHeaderButtonState })
-        }
-        if (taxResidency) {
-            setValue(Countries.find((country) => country.iso_cca2 === taxResidency)?.name || '')
         }
     }, [inactive, disabled])
 

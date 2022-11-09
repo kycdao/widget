@@ -19,7 +19,9 @@
   padding-bottom: 0;
   align-items: center;
   right: 0;
-  padding-bottom: 64px;
+  height: auto;
+  top: 64px;
+  bottom: 0;
 
   position: relative;
   transition: right 0.25s;

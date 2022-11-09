@@ -108,10 +108,20 @@ div.kyc-option {
   }
 }
 
+// TODO Virtual keyboard and stuff
+
 div.autocomplete {
   position: relative;
   //width: 368px;
   width: 100%;
-  max-height: 30vh;
+  max-height: 18vh;
+  height: auto;
   overflow-y: auto;
+  bottom: 0;
+}
+
+@media only screen and (min-width : 992px) {
+  div.autocomplete {
+    max-height: 30vh;
+  }
 }
