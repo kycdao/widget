@@ -30,46 +30,43 @@ export const NftSelection: FC<PageProps> = ({
 	])
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const onSubmit = useCallback(
-		(_ID: string) => async () => {
-			if (kycDao) {
+	const onSubmit = useCallback(async () => {
+		if (kycDao) {
+			try {
+				dispatch({
+					type: DataActionTypes.changePage,
+					payload: { current: StepID.loading, prev: StepID.nftArtSelection },
+				})
 				try {
+					await kycDao.kycDao.startMinting({
+						disclaimerAccepted: termsAccepted,
+						verificationType: VerificationTypes.KYC,
+					})
 					dispatch({
 						type: DataActionTypes.changePage,
-						payload: { current: StepID.loading, prev: StepID.nftArtSelection },
+						payload: { current: StepID.finalStep, prev: StepID.loading },
 					})
-					try {
-						await kycDao.kycDao.startMinting({
-							disclaimerAccepted: termsAccepted,
-							verificationType: VerificationTypes.KYC,
-						})
+				} catch (error) {
+					dispatch({
+						type: DataActionTypes.changePage,
+						payload: { current: StepID.chainSelection, prev: StepID.loading },
+					})
+					console.error(error)
+					alert(error)
+				}
+			} catch (e: unknown) {
+				if (typeof e === "object") {
+					const f = e as Record<string, unknown>
+					if (f.code && f.code === 4001) {
 						dispatch({
 							type: DataActionTypes.changePage,
-							payload: { current: StepID.finalStep, prev: StepID.loading },
+							payload: { current: StepID.nftArtSelection },
 						})
-					} catch (error) {
-						dispatch({
-							type: DataActionTypes.changePage,
-							payload: { current: StepID.chainSelection, prev: StepID.loading },
-						})
-						console.error(error)
-						alert(error)
-					}
-				} catch (e: unknown) {
-					if (typeof e === "object") {
-						const f = e as Record<string, unknown>
-						if (f.code && f.code === 4001) {
-							dispatch({
-								type: DataActionTypes.changePage,
-								payload: { current: StepID.nftArtSelection },
-							})
-						}
 					}
 				}
 			}
-		},
-		[]
-	)
+		}
+	}, [])
 
 	const onPrev = useCallback(() => {
 		dispatch({
@@ -135,25 +132,25 @@ export const NftSelection: FC<PageProps> = ({
 							height: "75%",
 						}}>
 						<div
-							onClick={onSubmit("")}
+							onClick={onSubmit}
 							style={{ cursor: "pointer", height: "150px", width: "150px" }}>
 							<img src={`${nftImages[0].src}?${nftImages[0].hash}`} />
 						</div>
 						<Placeholder
 							style={{ borderRadius: "100%" }}
-							onClick={onSubmit("")}
+							onClick={onSubmit}
 							height="150px"
 							width="150px"
 						/>
 						<Placeholder
 							style={{ borderRadius: "100%" }}
-							onClick={onSubmit("")}
+							onClick={onSubmit}
 							height="150px"
 							width="150px"
 						/>
 						<Placeholder
 							style={{ borderRadius: "100%" }}
-							onClick={onSubmit("")}
+							onClick={onSubmit}
 							height="150px"
 							width="150px"
 						/>

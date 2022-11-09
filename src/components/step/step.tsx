@@ -7,7 +7,7 @@ import {
 	useState,
 } from "react"
 import { useSwipeable } from "react-swipeable"
-import { OnPrev, StateContext } from "../stateContext"
+import { StateContext } from "../stateContext"
 import "./step.scss"
 
 export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
