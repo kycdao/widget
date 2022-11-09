@@ -1,13 +1,13 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import './style/style.scss';
-import './index.css';
-import KycDaoModal from './App';
-import { SdkConfiguration } from '@kycdao/kycdao-sdk';
-import { ErrorBoundary } from 'react-error-boundary';
-import { ErrorPage } from './pages/ErrorPage';
-import buffer from 'buffer';
-import { IframeOptions } from './KycDaoClient';
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './style/style.scss'
+import './index.css'
+import KycDaoModal from './App'
+import { SdkConfiguration } from '@kycdao/kycdao-sdk'
+import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorPage } from './pages/ErrorPage'
+import buffer from 'buffer'
+import { IframeOptions } from './KycDaoClient'
 
 // don't know why this stopped working, so I do a manual polyfill
 if (!window.Buffer) {

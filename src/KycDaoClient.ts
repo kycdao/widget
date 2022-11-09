@@ -1,4 +1,5 @@
 import { SdkConfiguration } from "@kycdao/kycdao-sdk"
+// import './KycDaoClient.scss'
 
 export type KycDaoClientMessages = 'kycDaoCloseModal' | 'kycDaoSuccess' | 'kycDaoFail'
 
@@ -44,8 +45,8 @@ export type IframeOptions = {
 
 export default function KycDaoClient(
     this: KycDaoClientInterface, {
-        height = "650px",
-        width = '400px',
+        height = "100%",
+        width = '100%',
         parent = document.body,
         onFail,
         onSuccess,
@@ -147,7 +148,7 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
             container2.style.width = this.width
             container2.style.height = this.height
         }
-        container.classList.add('KycDaoModalIframe')
+        container.classList.add('KycDaoModalFrame')
 
         modalBody.appendChild(container)
         modalContent.appendChild(modalBody)
@@ -161,7 +162,7 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
         globalThis.BootstrapKycDaoModal({
             config: this.config,
             height: this.height,
-            parent: this.modal,
+            parent: container,
             width: this.width,
             onFail: this.onFail,
             onSuccess: this.onSuccess,
@@ -171,7 +172,6 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 }
 
 KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
-    console.log(document.getElementsByClassName('KycDaoModal').item(0))
     if (this.isOpen) {
         if (this.modal) {
             const parentNode = this.getParentElement()
@@ -179,11 +179,11 @@ KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
             if (parentNode) {
                 parentNode.removeChild(this.modal)
             }
+            window.removeEventListener('click', this.onOutsideClick)
+            window.removeEventListener('message', this.messageHndlr)
+            this.isOpen = false
         }
 
-        window.removeEventListener('click', this.onOutsideClick)
-        window.removeEventListener('message', this.messageHndlr)
-        this.isOpen = false
     }
 }
 

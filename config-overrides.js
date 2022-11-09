@@ -32,9 +32,10 @@ module.exports = function override(config, env) {
     config.module.rules.unshift({
         test: /\.(woff2?)$/,
         dependency: { not: ['file'] },
-        type: 'asset/inline',
+        type: 'asset/resource',
         generator: {
-            filename: 'static/[name][ext]'
+            // filename: 'static/[name][ext]',
+            // emit: false
         }
     })
 
