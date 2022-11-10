@@ -1,4 +1,4 @@
-import { useContext, useCallback, useEffect, FC } from "react"
+import { useContext, useCallback, useEffect, FC, useRef } from "react"
 import { KycDaoContext } from "../components/kycDao.provider"
 import {
 	StateContext,
@@ -6,23 +6,35 @@ import {
 	StepID,
 } from "../components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
-import { Loading } from "./loading"
+import { PageProps } from "./pageProps"
 
-let verifyingModalOpen = false
-
-export const BeginVerifyingStep: FC = () => {
+export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const {
 		dispatch,
 		data: { email, termsAccepted, taxResidency, messageTargetOrigin },
 	} = useContext(StateContext)
 	const kycDao = useContext(KycDaoContext)
+	const verifyingModalOpen = useRef(false)
 
 	useEffect(() => {
-		if (!kycDao || verifyingModalOpen) {
+		if (
+			inactive ||
+			disabled ||
+			!kycDao ||
+			verifyingModalOpen.current === true
+		) {
 			return
 		}
 
-		verifyingModalOpen = true
+		dispatch({
+			type: DataActionTypes.changePage,
+			payload: {
+				current: StepID.loading,
+				prev: StepID.chainSelection,
+			},
+		})
+
+		verifyingModalOpen.current = true
 		;(async () => {
 			try {
 				await kycDao.kycDao.registerOrLogin()
@@ -51,14 +63,14 @@ export const BeginVerifyingStep: FC = () => {
 				console.error(e)
 			}
 		})()
-	}, [verifyingModalOpen, kycDao])
+	}, [verifyingModalOpen, kycDao, inactive, disabled])
 
 	const onComplete = useCallback(async () => {
 		dispatch({
 			type: DataActionTypes.changePage,
 			payload: { current: StepID.nftArtSelection },
 		})
-		verifyingModalOpen = false
+		verifyingModalOpen.current = false
 	}, [])
 
 	const onCancel = useCallback(() => {
@@ -66,12 +78,12 @@ export const BeginVerifyingStep: FC = () => {
 			payload: { current: StepID.chainSelection },
 			type: DataActionTypes.changePage,
 		})
-		verifyingModalOpen = false
+		verifyingModalOpen.current = false
 	}, [])
 
 	const onError = useCallback((error: string) => {
 		console.log(error)
-		verifyingModalOpen = false
+		verifyingModalOpen.current = false
 		// what should be the error page?
 	}, [])
 
@@ -79,5 +91,5 @@ export const BeginVerifyingStep: FC = () => {
 		return <>Error</>
 	}
 
-	return <Loading />
+	return <></>
 }

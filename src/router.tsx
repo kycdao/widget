@@ -39,7 +39,7 @@ const GetStep = ({
 			return <TaxResidenceStep {...options} />
 		}
 		case StepID.beginVerificationStep: {
-			return <BeginVerifyingStep />
+			return <BeginVerifyingStep {...options} />
 		}
 		case StepID.nftArtSelection: {
 			return <NftSelection {...options} />

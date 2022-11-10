@@ -57,7 +57,6 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({
 
 	useLayoutEffect(() => {
 		if (animation) {
-			console.log("inanim")
 			setAnimatedClass(animation.from)
 			setTransitionState("inTransition")
 			const timeout = setTimeout(() => {
