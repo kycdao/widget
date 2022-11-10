@@ -105,7 +105,7 @@ export const ChainSelection: FC<PageProps> = ({
 
 				const verificationStatus =
 					await kycDao?.kycDao.checkVerificationStatus()
-				/*if (verificationStatus?.KYC) {
+				if (verificationStatus?.KYC) {
 					dispatch({
 						type: DataActionTypes.changePage,
 						payload: {
@@ -113,7 +113,7 @@ export const ChainSelection: FC<PageProps> = ({
 							prev: StepID.chainSelection,
 						},
 					})
-				} else {*/
+				} else {
 					dispatch({
 						type: DataActionTypes.changePage,
 						payload: {
@@ -121,7 +121,7 @@ export const ChainSelection: FC<PageProps> = ({
 							prev: StepID.chainSelection,
 						},
 					})
-				//}
+				}
 			} catch (err) {
 				console.error(err)
 			}
