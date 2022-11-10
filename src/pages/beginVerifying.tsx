@@ -75,7 +75,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 
 	const onCancel = useCallback(() => {
 		dispatch({
-			payload: { current: StepID.chainSelection },
+			payload: { current: StepID.chainSelection, next: StepID.loading },
 			type: DataActionTypes.changePage,
 		})
 		verifyingModalOpen.current = false
