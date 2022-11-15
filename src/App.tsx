@@ -13,15 +13,13 @@ import { Loading } from "./pages/loading"
 import "./style/style.scss"
 import { Header } from "./components/header/header"
 import "./fonts.scss"
-import { IframeOptions } from "./KycDaoClient"
-// import 'material-icons'
 import { Router } from "./router"
 
 export type KycDaoModalProps = {
 	width?: number | string
 	height?: number | string
 	config: SdkConfiguration
-	iframeOptions?: IframeOptions
+	iframeOptions?: { messageTargetOrigin: string }
 }
 
 export const KycDaoModal: FC<KycDaoModalProps> = ({
@@ -47,7 +45,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 			)
 		})
 		return close.unsubscribe.bind(close)
-	}, [])
+	}, [iframeOptions])
 
 	useEffect(() => {
 		if (kycDao) {

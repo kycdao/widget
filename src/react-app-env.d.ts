@@ -17,5 +17,6 @@ declare global {
 		onFail?: (reason: string) => void
 		onSuccess?: (data?: string) => void
 	}): void
+	function BootstrapIframeKycDaoModal(config: { parent: HTMLElement | string })
 	function KycDaoClient(KycDaoClientOptions)
 }

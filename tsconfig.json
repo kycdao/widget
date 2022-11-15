@@ -3,6 +3,7 @@
 		"skipDefaultLibCheck": true,
 		"target": "es5",
 		"declaration": true,
+		"downlevelIteration": true,
 		"declarationDir": "types",
 		"sourceMap": true,
 		"outDir": "dist",
