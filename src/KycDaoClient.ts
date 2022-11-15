@@ -125,11 +125,7 @@ KycDaoClient.prototype.messageHndlr = function (
 	this: KycDaoClientInterface,
 	{ data: { data, type }, origin }: KycDaoClientMessage
 ) {
-	console.log("t")
-	if (
-		(!this.iframeOptions && origin === window.location.origin) ||
-		(this.iframeOptions && origin === this.iframeOptions.messageTargetOrigin)
-	) {
+	{
 		switch (type) {
 			case "kycDaoCloseModal":
 				if (this.onFail) {
@@ -169,6 +165,7 @@ KycDaoClient.prototype.getParentElement = function (
 
 		return parentElement
 	}
+	return this.parent
 }
 
 KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
@@ -177,6 +174,8 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 
 		this.modal = document.createElement("div")
 		this.modal.classList.add("KycDaoModal")
+		this.modal.style.width = this.width
+		this.modal.style.height = this.height
 
 		const modalContent = document.createElement("div")
 		modalContent.classList.add("KycDaoModalContent")
