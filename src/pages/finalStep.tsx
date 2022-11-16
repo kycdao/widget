@@ -14,7 +14,7 @@ export const FinalStep: FC<PageProps> = ({
 	className,
 	animation,
 	disabled = false,
-	inactive = false,
+	// inactive = false,
 }) => {
 	const kycDao = useContext(KycDaoContext)
 	const {
@@ -33,7 +33,7 @@ export const FinalStep: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}
-	}, [inactive, disabled])
+	}, [disabled, dispatch])
 
 	const [nftImageUrl, setNftImageUrl] = useState("")
 
@@ -49,7 +49,7 @@ export const FinalStep: FC<PageProps> = ({
 			)
 			setNftImageUrl(kycDao.kycDao.getNftImageUrl())
 		}
-	}, [])
+	}, [messageTargetOrigin, kycDao])
 
 	if (!kycDao) {
 		return <>error</>
@@ -70,7 +70,7 @@ export const FinalStep: FC<PageProps> = ({
 					</h1>
 					<div style={{ display: "flex", justifyContent: "center" }}>
 						{nftImageUrl ? (
-							<img src={nftImageUrl} width="300px" height="300px" />
+							<img alt="" src={nftImageUrl} width="300px" height="300px" />
 						) : (
 							<Placeholder width="300px" height="300px" />
 						)}

@@ -27,14 +27,14 @@ export const VerificationStep: FC<PageProps> = ({
 				prev: StepID.verificationStep,
 			},
 		})
-	}, [])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
 			const next = OnNext.subscribe(onSubmit)
 			return next.unsubscribe.bind(next)
 		}
-	}, [disabled])
+	}, [disabled, inactive, onSubmit])
 
 	const onPrev = useCallback(() => {
 		dispatch({
@@ -44,14 +44,14 @@ export const VerificationStep: FC<PageProps> = ({
 			},
 			type: DataActionTypes.changePage,
 		})
-	}, [])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
 			const prev = OnPrev.subscribe(onPrev)
 			return prev.unsubscribe.bind(prev)
 		}
-	}, [disabled, inactive])
+	}, [disabled, inactive, onPrev])
 
 	const onStateChange = () => {
 		if (!disabled && !inactive) {

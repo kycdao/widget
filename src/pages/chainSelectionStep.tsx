@@ -85,19 +85,6 @@ export const ChainSelection: FC<PageProps> = ({
 		})
 	}, [])
 
-	useEffect(() => {
-		if (!disabled && !inactive) {
-			const next = OnNext.subscribe(onSubmit)
-
-			const prev = OnPrev.subscribe(onPrev)
-
-			return () => {
-				next.unsubscribe()
-				prev.unsubscribe()
-			}
-		}
-	}, [])
-
 	const onSubmit = useCallback(async () => {
 		if (!disabled && connectedWallet) {
 			try {
@@ -126,7 +113,20 @@ export const ChainSelection: FC<PageProps> = ({
 				console.error(err)
 			}
 		}
-	}, [connectedWallet, disabled])
+	}, [connectedWallet, disabled, kycDao])
+
+	useEffect(() => {
+		if (!disabled && !inactive) {
+			const next = OnNext.subscribe(onSubmit)
+
+			const prev = OnPrev.subscribe(onPrev)
+
+			return () => {
+				next.unsubscribe()
+				prev.unsubscribe()
+			}
+		}
+	}, [disabled, inactive, onPrev, onSubmit])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
@@ -139,7 +139,7 @@ export const ChainSelection: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}
-	}, [inactive, disabled])
+	}, [inactive, disabled, dispatch])
 
 	if (!kycDao) {
 		return <>Error</>

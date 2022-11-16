@@ -19,13 +19,6 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 }) => {
 	const { dispatch } = useContext(StateContext)
 
-	useEffect(() => {
-		if (!disabled && !inactive) {
-			const prev = OnPrev.subscribe(onPrev)
-			return prev.unsubscribe.bind(prev)
-		}
-	}, [disabled])
-
 	const onPrev = useCallback(() => {
 		dispatch({
 			payload: {
@@ -34,7 +27,14 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 			},
 			type: DataActionTypes.changePage,
 		})
-	}, [])
+	}, [dispatch])
+
+	useEffect(() => {
+		if (!disabled && !inactive) {
+			const prev = OnPrev.subscribe(onPrev)
+			return prev.unsubscribe.bind(prev)
+		}
+	}, [disabled, inactive, onPrev])
 
 	const onSubmit = useCallback(() => {
 		dispatch({
@@ -45,14 +45,14 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 			},
 		})
 		dispatch({ type: DataActionTypes.termsAcceptedChange, payload: true })
-	}, [])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
 			const next = OnNext.subscribe(onSubmit)
 			return next.unsubscribe.bind(next)
 		}
-	}, [disabled])
+	}, [disabled, inactive, onSubmit])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
@@ -65,7 +65,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}
-	}, [disabled, inactive])
+	}, [disabled, inactive, dispatch])
 
 	return (
 		<Step
@@ -80,8 +80,8 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 			footer={({ disabled, inactive }) => (
 				<>
 					<div className="policy">
-						By starting verification you accept <a href="#">Privacy Policy</a>{" "}
-						and <a href="#">Terms &#38; Conditions.</a>
+						By starting verification you accept <a href="#1">Privacy Policy</a>{" "}
+						and <a href="#2">Terms &#38; Conditions.</a>
 					</div>
 					<SubmitButton
 						autoFocus={!inactive && !disabled}

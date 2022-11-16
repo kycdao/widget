@@ -7,12 +7,16 @@ import { SdkConfiguration } from "@kycdao/kycdao-sdk"
 import { ErrorBoundary } from "react-error-boundary"
 import { ErrorPage } from "./pages/ErrorPage"
 import buffer from "buffer"
-import { IframeOptions } from "./KycDaoClient"
 import {
 	BlockchainNetwork,
 	KycDaoEnvironment,
 	VerificationType,
 } from "@kycdao/kycdao-sdk/dist/types"
+
+export type IframeOptions = {
+	url?: string
+	messageTargetOrigin: string
+}
 
 // don't know why this stopped working, so I do a manual polyfill
 
@@ -37,7 +41,7 @@ export type UrlParams = {
 	baseUrl?: string
 	enabledBlockchainNetworks?: BlockchainNetwork[]
 	enabledVerificationTypes?: VerificationType[]
-	evmProvider?: string
+	evmProvider?: "ethereum"
 	messageTargetOrigin?: string
 	width?: string
 	height?: string
@@ -48,13 +52,11 @@ export function BootstrapKycDaoModal({
 	height,
 	width,
 	config,
-	iframeOptions,
 }: {
 	width: number | string
 	height: number | string
 	parent: HTMLElement | string
 	config: SdkConfiguration
-	iframeOptions?: IframeOptions
 }) {
 	const root = createRoot(
 		typeof parent === "string"
@@ -65,15 +67,18 @@ export function BootstrapKycDaoModal({
 	root.render(
 		<StrictMode>
 			<ErrorBoundary FallbackComponent={ErrorPage}>
-				<KycDaoModal
-					config={config}
-					iframeOptions={iframeOptions}
-					height={height}
-					width={width}
-				/>
+				<KycDaoModal config={config} height={height} width={width} />
 			</ErrorBoundary>
 		</StrictMode>
 	)
+}
+
+export type EvmProvidersT = "ethereum"
+
+const EvmProviders: {
+	[index in EvmProvidersT]: unknown
+} = {
+	ethereum: window.ethereum,
 }
 
 export function BootstrapIframeKycDaoModal({
@@ -96,15 +101,21 @@ export function BootstrapIframeKycDaoModal({
 	}, {} as { [key: keyof UrlParams]: string }) as UrlParams
 
 	if (!urlParams.messageTargetOrigin) {
-		throw "You need to give the messageTargetOrigin, if you want to use the page in an iframe!"
+		throw new Error(
+			"You need to give the messageTargetOrigin, if you want to use the page in an iframe!"
+		)
 	}
 
 	if (!urlParams.baseUrl) {
-		throw "You need to give the baseUrl, if you want to use the page in an iframe!"
+		throw new Error(
+			"You need to give the baseUrl, if you want to use the page in an iframe!"
+		)
 	}
 
 	if (!urlParams.enabledVerificationTypes) {
-		throw "You need to give the enabledVerificationTypes, if you want to use the page in an iframe!"
+		throw new Error(
+			"You need to give the enabledVerificationTypes, if you want to use the page in an iframe!"
+		)
 	}
 
 	const {
@@ -114,10 +125,10 @@ export function BootstrapIframeKycDaoModal({
 		enabledBlockchainNetworks,
 		enabledVerificationTypes,
 		environment,
-		evmProvider,
 		height,
 		messageTargetOrigin,
 		width,
+		evmProvider,
 	} = urlParams
 
 	root.render(
@@ -131,7 +142,7 @@ export function BootstrapIframeKycDaoModal({
 						demoMode,
 						enabledBlockchainNetworks,
 						environment,
-						evmProvider,
+						evmProvider: evmProvider ? EvmProviders[evmProvider] : undefined,
 					}}
 					iframeOptions={{
 						messageTargetOrigin,
@@ -143,6 +154,3 @@ export function BootstrapIframeKycDaoModal({
 		</StrictMode>
 	)
 }
-
-globalThis.BootstrapKycDaoModal = BootstrapKycDaoModal
-globalThis.BootstrapIframeKycDaoModal = BootstrapIframeKycDaoModal

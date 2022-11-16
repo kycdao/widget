@@ -4,7 +4,6 @@ import {
 	VerificationType,
 } from "@kycdao/kycdao-sdk"
 import { KycDaoEnvironment } from "@kycdao/kycdao-sdk/dist/types"
-import { BootstrapKycDaoModal } from "./BootstrapKycDaoModal"
 import "./KycDaoClient.scss"
 
 export type KycDaoClientMessages =
@@ -48,11 +47,11 @@ export type KycDaoClientMessageHandler = (message: KycDaoClientMessage) => void
 
 export type KycDaoClientInterface = {
 	config: SdkConfiguration
-	iframeOptions?: IframeOptions
+	iframeOptions: IframeOptions
 	width: string
 	height: string
 	isOpen: boolean
-	modal: HTMLElement
+	modal?: HTMLElement
 	parent: HTMLElement | string
 	isSuccessful: boolean
 	onFail?: (reason: string) => void
@@ -69,7 +68,7 @@ export type KycDaoClientOptions = {
 	height: number | string
 	parent: HTMLElement | string
 	config: SdkConfiguration
-	iframeOptions?: IframeOptions
+	iframeOptions: IframeOptions
 	onFail?: (reason: string) => void
 	onSuccess?: (data?: string) => void
 }
@@ -79,7 +78,7 @@ export type IframeOptions = {
 	messageTargetOrigin: string
 }
 
-export function KycDaoClient(
+export default function KycDaoClient(
 	this: KycDaoClientInterface,
 	{
 		height = "100%",
@@ -181,44 +180,42 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 		this.modal.style.setProperty("--width", this.width)
 		this.modal.style.setProperty("--height", this.height)
 
-		const container = this.iframeOptions
-			? document.createElement("iframe")
-			: document.createElement("div")
-		if (this.iframeOptions) {
-			const container2 = container as HTMLIFrameElement
+		const container = document.createElement("iframe")
 
-			if (!this.iframeOptions.url) {
-				throw new Error(
-					"An URL is needed if you want to use an iframe! What do you want to display?"
-				)
-			}
+		const container2 = container as HTMLIFrameElement
 
-			container2.allow = "encrypted-media; camera"
-			container2.style.border = "border: 0px"
-			container2.style.borderWidth = "0"
-
-			const params = new URLSearchParams()
-			params.set("messageTargetOrigin", this.iframeOptions.messageTargetOrigin)
-
-			Object.entries(this.config).forEach(({ 0: key, 1: value }) => {
-				if (Array.isArray(value)) {
-					params.set(`${key}`, `["${value.join('","')}"]`)
-				} else {
-					params.set(key, value)
-				}
-			})
-			Object.entries(this.iframeOptions).forEach(({ 0: key, 1: value }) => {
-				if (Array.isArray(value)) {
-					params.set(`${key}`, `["${value.join('","')}"]`)
-				} else {
-					params.set(key, value)
-				}
-			})
-
-			container2.src = this.iframeOptions.url + "?" + params.toString()
-			container2.width = this.width
-			container2.height = this.height
+		if (!this.iframeOptions.url) {
+			throw new Error(
+				"An URL is needed if you want to use an iframe! What do you want to display?"
+			)
 		}
+
+		container2.allow = "encrypted-media; camera"
+		container2.style.border = "border: 0px"
+		container2.style.borderWidth = "0"
+
+		const params = new URLSearchParams()
+		params.set("messageTargetOrigin", this.iframeOptions.messageTargetOrigin)
+
+		Object.entries(this.config).forEach(({ 0: key, 1: value }) => {
+			if (Array.isArray(value)) {
+				params.set(`${key}`, `["${value.join('","')}"]`)
+			} else {
+				params.set(key, value)
+			}
+		})
+		Object.entries(this.iframeOptions).forEach(({ 0: key, 1: value }) => {
+			if (Array.isArray(value)) {
+				params.set(`${key}`, `["${value.join('","')}"]`)
+			} else {
+				params.set(key, value)
+			}
+		})
+
+		container2.src = this.iframeOptions.url + "?" + params.toString()
+		container2.width = this.width
+		container2.height = this.height
+
 		container.classList.add("KycDaoModalFrame")
 		container.style.position = "absolute"
 		container.style.inset = "0"
@@ -232,13 +229,6 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 		setTimeout(() => {
 			window.parent.addEventListener("click", this.onOutsideClick)
 			window.parent.addEventListener("message", this.messageHndlr)
-
-			BootstrapKycDaoModal({
-				config: this.config,
-				height: this.height,
-				parent: container,
-				width: this.width,
-			})
 		}, 0)
 	}
 }
@@ -258,4 +248,4 @@ KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
 	}
 }
 
-window.KycDaoClient = KycDaoClient
+window.KycDaoIframeClient = KycDaoClient

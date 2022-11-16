@@ -21,7 +21,7 @@ type InputProps = {
 	value?: string
 	autoCompleteData?: string[]
 	autoFocus?: boolean
-	inputRef?: RefObject<HTMLInputElement>
+	inputRef: RefObject<HTMLInputElement>
 }
 
 export const Input: FC<InputProps> = ({
@@ -72,7 +72,9 @@ export const Input: FC<InputProps> = ({
 
 		inputRef.current?.addEventListener("focus", hndlr)
 
-		return () => inputRef.current?.addEventListener("focus", hndlr)
+		return () => {
+			inputRef.current?.addEventListener("focus", hndlr)
+		}
 	}, [showAutoComplete])
 
 	const onAutocompleteHndlr = useCallback(

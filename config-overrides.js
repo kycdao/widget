@@ -3,6 +3,8 @@ const path = require("path")
 const NpmDtsPlugin = require("npm-dts-webpack-plugin")
 const process = require("process")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const WebpackManifestPlugin =
+	require("webpack-manifest-plugin").WebpackManifestPlugin
 
 module.exports = function override(config, env) {
 	const fallback = config.resolve.fallback
@@ -14,9 +16,9 @@ module.exports = function override(config, env) {
 
 	const outDir = "./build"
 	config.target = "web"
-	config.entry = ["./src/KycDaoClient.ts", "./src/index.tsx"]
+	config.entry = { app: "./src/KycDaoClient.ts", iframeClient: "./src/KycDaoIframeClient.ts", }
 	config.output = {
-		filename: "index.js",
+		filename: "[name].js",
 		library: { name: "@kycdao/kycdao-web-sdk", type: "umd" },
 	}
 
@@ -58,13 +60,40 @@ module.exports = function override(config, env) {
 		1
 	)
 
-	// config.plugins.splice(config.plugins.findIndex(plugin => plugin instanceof WebpackManifestPlugin), 1)
+	config.plugins.splice(
+		config.plugins.findIndex(
+			(plugin) => plugin instanceof WebpackManifestPlugin
+		),
+		1
+	)
 
 	config.plugins.push(
 		new MiniCssExtractPlugin({
-			filename: "index.css",
+			filename: "[name].css",
 		})
 	)
+
+	/*config.plugins.push(
+		new WebpackManifestPlugin({
+			fileName: "asset-manifest.json",
+			publicPath: "public",
+			generate: (seed, files, entrypoints) => {
+				const manifestFiles = files.reduce((manifest, file) => {
+					manifest[file.name] = file.path
+					return manifest
+				}, seed)
+				const entrypointFiles = entrypoints.main.filter(
+					// <--- This line here
+					(fileName) => !fileName.endsWith(".map")
+				)
+
+				return {
+					files: manifestFiles,
+					entrypoints: entrypointFiles,
+				}
+			},
+		})
+	)*/
 
 	config.devtool = "source-map"
 

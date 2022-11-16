@@ -42,7 +42,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 			setEmailValue(email)
 			setButtonAutoFocus(true)
 		}
-	}, [])
+	}, [email])
 
 	const inputRef = useRef<HTMLInputElement>(null)
 
@@ -63,7 +63,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}
-	}, [inactive, disabled])
+	}, [inactive, disabled, dispatch, email])
 
 	const disableSubmit = useMemo(
 		() => !emailRegex.test(emailValue),
@@ -78,7 +78,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 			},
 			type: DataActionTypes.SetHeaderButtonState,
 		})
-	}, [disableSubmit])
+	}, [disableSubmit, dispatch])
 
 	const onSubmit = useCallback(() => {
 		if (!disableSubmit) {
@@ -91,7 +91,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 				},
 			})
 		}
-	}, [disableSubmit, emailValue])
+	}, [disableSubmit, emailValue, dispatch])
 
 	const onPrev = useCallback(() => {
 		dispatch({
@@ -101,7 +101,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 			},
 			type: DataActionTypes.changePage,
 		})
-	}, [])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
@@ -113,7 +113,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 				next.unsubscribe()
 			}
 		}
-	}, [onSubmit, disabled, inactive])
+	}, [onSubmit, disabled, inactive, dispatch, onPrev])
 
 	const onEmailChange = useCallback((value: string) => {
 		setEmailValue(value)

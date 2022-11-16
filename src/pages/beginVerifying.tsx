@@ -9,12 +9,34 @@ import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { PageProps } from "./pageProps"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
+	const onError = useCallback((error: string) => {
+		console.log(error)
+		verifyingModalOpen.current = false
+		// what should be the error page?
+	}, [])
+
 	const {
 		dispatch,
 		data: { email, termsAccepted, taxResidency, messageTargetOrigin },
 	} = useContext(StateContext)
 	const kycDao = useContext(KycDaoContext)
 	const verifyingModalOpen = useRef(false)
+
+	const onComplete = useCallback(async () => {
+		dispatch({
+			type: DataActionTypes.changePage,
+			payload: { current: StepID.nftArtSelection },
+		})
+		verifyingModalOpen.current = false
+	}, [dispatch])
+
+	const onCancel = useCallback(() => {
+		dispatch({
+			payload: { current: StepID.chainSelection, next: StepID.loading },
+			type: DataActionTypes.changePage,
+		})
+		verifyingModalOpen.current = false
+	}, [dispatch])
 
 	useEffect(() => {
 		if (
@@ -63,29 +85,20 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 				console.error(e)
 			}
 		})()
-	}, [verifyingModalOpen, kycDao, inactive, disabled])
-
-	const onComplete = useCallback(async () => {
-		dispatch({
-			type: DataActionTypes.changePage,
-			payload: { current: StepID.nftArtSelection },
-		})
-		verifyingModalOpen.current = false
-	}, [])
-
-	const onCancel = useCallback(() => {
-		dispatch({
-			payload: { current: StepID.chainSelection, next: StepID.loading },
-			type: DataActionTypes.changePage,
-		})
-		verifyingModalOpen.current = false
-	}, [])
-
-	const onError = useCallback((error: string) => {
-		console.log(error)
-		verifyingModalOpen.current = false
-		// what should be the error page?
-	}, [])
+	}, [
+		verifyingModalOpen,
+		kycDao,
+		inactive,
+		disabled,
+		onCancel,
+		onComplete,
+		dispatch,
+		email,
+		onError,
+		messageTargetOrigin,
+		taxResidency,
+		termsAccepted,
+	])
 
 	if (!kycDao) {
 		return <>Error</>

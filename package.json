@@ -3,14 +3,20 @@
 	"version": "0.2.15",
 	"license": "unlicensed",
 	"files": [
-		"dist",
+		"dist/*",
 		"README.md"
 	],
 	"repository": {
 		"url": "https://github.com/kycdao/web-sdk",
 		"type": "git"
 	},
-	"main": "./dist/index.js",
+	"exports": {
+		".": "./dist/app.js",
+		"./css": "./dist/app.css", 
+		"./client": "./dist/iframeClient.js",
+		"./client.css": "./dist/iframeClient.css"
+	},
+	"main": "./dist/app.js",
 	"types": "./dist/index.d.ts",
 	"dependencies": {
 		"@kycdao/kycdao-sdk": "^0.3.5",
@@ -64,8 +70,7 @@
 	},
 	"scripts": {
 		"start": "cross-env HTTPS=true PORT=3001 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
-		"build:lib": "yarn clean && GENERATE_SOURCEMAP=false react-app-rewired build && mv ./build ./dist && mv index.d.ts dist/",
-		"build:client": "tsc --outDir dist --esModuleInterop --module commonjs --target es6 ./src/KycDaoClient.ts --declaration --declarationMap --sourcemap",
+		"build": "yarn clean && GENERATE_SOURCEMAP=false react-app-rewired build && mv ./build ./dist && mv index.d.ts dist/",
 		"test": "react-app-rewired test",
 		"eject": "create-react-app --eject",
 		"lint": "eslint --ext ts,tsx src/*/*.*",

@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"skipDefaultLibCheck": true,
-		"target": "es5",
+		"target": "es6",
 		"declaration": true,
 		"downlevelIteration": true,
 		"declarationDir": "types",
@@ -16,7 +16,7 @@
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
 		"noFallthroughCasesInSwitch": true,
-		"module": "esnext",
+		"module": "ESNext",
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"isolatedModules": true,

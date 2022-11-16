@@ -134,7 +134,7 @@ export const NftSelection: FC<PageProps> = ({
 						<div
 							onClick={onSubmit}
 							style={{ cursor: "pointer", height: "150px", width: "150px" }}>
-							<img src={`${nftImages[0].src}?${nftImages[0].hash}`} />
+							<img alt="" src={`${nftImages[0].src}?${nftImages[0].hash}`} />
 						</div>
 						<Placeholder
 							style={{ borderRadius: "100%" }}
