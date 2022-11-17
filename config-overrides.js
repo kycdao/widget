@@ -16,14 +16,15 @@ module.exports = function override(config, env) {
 
 	const outDir = "./build"
 	config.target = "web"
-	config.entry = { app: "./src/KycDaoClient.ts", iframeClient: "./src/KycDaoIframeClient.ts", }
+	config.entry = { client: "./src/KycDaoClient.ts", iframeClient: "./src/KycDaoIframeClient.ts", app: "./src/index.js" }
 	config.output = {
-		filename: "[name].js",
-		library: { name: "@kycdao/kycdao-web-sdk", type: "umd" },
+		filename: "[name].min.js",
+		library: "kycDaoWebSdk",
 	}
 
 	config.output.path = path.resolve(outDir)
 	config.resolve.fallback = fallback
+	config.resolve.modules = ['node_modules']
 
 	config.plugins = (config.plugins || []).concat([
 		new webpack.ProvidePlugin({

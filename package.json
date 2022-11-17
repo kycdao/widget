@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.2.15",
+	"version": "0.3.0",
 	"license": "unlicensed",
 	"files": [
 		"dist/*",
@@ -11,13 +11,23 @@
 		"type": "git"
 	},
 	"exports": {
-		".": "./dist/app.js",
-		"./css": "./dist/app.css", 
-		"./client": "./dist/iframeClient.js",
-		"./client.css": "./dist/iframeClient.css"
+		".": {
+			"import": "./dist/es/index.js",
+			"style": "./dist/app.css"
+		},
+		"./KycDaoClient": {
+			"import": "./dist/KycDaoClient.js",
+			"script": "./dist/client.min.js",
+			"style": "./dist/client.css"
+		},
+		"./IframeClient": {
+			"import": "./dist/IframeClient.js",
+			"script": "./dist/iframeClient.min.js",
+			"style": "./dist/iframeClient.css"
+		},
+		"./es": "./dist/es/"
 	},
-	"main": "./dist/app.js",
-	"types": "./dist/index.d.ts",
+	"types": "./index.d.ts",
 	"dependencies": {
 		"@kycdao/kycdao-sdk": "^0.3.5",
 		"@testing-library/jest-dom": "^5.16.5",
@@ -31,7 +41,7 @@
 		"crypto-browserify": "^3.12.0",
 		"material-icons": "^1.12.0",
 		"near-api-js": "^1.1.0",
-		"persona": "^4.6.0",
+		"persona": "^4.7.1",
 		"process": "^0.11.10",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
@@ -47,10 +57,13 @@
 		"@babel/plugin-transform-typescript": "^7.20.0",
 		"@babel/preset-env": "^7.19.4",
 		"@babel/preset-react": "^7.18.6",
-		"@typescript-eslint/eslint-plugin": "latest",
-		"@typescript-eslint/parser": "latest",
+		"@typescript-eslint/eslint-plugin": "^5.43.0",
+		"@typescript-eslint/parser": "^5.43.0",
 		"babel-cli": "^6.23.0",
-		"create-react-app": "5.0.1",
+		"babel-preset-es2015": "6.24.1",
+		"copy-files": "^0.1.0",
+		"copyfiles": "^2.4.1",
+		"create-react-app": "^5.0.1",
 		"cross-env": "^7.0.3",
 		"eslint": "^8.26.0",
 		"eslint-config-airbnb": "^19.0.4",
@@ -58,7 +71,7 @@
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-jsx-a11y": "^6.6.1",
 		"eslint-plugin-prettier": "^4.2.1",
-		"eslint-plugin-react": "latest",
+		"eslint-plugin-react": "^7.31.10",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"npm-dts-webpack-plugin": "^1.3.12",
 		"prettier": "^2.7.1",
@@ -70,7 +83,9 @@
 	},
 	"scripts": {
 		"start": "cross-env HTTPS=true PORT=3001 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
-		"build": "yarn clean && GENERATE_SOURCEMAP=false react-app-rewired build && mv ./build ./dist && mv index.d.ts dist/",
+		"build:lib": "tsc",
+		"build:web": "GENERATE_SOURCEMAP=false react-app-rewired build",
+		"build": "yarn clean && yarn build:lib && yarn build:web && copyfiles -u 1 src/**/*.css src/**/*.scss dist/es/ && mv ./build/* ./dist/",
 		"test": "react-app-rewired test",
 		"eject": "create-react-app --eject",
 		"lint": "eslint --ext ts,tsx src/*/*.*",
