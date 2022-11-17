@@ -142,6 +142,7 @@ KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
 	if (this.isOpen) {
 		if (this.modal) {
 			const parentNode = this.getParentElement()
+			parentNode.classList.remove("KycDaoModalRoot")
 
 			if (parentNode) {
 				parentNode.removeChild(this.modal)
