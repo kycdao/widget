@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.1",
+	"version": "0.3.0-rc.2",
 	"license": "unlicensed",
 	"files": [
 		"dist/*",
@@ -33,10 +33,10 @@
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/react": "^13.4.0",
 		"@testing-library/user-event": "^14.4.3",
-		"@types/jest": "^29.2.0",
-		"@types/node": "^18.11.6",
+		"@types/jest": "^29.2.3",
+		"@types/node": "^18.11.9",
 		"@types/react": "^18.0.25",
-		"@types/react-dom": "^18.0.7",
+		"@types/react-dom": "^18.0.9",
 		"buffer": "^6.0.3",
 		"crypto-browserify": "^3.12.0",
 		"near-api-js": "^1.1.0",
@@ -53,24 +53,24 @@
 		"styled-components": "^5.3.6"
 	},
 	"devDependencies": {
-		"@babel/plugin-transform-typescript": "^7.20.0",
-		"@babel/preset-env": "^7.19.4",
+		"@babel/plugin-transform-typescript": "^7.20.2",
+		"@babel/preset-env": "^7.20.2",
 		"@babel/preset-react": "^7.18.6",
 		"@typescript-eslint/eslint-plugin": "^5.43.0",
 		"@typescript-eslint/parser": "^5.43.0",
-		"babel-cli": "^6.23.0",
+		"babel-cli": "^6.26.0",
 		"babel-preset-es2015": "6.24.1",
 		"copy-files": "^0.1.0",
 		"copyfiles": "^2.4.1",
 		"create-react-app": "^5.0.1",
 		"cross-env": "^7.0.3",
-		"eslint": "^8.26.0",
+		"eslint": "^8.28.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-jsx-a11y": "^6.6.1",
 		"eslint-plugin-prettier": "^4.2.1",
-		"eslint-plugin-react": "^7.31.10",
+		"eslint-plugin-react": "^7.31.11",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-rxjs": "^5.0.2",
 		"npm-dts-webpack-plugin": "^1.3.12",
@@ -78,17 +78,18 @@
 		"react-app-rewired": "^2.2.1",
 		"rimraf": "^3.0.2",
 		"tsc": "^2.0.4",
-		"typescript": "4.8.4"
+		"typescript": "4.9.3"
 	},
 	"scripts": {
 		"start": "cross-env HTTPS=true PORT=3001 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
 		"build:lib": "tsc",
 		"build:web": "GENERATE_SOURCEMAP=false react-app-rewired build",
-		"build": "yarn clean && yarn build:lib && yarn build:web && copyfiles -u 1 \"src/**/*.css\" \"src/**/*.scss\" dist/es && mv ./build/* ./dist/",
+		"build": "yarn clean && yarn build:lib && yarn build:web && mv ./build/* ./dist/ && yarn run copy-files",
 		"test": "react-app-rewired test",
 		"eject": "create-react-app --eject",
 		"lint": "eslint --ext ts,tsx src/*/*.*",
-		"clean": "rimraf build dist"
+		"clean": "rimraf build dist",
+		"copy-files": "copyfiles -u 1 \"./src/**/*.css\" \"./src/**/*.scss\" ./dist/es "
 	},
 	"eslintConfig": {
 		"extends": [
