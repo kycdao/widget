@@ -1,6 +1,21 @@
 @import "../../style/variables.scss";
 
 button.kyc-button {
+  &.centered {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+
+    span {
+      margin: 0;
+    }
+  }
+
+  &.square {
+    width: 3em;
+    height: 3em;
+  }
+
 	height: $--button-height;
 	display: inline-flex;
 	justify-content: space-between;
@@ -98,110 +113,39 @@ button.kyc-button {
 		}
 	}
 
-	/*
+  &.clean {
+    background: rgb(0, 0, 0, 0);
+    border: 1px $--kyc-dark-purple solid;
 
-  &.white {
-    background: white;
-    box-shadow: 0 0 0 0 rgba(white, 0);
+		span,
+		.material-icons {
+			font-weight: 400;
+			color: $--kyc-dark-blue-35;
+		}
 
-    span,
-    .material-icons {
-      color: $--kyc-dark-purple;
-    }
+		&:hover {
+			box-shadow: 0 0 0 10px $--kyc-dark-blue-35;
 
-    &:hover {
-      background: $--kyc-normal-blue;
-      box-shadow: 0 0 0 10px rgba($--kyc-normal-blue, 0.3);
+			span,
+			.material-icons {
+				font-weight: 400;
+				color: $--kyc-dark-blue-35;
+				//margin-left: 0.5em;
+			}
+		}
 
-      span,
-      .material-icons {
-        color: white;
-      }
-    }
+		&:focus {
+			background: $--kyc-dark-blue-35;
+			box-shadow: 0 0 0 5px $--kyc-dark-blue-50;
+		}
 
-    &:focus {
-      box-shadow: 0 0 0 10px rgba($--kyc-normal-blue, 0.5);
-    }
+		&:active {
+			box-shadow: 0 0 0 5px $--kyc-dark-blue-35;
+		}
 
-    &:active {
-      box-shadow: 0 0 0 10px rgba($--kyc-normal-blue, 0.7);
-    }
-
-    &:focus-visible {
-      outline: none;
-      border: none;
-    }
-  }
-
-  &.dark {
-    background: $--kyc-dark-blue;
-    box-shadow: 0 0 0 0 rgba(white, 0);
-
-    span,
-    .material-icons {
-      color: white;
-    }
-
-    &:hover {
-      background: white;
-      box-shadow: 0 0 0 10px rgba(white, 0.3);
-
-      span,
-      .material-icons {
-        color: $--kyc-normal-blue;
-      }
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 10px rgba($--kyc-dark-blue, 0.5);
-    }
-
-    &:active {
-      box-shadow: 0 0 0 10px rgba($--kyc-dark-blue, 0.7);
-    }
-
-    &:focus-visible {
-      outline: none;
-      border: none;
-    }
-  }
-
-  &.passed {
-    background: $--kyc-green;
-    box-shadow: 0 0 0 0 rgba(white, 0);
-
-    span,
-    .material-icons {
-      color: $--kyc-dark-blue;
-    }
-
-    &:hover {
-      background: $--kyc-green;
-      box-shadow: 0 0 0 10px rgba(white, 0.3);
-    }
-  }
-
-  &.underline {
-    color: $--kyc-normal-blue;
-    text-decoration: underline;
-    background: transparent;
-
-    @keyframes underlineHover {
-      from {
-        color: $--kyc-normal-blue;
-      }
-
-      to {
-        color: $--kyc-green;
-      }
-    }
-
-    &:hover {
-      animation-name: underlineHover;
-      animation-duration: 100ms;
-      color: $--kyc-green;
-    }
-  }
-
-   */
+		&:focus-visible {
+			outline: none;
+			border: none;
+		}
+	}
 }

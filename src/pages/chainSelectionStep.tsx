@@ -15,12 +15,14 @@ import {
 	OnNext,
 	OnPrev,
 } from "../components/stateContext"
-import { Step } from "../components/step/step"
+import { Step, StepPart } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { ToggleButton } from "../components/toggleButton/toggleButton"
 import { PageProps } from "./pageProps"
 
 type Chains = "Near" | "Ethereum" | "Solana"
+
+const Header = () => <h1 className="h1">Connect</h1>
 
 export const ChainSelection: FC<PageProps> = ({
 	className,
@@ -72,7 +74,7 @@ export const ChainSelection: FC<PageProps> = ({
 				})
 			})
 		},
-		[]
+		[dispatch, kycDao?.kycDao]
 	)
 
 	const onPrev = useCallback(() => {
@@ -83,7 +85,7 @@ export const ChainSelection: FC<PageProps> = ({
 				next: StepID.chainSelection,
 			},
 		})
-	}, [])
+	}, [dispatch])
 
 	const onSubmit = useCallback(async () => {
 		if (!disabled && connectedWallet) {
@@ -113,7 +115,7 @@ export const ChainSelection: FC<PageProps> = ({
 				console.error(err)
 			}
 		}
-	}, [connectedWallet, disabled, kycDao])
+	}, [connectedWallet, disabled, kycDao, dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
@@ -141,6 +143,43 @@ export const ChainSelection: FC<PageProps> = ({
 		}
 	}, [inactive, disabled, dispatch])
 
+	const footer = useCallback<StepPart>(
+		({ disabled, inactive, onEnter }) => (
+			<SubmitButton
+				inactive={inactive}
+				autoFocus={!!connectedWallet && !inactive}
+				disabled={!connectedWallet || disabled}
+				className="full-width blue"
+				onClick={onEnter}
+			/>
+		),
+		[connectedWallet]
+	)
+
+	const body = useCallback<StepPart>(
+		() => (
+			<>
+				<h2 className="h2">
+					Your amazing NFT image will be here, but first, please complete KYC
+					verification!
+				</h2>
+				<h2 className="h2">Select Network</h2>
+				{chains
+					.filter((chain) => chain.isAvailable)
+					.map(({ label, value }) => (
+						<ToggleButton
+							label={label}
+							toggle={value === connectedWallet}
+							key={value}
+							className="full-width blue"
+							onClick={onChange(value)}
+						/>
+					))}
+			</>
+		),
+		[onChange, connectedWallet, chains]
+	)
+
 	if (!kycDao) {
 		return <>Error</>
 	}
@@ -155,36 +194,9 @@ export const ChainSelection: FC<PageProps> = ({
 			animation={animation}
 			className={className}
 			onEnter={onSubmit}
-			header={() => <h1 className="h1">Connect</h1>}
-			footer={({ disabled, inactive }) => (
-				<SubmitButton
-					inactive={inactive}
-					autoFocus={!!connectedWallet && !inactive}
-					disabled={!connectedWallet || disabled}
-					className="full-width blue"
-					onClick={onSubmit}
-				/>
-			)}
-			body={() => (
-				<>
-					<h2 className="h2">
-						Your amazing NFT image will be here, but first, please complete KYC
-						verification!
-					</h2>
-					<h2 className="h2">Select Network</h2>
-					{chains
-						.filter((chain) => chain.isAvailable)
-						.map(({ label, value }) => (
-							<ToggleButton
-								label={label}
-								toggle={value === connectedWallet}
-								key={value}
-								className="full-width blue"
-								onClick={onChange(value)}
-							/>
-						))}
-				</>
-			)}
+			header={Header}
+			footer={footer}
+			body={body}
 		/>
 	)
 }

@@ -69,6 +69,10 @@
 			margin: 1rem 0;
 		}
 	}
+
+	p + p {
+		padding-top: 1em;
+	}
 }
 
 /* 00 STEP - loading.tsx */

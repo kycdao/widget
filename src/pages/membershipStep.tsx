@@ -7,9 +7,25 @@ import {
 	StateContext,
 	StepID,
 } from "../components/stateContext"
-import { Step } from "../components/step/step"
+import { StepPart, Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
+
+const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
+	<>
+		<div className="policy">
+			By starting verification you accept <a href="#1">Privacy Policy</a> and{" "}
+			<a href="#2">Terms &#38; Conditions.</a>
+		</div>
+		<SubmitButton
+			autoFocus={!inactive && !disabled}
+			disabled={disabled}
+			inactive={inactive}
+			className="full-width blue"
+			onClick={onEnter}
+		/>
+	</>
+)
 
 export const KycDAOMembershipStep: FC<PageProps> = ({
 	className,
@@ -77,21 +93,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 			animation={animation}
 			className={className}
 			onEnter={onSubmit}
-			footer={({ disabled, inactive }) => (
-				<>
-					<div className="policy">
-						By starting verification you accept <a href="#1">Privacy Policy</a>{" "}
-						and <a href="#2">Terms &#38; Conditions.</a>
-					</div>
-					<SubmitButton
-						autoFocus={!inactive && !disabled}
-						disabled={disabled}
-						inactive={inactive}
-						className="full-width blue"
-						onClick={onSubmit}
-					/>
-				</>
-			)}>
+			footer={Footer}>
 			<h1 className="h1">01 - KycDAO Membership</h1>
 			<p className="p">
 				kycDAO is building a trusted web3 ecosystem linked together by verified

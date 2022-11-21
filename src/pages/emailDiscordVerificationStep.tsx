@@ -17,7 +17,7 @@ import {
 	OnNext,
 	OnPrev,
 } from "../components/stateContext"
-import { Step } from "../components/step/step"
+import { StepPart, Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 
@@ -119,6 +119,29 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 		setEmailValue(value)
 	}, [])
 
+	const footer = useCallback<StepPart>(
+		({ disabled, inactive, onNext }) => (
+			<>
+				<Input
+					inputRef={inputRef}
+					disabled={disabled}
+					value={emailValue}
+					placeholder={"email"}
+					className="full-width"
+					onChange={onEmailChange}
+				/>
+				<SubmitButton
+					autoFocus={buttonAutofocus}
+					inactive={inactive}
+					disabled={disableSubmit || disabled}
+					className="full-width blue"
+					onClick={onNext}
+				/>
+			</>
+		),
+		[inputRef, emailValue, onEmailChange, buttonAutofocus, disableSubmit]
+	)
+
 	return (
 		<Step
 			onNext={onSubmit}
@@ -129,25 +152,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 			animation={animation}
 			className={className}
 			onEnter={onSubmit}
-			footer={({ disabled, inactive }) => (
-				<>
-					<Input
-						inputRef={inputRef}
-						disabled={disabled}
-						value={emailValue}
-						placeholder={"email"}
-						className="full-width"
-						onChange={onEmailChange}
-					/>
-					<SubmitButton
-						autoFocus={buttonAutofocus}
-						inactive={inactive}
-						disabled={disableSubmit || disabled}
-						className="full-width blue"
-						onClick={onSubmit}
-					/>
-				</>
-			)}>
+			footer={footer}>
 			<h1 className="h1">03 - Email / Discord verification</h1>
 			<p className="p">
 				Verify your email / discord via the magic link sent to your address.

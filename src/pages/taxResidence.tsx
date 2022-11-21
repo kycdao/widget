@@ -17,7 +17,7 @@ import {
 	OnNext,
 	OnPrev,
 } from "../components/stateContext"
-import { Step } from "../components/step/step"
+import { StepPart, Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 
@@ -126,6 +126,31 @@ export const TaxResidenceStep: FC<PageProps> = ({
 		}
 	}, [submitDisabled, disabled, inactive, dispatch])
 
+	const footer = useCallback<StepPart>(
+		({ disabled, inactive, onEnter }) => (
+			<>
+				<Input
+					inputRef={inputValue}
+					autoFocus={submitDisabled && !inactive}
+					disabled={disabled}
+					autoCompleteData={autoCompleteData}
+					value={value}
+					placeholder={"Type your tax residence here"}
+					className="full-width"
+					onChange={onChange}
+				/>
+				<SubmitButton
+					inactive={inactive}
+					autoFocus={!submitDisabled && !inactive}
+					disabled={submitDisabled || disabled}
+					className="full-width blue"
+					onClick={onEnter}
+				/>
+			</>
+		),
+		[submitDisabled, inputValue, autoCompleteData, value, onChange]
+	)
+
 	return (
 		<Step
 			onNext={onSubmit}
@@ -136,29 +161,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 			animation={animation}
 			className={className}
 			onEnter={onSubmit}
-			footer={({ disabled, inactive }) => {
-				return (
-					<>
-						<Input
-							inputRef={inputValue}
-							autoFocus={submitDisabled && !inactive}
-							disabled={disabled}
-							autoCompleteData={autoCompleteData}
-							value={value}
-							placeholder={"Type your tax residence here"}
-							className="full-width"
-							onChange={onChange}
-						/>
-						<SubmitButton
-							inactive={inactive}
-							autoFocus={!submitDisabled && !inactive}
-							disabled={submitDisabled || disabled}
-							className="full-width blue"
-							onClick={onSubmit}
-						/>
-					</>
-				)
-			}}>
+			footer={footer}>
 			<h1 className="h1">Tax residence</h1>
 			<p className="p">
 				Please select the country where you are currently a tax residence.

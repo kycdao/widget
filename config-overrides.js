@@ -30,8 +30,7 @@ module.exports = function override(config, env) {
 		new webpack.ProvidePlugin({
 			process: "process/browser",
 			Buffer: ["buffer", "Buffer"],
-			ethereum: ["ethereum", "ethereum"],
-			//            crypto: ['crypto', 'crypto-browserify']
+			ethereum: ["ethereum", "ethereum"]
 		}),
 	])
 
@@ -39,10 +38,6 @@ module.exports = function override(config, env) {
 		test: /\.(woff2?)$/,
 		dependency: { not: ["file"] },
 		type: "asset/resource",
-		generator: {
-			// filename: 'static/[name][ext]',
-			// emit: false
-		},
 	})
 
 	if (env === "production") {
@@ -73,29 +68,7 @@ module.exports = function override(config, env) {
 			filename: "[name].css",
 		})
 	)
-
-	/*config.plugins.push(
-		new WebpackManifestPlugin({
-			fileName: "asset-manifest.json",
-			publicPath: "public",
-			generate: (seed, files, entrypoints) => {
-				const manifestFiles = files.reduce((manifest, file) => {
-					manifest[file.name] = file.path
-					return manifest
-				}, seed)
-				const entrypointFiles = entrypoints.main.filter(
-					// <--- This line here
-					(fileName) => !fileName.endsWith(".map")
-				)
-
-				return {
-					files: manifestFiles,
-					entrypoints: entrypointFiles,
-				}
-			},
-		})
-	)*/
-
+	
 	config.devtool = "source-map"
 
 	return config

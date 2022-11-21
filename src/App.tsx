@@ -35,7 +35,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 		KycDao.initialize(config).then((results) => {
 			setKycDao({ ...results, width, height })
 		})
-	}, [])
+	}, [config, width, height])
 
 	useEffect(() => {
 		const close = OnClose.subscribe(() => {
@@ -50,7 +50,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	useEffect(() => {
 		if (kycDao) {
 			dispatch({
-				payload: { current: StepID.AgreementStep, prev: StepID.loading },
+				payload: { current: StepID.mintStep, prev: StepID.loading },
 				type: DataActionTypes.changePage,
 			})
 		}

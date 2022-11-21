@@ -6,10 +6,20 @@ import {
 	HeaderButtons,
 	OnPrev,
 } from "../components/stateContext"
-import { Step } from "../components/step/step"
+import { StepPart, Step } from "../components/step/step"
 import { OnNext } from "../components/stateContext"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
+
+const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
+	<SubmitButton
+		autoFocus={!disabled && !inactive}
+		disabled={disabled}
+		inactive={inactive}
+		className="full-width blue"
+		onClick={onEnter}
+	/>
+)
 
 export const VerificationStep: FC<PageProps> = ({
 	className,
@@ -76,15 +86,7 @@ export const VerificationStep: FC<PageProps> = ({
 			animation={animation}
 			className={className}
 			onEnter={onSubmit}
-			footer={({ disabled, inactive }) => (
-				<SubmitButton
-					autoFocus={!disabled && !inactive}
-					disabled={disabled}
-					inactive={inactive}
-					className="full-width blue"
-					onClick={onSubmit}
-				/>
-			)}>
+			footer={Footer}>
 			<h1 className="h1">02 - ID Verification</h1>
 			<p className="p">
 				We are using 3rd party partners to collect information for verification.

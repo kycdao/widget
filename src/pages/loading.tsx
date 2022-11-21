@@ -7,6 +7,8 @@ import {
 import { Step } from "../components/step/step"
 import { PageProps } from "./pageProps"
 
+const Header = () => <h1 className="h1">Loading</h1>
+
 export const Loading: FC<PageProps> = ({
 	className,
 	animation,
@@ -26,7 +28,7 @@ export const Loading: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}
-	}, [inactive, disabled])
+	}, [disabled, dispatch])
 
 	return (
 		<Step
@@ -34,7 +36,7 @@ export const Loading: FC<PageProps> = ({
 			onTransitionDone={onTransitionDone}
 			className={className}
 			animation={animation}
-			header={() => <h1 className="h1">Loading</h1>}>
+			header={Header}>
 			<div className="loading-animation">
 				<svg
 					className="part-1"

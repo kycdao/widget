@@ -7,7 +7,7 @@
 		"sourceMap": true,
 		"outDir": "dist/es",
 		"lib": ["dom", "dom.iterable", "ES2021"],
-		"allowJs": false,
+		"allowJs": true,
 		"skipLibCheck": true,
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
@@ -20,7 +20,7 @@
 		"jsx": "react-jsx",
 		"removeComments": true,
 		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
+		"emitDecoratorMetadata": true
 	},
 	"include": ["src"],
 	"exclude": [

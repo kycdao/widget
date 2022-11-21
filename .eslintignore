@@ -5,3 +5,4 @@
 *.svg
 /build
 /dist
+/src/index.js
