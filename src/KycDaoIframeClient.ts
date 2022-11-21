@@ -1,4 +1,3 @@
-import { BootstrapKycDaoModal } from "./BootstrapKycDaoModal"
 import "./KycDaoClient.scss"
 import {
 	KycDaoClientInterface,
@@ -6,7 +5,7 @@ import {
 	KycDaoClientOptions,
 } from "./KycDaoClientCommon"
 
-export function KycDaoClient(
+export default function KycDaoClient(
 	this: KycDaoClientInterface,
 	{
 		height = "100%",
@@ -95,7 +94,22 @@ KycDaoClient.prototype.getParentElement = function (
 }
 
 KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
+	if (!this.iframeOptions?.url) {
+		throw new Error(
+			"An URL is needed if you want to use an iframe! What do you want to display?"
+		)
+	}
+
 	if (!this.isOpen) {
+		const params = new URLSearchParams()
+		const paramSetter = ({ 0: key, 1: value }: { 0: string; 1: string }) =>
+			params.set(key, Array.isArray(value) ? `["${value.join('","')}"]` : value)
+
+		Object.entries(this.config).forEach(paramSetter)
+		Object.entries(this.iframeOptions).forEach(paramSetter)
+
+		params.set("messageTargetOrigin", this.iframeOptions.messageTargetOrigin)
+
 		this.parent = this.getParentElement() || document.body
 		this.parent.classList.add("KycDaoModalRoot")
 
@@ -104,9 +118,12 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 		this.modal.style.setProperty("--width", this.width)
 		this.modal.style.setProperty("--height", this.height)
 
-		const container = document.createElement("div")
-
-		container.classList.add("KycDaoModalFrame")
+		const container = document.createElement("iframe")
+		container.allow = "encrypted-media; camera"
+		container.src = this.iframeOptions.url + "?" + params.toString()
+		container.width = this.width
+		container.height = this.height
+		container.classList.add("KycDaoModalIFrame")
 
 		this.modal.appendChild(container)
 
@@ -117,29 +134,24 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 		setTimeout(() => {
 			window.parent.addEventListener("click", this.onOutsideClick)
 			window.parent.addEventListener("message", this.messageHndlr)
-
-			BootstrapKycDaoModal({
-				config: this.config,
-				height: this.height,
-				parent: container,
-				width: this.width,
-			})
 		}, 0)
 	}
 }
 
 KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
-	if (this.isOpen && this.modal) {
-		const parentNode = this.getParentElement()
-		parentNode.classList.remove("KycDaoModalRoot")
+	if (this.isOpen) {
+		if (this.modal) {
+			const parentNode = this.getParentElement()
+			parentNode.classList.remove("KycDaoModalRoot")
 
-		if (parentNode) {
-			parentNode.removeChild(this.modal)
+			if (parentNode) {
+				parentNode.removeChild(this.modal)
+			}
+			window.removeEventListener("click", this.onOutsideClick)
+			window.removeEventListener("message", this.messageHndlr)
+			this.isOpen = false
 		}
-		window.removeEventListener("click", this.onOutsideClick)
-		window.removeEventListener("message", this.messageHndlr)
-		this.isOpen = false
 	}
 }
 
-window.KycDaoClient = KycDaoClient
+window.KycDaoIframeClient = KycDaoClient

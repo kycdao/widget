@@ -13,15 +13,13 @@ import { Loading } from "./pages/loading"
 import "./style/style.scss"
 import { Header } from "./components/header/header"
 import "./fonts.scss"
-import { IframeOptions } from "./KycDaoClient"
-// import 'material-icons'
 import { Router } from "./router"
 
 export type KycDaoModalProps = {
 	width?: number | string
 	height?: number | string
 	config: SdkConfiguration
-	iframeOptions?: IframeOptions
+	iframeOptions?: { messageTargetOrigin: string }
 }
 
 export const KycDaoModal: FC<KycDaoModalProps> = ({
@@ -37,7 +35,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 		KycDao.initialize(config).then((results) => {
 			setKycDao({ ...results, width, height })
 		})
-	}, [])
+	}, [config, width, height])
 
 	useEffect(() => {
 		const close = OnClose.subscribe(() => {
@@ -47,12 +45,12 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 			)
 		})
 		return close.unsubscribe.bind(close)
-	}, [])
+	}, [iframeOptions])
 
 	useEffect(() => {
 		if (kycDao) {
 			dispatch({
-				payload: { current: StepID.AgreementStep, prev: StepID.loading },
+				payload: { current: StepID.mintStep, prev: StepID.loading },
 				type: DataActionTypes.changePage,
 			})
 		}
@@ -65,10 +63,8 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	return (
 		<KycDaoContext.Provider value={kycDao}>
 			<StateContext.Provider value={{ data, dispatch }}>
-				<div style={{ width, height }}>
-					<Header />
-					<Router />
-				</div>
+				<Header />
+				<Router />
 			</StateContext.Provider>
 		</KycDaoContext.Provider>
 	)

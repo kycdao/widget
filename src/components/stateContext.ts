@@ -1,5 +1,5 @@
 import { createContext } from "react"
-import { Subject } from "rxjs/internal/Subject"
+import { Subject } from "rxjs"
 
 export type HeaderButtonState = "enabled" | "disabled" | "hidden"
 
@@ -120,6 +120,7 @@ export enum StepID {
 	chainSelection,
 	termsAccepted,
 	loading,
+	mintStep,
 }
 
 export const reducer = (

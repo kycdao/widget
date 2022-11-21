@@ -1,5 +1,6 @@
 import {
 	ChangeEventHandler,
+	createRef,
 	FC,
 	RefObject,
 	useCallback,
@@ -21,7 +22,7 @@ type InputProps = {
 	value?: string
 	autoCompleteData?: string[]
 	autoFocus?: boolean
-	inputRef?: RefObject<HTMLInputElement>
+	inputRef: RefObject<HTMLInputElement>
 }
 
 export const Input: FC<InputProps> = ({
@@ -33,7 +34,7 @@ export const Input: FC<InputProps> = ({
 	value = "",
 	autoCompleteData,
 	autoFocus,
-	inputRef = useRef(null),
+	inputRef = createRef(),
 }) => {
 	const [showAutoComplete, setShowAutoComplete] = useState(false)
 	const autocompleteRef = useRef<HTMLDivElement>(null)
@@ -45,7 +46,7 @@ export const Input: FC<InputProps> = ({
 			}
 			setShowAutoComplete(true)
 		},
-		[]
+		[onChange]
 	)
 
 	useEffect(() => {
@@ -70,10 +71,14 @@ export const Input: FC<InputProps> = ({
 			}
 		}
 
-		inputRef.current?.addEventListener("focus", hndlr)
+		const { current } = inputRef
 
-		return () => inputRef.current?.addEventListener("focus", hndlr)
-	}, [showAutoComplete])
+		current?.addEventListener("focus", hndlr)
+
+		return () => {
+			current?.addEventListener("focus", hndlr)
+		}
+	}, [showAutoComplete, inputRef])
 
 	const onAutocompleteHndlr = useCallback(
 		(value: string) => () => {
@@ -97,7 +102,7 @@ export const Input: FC<InputProps> = ({
 		} else if (disabled && autoFocus) {
 			inputRef.current?.blur()
 		}
-	}, [disabled, autoFocus])
+	}, [disabled, autoFocus, inputRef])
 
 	return (
 		<>

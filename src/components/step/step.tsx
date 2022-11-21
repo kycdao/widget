@@ -16,10 +16,18 @@ export type StepAnimation = { from: MovingDirection; to: MovingDirection }
 
 export type StepState = "inTransition" | "transitionDone"
 
+export type StepPart = FC<{
+	disabled: boolean
+	inactive: boolean
+	onNext?: () => void
+	onPrev?: () => void
+	onEnter?: () => void
+}>
+
 type StepProps = {
-	header?: (props: { disabled: boolean; inactive: boolean }) => JSX.Element
-	footer?: (props: { disabled: boolean; inactive: boolean }) => JSX.Element
-	body?: (props: { disabled: boolean; inactive: boolean }) => JSX.Element
+	header?: StepPart
+	footer?: StepPart
+	body?: StepPart
 	onEnter?: () => void
 	className?: string
 	disabled: boolean
@@ -114,18 +122,23 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({
 		)
 	}
 
+	const transitionNotDone = transitionState !== "transitionDone"
+
 	return (
 		<div
-			{...(!inactive && !disabled && transitionState === "transitionDone"
-				? swipeHandlers
-				: {})}
-			className={`step${animatedClass ? ` ${animatedClass}` : ""} ${className}`}
+			{...(!inactive && !disabled && transitionNotDone ? swipeHandlers : {})}
+			className={`step${animatedClass ? ` ${animatedClass}` : ""} ${
+				className ? className : ""
+			}`}
 			style={{ position: "absolute" }}>
 			<div>
 				{header
 					? header({
 							disabled,
-							inactive: inactive || transitionState !== "transitionDone",
+							inactive: inactive || transitionNotDone,
+							onEnter,
+							onNext,
+							onPrev,
 					  })
 					: null}
 			</div>
@@ -134,7 +147,10 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({
 				{body
 					? body({
 							disabled,
-							inactive: inactive || transitionState !== "transitionDone",
+							inactive: inactive || transitionNotDone,
+							onEnter,
+							onNext,
+							onPrev,
 					  })
 					: null}
 			</div>
@@ -142,7 +158,10 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({
 				{footer
 					? footer({
 							disabled,
-							inactive: inactive || transitionState !== "transitionDone",
+							inactive: inactive || transitionNotDone,
+							onEnter,
+							onNext,
+							onPrev,
 					  })
 					: null}
 			</div>

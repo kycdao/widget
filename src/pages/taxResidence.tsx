@@ -17,7 +17,7 @@ import {
 	OnNext,
 	OnPrev,
 } from "../components/stateContext"
-import { Step } from "../components/step/step"
+import { StepPart, Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 
@@ -37,6 +37,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 		[value]
 	)
 	const taxResidence = useRef(taxResidency)
+	const inputValue = useRef(null)
 
 	useEffect(() => {
 		if (taxResidency) {
@@ -45,7 +46,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 					""
 			)
 		}
-	}, [])
+	}, [taxResidency])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
@@ -61,7 +62,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}
-	}, [inactive, disabled])
+	}, [inactive, disabled, dispatch, taxResidency])
 
 	const onSubmit = useCallback(() => {
 		if (!submitDisabled && !inactive) {
@@ -77,7 +78,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 				},
 			})
 		}
-	}, [taxResidence.current, submitDisabled, inactive])
+	}, [taxResidence, submitDisabled, inactive, dispatch])
 
 	const onPrev = useCallback(() => {
 		dispatch({
@@ -91,7 +92,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 			payload: taxResidence.current,
 			type: DataActionTypes.taxResidenceChange,
 		})
-	}, [])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
@@ -103,7 +104,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 				next.unsubscribe()
 			}
 		}
-	}, [onSubmit])
+	}, [onSubmit, disabled, inactive, onPrev])
 
 	const autoCompleteData = useMemo(() => Countries.map((c) => c.name), [])
 
@@ -123,7 +124,32 @@ export const TaxResidenceStep: FC<PageProps> = ({
 				},
 			})
 		}
-	}, [submitDisabled, disabled, inactive])
+	}, [submitDisabled, disabled, inactive, dispatch])
+
+	const footer = useCallback<StepPart>(
+		({ disabled, inactive, onEnter }) => (
+			<>
+				<Input
+					inputRef={inputValue}
+					autoFocus={submitDisabled && !inactive}
+					disabled={disabled}
+					autoCompleteData={autoCompleteData}
+					value={value}
+					placeholder={"Type your tax residence here"}
+					className="full-width"
+					onChange={onChange}
+				/>
+				<SubmitButton
+					inactive={inactive}
+					autoFocus={!submitDisabled && !inactive}
+					disabled={submitDisabled || disabled}
+					className="full-width blue"
+					onClick={onEnter}
+				/>
+			</>
+		),
+		[submitDisabled, inputValue, autoCompleteData, value, onChange]
+	)
 
 	return (
 		<Step
@@ -135,28 +161,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 			animation={animation}
 			className={className}
 			onEnter={onSubmit}
-			footer={({ disabled, inactive }) => {
-				return (
-					<>
-						<Input
-							autoFocus={submitDisabled && !inactive}
-							disabled={disabled}
-							autoCompleteData={autoCompleteData}
-							value={value}
-							placeholder={"Type your tax residence here"}
-							className="full-width"
-							onChange={onChange}
-						/>
-						<SubmitButton
-							inactive={inactive}
-							autoFocus={!submitDisabled && !inactive}
-							disabled={submitDisabled || disabled}
-							className="full-width blue"
-							onClick={onSubmit}
-						/>
-					</>
-				)
-			}}>
+			footer={footer}>
 			<h1 className="h1">Tax residence</h1>
 			<p className="p">
 				Please select the country where you are currently a tax residence.

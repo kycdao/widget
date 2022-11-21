@@ -1,3 +1,8 @@
-/src/style
-/src/**/*.woff*
-/src/**/*.svg
+/style
+*.woff*
+*.scss
+*.css
+*.svg
+/build
+/dist
+/src/index.js

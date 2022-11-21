@@ -10,8 +10,10 @@ import {
 	HeaderButtons,
 	OnPrev,
 } from "../components/stateContext"
-import { Step } from "../components/step/step"
+import { StepPart, Step } from "../components/step/step"
 import { PageProps } from "./pageProps"
+
+const Header = () => <h1>Select your KYC NFT art</h1>
 
 export const NftSelection: FC<PageProps> = ({
 	className,
@@ -66,7 +68,7 @@ export const NftSelection: FC<PageProps> = ({
 				}
 			}
 		}
-	}, [])
+	}, [dispatch, kycDao, termsAccepted])
 
 	const onPrev = useCallback(() => {
 		dispatch({
@@ -76,7 +78,7 @@ export const NftSelection: FC<PageProps> = ({
 				next: StepID.nftArtSelection,
 			},
 		})
-	}, [])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
@@ -86,7 +88,7 @@ export const NftSelection: FC<PageProps> = ({
 				prev.unsubscribe()
 			}
 		}
-	}, [])
+	}, [disabled, inactive, onPrev])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
@@ -99,13 +101,61 @@ export const NftSelection: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}
-	}, [disabled, inactive])
+	}, [disabled, inactive, dispatch])
 
 	const onRegenerate = useCallback(() => {
 		kycDao?.kycDao.regenerateNftImage().then(() => {
 			setNftImages([{ src: kycDao.kycDao.getNftImageUrl(), hash: Date.now() }])
 		})
-	}, [])
+	}, [kycDao?.kycDao])
+
+	const body = useCallback<StepPart>(
+		({ disabled, inactive }) => (
+			<>
+				<div
+					style={{
+						display: "flex",
+						flexWrap: "wrap",
+						gap: "2em",
+						justifyContent: "space-around",
+						alignContent: "center",
+						height: "75%",
+					}}>
+					<div
+						onClick={onSubmit}
+						style={{ cursor: "pointer", height: "150px", width: "150px" }}>
+						<img alt="" src={`${nftImages[0].src}?${nftImages[0].hash}`} />
+					</div>
+					<Placeholder
+						style={{ borderRadius: "100%" }}
+						onClick={onSubmit}
+						height="150px"
+						width="150px"
+					/>
+					<Placeholder
+						style={{ borderRadius: "100%" }}
+						onClick={onSubmit}
+						height="150px"
+						width="150px"
+					/>
+					<Placeholder
+						style={{ borderRadius: "100%" }}
+						onClick={onSubmit}
+						height="150px"
+						width="150px"
+					/>
+				</div>
+				<Button
+					inactive={inactive}
+					disabled={disabled}
+					className="full-width underline centered"
+					onClick={onRegenerate}>
+					Regenerate ↻
+				</Button>
+			</>
+		),
+		[onRegenerate, nftImages, onSubmit]
+	)
 
 	if (!kycDao) {
 		return <>Error</>
@@ -119,51 +169,8 @@ export const NftSelection: FC<PageProps> = ({
 			onTransitionDone={onTransitionDone}
 			animation={animation}
 			className={className}
-			header={() => <h1>Select your KYC NFT art</h1>}
-			body={({ disabled, inactive }) => (
-				<>
-					<div
-						style={{
-							display: "flex",
-							flexWrap: "wrap",
-							gap: "2em",
-							justifyContent: "space-around",
-							alignContent: "center",
-							height: "75%",
-						}}>
-						<div
-							onClick={onSubmit}
-							style={{ cursor: "pointer", height: "150px", width: "150px" }}>
-							<img src={`${nftImages[0].src}?${nftImages[0].hash}`} />
-						</div>
-						<Placeholder
-							style={{ borderRadius: "100%" }}
-							onClick={onSubmit}
-							height="150px"
-							width="150px"
-						/>
-						<Placeholder
-							style={{ borderRadius: "100%" }}
-							onClick={onSubmit}
-							height="150px"
-							width="150px"
-						/>
-						<Placeholder
-							style={{ borderRadius: "100%" }}
-							onClick={onSubmit}
-							height="150px"
-							width="150px"
-						/>
-					</div>
-					<Button
-						inactive={inactive}
-						disabled={disabled}
-						label="Regenerate ↻"
-						className="full-width underline centered"
-						onClick={onRegenerate}
-					/>
-				</>
-			)}
+			header={Header}
+			body={body}
 		/>
 	)
 }

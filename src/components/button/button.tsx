@@ -6,7 +6,7 @@ export type ButtonProps = {
 	className?: string
 	disabled?: boolean
 	style?: CSSProperties
-	label: string
+	children: JSX.Element[] | JSX.Element | string
 	inactive?: boolean
 }
 
@@ -15,16 +15,16 @@ export const Button: FC<ButtonProps> = ({
 	disabled = false,
 	onClick,
 	className,
-	label,
 	inactive,
+	children,
 }) => {
 	return (
 		<button
 			style={style}
 			disabled={disabled}
-			className={`kyc-button ${className}`}
+			className={`kyc-button${className ? ` ${className}` : ""}`}
 			onClick={inactive ? undefined : onClick}>
-			<span>{label}</span>
+			<span>{children}</span>
 		</button>
 	)
 }

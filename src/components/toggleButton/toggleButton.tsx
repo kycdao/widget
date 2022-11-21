@@ -1,7 +1,7 @@
 import { CSSProperties, FC } from "react"
 import "./toggleButton.scss"
 
-export type ToggleButton = {
+export type ToggleButtonProps = {
 	onClick?: () => void
 	className?: string
 	label?: string
@@ -13,7 +13,7 @@ export type ToggleButton = {
 	inactive?: boolean
 }
 
-export const ToggleButton: FC<ToggleButton> = ({
+export const ToggleButton: FC<ToggleButtonProps> = ({
 	toggle,
 	style,
 	disabled = false,

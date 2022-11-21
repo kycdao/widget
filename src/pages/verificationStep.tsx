@@ -6,10 +6,20 @@ import {
 	HeaderButtons,
 	OnPrev,
 } from "../components/stateContext"
-import { Step } from "../components/step/step"
+import { StepPart, Step } from "../components/step/step"
 import { OnNext } from "../components/stateContext"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
+
+const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
+	<SubmitButton
+		autoFocus={!disabled && !inactive}
+		disabled={disabled}
+		inactive={inactive}
+		className="full-width blue"
+		onClick={onEnter}
+	/>
+)
 
 export const VerificationStep: FC<PageProps> = ({
 	className,
@@ -27,14 +37,14 @@ export const VerificationStep: FC<PageProps> = ({
 				prev: StepID.verificationStep,
 			},
 		})
-	}, [])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
 			const next = OnNext.subscribe(onSubmit)
 			return next.unsubscribe.bind(next)
 		}
-	}, [disabled])
+	}, [disabled, inactive, onSubmit])
 
 	const onPrev = useCallback(() => {
 		dispatch({
@@ -44,14 +54,14 @@ export const VerificationStep: FC<PageProps> = ({
 			},
 			type: DataActionTypes.changePage,
 		})
-	}, [])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
 			const prev = OnPrev.subscribe(onPrev)
 			return prev.unsubscribe.bind(prev)
 		}
-	}, [disabled, inactive])
+	}, [disabled, inactive, onPrev])
 
 	const onStateChange = () => {
 		if (!disabled && !inactive) {
@@ -76,15 +86,7 @@ export const VerificationStep: FC<PageProps> = ({
 			animation={animation}
 			className={className}
 			onEnter={onSubmit}
-			footer={({ disabled, inactive }) => (
-				<SubmitButton
-					autoFocus={!disabled && !inactive}
-					disabled={disabled}
-					inactive={inactive}
-					className="full-width blue"
-					onClick={onSubmit}
-				/>
-			)}>
+			footer={Footer}>
 			<h1 className="h1">02 - ID Verification</h1>
 			<p className="p">
 				We are using 3rd party partners to collect information for verification.

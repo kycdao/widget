@@ -3,6 +3,8 @@ const path = require("path")
 const NpmDtsPlugin = require("npm-dts-webpack-plugin")
 const process = require("process")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const WebpackManifestPlugin =
+	require("webpack-manifest-plugin").WebpackManifestPlugin
 
 module.exports = function override(config, env) {
 	const fallback = config.resolve.fallback
@@ -14,21 +16,21 @@ module.exports = function override(config, env) {
 
 	const outDir = "./build"
 	config.target = "web"
-	config.entry = ["./src/KycDaoClient.ts", "./src/index.tsx"]
+	config.entry = { client: "./src/KycDaoClient.ts", iframeClient: "./src/KycDaoIframeClient.ts", app: "./src/index.js" }
 	config.output = {
-		filename: "index.js",
-		library: { name: "@kycdao/kycdao-web-sdk", type: "umd" },
+		filename: "[name].min.js",
+		library: "kycDaoWebSdk",
 	}
 
 	config.output.path = path.resolve(outDir)
 	config.resolve.fallback = fallback
+	config.resolve.modules = ['node_modules']
 
 	config.plugins = (config.plugins || []).concat([
 		new webpack.ProvidePlugin({
 			process: "process/browser",
 			Buffer: ["buffer", "Buffer"],
-			ethereum: ["ethereum", "ethereum"],
-			//            crypto: ['crypto', 'crypto-browserify']
+			ethereum: ["ethereum", "ethereum"]
 		}),
 	])
 
@@ -36,10 +38,6 @@ module.exports = function override(config, env) {
 		test: /\.(woff2?)$/,
 		dependency: { not: ["file"] },
 		type: "asset/resource",
-		generator: {
-			// filename: 'static/[name][ext]',
-			// emit: false
-		},
 	})
 
 	if (env === "production") {
@@ -58,14 +56,19 @@ module.exports = function override(config, env) {
 		1
 	)
 
-	// config.plugins.splice(config.plugins.findIndex(plugin => plugin instanceof WebpackManifestPlugin), 1)
+	config.plugins.splice(
+		config.plugins.findIndex(
+			(plugin) => plugin instanceof WebpackManifestPlugin
+		),
+		1
+	)
 
 	config.plugins.push(
 		new MiniCssExtractPlugin({
-			filename: "index.css",
+			filename: "[name].css",
 		})
 	)
-
+	
 	config.devtool = "source-map"
 
 	return config

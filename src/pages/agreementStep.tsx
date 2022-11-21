@@ -6,9 +6,21 @@ import {
 	StateContext,
 	StepID,
 } from "../components/stateContext"
-import { Step } from "../components/step/step"
+import { StepPart, Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
+
+const Header: StepPart = () => <h1 className="h1">KycDAO</h1>
+
+const Footer: StepPart = ({ inactive, disabled, onEnter }) => (
+	<SubmitButton
+		autoFocus={!inactive && !disabled}
+		disabled={disabled}
+		className="full-width blue"
+		onClick={onEnter}
+		inactive={inactive}
+	/>
+)
 
 export const AgreementStep: FC<PageProps> = ({
 	className,
@@ -31,7 +43,7 @@ export const AgreementStep: FC<PageProps> = ({
 				prev: StepID.AgreementStep,
 			},
 		})
-	}, [])
+	}, [dispatch])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
@@ -44,14 +56,14 @@ export const AgreementStep: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}
-	}, [disabled, inactive])
+	}, [disabled, inactive, dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
 			const next = OnNext.subscribe(onSubmit)
 			return next.unsubscribe.bind(next)
 		}
-	}, [disabled, inactive])
+	}, [disabled, inactive, dispatch, onSubmit])
 
 	return (
 		<Step
@@ -61,17 +73,9 @@ export const AgreementStep: FC<PageProps> = ({
 			className={className}
 			inactive={inactive}
 			animation={animation}
-			header={() => <h1 className="h1">KycDAO</h1>}
+			header={Header}
 			onEnter={onSubmit}
-			footer={({ disabled, inactive }) => (
-				<SubmitButton
-					autoFocus={!inactive && !disabled}
-					disabled={disabled}
-					className="full-width blue"
-					onClick={onSubmit}
-					inactive={inactive}
-				/>
-			)}>
+			footer={Footer}>
 			<p>{translations?.body1}</p>
 			<p>{translations?.body2}</p>
 		</Step>

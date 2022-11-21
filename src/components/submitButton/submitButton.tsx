@@ -35,7 +35,7 @@ export const SubmitButton: FC<ButtonProps> = ({
 			ref={ref}
 			onMouseEnter={() => setInnerHtml("Next")}
 			onMouseLeave={() => setInnerHtml("Submit")}
-			className={`kyc-button ${className}`}
+			className={`kyc-submit-button kyc-button ${className}`}
 			onClick={inactive ? undefined : onClick}>
 			<i className="material-icons first-arrow"> chevron_right </i>
 			<span>{innerHtml}</span>
