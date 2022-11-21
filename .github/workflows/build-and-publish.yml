@@ -30,7 +30,7 @@ jobs:
       # - run: yarn bundle
       # - run: yarn lint:nofix
       # - run: yarn format:check
-      - run: yarn build:lib
+      - run: yarn build
       - name: Cache package
         if: env.PUBLISH == 'true'
         uses: actions/upload-artifact@v3
