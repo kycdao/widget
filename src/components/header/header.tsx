@@ -13,21 +13,21 @@ export const Header: FC<{ style?: CSSProperties }> = ({ style }) => {
 			payload: { button: HeaderButtons.prev },
 			type: DataActionTypes.OnClickHeaderButton,
 		})
-	}, [])
+	}, [dispatch])
 
 	const OnNext = useCallback(() => {
 		dispatch({
 			payload: { button: HeaderButtons.next },
 			type: DataActionTypes.OnClickHeaderButton,
 		})
-	}, [])
+	}, [dispatch])
 
 	const OnClose = useCallback(() => {
 		dispatch({
 			payload: { button: HeaderButtons.close },
 			type: DataActionTypes.OnClickHeaderButton,
 		})
-	}, [])
+	}, [dispatch])
 
 	return (
 		<div style={style} className="step-header">

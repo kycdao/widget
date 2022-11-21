@@ -63,7 +63,7 @@ export const VerificationStep: FC<PageProps> = ({
 		}
 	}, [disabled, inactive, onPrev])
 
-	const onStateChange = () => {
+	const onStateChange = useCallback(() => {
 		if (!disabled && !inactive) {
 			dispatch({
 				payload: { button: HeaderButtons.prev, state: "enabled" },
@@ -74,7 +74,7 @@ export const VerificationStep: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}
-	}
+	}, [disabled, dispatch, inactive])
 
 	return (
 		<Step

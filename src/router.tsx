@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useContext } from "react"
+import { CSSProperties, FC, useContext, useMemo } from "react"
 import { StepID, StateContext } from "./components/stateContext"
 import { StepAnimation, MovingDirection } from "./components/step/step"
 import { AgreementStep } from "./pages/agreementStep"
@@ -12,16 +12,13 @@ import { NftSelection } from "./pages/nftArtSelection"
 import { TaxResidenceStep } from "./pages/taxResidence"
 import { VerificationStep } from "./pages/verificationStep"
 
-const GetStep = ({
-	stepID,
-	...options
-}: {
+const GetStep: FC<{
 	stepID: StepID
 	animation?: StepAnimation
 	disabled?: boolean
 	inactive?: boolean
 	style?: CSSProperties
-}) => {
+}> = ({ stepID, ...options }) => {
 	switch (stepID) {
 		case StepID.AgreementStep: {
 			return <AgreementStep {...options} />
@@ -71,37 +68,50 @@ function GetMovingAnimation(
 	return "moving-center"
 }
 
+const prevAnimation = {
+	from: "moving-center" as MovingDirection,
+	to: "moving-out" as MovingDirection,
+}
+
+const nextAnimation = {
+	from: "moving-center" as MovingDirection,
+	to: "moving-in" as MovingDirection,
+}
+
 export const Router: FC = () => {
 	const {
 		data: { prevPage, nextPage, currentPage },
 	} = useContext(StateContext)
 
+	const currentAnimation = useMemo(() => {
+		return prevPage || nextPage
+			? {
+					to: "moving-center" as MovingDirection,
+					from: GetMovingAnimation(prevPage, nextPage),
+			  }
+			: undefined
+	}, [nextPage, prevPage])
+
 	return (
 		<div style={{ display: "block", width: "100%", height: "100%" }}>
-			{prevPage
-				? GetStep({
-						stepID: prevPage,
-						animation: { from: "moving-center", to: "moving-out" },
-						inactive: true,
-						style: { width: "100%", height: "100%" },
-				  })
-				: null}
+			{prevPage && (
+				<GetStep
+					stepID={prevPage}
+					animation={prevAnimation}
+					inactive={true}
+					style={{ width: "100%", height: "100%" }}
+				/>
+			)}
 			{GetStep({
 				stepID: currentPage,
-				animation:
-					prevPage || nextPage
-						? {
-								to: "moving-center",
-								from: GetMovingAnimation(prevPage, nextPage),
-						  }
-						: undefined,
+				animation: currentAnimation,
 				inactive: false,
 				style: { width: "100%", height: "100%" },
 			})}
 			{nextPage
 				? GetStep({
 						stepID: nextPage,
-						animation: { from: "moving-center", to: "moving-in" },
+						animation: nextAnimation,
 						inactive: true,
 						style: { width: "100%", height: "100%" },
 				  })

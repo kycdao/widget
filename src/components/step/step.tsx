@@ -78,7 +78,7 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({
 				onTransitionDone("transitionDone")
 			}
 		}
-	}, [])
+	}, [onTransitionDone, animation])
 
 	useLayoutEffect(() => {
 		const timeout = setTimeout(() => {
@@ -91,7 +91,7 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({
 		}, 250)
 
 		return () => clearTimeout(timeout)
-	}, [animatedClass, transitionState])
+	}, [animatedClass, transitionState, onTransitionDone, animation])
 
 	useEffect(() => {
 		if (
@@ -111,7 +111,7 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({
 		document.addEventListener("keyup", enterHndlr)
 
 		return () => document.removeEventListener("keyup", enterHndlr)
-	}, [onEnter, state, transitionState])
+	}, [onEnter, state, transitionState, inactive])
 
 	if (!state) {
 		return (
