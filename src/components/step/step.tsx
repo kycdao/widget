@@ -7,7 +7,6 @@ import {
 	useState,
 } from "react"
 import { useSwipeable } from "react-swipeable"
-import { VirtualKeyboardEvent } from "../../react-app-env"
 import { StateContext } from "../stateContext"
 import "./step.scss"
 
@@ -16,6 +15,8 @@ export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
 export type StepAnimation = { from: MovingDirection; to: MovingDirection }
 
 export type StepState = "inTransition" | "transitionDone"
+
+const windowHeight = window.visualViewport?.height
 
 export type StepPart = FC<{
 	disabled: boolean
@@ -42,9 +43,8 @@ type StepProps = {
 	onPrev?: () => void
 }
 
-const virtualKeyboardSupported = "virtualKeyboard" in navigator
-
 const isPhantom = !!navigator.userAgent.match("Phantom")
+const isIphone = !!navigator.userAgent.match("iPhone")
 
 export const Step: FC<StepProps> = ({
 	onNext,
@@ -120,35 +120,22 @@ export const Step: FC<StepProps> = ({
 		return () => document.removeEventListener("keyup", enterHndlr)
 	}, [onEnter, state, transitionState, inactive])
 
-	const [marginBottom, setMarginBottom] = useState<string>()
-
-	useEffect(() => {
-		if (virtualKeyboardSupported) {
-			const resizeHndlr = (ev: UIEvent) => {
-				const virtualKeyboardEv = ev as VirtualKeyboardEvent
-
-				setMarginBottom(virtualKeyboardEv?.target?.boundingRect.height)
-			}
-
-			navigator.virtualKeyboard.addEventListener("geometrychange", resizeHndlr)
-
-			return () => {
-				navigator.virtualKeyboard.removeEventListener(
-					"geometrychange",
-					resizeHndlr
-				)
-			}
-		}
-	}, [])
+	const [marginBottom, setMarginBottom] = useState<string>(
+		"env(keyboard-inset-height, 0px)"
+	)
 
 	const onInputBlurred = useCallback(() => {
-		if (!virtualKeyboardSupported || isPhantom) {
+		if (isPhantom || isIphone) {
 			setMarginBottom("0px")
 		}
 	}, [])
 
 	const onInputFocused = useCallback(() => {
-		if (!virtualKeyboardSupported || isPhantom) {
+		if (isIphone) {
+			setMarginBottom(
+				windowHeight ? `${windowHeight - window.innerHeight}px` : "270px"
+			)
+		} else if (isPhantom) {
 			setMarginBottom("200px")
 		}
 	}, [])
