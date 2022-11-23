@@ -1,7 +1,5 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-import "./style/style.scss"
-import "./index.css"
 import KycDaoModal from "./App"
 import { SdkConfiguration } from "@kycdao/kycdao-sdk"
 import { ErrorBoundary } from "react-error-boundary"
@@ -12,6 +10,9 @@ import {
 	KycDaoEnvironment,
 	VerificationType,
 } from "@kycdao/kycdao-sdk/dist/types"
+
+import "./style/style.scss"
+import "./index.css"
 
 export type IframeOptions = {
 	url?: string

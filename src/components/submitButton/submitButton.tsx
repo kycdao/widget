@@ -1,5 +1,5 @@
 import { CSSProperties, FC, useEffect, useRef, useState } from "react"
-import "./button.scss"
+import "./submitButton.scss"
 
 export type ButtonProps = {
 	onClick?: () => void

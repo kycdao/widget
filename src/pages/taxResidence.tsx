@@ -21,6 +21,17 @@ import { StepPart, Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 
+export const Body = () => {
+	return (
+		<>
+			<h1 className="h1">Tax residence</h1>
+			<p className="p">
+				Please select the country where you are currently a tax residence.
+			</p>
+		</>
+	)
+}
+
 export const TaxResidenceStep: FC<PageProps> = ({
 	className,
 	animation,
@@ -127,9 +138,11 @@ export const TaxResidenceStep: FC<PageProps> = ({
 	}, [submitDisabled, disabled, inactive, dispatch])
 
 	const footer = useCallback<StepPart>(
-		({ disabled, inactive, onEnter }) => (
+		({ disabled, inactive, onEnter, onInputBlurred, onInputFocused }) => (
 			<>
 				<Input
+					onInputBlurred={onInputBlurred}
+					onInputFocused={onInputFocused}
 					inputRef={inputValue}
 					autoFocus={submitDisabled && !inactive}
 					disabled={disabled}
@@ -161,11 +174,8 @@ export const TaxResidenceStep: FC<PageProps> = ({
 			animation={animation}
 			className={className}
 			onEnter={onSubmit}
-			footer={footer}>
-			<h1 className="h1">Tax residence</h1>
-			<p className="p">
-				Please select the country where you are currently a tax residence.
-			</p>
-		</Step>
+			footer={footer}
+			body={Body}
+		/>
 	)
 }

@@ -1,5 +1,5 @@
 import { KycDao, SdkConfiguration } from "@kycdao/kycdao-sdk"
-import { FC, useEffect, useReducer, useState } from "react"
+import { FC, useEffect, useMemo, useReducer, useState } from "react"
 import { KycDaoContext, KycDaoState } from "./components/kycDao.provider"
 import {
 	StepID,
@@ -10,10 +10,12 @@ import {
 	DataActionTypes,
 } from "./components/stateContext"
 import { Loading } from "./pages/loading"
-import "./style/style.scss"
 import { Header } from "./components/header/header"
-import "./fonts.scss"
 import { Router } from "./router"
+
+if ("virtualKeyboard" in navigator) {
+	navigator.virtualKeyboard.overlaysContent = true
+}
 
 export type KycDaoModalProps = {
 	width?: number | string
@@ -56,13 +58,15 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 		}
 	}, [kycDao])
 
+	const contextData = useMemo(() => ({ data, dispatch }), [data, dispatch])
+
 	if (!kycDao) {
 		return <Loading />
 	}
 
 	return (
 		<KycDaoContext.Provider value={kycDao}>
-			<StateContext.Provider value={{ data, dispatch }}>
+			<StateContext.Provider value={contextData}>
 				<Header />
 				<Router />
 			</StateContext.Provider>

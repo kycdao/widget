@@ -23,6 +23,17 @@ import { PageProps } from "./pageProps"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
+const Body = () => {
+	return (
+		<>
+			<h1 className="h1">03 - Email / Discord verification</h1>
+			<p className="p">
+				Verify your email / discord via the magic link sent to your address.
+			</p>
+		</>
+	)
+}
+
 export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	className,
 	animation,
@@ -120,9 +131,11 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	}, [])
 
 	const footer = useCallback<StepPart>(
-		({ disabled, inactive, onNext }) => (
+		({ disabled, inactive, onNext, onInputBlurred, onInputFocused }) => (
 			<>
 				<Input
+					onInputBlurred={onInputBlurred}
+					onInputFocused={onInputFocused}
 					inputRef={inputRef}
 					disabled={disabled}
 					value={emailValue}
@@ -152,11 +165,8 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 			animation={animation}
 			className={className}
 			onEnter={onSubmit}
-			footer={footer}>
-			<h1 className="h1">03 - Email / Discord verification</h1>
-			<p className="p">
-				Verify your email / discord via the magic link sent to your address.
-			</p>
-		</Step>
+			footer={footer}
+			body={Body}
+		/>
 	)
 }

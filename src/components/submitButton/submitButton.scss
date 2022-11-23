@@ -1,0 +1,33 @@
+@import "../../style/variables";
+
+.kyc-submit-button {
+	overflow: hidden;
+
+	.first-arrow {
+		position: absolute;
+		left: 1rem;
+		@include translateX(0);
+		@extend .tr2;
+	}
+
+	.second-arrow {
+		position: absolute;
+		right: 1rem;
+		@include translateX(0);
+		@extend .tr2;
+	}
+
+	span {
+		margin-left: 1.5rem !important;
+	}
+
+	&:hover {
+		.first-arrow {
+			@include translateX(20rem);
+		}
+
+		.second-arrow {
+			@include translateX(4rem);
+		}
+	}
+}

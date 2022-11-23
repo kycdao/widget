@@ -27,6 +27,38 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	</>
 )
 
+const Body = () => {
+	return (
+		<>
+			<h1 className="h1">01 - KycDAO Membership</h1>
+			<p className="p">
+				kycDAO is building a trusted web3 ecosystem linked together by verified
+				wallets.
+			</p>
+			<p className="p">
+				Once verified and proof is minted on-chain, all kycDAO partner services
+				will accept the verification.
+			</p>
+			<div className="the-process">
+				<ul>
+					<li>
+						<span>1</span>
+						<p>Connect</p>
+					</li>
+					<li>
+						<span>2</span>
+						<p>Verify</p>
+					</li>
+					<li>
+						<span>3</span>
+						<p>Mint</p>
+					</li>
+				</ul>
+			</div>
+		</>
+	)
+}
+
 export const KycDAOMembershipStep: FC<PageProps> = ({
 	className,
 	animation,
@@ -93,32 +125,8 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 			animation={animation}
 			className={className}
 			onEnter={onSubmit}
-			footer={Footer}>
-			<h1 className="h1">01 - KycDAO Membership</h1>
-			<p className="p">
-				kycDAO is building a trusted web3 ecosystem linked together by verified
-				wallets.
-			</p>
-			<p className="p">
-				Once verified and proof is minted on-chain, all kycDAO partner services
-				will accept the verification.
-			</p>
-			<div className="the-process">
-				<ul>
-					<li>
-						<span>1</span>
-						<p>Connect</p>
-					</li>
-					<li>
-						<span>2</span>
-						<p>Verify</p>
-					</li>
-					<li>
-						<span>3</span>
-						<p>Mint</p>
-					</li>
-				</ul>
-			</div>
-		</Step>
+			footer={Footer}
+			body={Body}
+		/>
 	)
 }

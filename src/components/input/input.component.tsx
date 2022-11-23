@@ -23,6 +23,8 @@ type InputProps = {
 	autoCompleteData?: string[]
 	autoFocus?: boolean
 	inputRef: RefObject<HTMLInputElement>
+	onInputBlurred?: () => void
+	onInputFocused?: () => void
 }
 
 export const Input: FC<InputProps> = ({
@@ -35,6 +37,8 @@ export const Input: FC<InputProps> = ({
 	autoCompleteData,
 	autoFocus,
 	inputRef = createRef(),
+	onInputBlurred,
+	onInputFocused,
 }) => {
 	const [showAutoComplete, setShowAutoComplete] = useState(false)
 	const autocompleteRef = useRef<HTMLDivElement>(null)
@@ -128,6 +132,8 @@ export const Input: FC<InputProps> = ({
 				</div>
 			)}
 			<input
+				onBlur={onInputBlurred}
+				onFocus={onInputFocused}
 				ref={inputRef}
 				id={id}
 				className={`kyc-input ${disabled ? "disabled" : ""} ${className}`}

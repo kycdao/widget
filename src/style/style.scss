@@ -1,60 +1,6 @@
-@import "variables.scss";
-@import "reset.scss";
-
-.App {
-	text-align: center;
-}
-
-.App-logo {
-	height: 40vmin;
-	pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-	.App-logo {
-		animation: App-logo-spin infinite 20s linear;
-	}
-}
-
-.App-header {
-	background-color: #282c34;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	font-size: calc(10px + 2vmin);
-	color: white;
-}
-
-.App-link {
-	color: #61dafb;
-}
-
-#modalRoot {
-	/*
-  top: 100px;
-  position: relative;
-  background-color: #fefefe;
-  margin: auto;
-  padding: 0;
-  border: 1px solid #888;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-  */
-	//width: 400px;
-	//height: 650px;
-
-	//height: 650px;
-
-	position: absolute;
-	overflow: hidden;
-
-	// overflow: hidden;
-
-	.step {
-	}
-}
+@import "variables";
+@import "reset";
+@import "fonts";
 
 h1,
 h2,
@@ -102,7 +48,3 @@ h4 {
 body {
 	margin: 0;
 }
-
-/*.persona-widget__overlay {
-  display: block!important;
-}*/

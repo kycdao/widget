@@ -65,6 +65,15 @@ export const AgreementStep: FC<PageProps> = ({
 		}
 	}, [disabled, inactive, dispatch, onSubmit])
 
+	const body = useCallback(() => {
+		return (
+			<>
+				<p>{translations?.body1}</p>
+				<p>{translations?.body2}</p>
+			</>
+		)
+	}, [translations])
+
 	return (
 		<Step
 			onNext={onSubmit}
@@ -75,9 +84,8 @@ export const AgreementStep: FC<PageProps> = ({
 			animation={animation}
 			header={Header}
 			onEnter={onSubmit}
-			footer={Footer}>
-			<p>{translations?.body1}</p>
-			<p>{translations?.body2}</p>
-		</Step>
+			footer={Footer}
+			body={body}
+		/>
 	)
 }

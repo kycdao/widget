@@ -89,6 +89,7 @@ export const FinalStep: FC<PageProps> = ({
 			animation={animation}
 			className={className}
 			header={Header}
-			body={body}></Step>
+			body={body}
+		/>
 	)
 }

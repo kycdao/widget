@@ -12,7 +12,9 @@ import { NftSelection } from "./pages/nftArtSelection"
 import { TaxResidenceStep } from "./pages/taxResidence"
 import { VerificationStep } from "./pages/verificationStep"
 
-const GetStep: FC<{
+import "./router.css"
+
+const RoutedStep: FC<{
 	stepID: StepID
 	animation?: StepAnimation
 	disabled?: boolean
@@ -78,6 +80,8 @@ const nextAnimation = {
 	to: "moving-in" as MovingDirection,
 }
 
+const stepStyle = { width: "100%", height: "100%" }
+
 export const Router: FC = () => {
 	const {
 		data: { prevPage, nextPage, currentPage },
@@ -93,29 +97,29 @@ export const Router: FC = () => {
 	}, [nextPage, prevPage])
 
 	return (
-		<div style={{ display: "block", width: "100%", height: "100%" }}>
+		<div className="routerContainer">
 			{prevPage && (
-				<GetStep
+				<RoutedStep
 					stepID={prevPage}
 					animation={prevAnimation}
 					inactive={true}
-					style={{ width: "100%", height: "100%" }}
+					style={stepStyle}
 				/>
 			)}
-			{GetStep({
-				stepID: currentPage,
-				animation: currentAnimation,
-				inactive: false,
-				style: { width: "100%", height: "100%" },
-			})}
-			{nextPage
-				? GetStep({
-						stepID: nextPage,
-						animation: nextAnimation,
-						inactive: true,
-						style: { width: "100%", height: "100%" },
-				  })
-				: null}
+			<RoutedStep
+				stepID={currentPage}
+				animation={currentAnimation}
+				inactive={false}
+				style={stepStyle}
+			/>
+			{nextPage && (
+				<RoutedStep
+					stepID={nextPage}
+					animation={nextAnimation}
+					inactive={true}
+					style={stepStyle}
+				/>
+			)}
 		</div>
 	)
 }

@@ -1,17 +1,19 @@
-import { FC } from "react"
+import { FC, useCallback } from "react"
 import { Step } from "../components/step/step"
 import { FallbackProps } from "react-error-boundary"
 
 const Header = () => <h1>Something went wrong!</h1>
 
 export const ErrorPage: FC<FallbackProps> = ({ error, resetErrorBoundary }) => {
-	return (
-		<Step disabled={false} header={Header}>
+	const body = useCallback(() => {
+		return (
 			<div role="alert">
 				<p>Something went wrong:</p>
 				<pre>{error.message}</pre>
 				<button onClick={resetErrorBoundary}>Try again</button>
 			</div>
-		</Step>
-	)
+		)
+	}, [error.message, resetErrorBoundary])
+
+	return <Step disabled={false} header={Header} body={body} />
 }

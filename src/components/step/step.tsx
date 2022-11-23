@@ -1,12 +1,13 @@
 import {
 	FC,
-	PropsWithChildren,
+	useCallback,
 	useContext,
 	useEffect,
 	useLayoutEffect,
 	useState,
 } from "react"
 import { useSwipeable } from "react-swipeable"
+import { VirtualKeyboardEvent } from "../../react-app-env"
 import { StateContext } from "../stateContext"
 import "./step.scss"
 
@@ -22,6 +23,9 @@ export type StepPart = FC<{
 	onNext?: () => void
 	onPrev?: () => void
 	onEnter?: () => void
+	// Thanks apple
+	onInputFocused?: () => void
+	onInputBlurred?: () => void
 }>
 
 type StepProps = {
@@ -38,12 +42,15 @@ type StepProps = {
 	onPrev?: () => void
 }
 
-export const Step: FC<PropsWithChildren<StepProps>> = ({
+const virtualKeyboardSupported = "virtualKeyboard" in navigator
+
+const isPhantom = !!navigator.userAgent.match("Phantom")
+
+export const Step: FC<StepProps> = ({
 	onNext,
 	onPrev,
 	inactive = false,
 	disabled = false,
-	children,
 	body,
 	header,
 	footer,
@@ -113,6 +120,39 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({
 		return () => document.removeEventListener("keyup", enterHndlr)
 	}, [onEnter, state, transitionState, inactive])
 
+	const [marginBottom, setMarginBottom] = useState<string>()
+
+	useEffect(() => {
+		if (virtualKeyboardSupported) {
+			const resizeHndlr = (ev: UIEvent) => {
+				const virtualKeyboardEv = ev as VirtualKeyboardEvent
+
+				setMarginBottom(virtualKeyboardEv?.target?.boundingRect.height)
+			}
+
+			navigator.virtualKeyboard.addEventListener("geometrychange", resizeHndlr)
+
+			return () => {
+				navigator.virtualKeyboard.removeEventListener(
+					"geometrychange",
+					resizeHndlr
+				)
+			}
+		}
+	}, [])
+
+	const onInputBlurred = useCallback(() => {
+		if (!virtualKeyboardSupported || isPhantom) {
+			setMarginBottom("0px")
+		}
+	}, [])
+
+	const onInputFocused = useCallback(() => {
+		if (!virtualKeyboardSupported || isPhantom) {
+			setMarginBottom("200px")
+		}
+	}, [])
+
 	if (!state) {
 		return (
 			<>
@@ -130,41 +170,50 @@ export const Step: FC<PropsWithChildren<StepProps>> = ({
 			className={`step${animatedClass ? ` ${animatedClass}` : ""} ${
 				className ? className : ""
 			}`}
-			style={{ position: "absolute" }}>
-			<div>
-				{header
-					? header({
-							disabled,
-							inactive: inactive || transitionNotDone,
-							onEnter,
-							onNext,
-							onPrev,
-					  })
-					: null}
-			</div>
-			<div className={`step-body`}>
-				{children}
-				{body
-					? body({
-							disabled,
-							inactive: inactive || transitionNotDone,
-							onEnter,
-							onNext,
-							onPrev,
-					  })
-					: null}
-			</div>
-			<div className={`step-footer`}>
-				{footer
-					? footer({
-							disabled,
-							inactive: inactive || transitionNotDone,
-							onEnter,
-							onNext,
-							onPrev,
-					  })
-					: null}
-			</div>
+			style={{
+				position: "absolute",
+				display: "flex",
+				paddingBottom: marginBottom,
+			}}>
+			{header ? (
+				<div>
+					{header({
+						disabled,
+						inactive: inactive || transitionNotDone,
+						onEnter,
+						onNext,
+						onPrev,
+						onInputBlurred,
+						onInputFocused,
+					})}
+				</div>
+			) : null}
+			{body ? (
+				<div className={`step-body`}>
+					{body({
+						disabled,
+						inactive: inactive || transitionNotDone,
+						onEnter,
+						onNext,
+						onPrev,
+						onInputBlurred,
+						onInputFocused,
+					})}
+				</div>
+			) : null}
+			{footer ? (
+				<div className={`step-footer`}>
+					{footer({
+						disabled,
+						inactive: inactive || transitionNotDone,
+						onEnter,
+						onNext,
+						onPrev,
+						onInputBlurred,
+						onInputFocused,
+					})}
+				</div>
+			) : null}
 		</div>
 	)
 }
