@@ -5,6 +5,7 @@ import {
 	DataActionTypes,
 	HeaderButtons,
 	OnNext,
+	OnPrev,
 	StateContext,
 	StepID,
 } from "../components/stateContext"
@@ -12,6 +13,7 @@ import { StepPart, Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 import "./mintMembershipStep.scss"
+import { VerificationTypes } from "@kycdao/kycdao-sdk"
 
 const Body = () => {
 	return (
@@ -36,25 +38,59 @@ export const MintStep: FC<PageProps> = ({
 	disabled = false,
 	inactive = false,
 }) => {
-	const { dispatch } = useContext(StateContext)
+	const {
+		dispatch,
+		data: { termsAccepted },
+	} = useContext(StateContext)
 	const kycDao = useContext(KycDaoContext)
 
 	const [yearCount, setYearCount] = useState<number | null>(null)
 
-	const onSubmit = useCallback(() => {
-		dispatch({
-			type: DataActionTypes.changePage,
-			payload: {
-				current: StepID.kycDAOMembershipStep,
-				prev: StepID.AgreementStep,
-			},
-		})
-	}, [dispatch])
+	const onSubmit = useCallback(async () => {
+		if (kycDao) {
+			try {
+				dispatch({
+					type: DataActionTypes.changePage,
+					payload: { current: StepID.loading, prev: StepID.mintStep },
+				})
+				try {
+					await kycDao.kycDao.startMinting({
+						disclaimerAccepted: termsAccepted,
+						verificationType: VerificationTypes.KYC,
+					})
+					dispatch({
+						type: DataActionTypes.changePage,
+						payload: { current: StepID.finalStep, prev: StepID.loading },
+					})
+				} catch (error) {
+					dispatch({
+						type: DataActionTypes.changePage,
+						payload: { current: StepID.mintStep, prev: StepID.loading },
+					})
+					console.error(error)
+					alert(error)
+				}
+			} catch (e: unknown) {
+				if (typeof e === "object") {
+					const f = e as Record<string, unknown>
+					if (f.code && f.code === 4001) {
+						dispatch({
+							type: DataActionTypes.changePage,
+							payload: {
+								current: StepID.mintStep,
+								prev: StepID.loading,
+							},
+						})
+					}
+				}
+			}
+		}
+	}, [dispatch, kycDao, termsAccepted])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
 			dispatch({
-				payload: { button: HeaderButtons.prev, state: "hidden" },
+				payload: { button: HeaderButtons.prev, state: "enabled" },
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 			dispatch({
@@ -87,6 +123,26 @@ export const MintStep: FC<PageProps> = ({
 			return prevValue
 		})
 	}, [])
+
+	const onPrev = useCallback(() => {
+		dispatch({
+			type: DataActionTypes.changePage,
+			payload: {
+				current: StepID.nftArtSelection,
+				next: StepID.mintStep,
+			},
+		})
+	}, [dispatch])
+
+	useEffect(() => {
+		if (!disabled && !inactive) {
+			const prev = OnPrev.subscribe(onPrev)
+
+			return () => {
+				prev.unsubscribe()
+			}
+		}
+	}, [disabled, inactive, onPrev])
 
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive, onEnter }) => (
@@ -152,7 +208,7 @@ export const MintStep: FC<PageProps> = ({
 					className="full-width blue"
 					onClick={onEnter}
 					inactive={inactive}
-					label={`Pay + mint on ${kycDao?.kycDao.connectedWallet}`}
+					label={`Pay + mint on ${kycDao?.kycDao.connectedWallet?.blockchain}`}
 				/>
 			</>
 		),

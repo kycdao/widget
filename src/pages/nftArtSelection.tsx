@@ -1,4 +1,3 @@
-import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { useContext, useState, useCallback, FC, useEffect } from "react"
 import { Button } from "../components/button/button"
 import { KycDaoContext } from "../components/kycDao.provider"
@@ -21,10 +20,7 @@ export const NftSelection: FC<PageProps> = ({
 	disabled = false,
 	inactive = false,
 }) => {
-	const {
-		dispatch,
-		data: { termsAccepted },
-	} = useContext(StateContext)
+	const { dispatch } = useContext(StateContext)
 	const kycDao = useContext(KycDaoContext)
 
 	const [nftImages, setNftImages] = useState([
@@ -32,43 +28,15 @@ export const NftSelection: FC<PageProps> = ({
 	])
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const onSubmit = useCallback(async () => {
-		if (kycDao) {
-			try {
-				dispatch({
-					type: DataActionTypes.changePage,
-					payload: { current: StepID.loading, prev: StepID.nftArtSelection },
-				})
-				try {
-					await kycDao.kycDao.startMinting({
-						disclaimerAccepted: termsAccepted,
-						verificationType: VerificationTypes.KYC,
-					})
-					dispatch({
-						type: DataActionTypes.changePage,
-						payload: { current: StepID.finalStep, prev: StepID.loading },
-					})
-				} catch (error) {
-					dispatch({
-						type: DataActionTypes.changePage,
-						payload: { current: StepID.chainSelection, prev: StepID.loading },
-					})
-					console.error(error)
-					alert(error)
-				}
-			} catch (e: unknown) {
-				if (typeof e === "object") {
-					const f = e as Record<string, unknown>
-					if (f.code && f.code === 4001) {
-						dispatch({
-							type: DataActionTypes.changePage,
-							payload: { current: StepID.nftArtSelection },
-						})
-					}
-				}
-			}
-		}
-	}, [dispatch, kycDao, termsAccepted])
+	const onSubmit = useCallback(() => {
+		dispatch({
+			type: DataActionTypes.changePage,
+			payload: {
+				current: StepID.mintStep,
+				prev: StepID.nftArtSelection,
+			},
+		})
+	}, [dispatch])
 
 	const onPrev = useCallback(() => {
 		dispatch({

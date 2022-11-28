@@ -31,9 +31,11 @@ export const ChainSelection: FC<PageProps> = ({
 	inactive,
 }) => {
 	const kycDao = useContext(KycDaoContext)
-	const [connectedWallet, setConnectedWallet] = useState<Chains>()
-
 	const { dispatch } = useContext(StateContext)
+
+	const [connectedWallet, setConnectedWallet] = useState<Chains | undefined>(
+		kycDao?.kycDao.connectedWallet?.blockchain
+	)
 
 	const chains = useMemo<
 		{ value: Chains; label: string; isAvailable: boolean }[]
@@ -137,11 +139,14 @@ export const ChainSelection: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 			dispatch({
-				payload: { button: HeaderButtons.next, state: "hidden" },
+				payload: {
+					button: HeaderButtons.next,
+					state: connectedWallet ? "enabled" : "hidden",
+				},
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}
-	}, [inactive, disabled, dispatch])
+	}, [inactive, disabled, dispatch, connectedWallet])
 
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive, onEnter }) => (
