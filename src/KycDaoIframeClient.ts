@@ -130,6 +130,10 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 		this.parent.appendChild(this.modal)
 		this.isOpen = true
 
+		if ("virtualKeyboard" in navigator) {
+			navigator.virtualKeyboard.overlaysContent = true
+		}
+
 		// The setTimeout needed because the close event handler would close the modal instantly, because even the open button click counts
 		setTimeout(() => {
 			window.parent.addEventListener("click", this.onOutsideClick)

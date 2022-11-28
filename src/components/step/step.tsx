@@ -163,7 +163,7 @@ export const Step: FC<StepProps> = ({
 				paddingBottom: marginBottom,
 			}}>
 			{header ? (
-				<div>
+				<div className={`step-head`}>
 					{header({
 						disabled,
 						inactive: inactive || transitionNotDone,

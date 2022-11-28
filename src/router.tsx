@@ -8,6 +8,7 @@ import { EmailDiscordVerificationStep } from "./pages/emailDiscordVerificationSt
 import { FinalStep } from "./pages/finalStep"
 import { Loading } from "./pages/loading"
 import { KycDAOMembershipStep } from "./pages/membershipStep"
+import { MintStep } from "./pages/MintMembershipStep"
 import { NftSelection } from "./pages/nftArtSelection"
 import { TaxResidenceStep } from "./pages/taxResidence"
 import { VerificationStep } from "./pages/verificationStep"
@@ -51,6 +52,9 @@ const RoutedStep: FC<{
 		}
 		case StepID.loading: {
 			return <Loading {...options} />
+		}
+		case StepID.mintStep: {
+			return <MintStep {...options} />
 		}
 		default: {
 			return <>Something went wrong</>

@@ -115,28 +115,28 @@ button.kyc-button {
 
   &.clean {
     background: rgb(0, 0, 0, 0);
-    border: 1px $--kyc-dark-purple solid;
+    border: 2px $--kyc-normal-blue solid;
 
 		span,
 		.material-icons {
 			font-weight: 400;
-			color: $--kyc-dark-blue-35;
+			color: $--kyc-normal-blue;
 		}
 
 		&:hover {
-			box-shadow: 0 0 0 10px $--kyc-dark-blue-35;
+			box-shadow: 0 0 0 10px $--kyc-normal-blue-35;
 
 			span,
 			.material-icons {
 				font-weight: 400;
-				color: $--kyc-dark-blue-35;
+				color: $--kyc-normal-blue;
 				//margin-left: 0.5em;
 			}
 		}
 
 		&:focus {
-			background: $--kyc-dark-blue-35;
-			box-shadow: 0 0 0 5px $--kyc-dark-blue-50;
+			background: $--kyc-normal-blue-35;
+			box-shadow: 0 0 0 5px $--kyc-dark-blue-35;
 		}
 
 		&:active {

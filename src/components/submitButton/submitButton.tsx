@@ -1,4 +1,11 @@
-import { CSSProperties, FC, useEffect, useRef, useState } from "react"
+import {
+	CSSProperties,
+	FC,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react"
 import "./submitButton.scss"
 
 export type ButtonProps = {
@@ -18,9 +25,10 @@ export const SubmitButton: FC<ButtonProps> = ({
 	className,
 	autoFocus,
 	inactive = false,
+	label,
 }) => {
 	const ref = useRef<HTMLButtonElement>(null)
-	const [innerHtml, setInnerHtml] = useState("Submit")
+	const [innerHtml, setInnerHtml] = useState(label ? label : "Submit")
 
 	useEffect(() => {
 		if (autoFocus && !disabled && !inactive) {
@@ -28,13 +36,21 @@ export const SubmitButton: FC<ButtonProps> = ({
 		}
 	}, [disabled, autoFocus, inactive])
 
+	const onMouseEnter = useCallback(() => {
+		setInnerHtml(label ? label : "Next")
+	}, [label])
+
+	const onMouseLeave = useCallback(() => {
+		setInnerHtml(label ? label : "Submit")
+	}, [label])
+
 	return (
 		<button
 			style={style}
 			disabled={disabled}
 			ref={ref}
-			onMouseEnter={() => setInnerHtml("Next")}
-			onMouseLeave={() => setInnerHtml("Submit")}
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
 			className={`kyc-submit-button kyc-button ${className}`}
 			onClick={inactive ? undefined : onClick}>
 			<i className="material-icons first-arrow"> chevron_right </i>

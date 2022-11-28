@@ -60,22 +60,35 @@ export const FinalStep: FC<PageProps> = ({
 					You have successfully minted your kycNFT on{" "}
 					{kycDao?.kycDao.connectedWallet?.blockchainNetwork}
 				</h1>
-				<div style={{ display: "flex", justifyContent: "center" }}>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						flexFlow: "column",
+						alignItems: "center",
+						height: "100%",
+					}}>
 					{nftImageUrl ? (
 						<img alt="" src={nftImageUrl} width="300px" height="300px" />
 					) : (
 						<Placeholder width="300px" height="300px" />
 					)}
 				</div>
-				<Button
-					{...props}
-					className="full-width underline centered"
-					onClick={onCheck}>
-					Check on chain
-				</Button>
 			</>
 		),
-		[kycDao, nftImageUrl, onCheck]
+		[kycDao, nftImageUrl]
+	)
+
+	const footer = useCallback<StepPart>(
+		(props) => (
+			<Button
+				{...props}
+				className="full-width underline centered"
+				onClick={onCheck}>
+				Check on chain
+			</Button>
+		),
+		[onCheck]
 	)
 
 	if (!kycDao) {
@@ -90,6 +103,7 @@ export const FinalStep: FC<PageProps> = ({
 			className={className}
 			header={Header}
 			body={body}
+			footer={footer}
 		/>
 	)
 }
