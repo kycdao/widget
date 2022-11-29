@@ -30,7 +30,6 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 const Body = () => {
 	return (
 		<>
-			<h1 className="h1">01 - KycDAO Membership</h1>
 			<p className="p">
 				kycDAO is building a trusted web3 ecosystem linked together by verified
 				wallets.
@@ -58,6 +57,8 @@ const Body = () => {
 		</>
 	)
 }
+
+const Header = () => <h1 className="h1">01 - KycDAO Membership</h1>
 
 export const KycDAOMembershipStep: FC<PageProps> = ({
 	className,
@@ -127,6 +128,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 			onEnter={onSubmit}
 			footer={Footer}
 			body={Body}
+			header={Header}
 		/>
 	)
 }

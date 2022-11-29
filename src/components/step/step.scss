@@ -26,6 +26,11 @@
 	transition: right 0.25s;
 	overflow: hidden;
 
+	&.blurred {
+		filter: brightness(50%);
+		background: #fefefe;
+	}
+
 	&.moving-center {
 		right: 0px;
 	}

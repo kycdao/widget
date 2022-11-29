@@ -12,6 +12,7 @@ import {
 import { Loading } from "./pages/loading"
 import { Header } from "./components/header/header"
 import { Router } from "./router"
+import { ModalRouter } from "./components/modal/modal"
 
 if ("virtualKeyboard" in navigator) {
 	navigator.virtualKeyboard.overlaysContent = true
@@ -69,6 +70,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 			<StateContext.Provider value={contextData}>
 				<Header />
 				<Router />
+				<ModalRouter />
 			</StateContext.Provider>
 		</KycDaoContext.Provider>
 	)

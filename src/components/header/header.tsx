@@ -4,7 +4,7 @@ import "./header.scss"
 
 export const Header: FC<{ style?: CSSProperties }> = ({ style }) => {
 	const {
-		data: { closeButtonState, nextButtonState, prevButtonState },
+		data: { closeButtonState, nextButtonState, prevButtonState, currentModal },
 		dispatch,
 	} = useContext(StateContext)
 
@@ -30,7 +30,9 @@ export const Header: FC<{ style?: CSSProperties }> = ({ style }) => {
 	}, [dispatch])
 
 	return (
-		<div style={style} className="step-header">
+		<div
+			style={style}
+			className={`step-header${currentModal ? " blurred" : ""}`}>
 			<div className="button-wrapper">
 				<button
 					disabled={prevButtonState === "disabled"}

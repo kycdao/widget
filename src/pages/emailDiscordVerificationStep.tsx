@@ -23,16 +23,13 @@ import { PageProps } from "./pageProps"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
-const Body = () => {
-	return (
-		<>
-			<h1 className="h1">03 - Email / Discord verification</h1>
-			<p className="p">
-				Verify your email / discord via the magic link sent to your address.
-			</p>
-		</>
-	)
-}
+const Header = () => <h1 className="h1">03 - Email / Discord verification</h1>
+
+const Body = () => (
+	<p className="p">
+		Verify your email / discord via the magic link sent to your address.
+	</p>
+)
 
 export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	className,
@@ -93,16 +90,17 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 
 	const onSubmit = useCallback(() => {
 		if (!disableSubmit) {
+			dispatch({ type: DataActionTypes.setModal, payload: "emailVerification" })
 			dispatch({ type: DataActionTypes.emailChange, payload: emailValue })
-			dispatch({
+			/*dispatch({
 				type: DataActionTypes.changePage,
 				payload: {
 					current: StepID.taxResidenceStep,
 					prev: StepID.emailDiscordVerificationStep,
 				},
-			})
+			})*/
 		}
-	}, [disableSubmit, emailValue, dispatch])
+	}, [disableSubmit, dispatch, emailValue])
 
 	const onPrev = useCallback(() => {
 		dispatch({
@@ -167,6 +165,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 			onEnter={onSubmit}
 			footer={footer}
 			body={Body}
+			header={Header}
 		/>
 	)
 }

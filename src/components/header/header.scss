@@ -7,6 +7,11 @@
 	justify-content: space-between;
 	padding: 1rem;
 
+	&.blurred {
+		filter: brightness(50%);
+		background: #fefefe;
+	}
+
 	.button-wrapper {
 		display: flex;
 		align-items: center;

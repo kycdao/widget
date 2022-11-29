@@ -7,7 +7,7 @@ import {
 	OnPrev,
 } from "../components/stateContext"
 import { StepPart, Step } from "../components/step/step"
-import { OnNext } from "../components/stateContext"
+import { OnNext } from "../components/stateContext/stateContext"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 
@@ -21,10 +21,11 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	/>
 )
 
+const Header = () => <h1 className="h1">02 - ID Verification</h1>
+
 const Body = () => {
 	return (
 		<>
-			<h1 className="h1">02 - ID Verification</h1>
 			<p className="p">
 				We are using 3rd party partners to collect information for verification.
 			</p>
@@ -108,6 +109,7 @@ export const VerificationStep: FC<PageProps> = ({
 			onEnter={onSubmit}
 			footer={Footer}
 			body={Body}
+			header={Header}
 		/>
 	)
 }

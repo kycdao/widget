@@ -13,7 +13,7 @@ import { NftSelection } from "./pages/nftArtSelection"
 import { TaxResidenceStep } from "./pages/taxResidence"
 import { VerificationStep } from "./pages/verificationStep"
 
-import "./router.css"
+import "./router.scss"
 
 const RoutedStep: FC<{
 	stepID: StepID
@@ -88,7 +88,7 @@ const stepStyle = { width: "100%", height: "100%" }
 
 export const Router: FC = () => {
 	const {
-		data: { prevPage, nextPage, currentPage },
+		data: { prevPage, nextPage, currentPage, currentModal },
 	} = useContext(StateContext)
 
 	const currentAnimation = useMemo(() => {
@@ -101,7 +101,7 @@ export const Router: FC = () => {
 	}, [nextPage, prevPage])
 
 	return (
-		<div className="routerContainer">
+		<div className={`routerContainer${currentModal ? " blurred" : ""}`}>
 			{prevPage && (
 				<RoutedStep
 					stepID={prevPage}
@@ -113,7 +113,7 @@ export const Router: FC = () => {
 			<RoutedStep
 				stepID={currentPage}
 				animation={currentAnimation}
-				inactive={false}
+				inactive={!!currentModal}
 				style={stepStyle}
 			/>
 			{nextPage && (

@@ -7,7 +7,7 @@ import {
 	useState,
 } from "react"
 import { useSwipeable } from "react-swipeable"
-import { StateContext } from "../stateContext"
+import { StateContext } from "../stateContext/stateContext"
 import "./step.scss"
 
 export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
@@ -154,9 +154,9 @@ export const Step: FC<StepProps> = ({
 	return (
 		<div
 			{...(!inactive && !disabled && transitionNotDone ? swipeHandlers : {})}
-			className={`step${animatedClass ? ` ${animatedClass}` : ""} ${
-				className ? className : ""
-			}`}
+			className={`step${animatedClass ? ` ${animatedClass}` : ""}${
+				className ? ` ${className}` : ""
+			}${state.data.currentModal ? " blurred" : ""}`}
 			style={{
 				position: "absolute",
 				display: "flex",
