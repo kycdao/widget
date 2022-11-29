@@ -19,7 +19,7 @@ export const EmailVerificationModal = () => {
 	}, [dispatch])
 
 	useEffect(() => {
-		setTimeout(() => {
+		const timeout = setTimeout(() => {
 			dispatch({
 				type: DataActionTypes.changePage,
 				payload: {
@@ -32,6 +32,8 @@ export const EmailVerificationModal = () => {
 				payload: null,
 			})
 		}, 3000)
+
+		return () => clearTimeout(timeout)
 	}, [dispatch])
 
 	return (

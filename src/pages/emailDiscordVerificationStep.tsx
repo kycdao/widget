@@ -92,6 +92,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 		if (!disableSubmit) {
 			dispatch({ type: DataActionTypes.setModal, payload: "emailVerification" })
 			dispatch({ type: DataActionTypes.emailChange, payload: emailValue })
+
 			/*dispatch({
 				type: DataActionTypes.changePage,
 				payload: {

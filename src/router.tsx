@@ -100,26 +100,31 @@ export const Router: FC = () => {
 			: undefined
 	}, [nextPage, prevPage])
 
+	const containerClasses = useMemo(
+		() => `routerContainer${currentModal ? " blurred" : ""}`,
+		[currentModal]
+	)
+
 	return (
-		<div className={`routerContainer${currentModal ? " blurred" : ""}`}>
+		<div className={containerClasses}>
 			{prevPage && (
 				<RoutedStep
 					stepID={prevPage}
-					animation={prevAnimation}
+					animation={currentModal ? undefined : prevAnimation}
 					inactive={true}
 					style={stepStyle}
 				/>
 			)}
 			<RoutedStep
 				stepID={currentPage}
-				animation={currentAnimation}
+				animation={currentModal ? undefined : currentAnimation}
 				inactive={!!currentModal}
 				style={stepStyle}
 			/>
 			{nextPage && (
 				<RoutedStep
 					stepID={nextPage}
-					animation={nextAnimation}
+					animation={currentModal ? undefined : nextAnimation}
 					inactive={true}
 					style={stepStyle}
 				/>

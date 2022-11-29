@@ -1,9 +1,11 @@
 import {
+	CSSProperties,
 	FC,
 	useCallback,
 	useContext,
 	useEffect,
 	useLayoutEffect,
+	useMemo,
 	useState,
 } from "react"
 import { useSwipeable } from "react-swipeable"
@@ -118,27 +120,32 @@ export const Step: FC<StepProps> = ({
 		document.addEventListener("keyup", enterHndlr)
 
 		return () => document.removeEventListener("keyup", enterHndlr)
-	}, [onEnter, state, transitionState, inactive])
+	}, [onEnter, transitionState, inactive])
 
 	const [marginBottom, setMarginBottom] = useState<string>(
 		"env(keyboard-inset-height, 0px)"
 	)
 
 	const onInputBlurred = useCallback(() => {
-		if (isPhantom || isIphone) {
+		if (isPhantom) {
 			setMarginBottom("0px")
 		}
 	}, [])
 
 	const onInputFocused = useCallback(() => {
-		if (isIphone) {
-			setMarginBottom(
-				windowHeight ? `${windowHeight - window.innerHeight}px` : "270px"
-			)
-		} else if (isPhantom) {
+		if (isPhantom) {
 			setMarginBottom("200px")
 		}
 	}, [])
+
+	const containerStyle = useMemo<CSSProperties>(
+		() => ({
+			position: "absolute",
+			display: "flex",
+			paddingBottom: marginBottom,
+		}),
+		[marginBottom]
+	)
 
 	if (!state) {
 		return (
@@ -157,11 +164,7 @@ export const Step: FC<StepProps> = ({
 			className={`step${animatedClass ? ` ${animatedClass}` : ""}${
 				className ? ` ${className}` : ""
 			}${state.data.currentModal ? " blurred" : ""}`}
-			style={{
-				position: "absolute",
-				display: "flex",
-				paddingBottom: marginBottom,
-			}}>
+			style={containerStyle}>
 			{header ? (
 				<div className={`step-head`}>
 					{header({
