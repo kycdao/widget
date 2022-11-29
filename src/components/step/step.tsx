@@ -1,78 +1,209 @@
-import { FC, PropsWithChildren, useContext, useEffect, useLayoutEffect, useState } from "react"
-import { StateContext } from "../stateContext"
-import './step.scss'
+import {
+	CSSProperties,
+	FC,
+	useCallback,
+	useContext,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useState,
+} from "react"
+import { useSwipeable } from "react-swipeable"
+import { StateContext } from "../stateContext/stateContext"
+import "./step.scss"
 
 export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
 
-export type StepAnimation = { from: MovingDirection, to: MovingDirection }
+export type StepAnimation = { from: MovingDirection; to: MovingDirection }
+
+export type StepState = "inTransition" | "transitionDone"
+
+const windowHeight = window.visualViewport?.height
+
+export type StepPart = FC<{
+	disabled: boolean
+	inactive: boolean
+	onNext?: () => void
+	onPrev?: () => void
+	onEnter?: () => void
+	// Thanks apple
+	onInputFocused?: () => void
+	onInputBlurred?: () => void
+}>
 
 type StepProps = {
-    header?: (disabled: boolean, onTransitionDone: boolean) => JSX.Element
-    footer?: (disabled: boolean, onTransitionDone: boolean) => JSX.Element
-    onEnter?: () => void
-    className?: string
-    disabled?: boolean
-    animation?: StepAnimation
-    onTransitionDone?: () => void
+	header?: StepPart
+	footer?: StepPart
+	body?: StepPart
+	onEnter?: () => void
+	className?: string
+	disabled: boolean
+	animation?: StepAnimation
+	onTransitionDone?: (newState: StepState) => void
+	inactive?: boolean
+	onNext?: () => void
+	onPrev?: () => void
 }
 
-export const Step: FC<PropsWithChildren<StepProps>> = ({ children, header, footer, onEnter, className, disabled = false, animation, onTransitionDone }) => {
-    const state = useContext(StateContext)
-    const [animatedClass, setAnimatedClass] = useState<MovingDirection>()
-    const [transitionDone, setTransitionDone] = useState(false)
+const isPhantom = !!navigator.userAgent.match("Phantom")
+const isIphone = !!navigator.userAgent.match("iPhone")
 
-    useLayoutEffect(() => {
-        if (animation) {
-            setAnimatedClass(animation.from)
-        }
-    }, [])
+export const Step: FC<StepProps> = ({
+	onNext,
+	onPrev,
+	inactive = false,
+	disabled = false,
+	body,
+	header,
+	footer,
+	onEnter,
+	className,
+	animation,
+	onTransitionDone,
+}) => {
+	const state = useContext(StateContext)
+	const [animatedClass, setAnimatedClass] = useState<MovingDirection>()
+	const [transitionState, setTransitionState] = useState<
+		StepState | undefined
+	>()
 
-    useLayoutEffect(() => {
-        if (animation) {
-            setTimeout(() => {
-                setAnimatedClass(animation.to)
-            }, 0);
-        }
-    }, [animatedClass])
+	const swipeHandlers = useSwipeable({
+		onSwipedLeft: onNext,
+		onSwipedRight: onPrev,
+	})
 
-    useLayoutEffect(() => {
-        setTimeout(() => {
-            if (onTransitionDone && animatedClass === animation?.to) {
-                onTransitionDone()
-                setTransitionDone(true)
-            }
-        }, 250);
-    }, [animatedClass, animation?.to])
+	useLayoutEffect(() => {
+		if (animation) {
+			setAnimatedClass(animation.from)
+			setTransitionState("inTransition")
+			const timeout = setTimeout(() => {
+				setAnimatedClass(animation.to)
+			}, 0)
 
-    useEffect(() => {
-        if (!onEnter || disabled) {
-            return
-        }
+			return () => clearTimeout(timeout)
+		} else {
+			setTransitionState("transitionDone")
+			if (onTransitionDone) {
+				onTransitionDone("transitionDone")
+			}
+		}
+	}, [onTransitionDone, animation])
 
-        const enterHndlr = ({ key }: KeyboardEvent) => {
-            if (key === 'Enter') {
-                onEnter()
-            }
-        }
+	useLayoutEffect(() => {
+		const timeout = setTimeout(() => {
+			if (animation && !!transitionState && animatedClass === animation?.to) {
+				if (onTransitionDone) {
+					onTransitionDone("transitionDone")
+				}
+				setTransitionState("transitionDone")
+			}
+		}, 250)
 
-        document.addEventListener('keyup', enterHndlr)
+		return () => clearTimeout(timeout)
+	}, [animatedClass, transitionState, onTransitionDone, animation])
 
-        return () => document.removeEventListener('keyup', enterHndlr)
-    }, [onEnter, state, disabled])
+	useEffect(() => {
+		if (
+			inactive ||
+			!onEnter ||
+			(transitionState && transitionState !== "transitionDone")
+		) {
+			return
+		}
 
-    if (!state) {
-        return <>Something went seriously wrong! Probably you did not provided the data! Check your data provider!</>
-    }
+		const enterHndlr = ({ key }: KeyboardEvent) => {
+			if (key === "Enter") {
+				onEnter()
+			}
+		}
 
-    return <div className={`step${animatedClass ? ` ${animatedClass}` : ''} ${className}`} style={{ position: 'absolute' }}>
-        <div>
-            {header ? header(disabled, transitionDone) : null}
-        </div>
-        <div className={`step-body`} >
-            {children}
-        </div>
-        <div className={`step-footer`}>
-            {footer ? footer(disabled, transitionDone) : null}
-        </div>
-    </div>
+		document.addEventListener("keyup", enterHndlr)
+
+		return () => document.removeEventListener("keyup", enterHndlr)
+	}, [onEnter, transitionState, inactive])
+
+	const [marginBottom, setMarginBottom] = useState<string>(
+		"env(keyboard-inset-height, 0px)"
+	)
+
+	const onInputBlurred = useCallback(() => {
+		if (isPhantom) {
+			setMarginBottom("0px")
+		}
+	}, [])
+
+	const onInputFocused = useCallback(() => {
+		if (isPhantom) {
+			setMarginBottom("200px")
+		}
+	}, [])
+
+	const containerStyle = useMemo<CSSProperties>(
+		() => ({
+			position: "absolute",
+			display: "flex",
+			paddingBottom: marginBottom,
+		}),
+		[marginBottom]
+	)
+
+	if (!state) {
+		return (
+			<>
+				Something went seriously wrong! Probably you did not provided the data!
+				Check your data provider!
+			</>
+		)
+	}
+
+	const transitionNotDone = transitionState !== "transitionDone"
+
+	return (
+		<div
+			{...(!inactive && !disabled && transitionNotDone ? swipeHandlers : {})}
+			className={`step${animatedClass ? ` ${animatedClass}` : ""}${
+				className ? ` ${className}` : ""
+			}${state.data.currentModal ? " blurred" : ""}`}
+			style={containerStyle}>
+			{header ? (
+				<div className={`step-head`}>
+					{header({
+						disabled,
+						inactive: inactive || transitionNotDone,
+						onEnter,
+						onNext,
+						onPrev,
+						onInputBlurred,
+						onInputFocused,
+					})}
+				</div>
+			) : null}
+			{body ? (
+				<div className={`step-body`}>
+					{body({
+						disabled,
+						inactive: inactive || transitionNotDone,
+						onEnter,
+						onNext,
+						onPrev,
+						onInputBlurred,
+						onInputFocused,
+					})}
+				</div>
+			) : null}
+			{footer ? (
+				<div className={`step-footer`}>
+					{footer({
+						disabled,
+						inactive: inactive || transitionNotDone,
+						onEnter,
+						onNext,
+						onPrev,
+						onInputBlurred,
+						onInputFocused,
+					})}
+				</div>
+			) : null}
+		</div>
+	)
 }

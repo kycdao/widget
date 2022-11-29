@@ -1,40 +1,109 @@
 import { useContext, useCallback, useState, useEffect, FC } from "react"
-import { Step, StepAnimation } from "../components/step/step"
+import { Step, StepPart } from "../components/step/step"
 import { Button } from "../components/button/button"
 import { KycDaoContext } from "../components/kycDao.provider"
 import { Placeholder } from "../components/placeholder/placeholder"
-import { DataActionTypes, HeaderButtons, StateContext } from "../components/stateContext"
+import {
+	DataActionTypes,
+	HeaderButtons,
+	StateContext,
+} from "../components/stateContext"
+import { PageProps } from "./pageProps"
 
-export const FinalStep: FC<{ className?: string, animation?: StepAnimation, disabled?: boolean }> = ({ className, animation, disabled = false }) => {
-    const kycDao = useContext(KycDaoContext)
-    const { dispatch } = useContext(StateContext)
+const Header = () => <h1>Congrats!</h1>
 
-    const onAnimationDone = useCallback(() => {
-        if (!disabled) {
-            dispatch({ payload: { button: HeaderButtons.prev, state: 'hidden' }, type: DataActionTypes.SetHeaderButtonState })
-            dispatch({ payload: { button: HeaderButtons.next, state: 'hidden' }, type: DataActionTypes.SetHeaderButtonState })
-        }
-    }, [])
+export const FinalStep: FC<PageProps> = ({
+	className,
+	animation,
+	disabled = false,
+	// inactive = false,
+}) => {
+	const kycDao = useContext(KycDaoContext)
+	const {
+		dispatch,
+		data: { messageTargetOrigin },
+	} = useContext(StateContext)
 
-    const [nftImageUrl, setNftImageUrl] = useState('')
+	const onTransitionDone = useCallback(() => {
+		if (!disabled) {
+			dispatch({
+				payload: { button: HeaderButtons.prev, state: "hidden" },
+				type: DataActionTypes.SetHeaderButtonState,
+			})
+			dispatch({
+				payload: { button: HeaderButtons.next, state: "hidden" },
+				type: DataActionTypes.SetHeaderButtonState,
+			})
+		}
+	}, [disabled, dispatch])
 
-    const onCheck = useCallback(() => {
-        // dispatch({ type: DataActionTypes.nexPage, payload: StepID.finalStep })
-    }, [])
+	const [nftImageUrl, setNftImageUrl] = useState("")
 
-    if (!kycDao) {
-        return <>error</>
-    }
+	const onCheck = useCallback(() => {
+		// dispatch({ type: DataActionTypes.nexPage, payload: StepID.finalStep })
+	}, [])
 
-    useEffect(() => {
-        setNftImageUrl(kycDao.kycDao.getNftImageUrl())
-    }, [])
+	useEffect(() => {
+		if (kycDao) {
+			window.parent.postMessage(
+				{ type: "kycDaoSuccess" },
+				messageTargetOrigin || window.location.origin
+			)
+			setNftImageUrl(kycDao.kycDao.getNftImageUrl())
+		}
+	}, [messageTargetOrigin, kycDao])
 
-    return <Step onTransitionDone={onAnimationDone} disabled={disabled} animation={animation} className={className} header={() => <h1>Congrats!</h1>}>
-        <h1 style={{ textAlign: 'center' }}>You have successfully minted your kycNFT on {kycDao.kycDao.connectedWallet?.blockchainNetwork}</h1>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-            {nftImageUrl ? <img src={nftImageUrl} width="300px" height="300px" /> : <Placeholder width="300px" height="300px" />}
-        </div>
-        <Button label="Check on chain" className="full-width underline centered" onClick={onCheck} />
-    </Step>
+	const body = useCallback<StepPart>(
+		(props) => (
+			<>
+				<h1 style={{ textAlign: "center" }}>
+					You have successfully minted your kycNFT on{" "}
+					{kycDao?.kycDao.connectedWallet?.blockchainNetwork}
+				</h1>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						flexFlow: "column",
+						alignItems: "center",
+						height: "100%",
+					}}>
+					{nftImageUrl ? (
+						<img alt="" src={nftImageUrl} width="300px" height="300px" />
+					) : (
+						<Placeholder width="300px" height="300px" />
+					)}
+				</div>
+			</>
+		),
+		[kycDao, nftImageUrl]
+	)
+
+	const footer = useCallback<StepPart>(
+		(props) => (
+			<Button
+				{...props}
+				className="full-width underline centered"
+				onClick={onCheck}>
+				Check on chain
+			</Button>
+		),
+		[onCheck]
+	)
+
+	if (!kycDao) {
+		return <>error</>
+	}
+
+	return (
+		<Step
+			onTransitionDone={onTransitionDone}
+			disabled={disabled}
+			animation={animation}
+			className={className}
+			header={Header}
+			body={body}
+			footer={footer}
+		/>
+	)
 }

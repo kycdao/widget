@@ -1,1 +1,1 @@
-export default "./index.tsx"
+export * from "./BootstrapKycDaoModal"

@@ -1,0 +1,9 @@
+{
+	"semi": false,
+	"useTabs": true,
+	"arrowParens": "always",
+	"htmlWhitespaceSensitivity": "strict",
+	"bracketSameLine": true,
+	"trailingComma": "es5",
+	"printWidth": 80
+}

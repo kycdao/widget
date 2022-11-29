@@ -1,0 +1,36 @@
+@import "../style/variables";
+@import "../style/style";
+
+.value {
+	@extend .policy;
+	margin-bottom: 2em;
+	font-family: "gilroyRegular";
+
+	> strong {
+		color: $--kyc-normal-blue;
+		font-weight: normal;
+	}
+}
+
+.subscription-selector {
+	font-family: "gilroyRegular";
+	> strong {
+		color: $--kyc-normal-blue;
+	}
+}
+
+.price {
+	color: $--kyc-normal-blue;
+	font-weight: bold;
+	font-weight: bold;
+	font-family: "gilroyRegular";
+}
+
+.subscription {
+	font-family: "gilroyRegular";
+}
+
+.yearCount {
+	font-family: "gilroyRegular";
+	color: $--kyc-normal-blue;
+}

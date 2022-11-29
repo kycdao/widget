@@ -1,0 +1,157 @@
+@import "../../style/variables";
+
+button.kyc-button {
+  &.centered {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+
+    span {
+      margin: 0;
+    }
+  }
+
+  &.square {
+    width: 3em;
+    height: 3em;
+  }
+
+	height: $--button-height;
+	display: inline-flex;
+	justify-content: space-between;
+	box-sizing: border-box;
+	padding-left: 1.5em;
+	align-items: center;
+
+	position: relative;
+	box-shadow: 0 0 0 0 rgba(white, 0);
+	background: #ecf0fe;
+	color: $--kyc-dark-purple;
+	border-radius: $--border-radius-light;
+	font-size: 12pt;
+	cursor: pointer;
+	@extend .tr2;
+
+	span {
+		font-family: "gilroyRegular";
+		font-weight: 400;
+		font-size: 16px;
+		margin-left: 0;
+	}
+
+	&.full-width {
+		width: 100%;
+	}
+
+	&[disabled] {
+		background: $--inactive !important;
+		pointer-events: none !important;
+	}
+
+	&.blue {
+		background: $--kyc-normal-blue;
+
+		span,
+		.material-icons {
+			font-weight: 400;
+			color: white;
+		}
+
+		&:hover {
+			background: $--kyc-normal-blue;
+			box-shadow: 0 0 0 10px $--kyc-normal-blue-35;
+		}
+
+		&:focus {
+			background: $--kyc-normal-blue;
+			box-shadow: 0 0 0 5px $--kyc-normal-blue-50;
+		}
+
+		&:active {
+			box-shadow: 0 0 0 5px $--kyc-normal-blue-35;
+		}
+
+		&:focus-visible {
+			outline: none;
+			border: none;
+		}
+	}
+
+	&.green {
+		background: $--kyc-cyberpunk;
+
+		span,
+		.material-icons {
+			font-weight: 400;
+			color: white;
+		}
+
+		&:hover {
+			background: $--kyc-cyberpunk;
+			box-shadow: 0 0 0 10px $--kyc-cyberpunk-35;
+
+			span,
+			.material-icons {
+				font-weight: 400;
+				color: $--kyc-dark-blue;
+				//margin-left: 0.5em;
+			}
+		}
+
+		&:focus {
+			background: $--kyc-cyberpunk;
+			box-shadow: 0 0 0 5px $--kyc-cyberpunk-50;
+		}
+
+		&:active {
+			box-shadow: 0 0 0 5px $--kyc-dark-blue-35;
+		}
+
+		&:focus-visible {
+			outline: none;
+			border: none;
+		}
+	}
+
+  &.clean {
+    background: rgb(0, 0, 0, 0);
+    border: 2px $--kyc-normal-blue solid;
+
+		span,
+		.material-icons {
+			font-weight: 400;
+			color: $--kyc-normal-blue;
+		}
+
+		&:hover {
+			box-shadow: 0 0 0 10px $--kyc-normal-blue-35;
+
+			span,
+			.material-icons {
+				font-weight: 400;
+				color: $--kyc-normal-blue;
+				//margin-left: 0.5em;
+			}
+		}
+
+		&:focus {
+			background: $--kyc-normal-blue-35;
+			box-shadow: 0 0 0 5px $--kyc-dark-blue-35;
+		}
+
+		&:active {
+			box-shadow: 0 0 0 5px $--kyc-dark-blue-35;
+		}
+
+		&:focus-visible {
+			outline: none;
+			border: none;
+		}
+	}
+
+	&.underline {
+		text-decoration: underline;
+		background: rgb(0, 0, 0, 0);
+		color: $--kyc-normal-blue;
+	}
+}

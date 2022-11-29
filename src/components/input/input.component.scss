@@ -1,115 +1,126 @@
-@import "../../style/style.scss";
+@import "../../style/variables";
 
 .kyc-input {
-  height: $--button-height;
-  display: inline-flex;
-  justify-content: space-between;
-  box-sizing: border-box;
-  padding-left: 1.5em;
-  align-items: center;
+	height: $--button-height;
+	display: inline-flex;
+	justify-content: space-between;
+	box-sizing: border-box;
+	padding-left: 1.5em;
+	align-items: center;
 
-  position: relative;
-  box-shadow: 0 0 0 0 rgba(white, 0);
-  background: #ecf0fe;
-  color: $--kyc-dark-purple;
-  border-radius: $--border-radius-light;
-  font-size: 12pt;
+	position: relative;
+	box-shadow: 0 0 0 0 rgba(white, 0);
+	background: #ecf0fe;
+	color: $--kyc-dark-purple;
+	border-radius: $--border-radius-light;
+	font-size: 12pt;
 
-  border: 2px solid $--kyc-normal-blue;
-  //padding-right: 3em;
+	border: 2px solid $--kyc-normal-blue;
+	//padding-right: 3em;
 
-  @extend .tr2;
+	@extend .tr2;
 
-  ::placeholder {
-    color: $--kyc-dark-purple;
-  }
+	::placeholder {
+		color: $--kyc-dark-purple;
+	}
 
-  ::-webkit-input-placeholder {
-    color: $--kyc-dark-purple;
-  }
+	::-webkit-input-placeholder {
+		color: $--kyc-dark-purple;
+	}
 
-  :-ms-input-placeholder {
-    color: $--kyc-dark-purple;
-  }
+	:-ms-input-placeholder {
+		color: $--kyc-dark-purple;
+	}
 
-  ::-ms-input-placeholder {
-    color: $--kyc-dark-purple;
-  }
+	::-ms-input-placeholder {
+		color: $--kyc-dark-purple;
+	}
 
-  &:hover {
-    background: white;
-    //background: $--kyc-normal-blue-15;
-    border: 2px solid $--kyc-normal-blue;
-    box-shadow: 0 0 0 10px $--kyc-normal-blue-15;
-    @extend .tr2;
-  }
+	&:hover {
+		background: white;
+		//background: $--kyc-normal-blue-15;
+		border: 2px solid $--kyc-normal-blue;
+		box-shadow: 0 0 0 10px $--kyc-normal-blue-15;
+		@extend .tr2;
+	}
 
-  &:focus {
-    background: white;
-    box-shadow: 0 0 0 5px $--kyc-normal-blue-50;
-    border: 2px solid $--kyc-normal-blue;
-    @extend .tr2;
-  }
+	&:focus {
+		background: white;
+		box-shadow: 0 0 0 5px $--kyc-normal-blue-50;
+		border: 2px solid $--kyc-normal-blue;
+		@extend .tr2;
+	}
 
-  &.full-width {
-    display: flex;
-    width: 100%;
-  }
+	&.full-width {
+		display: flex;
+		width: 100%;
+	}
 }
 
-
 div.clear {
-  position: absolute;
-  right: 2px;
-  top: 1.5rem;
-  font-size: 24px;
-  height: 2rem;
-  width: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: $--kyc-normal-blue;
-  cursor: pointer;
-  border-radius: $--border-radius-light;
+	position: absolute;
+	right: 2px;
+	bottom: 88px;
+	font-size: 24px;
+	height: 2rem;
+	width: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: $--kyc-normal-blue;
+	cursor: pointer;
+	border-radius: $--border-radius-light;
+	@extend .tr2;
 
-  &:hover {
-    background: $--kyc-normal-blue-35;
-  }
+	&:hover {
+		background: $--kyc-normal-blue-35;
+	}
 
-  &:active{
-    background: $--kyc-normal-blue;
-    color: white;
-  }
+	&:active {
+		background: $--kyc-normal-blue;
+		color: white;
+	}
 
-  &.disabled {
-    color: lightgrey;
-  }
+	&.disabled {
+		color: lightgrey;
+	}
 }
 
 div.kyc-option {
-  height: 2.5em;
-  cursor: pointer;
-  line-height: 2.5em;
-  padding-left: 1.5em;
-  border-bottom: 1px solid $--kyc-normal-blue-15;
-  font-family: 'gilroyRegular';
-  font-weight: 400;
-  color: $--kyc-dark-blue;
+	height: 2.5em;
+	cursor: pointer;
+	line-height: 2.5em;
+	padding-left: 1.5em;
+	border-bottom: 1px solid $--kyc-normal-blue-15;
+	font-family: "gilroyRegular";
+	font-weight: 400;
+	color: $--kyc-dark-blue;
 
-  strong{
-    font-family: 'gilroyBold';
-    font-weight: 800;
-  }
+	strong {
+		font-family: "gilroyBold";
+		font-weight: 800;
+	}
 
-  &:hover{
-    background: $--kyc-normal-blue-15;
-    color: $--kyc-normal-blue;
-  }
+	&:hover {
+		background: $--kyc-normal-blue-15;
+		color: $--kyc-normal-blue;
+	}
 }
 
+// TODO Virtual keyboard and stuff
+
 div.autocomplete {
-  position: relative;
-  width: 368px;
-  max-height: 45vh;
-  overflow-y: auto;
+	position: relative;
+	//width: 368px;
+	width: 100%;
+	max-height: 18vh;
+	height: auto;
+	overflow-y: auto;
+	bottom: 0;
+}
+
+@media only screen and (min-width: 992px) {
+	div.autocomplete {
+		max-height: 20vh;
+	}
 }

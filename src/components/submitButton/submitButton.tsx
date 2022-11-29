@@ -1,34 +1,61 @@
-import { CSSProperties, FC, useCallback, useEffect, useRef, useState } from "react"
-import './button.scss'
+import {
+	CSSProperties,
+	FC,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react"
+import "./submitButton.scss"
 
 export type ButtonProps = {
-    onClick?: () => void
-    className?: string
-    label?: string
-    disabled?: boolean
-    style?: CSSProperties
-    autoFocus?: boolean
+	onClick?: () => void
+	className?: string
+	label?: string
+	disabled?: boolean
+	style?: CSSProperties
+	autoFocus?: boolean
+	inactive?: boolean
 }
 
-export const SubmitButton: FC<ButtonProps> = ({ style, disabled = false, onClick, className, autoFocus }) => {
-    const ref = useRef<HTMLButtonElement>(null)
-    const [innerHtml, setInnerHtml] = useState('Submit')
+export const SubmitButton: FC<ButtonProps> = ({
+	style,
+	disabled = false,
+	onClick,
+	className,
+	autoFocus,
+	inactive = false,
+	label,
+}) => {
+	const ref = useRef<HTMLButtonElement>(null)
+	const [innerHtml, setInnerHtml] = useState(label ? label : "Submit")
 
-    const innerHtmlSetter = useCallback((label: string) => () => {
-        setInnerHtml(label)
-    }, [])
+	useEffect(() => {
+		if (autoFocus && !disabled && !inactive) {
+			ref.current?.focus({ preventScroll: true })
+		}
+	}, [disabled, autoFocus, inactive])
 
-    useEffect(() => {
-        if(autoFocus && !disabled) {
-            ref.current?.focus({ preventScroll: true })
-        }
-    }, [])
+	const onMouseEnter = useCallback(() => {
+		setInnerHtml(label ? label : "Next")
+	}, [label])
 
-    return <button style={style} disabled={disabled} ref={ref} onMouseEnter={innerHtmlSetter('Next')} onMouseLeave={innerHtmlSetter('Submit')} className={`kyc-button ${className}`} onClick={onClick}>
-        <i className="material-icons first-arrow"> chevron_right </i>
-        <span>
-            {innerHtml}
-        </span>
-        <i className="material-icons second-arrow"> chevron_right </i>
-    </button>
+	const onMouseLeave = useCallback(() => {
+		setInnerHtml(label ? label : "Submit")
+	}, [label])
+
+	return (
+		<button
+			style={style}
+			disabled={disabled}
+			ref={ref}
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
+			className={`kyc-submit-button kyc-button ${className}`}
+			onClick={inactive ? undefined : onClick}>
+			<i className="material-icons first-arrow"> chevron_right </i>
+			<span>{innerHtml}</span>
+			<i className="material-icons second-arrow"> chevron_right </i>
+		</button>
+	)
 }
