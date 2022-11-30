@@ -17,7 +17,13 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 
 	const {
 		dispatch,
-		data: { email, termsAccepted, taxResidency, messageTargetOrigin },
+		data: {
+			email,
+			termsAccepted,
+			taxResidency,
+			messageTargetOrigin,
+			isEmailConfirmed,
+		},
 	} = useContext(StateContext)
 	const kycDao = useContext(KycDaoContext)
 	const verifyingModalOpen = useRef(false)
@@ -63,7 +69,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 				await kycDao.kycDao.startVerification(
 					{
 						email,
-						isEmailConfirmed: true, // @TODO
+						isEmailConfirmed,
 						isLegalEntity: false, // @TODO
 						taxResidency,
 						termsAccepted,
@@ -98,6 +104,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 		messageTargetOrigin,
 		taxResidency,
 		termsAccepted,
+		isEmailConfirmed,
 	])
 
 	if (!kycDao) {

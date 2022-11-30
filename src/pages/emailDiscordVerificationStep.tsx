@@ -20,6 +20,7 @@ import {
 import { StepPart, Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
+// import { KycDaoContext } from "../components/kycDao.provider"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
@@ -41,6 +42,9 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 		data: { email },
 		dispatch,
 	} = useContext(StateContext)
+
+	// const kycDao = useContext(KycDaoContext)
+
 	const [buttonAutofocus, setButtonAutoFocus] = useState(false)
 
 	const [emailValue, setEmailValue] = useState("")
@@ -88,18 +92,36 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 		})
 	}, [disableSubmit, dispatch])
 
-	const onSubmit = useCallback(() => {
+	const onSubmit = useCallback(async () => {
 		if (!disableSubmit) {
 			dispatch({ type: DataActionTypes.setModal, payload: "emailVerification" })
 			dispatch({ type: DataActionTypes.emailChange, payload: emailValue })
 
-			/*dispatch({
-				type: DataActionTypes.changePage,
-				payload: {
-					current: StepID.taxResidenceStep,
-					prev: StepID.emailDiscordVerificationStep,
-				},
-			})*/
+			// await kycDao?.kycDao.updateEmail(emailValue)
+
+			const interval = setInterval(async () => {
+				try {
+					// const emailData = await kycDao?.kycDao.checkEmailConfirmed()
+
+					// if (emailData?.isConfirmed) {
+					clearInterval(interval)
+					dispatch({ type: DataActionTypes.setEmailConfirmed, payload: true })
+					dispatch({
+						type: DataActionTypes.changePage,
+						payload: {
+							current: StepID.taxResidenceStep,
+							prev: StepID.emailDiscordVerificationStep,
+						},
+					})
+					dispatch({
+						type: DataActionTypes.setModal,
+						payload: null,
+					})
+					// }
+				} catch (e) {
+					console.error(e)
+				}
+			}, 1000)
 		}
 	}, [disableSubmit, dispatch, emailValue])
 

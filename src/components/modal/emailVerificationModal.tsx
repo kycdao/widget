@@ -1,6 +1,7 @@
-import { useCallback, useContext, useEffect } from "react"
+import { useCallback, useContext } from "react"
 import { Button } from "../button/button"
-import { DataActionTypes, StepID } from "../stateContext"
+import { KycDaoContext } from "../kycDao.provider"
+import { DataActionTypes } from "../stateContext"
 import { StateContext } from "../stateContext/stateContext"
 import "./emailVerificationModal.scss"
 
@@ -10,30 +11,20 @@ export const EmailVerificationModal = () => {
 		dispatch,
 	} = useContext(StateContext)
 
-	const onResend = useCallback(() => {
-		console.log("resend")
-	}, [])
+	const kycDao = useContext(KycDaoContext)
+
+	const onResend = useCallback(async () => {
+		try {
+			await kycDao?.kycDao.resendEmailConfirmationCode()
+		} catch (e) {
+			console.error(e)
+		}
+
+		//something to show, if it worked or not
+	}, [kycDao])
 
 	const onChangeEmail = useCallback(() => {
 		dispatch({ type: DataActionTypes.setModal, payload: null })
-	}, [dispatch])
-
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			dispatch({
-				type: DataActionTypes.changePage,
-				payload: {
-					current: StepID.taxResidenceStep,
-					prev: StepID.emailDiscordVerificationStep,
-				},
-			})
-			dispatch({
-				type: DataActionTypes.setModal,
-				payload: null,
-			})
-		}, 3000)
-
-		return () => clearTimeout(timeout)
 	}, [dispatch])
 
 	return (
