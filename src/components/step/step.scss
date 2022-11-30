@@ -44,11 +44,13 @@
 	}
 
 	h1 {
-		font-family: "gilroyRegular";
+		font-family: var(--primary-font);
+		align-items: flex-start;
 		font-weight: 400;
 		display: flex;
 		width: 100%;
 		box-sizing: border-box;
+		color: black;
 	}
 
 	.step-body {
@@ -56,9 +58,9 @@
 		align-items: stretch;
 	
 		p {
-			font-family: "gilroyRegular";
+			font-family: var(--primary-font);
 			font-weight: 400;
-			color: $--kyc-dark-blue;
+			color: black;
 		}
 		width: 100%;
 		height: 100%;
@@ -150,7 +152,6 @@ body {
 
 .the-process {
 	ul {
-		padding: 1rem 0;
 		margin: 0 auto;
 		width: fit-content;
 
@@ -166,7 +167,7 @@ body {
 				content: "";
 				height: 100%;
 				width: 1px;
-				background-color: $--kyc-normal-blue;
+				background-color: var(--kyc-cybergreen);
 				position: absolute;
 				top: 2rem;
 				left: 1rem;
@@ -184,11 +185,11 @@ body {
 				align-items: center;
 				height: 2rem;
 				width: 2rem;
-				outline: 0.5rem solid $--kyc-normal-blue-15;
+				outline: 0.5rem solid var(--kyc-cybergreen-35);
 				border-radius: 999rem;
-				background: $--kyc-normal-blue;
-				color: white;
-				font-family: "gilroyBold";
+				background: var(--kyc-cybergreen);
+				color: black;
+				font-family: "gilroy-bold";
 			}
 
 			p {
@@ -199,8 +200,8 @@ body {
 }
 
 .policy {
-	font-family: "gilroyRegular";
-	color: $--kyc-dark-blue;
+	font-family: var(--primary-font);
+	color: black;
 	font-size: 12px;
 
 	a {

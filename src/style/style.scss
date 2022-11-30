@@ -6,14 +6,14 @@ h1,
 h2,
 h3,
 h4 {
-	font-family: "gilroyRegular";
-	color: $--kyc-dark-blue;
+	font-family: "neue-machina";
+	color: black;
 }
 
 .h1 {
 	margin-bottom: 1em;
-	color: $--kyc-normal-blue;
 	font-size: 2rem;
+	color: black;
 }
 
 .h2 {
@@ -47,4 +47,14 @@ h4 {
 
 body {
 	margin: 0;
+}
+
+.logo{
+	background: var(--kyc-cybergreen);
+	display: inline-flex;
+	justify-content: center;
+	margin-right: 8px;
+	flex: 1;
+	padding: 8px 10px;
+	border-radius: 4px;
 }

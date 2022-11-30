@@ -33,7 +33,7 @@ button.kyc-button {
 	@extend .tr2;
 
 	span {
-		font-family: "gilroyRegular";
+		font-family: var(--primary-font);
 		font-weight: 400;
 		font-size: 16px;
 		margin-left: 0;
@@ -48,6 +48,45 @@ button.kyc-button {
 		pointer-events: none !important;
 	}
 
+	&.black {
+		background: black;
+
+		span,
+		.material-icons {
+			font-weight: 400;
+			color: white;
+		}
+
+		&:hover {
+			background: var(--kyc-cybergreen);
+			box-shadow: 0 0 0 0px var(--kyc-cybergreen-35);
+
+			span, i{
+				color: black;
+			}
+		}
+
+		&:focus {
+			background: var(--kyc-cybergreen);
+			box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
+
+			span, i{
+				color: black;
+			}
+		}
+
+		&:active {
+			background: var(--darken-green);
+			box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
+		}
+
+		&:focus-visible {
+			outline: none;
+			border: none;
+		}
+	}
+
+	/*
 	&.blue {
 		background: $--kyc-normal-blue;
 
@@ -76,6 +115,7 @@ button.kyc-button {
 			border: none;
 		}
 	}
+	 */
 
 	&.green {
 		background: $--kyc-cyberpunk;

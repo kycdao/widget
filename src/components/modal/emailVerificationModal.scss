@@ -3,13 +3,18 @@
 .emailVerificationModal {
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	position: absolute;
-	bottom: 1em;
+	bottom: 0em;
 	margin: 1em;
 	width: stretch;
 	background: #fefefe;
 	border-radius: 4px;
 
 	.header {
+		flex-direction: row;
+		display: flex;
+		margin: 1em;
+		align-items: center;
+
 		.material-icons {
 			background: $--kyc-normal-blue-15;
 			border-radius: 100%;
@@ -18,13 +23,9 @@
 			text-align: center;
 			color: $--kyc-normal-blue;
 		}
+
 		p {
 			margin-left: 1em;
 		}
-
-		flex-direction: row;
-		display: flex;
-		margin: 1em;
-		align-items: center;
 	}
 }
