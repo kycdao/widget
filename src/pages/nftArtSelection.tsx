@@ -153,24 +153,17 @@ export const NftSelection: FC<PageProps> = ({
 				</div>
 
 				<div className="nft-button-wrapper">
-
 					<Button
 						inactive={inactive}
 						disabled={disabled}
 						className="full-width underline centered"
-						onClick={onRegenerate}
-					>
+						onClick={onRegenerate}>
 						<>
-							<i className="material-icons">
-								refresh
-							</i>
+							<i className="material-icons">refresh</i>
 							<span>regenerate</span>
 						</>
-
 					</Button>
-
 				</div>
-
 			</>
 		),
 		[onRegenerate, nftImages, onSubmit]
