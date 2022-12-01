@@ -1,7 +1,6 @@
 import { useContext, useState, useCallback, FC, useEffect } from "react"
 import { Button } from "../components/button/button"
 import { KycDaoContext } from "../components/kycDao.provider"
-import { Placeholder } from "../components/placeholder/placeholder"
 import {
 	StateContext,
 	DataActionTypes,
@@ -54,26 +53,39 @@ export const NftSelection: FC<PageProps> = ({
 	const { dispatch } = useContext(StateContext)
 	const kycDao = useContext(KycDaoContext)
 
-	const [nftImages, setNftImages] = useState([
-		{ src: kycDao?.kycDao.getNftImageUrl(), hash: Date.now() },
-	])
+	const [nftImages, setNftImages] = useState<string[]>([])
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const onSubmit = useCallback(() => {
-		dispatch({
-			type: DataActionTypes.changePage,
-			payload: {
-				current: StepID.mintStep,
-				prev: StepID.nftArtSelection,
-			},
+	useEffect(() => {
+		kycDao?.kycDao.getNftImageOptions().then((options) => {
+			const images = [] as string[]
+
+			Object.entries(options).forEach(([, url]) => {
+				images.push(url)
+			})
+
+			setNftImages(images)
 		})
-	}, [dispatch])
+	}, [kycDao])
+
+	const onSubmit = useCallback(
+		(id: string) => () => {
+			dispatch({ type: DataActionTypes.nftImageChange, payload: id })
+			dispatch({
+				type: DataActionTypes.changePage,
+				payload: {
+					current: StepID.mintStep,
+					prev: StepID.nftArtSelection,
+				},
+			})
+		},
+		[dispatch]
+	)
 
 	const onPrev = useCallback(() => {
 		dispatch({
 			type: DataActionTypes.changePage,
 			payload: {
-				current: StepID.chainSelection,
+				current: StepID.taxResidenceStep,
 				next: StepID.nftArtSelection,
 			},
 		})
@@ -104,7 +116,15 @@ export const NftSelection: FC<PageProps> = ({
 
 	const onRegenerate = useCallback(() => {
 		kycDao?.kycDao.regenerateNftImage().then(() => {
-			setNftImages([{ src: kycDao.kycDao.getNftImageUrl(), hash: Date.now() }])
+			kycDao?.kycDao.getNftImageOptions().then((options) => {
+				const images = [] as string[]
+
+				Object.entries(options).forEach(([, value]) => {
+					images.push(value)
+				})
+
+				setNftImages(images)
+			})
 		})
 	}, [kycDao?.kycDao])
 
@@ -120,29 +140,16 @@ export const NftSelection: FC<PageProps> = ({
 						alignContent: "center",
 						height: "75%",
 					}}>
-					<div
-						onClick={onSubmit}
-						style={{ cursor: "pointer", height: "150px", width: "150px" }}>
-						<img alt="" src={`${nftImages[0].src}?${nftImages[0].hash}`} />
-					</div>
-					<Placeholder
-						style={{ borderRadius: "100%" }}
-						onClick={onSubmit}
-						height="150px"
-						width="150px"
-					/>
-					<Placeholder
-						style={{ borderRadius: "100%" }}
-						onClick={onSubmit}
-						height="150px"
-						width="150px"
-					/>
-					<Placeholder
-						style={{ borderRadius: "100%" }}
-						onClick={onSubmit}
-						height="150px"
-						width="150px"
-					/>
+					{nftImages.map((image) => {
+						return (
+							<div
+								key={image}
+								onClick={onSubmit(image)}
+								style={{ cursor: "pointer", height: "150px", width: "150px" }}>
+								<img alt="Nft" src={image} />
+							</div>
+						)
+					})}
 				</div>
 
 				<div className="nft-button-wrapper">

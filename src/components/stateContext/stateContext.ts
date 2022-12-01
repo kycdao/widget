@@ -42,6 +42,8 @@ export const reducer = (
 			return { ...data, termsAccepted: payload }
 		case DataActionTypes.setVerifyingModalOpen:
 			return { ...data, verifyingModalOpen: payload }
+		case DataActionTypes.nftImageChange:
+			return { ...data, imageId: payload }
 		case DataActionTypes.SetHeaderButtonState:
 			switch (payload.button) {
 				case HeaderButtons.close:

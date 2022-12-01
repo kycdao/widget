@@ -2294,14 +2294,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kycdao/kycdao-sdk@npm:^0.3.8":
-  version: 0.3.8
-  resolution: "@kycdao/kycdao-sdk@npm:0.3.8"
+"@kycdao/kycdao-sdk@npm:^0.3.9":
+  version: 0.3.9
+  resolution: "@kycdao/kycdao-sdk@npm:0.3.9"
   dependencies:
     "@solana/spl-token": "npm:^0.3.5"
     "@solana/wallet-adapter-base": "npm:^0.9.18"
     "@solana/wallet-adapter-wallets": "npm:^0.19.3"
     "@solana/web3.js": "npm:^1.66.1"
+    bn.js: "npm:^5.2.1"
     bs58: "npm:^5.0.0"
   peerDependencies:
     near-api-js: ^0.44.2
@@ -2309,7 +2310,7 @@ __metadata:
     react: ^18.1.0
     react-dom: ^18.1.0
     styled-components: ^5.3.5
-  checksum: f0261423ea78e3a9aeea87831dc834c07212bf5a5a4e50b6cd1042e6e52fd3b1240fcd3e9bdb3c5c539da254bb16c0a5de25468d69f55f4391139ee3ec46b7a9
+  checksum: fddf88bc267b94a7072e23f9958a8ffe27737509f9c5e7ad83aa03f7cee474c24433cdc323e06606492d0afebedc3d684ae44dd71eb0843d64ccb7327c7b866d
   languageName: node
   linkType: hard
 
@@ -2320,7 +2321,7 @@ __metadata:
     "@babel/plugin-transform-typescript": "npm:^7.20.2"
     "@babel/preset-env": "npm:^7.20.2"
     "@babel/preset-react": "npm:^7.18.6"
-    "@kycdao/kycdao-sdk": "npm:^0.3.8"
+    "@kycdao/kycdao-sdk": "npm:^0.3.9"
     "@testing-library/jest-dom": "npm:^5.16.5"
     "@testing-library/react": "npm:^13.4.0"
     "@testing-library/user-event": "npm:^14.4.3"
@@ -6589,7 +6590,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bn.js@npm:5.2.1, bn.js@npm:^5.0.0, bn.js@npm:^5.1.1, bn.js@npm:^5.1.2, bn.js@npm:^5.2.0":
+"bn.js@npm:5.2.1, bn.js@npm:^5.0.0, bn.js@npm:^5.1.1, bn.js@npm:^5.1.2, bn.js@npm:^5.2.0, bn.js@npm:^5.2.1":
   version: 5.2.1
   resolution: "bn.js@npm:5.2.1"
   checksum: 0c272b6eeda35a4d2a3bcf5f0cae54080eb876f5aa10789f67322ad891a27dc99f179b4362e1b5fc2e42c408fd8e0014afed4fdf30e4f346561302ea588fd095
