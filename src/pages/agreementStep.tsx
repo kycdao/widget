@@ -1,4 +1,5 @@
-import { useContext, useCallback, FC, useEffect } from "react"
+import { FC, useCallback, useContext, useEffect } from "react"
+import { KycDaoContext } from "../components/kycDao.provider"
 import {
 	DataActionTypes,
 	HeaderButtons,
@@ -6,7 +7,7 @@ import {
 	StateContext,
 	StepID,
 } from "../components/stateContext"
-import { StepPart, Step } from "../components/step/step"
+import { Step, StepPart } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 
@@ -34,6 +35,8 @@ export const AgreementStep: FC<PageProps> = ({
 			translations: { agreementStep: translations },
 		},
 	} = useContext(StateContext)
+
+	const kycDaoContext = useContext(KycDaoContext)
 
 	const onSubmit = useCallback(() => {
 		dispatch({
@@ -73,6 +76,10 @@ export const AgreementStep: FC<PageProps> = ({
 			</>
 		)
 	}, [translations])
+
+	if (!kycDaoContext) {
+		return <>Something went seriously wrong!</>
+	}
 
 	return (
 		<Step
