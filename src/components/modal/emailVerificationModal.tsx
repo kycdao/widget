@@ -29,27 +29,44 @@ export const EmailVerificationModal = () => {
 
 	return (
 		<div className="emailVerificationModal">
+
+
 			<div className="header">
 				<i className="material-icons">hourglass_bottom</i>
 				<p>Waiting your mail verification</p>
 			</div>
+
 			<div style={{ margin: "1em" }}>
 				<p className="policy">Your email address is:</p>
 				<p>{email}</p>
 			</div>
-			<div
-				style={{
-					display: "flex",
-					flexDirection: "row",
-					margin: "1em",
-					justifyContent: "space-between",
-				}}>
-				<Button className="underline centered" onClick={onResend}>
-					↻ resend email
+
+			<div className="button-wrapper">
+
+				<Button
+					className="underline centered"
+					onClick={onResend}
+					>
+					<>
+						<i className="material-icons">
+							refresh
+						</i>
+						<span>regenerate</span>
+					</>
 				</Button>
-				<Button className="underline centered" onClick={onChangeEmail}>
-					change email
+
+				<Button
+					className="underline centered"
+					onClick={onChangeEmail}
+				>
+					<>
+						<i className="material-icons">
+							refresh
+						</i>
+						<span>change email</span>
+					</>
 				</Button>
+
 			</div>
 		</div>
 	)

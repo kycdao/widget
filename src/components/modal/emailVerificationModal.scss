@@ -16,16 +16,24 @@
 		align-items: center;
 
 		.material-icons {
-			background: $--kyc-normal-blue-15;
+			background: var(--kyc-cybergreen-35);
 			border-radius: 100%;
 			width: 1.5em;
 			line-height: 1.5em;
 			text-align: center;
-			color: $--kyc-normal-blue;
+			color: black;
 		}
 
 		p {
 			margin-left: 1em;
 		}
+	}
+
+	.button-wrapper{
+		padding: 0 1rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
 	}
 }

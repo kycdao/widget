@@ -189,9 +189,35 @@ button.kyc-button {
 		}
 	}
 
+	/* GYURI : COPY STYLE */
 	&.underline {
-		text-decoration: underline;
 		background: rgb(0, 0, 0, 0);
-		color: $--kyc-normal-blue;
+		color: black;
+		position: relative;
+		display: inline-flex;
+		width: max-content;
+
+		&:after{
+			content: '';
+			display: inline-flex;
+			height: 2px;
+			width: 100%;
+			background-color: var(--kyc-cybergreen);
+			position: absolute;
+			bottom: 6px;
+			@extend .tr2;
+		}
+
+		span{
+			display: flex;
+			align-items: center;
+		}
+
+		&:hover{
+
+			&:after{
+				height: 8px;
+			}
+		}
 	}
 }
