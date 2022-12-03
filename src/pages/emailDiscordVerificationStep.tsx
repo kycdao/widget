@@ -152,7 +152,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 				} catch (e) {
 					console.error(e)
 				}
-			}, 5000000)
+			}, 1000)
 		}
 	}, [disableSubmit, dispatch, emailValue])
 

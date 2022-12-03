@@ -51,7 +51,7 @@ export const EmailVerificationModal = () => {
 						<i className="material-icons">
 							refresh
 						</i>
-						<span>regenerate</span>
+						<span>resend</span>
 					</>
 				</Button>
 
