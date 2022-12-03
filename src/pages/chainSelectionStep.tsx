@@ -92,8 +92,6 @@ export const ChainSelection: FC<PageProps> = ({
 	const onSubmit = useCallback(async () => {
 		if (!disabled && connectedWallet) {
 			try {
-				await kycDao?.kycDao.registerOrLogin()
-
 				const verificationStatus =
 					await kycDao?.kycDao.checkVerificationStatus()
 				if (verificationStatus?.KYC) {
@@ -154,7 +152,7 @@ export const ChainSelection: FC<PageProps> = ({
 				inactive={inactive}
 				autoFocus={!!connectedWallet && !inactive}
 				disabled={!connectedWallet || disabled}
-				className="full-width blue"
+				className="full-width black"
 				onClick={onEnter}
 			/>
 		),

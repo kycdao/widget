@@ -10,45 +10,48 @@
 
 	position: relative;
 	box-shadow: 0 0 0 0 rgba(white, 0);
-	background: #ecf0fe;
-	color: $--kyc-dark-purple;
+	background: white;
+	color: black;
 	border-radius: $--border-radius-light;
 	font-size: 12pt;
 
-	border: 2px solid $--kyc-normal-blue;
+	border: 2px solid black;
 	//padding-right: 3em;
 
 	@extend .tr2;
 
 	::placeholder {
-		color: $--kyc-dark-purple;
+		color: black;
 	}
 
 	::-webkit-input-placeholder {
-		color: $--kyc-dark-purple;
+		color: black;
 	}
 
 	:-ms-input-placeholder {
-		color: $--kyc-dark-purple;
+		color: black;
 	}
 
 	::-ms-input-placeholder {
-		color: $--kyc-dark-purple;
+		color: black;
 	}
 
 	&:hover {
 		background: white;
 		//background: $--kyc-normal-blue-15;
-		border: 2px solid $--kyc-normal-blue;
-		box-shadow: 0 0 0 10px $--kyc-normal-blue-15;
+		border: 2px solid var(--kyc-cybergreen);
+		box-shadow: 0 0 0 10px var(--kyc-cybergreen-35);
 		@extend .tr2;
 	}
 
 	&:focus {
-		background: white;
-		box-shadow: 0 0 0 5px $--kyc-normal-blue-50;
-		border: 2px solid $--kyc-normal-blue;
+		background: black;
+		border: 2px solid var(--kyc-cybergreen);
+		box-shadow: 0 0 0 5px var(--kyc-cybergreen-50);
 		@extend .tr2;
+
+		color: white;
+
 	}
 
 	&.full-width {
@@ -59,26 +62,27 @@
 
 div.clear {
 	position: absolute;
-	right: 2px;
-	bottom: 88px;
+	right: 5px;
+	bottom: 85px;
 	font-size: 24px;
-	height: 2rem;
-	width: 2rem;
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: $--kyc-normal-blue;
+	color: black;
 	cursor: pointer;
 	border-radius: $--border-radius-light;
+	background: transparent;
+	padding: 3px 9px;
+	line-height: 132%;
+
+
 	@extend .tr2;
 
 	&:hover {
-		background: $--kyc-normal-blue-35;
+		background: var(--kyc-cybergreen-35);
 	}
 
 	&:active {
-		background: $--kyc-normal-blue;
-		color: white;
+		background: black;
+		color: var(--kyc-cybergreen);
 	}
 
 	&.disabled {
@@ -92,9 +96,9 @@ div.kyc-option {
 	line-height: 2.5em;
 	padding-left: 1.5em;
 	border-bottom: 1px solid $--kyc-normal-blue-15;
-	font-family: "gilroyRegular";
+	font-family: var(--primary-font);
 	font-weight: 400;
-	color: $--kyc-dark-blue;
+	color: black;
 
 	strong {
 		font-family: "gilroyBold";
@@ -102,21 +106,23 @@ div.kyc-option {
 	}
 
 	&:hover {
-		background: $--kyc-normal-blue-15;
-		color: $--kyc-normal-blue;
+		background: var(--kyc-cybergreen-35);
+		color: black;
 	}
 }
 
 // TODO Virtual keyboard and stuff
 
 div.autocomplete {
-	position: relative;
 	//width: 368px;
 	width: 100%;
 	max-height: 18vh;
 	height: auto;
 	overflow-y: auto;
 	bottom: 0;
+
+	.kyc-option{
+	}
 }
 
 @media only screen and (min-width: 992px) {

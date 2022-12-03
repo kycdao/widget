@@ -21,6 +21,8 @@ export const reducer = (
 	{ payload, type }: DataChangeActions
 ): Data => {
 	switch (type) {
+		case DataActionTypes.setEmailConfirmed:
+			return { ...data, isEmailConfirmed: payload }
 		case DataActionTypes.chainChange:
 			return { ...data, chain: payload }
 		case DataActionTypes.emailChange:
@@ -40,6 +42,8 @@ export const reducer = (
 			return { ...data, termsAccepted: payload }
 		case DataActionTypes.setVerifyingModalOpen:
 			return { ...data, verifyingModalOpen: payload }
+		case DataActionTypes.nftImageChange:
+			return { ...data, imageId: payload }
 		case DataActionTypes.SetHeaderButtonState:
 			switch (payload.button) {
 				case HeaderButtons.close:
@@ -83,6 +87,7 @@ export const DefaultData = {
 		},
 	},
 	currentModal: null,
+	isEmailConfirmed: false,
 } as Data
 
 export const StateContext = createContext<{

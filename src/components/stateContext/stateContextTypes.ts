@@ -21,6 +21,8 @@ export enum DataActionTypes {
 	setVerifyingModalOpen,
 	OnClickHeaderButton,
 	setModal,
+	setEmailConfirmed,
+	nftImageChange,
 }
 
 export enum StepID {
@@ -39,6 +41,7 @@ export enum StepID {
 }
 
 export type Data = {
+	imageId?: string
 	chain?: string
 	email: string
 	taxResidency: string
@@ -54,6 +57,7 @@ export type Data = {
 	closeButtonState: HeaderButtonState
 	messageTargetOrigin?: string
 	translations: { [key: string]: { [key: string]: string } }
+	isEmailConfirmed: boolean
 }
 
 export type HeaderButtonState = "enabled" | "disabled" | "hidden"
@@ -108,6 +112,16 @@ export type SetModalAction = {
 	payload: ModalType | null
 }
 
+export type EmailConfirmedChangeAction = {
+	type: DataActionTypes.setEmailConfirmed
+	payload: boolean
+}
+
+export type NftImageChangeAction = {
+	type: DataActionTypes.nftImageChange
+	payload: string
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -119,5 +133,7 @@ export type DataChangeActions =
 	| ChangePageAction
 	| TaxResidentChangeAction
 	| SetModalAction
+	| EmailConfirmedChangeAction
+	| NftImageChangeAction
 
 export type ModalType = "emailVerification"

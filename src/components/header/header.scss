@@ -24,7 +24,7 @@
 			border: none;
 			cursor: pointer;
 
-			color: $--kyc-normal-blue;
+			color: black;
 
 			display: flex;
 			align-items: center;
@@ -37,7 +37,12 @@
 			}
 
 			&:hover {
-				background: $--kyc-normal-blue-15;
+				background: var(--kyc-cybergreen-35);
+			}
+
+			&:active{
+				color: #09b678;
+				background: var(--kyc-cybergreen-35);
 			}
 		}
 	}
@@ -55,11 +60,16 @@
 		border-radius: 999rem;
 
 		font-size: 24px;
-		color: $--kyc-normal-blue;
+		color: black;
 		@extend .tr2;
 
 		&:hover {
-			background: $--kyc-normal-blue-15;
+			background: var(--kyc-cybergreen-35);
+		}
+
+		&:active{
+			color: #09b678;
+			background: var(--kyc-cybergreen-35);
 		}
 	}
 }
