@@ -150,8 +150,30 @@ body {
 	}
 }
 
+
+/* STEP ORDER:
+
+AgreementStep = 1,
+kycDAOMembershipStep = 2
+verificationStep = 3
+emailDiscordVerificationStep = 4
+taxResidenceStep = 5
+beginVerificationStep = 6
+nftArtSelection = 7
+finalStep = 8
+chainSelection = 9
+termsAccepted = 10
+loading = 11
+mintStep = 12
+
+ */
+
+/* STEP 02 - kycDAOMembershipStep */
+
 .the-process {
+
 	ul {
+		padding: 1rem 0;
 		margin: 0 auto;
 		width: fit-content;
 
@@ -174,6 +196,7 @@ body {
 			}
 
 			&:last-child {
+
 				&:after {
 					display: none;
 				}
@@ -192,9 +215,21 @@ body {
 				font-family: "gilroy-bold";
 			}
 
-			p {
+			& > div{
 				margin-left: 1rem;
+				display: flex;
+				flex-flow: column;
+
+				p, b{
+					font-family: var(--primary-font);
+					font-weight: 400;
+				}
+
+				b{
+					font-size: 12px;
+				}
 			}
+
 		}
 	}
 }
@@ -209,8 +244,21 @@ body {
 	}
 }
 
+/* 07 STEP -  nftArtSelection */
+
 .nft-button-wrapper{
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
+
+.nft-image-wrapper{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2rem;
+	justify-content: space-around;
+	align-content: center;
+	height: 75%;
+
+}
+

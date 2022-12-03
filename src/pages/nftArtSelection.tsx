@@ -131,15 +131,8 @@ export const NftSelection: FC<PageProps> = ({
 	const body = useCallback<StepPart>(
 		({ disabled, inactive }) => (
 			<>
-				<div
-					style={{
-						display: "flex",
-						flexWrap: "wrap",
-						gap: "2em",
-						justifyContent: "space-around",
-						alignContent: "center",
-						height: "75%",
-					}}>
+				<div className="nft-image-wrapper"
+					>
 					{nftImages.map((image) => {
 						return (
 							<div

@@ -50,7 +50,7 @@ const Header = () => (
 				/>
 			</svg>
 		</span>
-		02 - ID Verification
+		ID Verification
 	</h1>
 )
 

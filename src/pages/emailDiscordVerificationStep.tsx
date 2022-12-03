@@ -53,13 +53,15 @@ const Header = () => (
 				/>
 			</svg>
 		</span>
-		03 - Email / Discord verification
+		Email verification
 	</h1>
 )
 
 const Body = () => (
 	<p className="p">
-		Verify your email / discord via the magic link sent to your address.
+		Verify your email via the magic link sent to you. <br/> <br/>
+		kycDAO won’t know who you are, your account is with our partners. <br/>
+		Yet, we need to establish a communication channel with members.
 	</p>
 )
 

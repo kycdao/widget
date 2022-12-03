@@ -24,6 +24,7 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 			inactive={inactive}
 			className="full-width black"
 			onClick={onEnter}
+			label="Join"
 		/>
 	</>
 )
@@ -43,15 +44,25 @@ const Body = () => {
 				<ul>
 					<li>
 						<span>1</span>
-						<p>Connect</p>
+						<div>
+							<p>Connect</p>
+							<b>Using your wallet</b>
+						</div>
+
 					</li>
 					<li>
 						<span>2</span>
-						<p>Verify</p>
+						<div>
+							<p>Verify</p>
+							<b>Log-in or Open a compliant account</b>
+						</div>
 					</li>
 					<li>
 						<span>3</span>
-						<p>Mint</p>
+						<div>
+							<p>Mint</p>
+							<b>kycNFT - $5</b>
+						</div>
 					</li>
 				</ul>
 			</div>
@@ -88,7 +99,7 @@ const Header = () => (
 				/>
 			</svg>
 		</span>
-		01 - KycDAO Membership
+		KycDAO Membership
 	</h1>
 )
 

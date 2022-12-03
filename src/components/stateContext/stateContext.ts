@@ -81,9 +81,8 @@ export const DefaultData = {
 	prevButtonState: "enabled",
 	translations: {
 		agreementStep: {
-			body1: "Ha Ho’",
-			body2:
-				"To buy this coffee you will have to get verified and onboard with kycDAO.",
+			body1: "",
+			body2: ""
 		},
 	},
 	currentModal: null,
