@@ -53,9 +53,9 @@ export const SubmitButton: FC<ButtonProps> = ({
 			onMouseLeave={onMouseLeave}
 			className={`kyc-submit-button kyc-button ${className}`}
 			onClick={inactive ? undefined : onClick}>
-			<i className="material-icons first-arrow"> chevron_right </i>
+			<i className="material-icons first-arrow">  arrow_forward  </i>
 			<span>{innerHtml}</span>
-			<i className="material-icons second-arrow"> chevron_right </i>
+			<i className="material-icons second-arrow">  arrow_forward  </i>
 		</button>
 	)
 }

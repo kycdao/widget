@@ -50,7 +50,7 @@ const Header = () => (
 				/>
 			</svg>
 		</span>
-		02 - ID Verification
+		ID Verification
 	</h1>
 )
 
@@ -58,15 +58,18 @@ const Body = () => {
 	return (
 		<>
 			<p className="p">
-				We are using 3rd party partners to collect information for verification.
+				Our partners use 3rd party partners to collect information for verification.
 			</p>
-			<p className="p">During the verification you wil be asked:</p>
+			<p className="p">During the account opening you will be asked:</p>
 			<ul>
 				<li className="li">
-					<p>government ID</p>
+					<p>Government ID</p>
 				</li>
 				<li className="li">
-					<p>selfie</p>
+					<p>Selfie</p>
+				</li>
+				<li className="li">
+					<p>Tax residency</p>
 				</li>
 			</ul>
 		</>

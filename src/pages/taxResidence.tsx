@@ -53,7 +53,7 @@ export const Body = () => {
 						/>
 					</svg>
 				</span>
-				04 - Tax residence
+				Tax residence
 			</h1>
 			<p className="p">
 				Please select the country where you are currently a tax residence.

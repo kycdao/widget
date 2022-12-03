@@ -8,6 +8,7 @@
 	overflow: hidden;
 }
 
+
 .KycDaoModalIFrame {
 	@extend .KycDaoModalFrame;
 	border: 0px;
@@ -19,6 +20,7 @@
 		width: var(--width);
 		height: var(--height);
 		margin: auto;
+		border-radius: 12px;
 	}
 }
 

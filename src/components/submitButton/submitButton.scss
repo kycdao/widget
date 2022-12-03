@@ -5,7 +5,8 @@
 
 	.first-arrow {
 		position: absolute;
-		left: 1rem;
+		right: 3rem;
+		opacity: 0;
 		@include translateX(0);
 		@extend .tr2;
 	}
@@ -18,16 +19,17 @@
 	}
 
 	span {
-		margin-left: 1.5rem !important;
 	}
 
 	&:hover {
+
 		.first-arrow {
-			@include translateX(20rem);
+			@include translateX(2rem);
+			opacity: 1;
 		}
 
 		.second-arrow {
-			@include translateX(4rem);
+			@include translateX(8rem);
 		}
 	}
 }
