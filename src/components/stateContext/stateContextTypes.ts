@@ -22,6 +22,7 @@ export enum DataActionTypes {
 	OnClickHeaderButton,
 	setModal,
 	setEmailConfirmed,
+	nftImageChange,
 }
 
 export enum StepID {
@@ -40,6 +41,7 @@ export enum StepID {
 }
 
 export type Data = {
+	imageId?: string
 	chain?: string
 	email: string
 	taxResidency: string
@@ -115,6 +117,11 @@ export type EmailConfirmedChangeAction = {
 	payload: boolean
 }
 
+export type NftImageChangeAction = {
+	type: DataActionTypes.nftImageChange
+	payload: string
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -127,5 +134,6 @@ export type DataChangeActions =
 	| TaxResidentChangeAction
 	| SetModalAction
 	| EmailConfirmedChangeAction
+	| NftImageChangeAction
 
 export type ModalType = "emailVerification"

@@ -1,4 +1,5 @@
 import { FC, useContext, useCallback, useEffect } from "react"
+import { KycDaoContext } from "../../components/kycDao.provider"
 import {
 	DataActionTypes,
 	HeaderButtons,
@@ -91,6 +92,26 @@ const Header = () => (
 	</h1>
 )
 
+const getNetworkType = (
+	network: string
+): "Solana" | "Ethereum" | "Near" | undefined => {
+	const test = network.match("(Solana|Ethereum|Near)")?.[0]
+
+	if (!test) {
+		switch (network) {
+			case "PolygonMainnet":
+			case "PolygonMumbai":
+				return "Ethereum"
+		}
+	}
+
+	if (test !== "Solana" && test !== "Near" && test !== "Ethereum") {
+		return
+	}
+
+	return test
+}
+
 export const KycDAOMembershipStep: FC<PageProps> = ({
 	className,
 	animation,
@@ -98,6 +119,8 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 	inactive = false,
 }) => {
 	const { dispatch } = useContext(StateContext)
+
+	const kycDaoContext = useContext(KycDaoContext)
 
 	const onPrev = useCallback(() => {
 		dispatch({
@@ -116,16 +139,28 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 		}
 	}, [disabled, inactive, onPrev])
 
-	const onSubmit = useCallback(() => {
-		dispatch({
-			type: DataActionTypes.changePage,
-			payload: {
-				current: StepID.verificationStep,
-				prev: StepID.kycDAOMembershipStep,
-			},
-		})
-		dispatch({ type: DataActionTypes.termsAcceptedChange, payload: true })
-	}, [dispatch])
+	const onSubmit = useCallback(async () => {
+		if (kycDaoContext) {
+			const network = getNetworkType(
+				kycDaoContext.kycDao.sdkStatus.availableBlockchainNetworks[0]
+			)
+			if (network) {
+				try {
+					await kycDaoContext.kycDao.connectWallet(network)
+					dispatch({
+						type: DataActionTypes.changePage,
+						payload: {
+							current: StepID.verificationStep,
+							prev: StepID.kycDAOMembershipStep,
+						},
+					})
+					dispatch({ type: DataActionTypes.termsAcceptedChange, payload: true })
+				} catch (e) {
+					alert(e)
+				}
+			}
+		}
+	}, [dispatch, kycDaoContext])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

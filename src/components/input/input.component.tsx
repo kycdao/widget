@@ -2,6 +2,7 @@ import {
 	ChangeEventHandler,
 	createRef,
 	FC,
+	HTMLInputTypeAttribute,
 	RefObject,
 	useCallback,
 	useEffect,
@@ -25,6 +26,7 @@ type InputProps = {
 	inputRef: RefObject<HTMLInputElement>
 	onInputBlurred?: () => void
 	onInputFocused?: () => void
+	type?: HTMLInputTypeAttribute
 }
 
 export const Input: FC<InputProps> = ({
@@ -39,6 +41,7 @@ export const Input: FC<InputProps> = ({
 	inputRef = createRef(),
 	onInputBlurred,
 	onInputFocused,
+	type,
 }) => {
 	const [showAutoComplete, setShowAutoComplete] = useState(false)
 	const autocompleteRef = useRef<HTMLDivElement>(null)
@@ -137,7 +140,7 @@ export const Input: FC<InputProps> = ({
 				ref={inputRef}
 				id={id}
 				className={`kyc-input ${disabled ? "disabled" : ""} ${className}`}
-				type="text"
+				type={type || "text"}
 				placeholder={placeholder}
 				onChange={onChangeEventHndlr}
 				disabled={disabled}

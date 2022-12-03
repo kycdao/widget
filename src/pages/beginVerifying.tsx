@@ -38,7 +38,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 
 	const onCancel = useCallback(() => {
 		dispatch({
-			payload: { current: StepID.chainSelection, next: StepID.loading },
+			payload: { current: StepID.taxResidenceStep, next: StepID.loading },
 			type: DataActionTypes.changePage,
 		})
 		verifyingModalOpen.current = false
@@ -58,14 +58,13 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 			type: DataActionTypes.changePage,
 			payload: {
 				current: StepID.loading,
-				prev: StepID.chainSelection,
+				prev: StepID.taxResidenceStep,
 			},
 		})
 
 		verifyingModalOpen.current = true
 		;(async () => {
 			try {
-				await kycDao.kycDao.registerOrLogin()
 				await kycDao.kycDao.startVerification(
 					{
 						email,

@@ -20,7 +20,7 @@ import {
 import { StepPart, Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
-// import { KycDaoContext } from "../components/kycDao.provider"
+import { KycDaoContext } from "../components/kycDao.provider"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
@@ -74,7 +74,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 		dispatch,
 	} = useContext(StateContext)
 
-	// const kycDao = useContext(KycDaoContext)
+	const kycDao = useContext(KycDaoContext)
 
 	const [buttonAutofocus, setButtonAutoFocus] = useState(false)
 
@@ -128,31 +128,41 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 			dispatch({ type: DataActionTypes.setModal, payload: "emailVerification" })
 			dispatch({ type: DataActionTypes.emailChange, payload: emailValue })
 
-			// await kycDao?.kycDao.updateEmail(emailValue)
+			try {
+				await kycDao?.kycDao.registerOrLogin()
+				await kycDao?.kycDao.updateEmail(emailValue)
 
-			const interval = setInterval(async () => {
-				try {
-					// const emailData = await kycDao?.kycDao.checkEmailConfirmed()
+				const emailCheck = async () => {
+					const emailData = { isConfirmed: true } // await kycDao?.kycDao.checkEmailConfirmed()
 
-					// if (emailData?.isConfirmed) {
-					clearInterval(interval)
-					dispatch({ type: DataActionTypes.setEmailConfirmed, payload: true })
-					dispatch({
-						type: DataActionTypes.changePage,
-						payload: {
-							current: StepID.taxResidenceStep,
-							prev: StepID.emailDiscordVerificationStep,
-						},
-					})
-					dispatch({
-						type: DataActionTypes.setModal,
-						payload: null,
-					})
-					// }
-				} catch (e) {
-					console.error(e)
+					if (emailData?.isConfirmed) {
+						dispatch({ type: DataActionTypes.setEmailConfirmed, payload: true })
+						dispatch({
+							type: DataActionTypes.changePage,
+							payload: {
+								current: StepID.taxResidenceStep,
+								prev: StepID.emailDiscordVerificationStep,
+							},
+						})
+						dispatch({
+							type: DataActionTypes.setModal,
+							payload: null,
+						})
+
+						return true
+					} else {
+						return false
+					}
 				}
-			}, 1000)
+
+				if (!(await emailCheck())) {
+					const interval = setInterval(emailCheck, 1500)
+
+					return () => clearInterval(interval)
+				}
+			} catch (e) {
+				alert(e)
+			}
 		}
 	}, [disableSubmit, dispatch, emailValue])
 
@@ -194,6 +204,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 					placeholder={"email"}
 					className="full-width"
 					onChange={onEmailChange}
+					type="email"
 				/>
 				<SubmitButton
 					autoFocus={buttonAutofocus}

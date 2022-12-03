@@ -9,6 +9,7 @@ import {
 	useRef,
 } from "react"
 import { Input } from "../components/input/input.component"
+import { KycDaoContext } from "../components/kycDao.provider"
 import {
 	StateContext,
 	StepID,
@@ -78,6 +79,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 	)
 	const taxResidence = useRef(taxResidency)
 	const inputValue = useRef(null)
+	const kycDao = useContext(KycDaoContext)
 
 	useEffect(() => {
 		if (taxResidency) {
@@ -104,21 +106,38 @@ export const TaxResidenceStep: FC<PageProps> = ({
 		}
 	}, [inactive, disabled, dispatch, taxResidency])
 
-	const onSubmit = useCallback(() => {
-		if (!submitDisabled && !inactive) {
+	const onSubmit = useCallback(async () => {
+		if (!disabled && !submitDisabled && !inactive) {
 			dispatch({
 				type: DataActionTypes.taxResidenceChange,
 				payload: taxResidence.current,
 			})
-			dispatch({
-				type: DataActionTypes.changePage,
-				payload: {
-					current: StepID.chainSelection,
-					prev: StepID.taxResidenceStep,
-				},
-			})
+
+			try {
+				const verificationStatus =
+					await kycDao?.kycDao.checkVerificationStatus()
+				if (verificationStatus?.KYC) {
+					dispatch({
+						type: DataActionTypes.changePage,
+						payload: {
+							current: StepID.nftArtSelection,
+							prev: StepID.taxResidenceStep,
+						},
+					})
+				} else {
+					dispatch({
+						type: DataActionTypes.changePage,
+						payload: {
+							current: StepID.beginVerificationStep,
+							prev: StepID.taxResidenceStep,
+						},
+					})
+				}
+			} catch (err) {
+				console.error(err)
+			}
 		}
-	}, [taxResidence, submitDisabled, inactive, dispatch])
+	}, [taxResidence, submitDisabled, inactive, dispatch, disabled, kycDao])
 
 	const onPrev = useCallback(() => {
 		dispatch({

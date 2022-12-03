@@ -71,7 +71,7 @@ export const MintStep: FC<PageProps> = ({
 }) => {
 	const {
 		dispatch,
-		data: { termsAccepted },
+		data: { termsAccepted, imageId },
 	} = useContext(StateContext)
 	const kycDao = useContext(KycDaoContext)
 
@@ -88,6 +88,7 @@ export const MintStep: FC<PageProps> = ({
 					await kycDao.kycDao.startMinting({
 						disclaimerAccepted: termsAccepted,
 						verificationType: VerificationTypes.KYC,
+						imageId,
 					})
 					dispatch({
 						type: DataActionTypes.changePage,
@@ -116,7 +117,7 @@ export const MintStep: FC<PageProps> = ({
 				}
 			}
 		}
-	}, [dispatch, kycDao, termsAccepted])
+	}, [dispatch, kycDao, termsAccepted, imageId])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
