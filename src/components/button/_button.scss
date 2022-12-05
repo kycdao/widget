@@ -1,20 +1,20 @@
 @import "../../style/variables";
 
 button.kyc-button {
-  &.centered {
-    justify-content: center;
-    padding-left: 0;
-    padding-right: 0;
+	&.centered {
+		justify-content: center;
+		padding-left: 0;
+		padding-right: 0;
 
-    span {
-      margin: 0;
-    }
-  }
+		span {
+			margin: 0;
+		}
+	}
 
-  &.square {
-    width: 3em;
-    height: 3em;
-  }
+	&.square {
+		width: 3em;
+		height: 3em;
+	}
 
 	height: $--button-height;
 	display: inline-flex;
@@ -61,7 +61,8 @@ button.kyc-button {
 			background: var(--kyc-cybergreen);
 			box-shadow: 0 0 0 0px var(--kyc-cybergreen-35);
 
-			span, i{
+			span,
+			i {
 				color: black;
 			}
 		}
@@ -70,7 +71,8 @@ button.kyc-button {
 			background: var(--kyc-cybergreen);
 			box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
 
-			span, i{
+			span,
+			i {
 				color: black;
 			}
 		}
@@ -153,9 +155,9 @@ button.kyc-button {
 		}
 	}
 
-  &.clean {
-    background: rgb(0, 0, 0, 0);
-    border: 2px $--kyc-normal-blue solid;
+	&.clean {
+		background: rgb(0, 0, 0, 0);
+		border: 2px $--kyc-normal-blue solid;
 
 		span,
 		.material-icons {
@@ -197,8 +199,8 @@ button.kyc-button {
 		display: inline-flex;
 		width: max-content;
 
-		&:after{
-			content: '';
+		&:after {
+			content: "";
 			display: inline-flex;
 			height: 2px;
 			width: 100%;
@@ -208,14 +210,13 @@ button.kyc-button {
 			@extend .tr2;
 		}
 
-		span{
+		span {
 			display: flex;
 			align-items: center;
 		}
 
-		&:hover{
-
-			&:after{
+		&:hover {
+			&:after {
 				height: 8px;
 			}
 		}
