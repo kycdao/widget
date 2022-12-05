@@ -59,8 +59,8 @@ const Header = () => (
 
 const Body = () => (
 	<p className="p">
-		Verify your email via the magic link sent to you. <br/> <br/>
-		kycDAO won’t know who you are, your account is with our partners. <br/>
+		Verify your email via the magic link sent to you. <br /> <br />
+		kycDAO won’t know who you are, your account is with our partners. <br />
 		Yet, we need to establish a communication channel with members.
 	</p>
 )
@@ -72,7 +72,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	inactive = false,
 }) => {
 	const {
-		data: { email },
+		data: { email, currentModal, isEmailConfirmed },
 		dispatch,
 	} = useContext(StateContext)
 
@@ -81,6 +81,8 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	const [buttonAutofocus, setButtonAutoFocus] = useState(false)
 
 	const [emailValue, setEmailValue] = useState("")
+
+	const confirmationInterval = useRef<NodeJS.Timer>()
 
 	useLayoutEffect(() => {
 		if (email !== "") {
@@ -116,6 +118,12 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	)
 
 	useEffect(() => {
+		if (!currentModal && confirmationInterval.current) {
+			clearInterval(confirmationInterval.current)
+		}
+	}, [currentModal])
+
+	useEffect(() => {
 		dispatch({
 			payload: {
 				button: HeaderButtons.next,
@@ -126,49 +134,60 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	}, [disableSubmit, dispatch])
 
 	const onSubmit = useCallback(async () => {
-		if (!disableSubmit) {
-			dispatch({ type: DataActionTypes.setModal, payload: "emailVerification" })
-			dispatch({ type: DataActionTypes.emailChange, payload: emailValue })
+		if (!disableSubmit && kycDao) {
+			if (!isEmailConfirmed) {
+				dispatch({
+					type: DataActionTypes.setModal,
+					payload: "emailVerification",
+				})
+				dispatch({ type: DataActionTypes.emailChange, payload: emailValue })
 
-			try {
-				await kycDao?.kycDao.registerOrLogin()
-				await kycDao?.kycDao.updateEmail(emailValue)
+				try {
+					await kycDao.kycDao.registerOrLogin()
+					await kycDao.kycDao.updateEmail(emailValue)
 
-				const emailCheck = async () => {
-					const emailData = { isConfirmed: true } // await kycDao?.kycDao.checkEmailConfirmed()
+					const emailCheck = async () => {
+						const emailData = { isConfirmed: true } // await kycDao?.kycDao.checkEmailConfirmed()
 
-					if (emailData?.isConfirmed) {
-						dispatch({ type: DataActionTypes.setEmailConfirmed, payload: true })
-						dispatch({
-							type: DataActionTypes.changePage,
-							payload: {
-								current: StepID.taxResidenceStep,
-								prev: StepID.emailDiscordVerificationStep,
-							},
-						})
-						dispatch({
-							type: DataActionTypes.setModal,
-							payload: null,
-						})
+						if (emailData?.isConfirmed) {
+							dispatch({
+								type: DataActionTypes.setEmailConfirmed,
+								payload: true,
+							})
+							dispatch({
+								type: DataActionTypes.changePage,
+								payload: {
+									current: StepID.taxResidenceStep,
+									prev: StepID.emailDiscordVerificationStep,
+								},
+							})
+							dispatch({
+								type: DataActionTypes.setModal,
+								payload: null,
+							})
 
-						return true
-					} else {
-						return false
+							clearInterval(confirmationInterval.current)
+						}
 					}
+					confirmationInterval.current = setInterval(emailCheck, 1500)
+				} catch (e) {
+					alert(e)
 				}
-
-				if (!(await emailCheck())) {
-					const interval = setInterval(emailCheck, 1500)
-
-					return () => clearInterval(interval)
-				}
-			} catch (e) {
-				alert(e)
+			} else {
+				dispatch({
+					type: DataActionTypes.changePage,
+					payload: {
+						current: StepID.taxResidenceStep,
+						prev: StepID.emailDiscordVerificationStep,
+					},
+				})
 			}
 		}
-	}, [disableSubmit, dispatch, emailValue])
+	}, [disableSubmit, dispatch, emailValue, kycDao, isEmailConfirmed])
 
 	const onPrev = useCallback(() => {
+		clearInterval(confirmationInterval.current)
+
 		dispatch({
 			payload: {
 				current: StepID.verificationStep,
@@ -190,9 +209,13 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 		}
 	}, [onSubmit, disabled, inactive, dispatch, onPrev])
 
-	const onEmailChange = useCallback((value: string) => {
-		setEmailValue(value)
-	}, [])
+	const onEmailChange = useCallback(
+		(value: string) => {
+			setEmailValue(value)
+			dispatch({ type: DataActionTypes.setEmailConfirmed, payload: false })
+		},
+		[dispatch]
+	)
 
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive, onNext, onInputBlurred, onInputFocused }) => (
