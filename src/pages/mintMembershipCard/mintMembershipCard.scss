@@ -40,7 +40,7 @@
 				}
 
 				&:hover {
-					//box-shadow: 0 0 0 10px $--kyc-normal-blue-35;
+					box-shadow: 0 0 0 0px var(--kyc-cybergreen-35);
 					background: var(--kyc-cybergreen);
 
 					span,
@@ -50,10 +50,11 @@
 				}
 
 				&:focus {
+					box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
 
 					span,
 					.material-icons {
-						color: black;
+						color: white;
 					}
 				}
 
@@ -82,7 +83,6 @@
 
 				.price {
 					color: black;
-					font-weight: bold;
 					font-weight: 800;
 					font-family: var(--primary-font);
 				}
@@ -105,11 +105,6 @@
 		}
 	}
 
-	.value{
-
-
-
-	}
 
 }
 
@@ -142,15 +137,13 @@
 		}
 	}
 
-
-
 }
 
 .subscription-selector {
 	font-family: var(--primary-font);
 
 	> strong {
-		color: $--kyc-normal-blue;
+		color: black;
 	}
 }
 

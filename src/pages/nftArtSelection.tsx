@@ -134,10 +134,10 @@ export const NftSelection: FC<PageProps> = ({
 				<div className="nft-image-wrapper">
 					{nftImages.map((image) => {
 						return (
-							<div
+							<div className="nft-image"
 								key={image}
 								onClick={onSubmit(image)}
-								style={{ cursor: "pointer", height: "150px", width: "150px" }}>
+								>
 								<img alt="Nft" src={image} />
 							</div>
 						)
