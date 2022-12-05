@@ -48,7 +48,6 @@ const Body = () => {
 							<p>Connect</p>
 							<b>Using your wallet</b>
 						</div>
-
 					</li>
 					<li>
 						<span>2</span>

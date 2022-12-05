@@ -40,13 +40,12 @@ $--kyc-red-35: rgba(255, 70, 70, 0.35);
 $--light-font: gilroyLight;
 $--display-font: gilroyBold;
 
-:root{
+:root {
 	--primary-font: "neue-machina";
-	--kyc-cybergreen: #00FFB3;
-	--kyc-cybergreen-35: rgba(0, 255, 177, 0.35) ;
-	--kyc-cybergreen-50: rgba(0, 255, 177, 0.50) ;
-	--darken-green: #0AF292;
-
+	--kyc-cybergreen: #00ffb3;
+	--kyc-cybergreen-35: rgba(0, 255, 177, 0.35);
+	--kyc-cybergreen-50: rgba(0, 255, 177, 0.5);
+	--darken-green: #0af292;
 }
 
 .tr2 {
@@ -69,4 +68,3 @@ $--display-font: gilroyBold;
 	/* Safari */
 	transform: translateX($translateX);
 }
-
