@@ -1,7 +1,6 @@
 @import "../../style/variables";
 
 button.kyc-button {
-
 	height: $--button-height;
 	display: inline-flex;
 	justify-content: space-between;
@@ -140,7 +139,6 @@ button.kyc-button {
 		}
 	}
 
-
 	/* GYURI : COPY STYLE */
 	&.underline {
 		background: rgb(0, 0, 0, 0);
@@ -149,8 +147,8 @@ button.kyc-button {
 		display: inline-flex;
 		width: max-content;
 
-		&:after{
-			content: '';
+		&:after {
+			content: "";
 			display: inline-flex;
 			height: 2px;
 			width: 100%;
@@ -160,24 +158,21 @@ button.kyc-button {
 			@extend .tr2;
 		}
 
-		span{
+		span {
 			display: flex;
 			align-items: center;
 		}
 
-		&:hover{
-
-			&:after{
+		&:hover {
+			&:after {
 				height: 8px;
 			}
 		}
 	}
 
-	&.kyc-submit-button{
-
-		span{
+	&.kyc-submit-button {
+		span {
 			padding-left: 1.5rem;
 		}
-
 	}
 }

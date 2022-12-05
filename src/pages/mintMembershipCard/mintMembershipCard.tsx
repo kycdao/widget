@@ -181,7 +181,9 @@ export const MintStep: FC<PageProps> = ({
 			<>
 				<div className="calculator-wrapper">
 					<p className="p">Membership period:</p>
-					<div className="calculator" style={{ display: "flex", flexDirection: "column" }}>
+					<div
+						className="calculator"
+						style={{ display: "flex", flexDirection: "column" }}>
 						<div>
 							<Button
 								className="centered clean square calculator-button"
@@ -190,21 +192,15 @@ export const MintStep: FC<PageProps> = ({
 									remove
 								</i>
 							</Button>
-							<div
-								className="yearCount"
-								>
-								{yearCount} year
-							</div>
+							<div className="yearCount">{yearCount} year</div>
 							<Button
 								className="centered clean square calculator-button"
-								onClick={increase}
-								>
+								onClick={increase}>
 								<i style={{ lineHeight: "2em" }} className="material-icons">
 									add
 								</i>
 							</Button>
-							<div className="sum"
-								>
+							<div className="sum">
 								<span className="price">${5 * (yearCount || 0)}</span>
 								<span className="subscription"> / year</span>
 							</div>
@@ -213,9 +209,16 @@ export const MintStep: FC<PageProps> = ({
 				</div>
 				<div className="value">
 					<i className="material-icons">info</i>
-					<p><strong>5,6</strong> Matic</p>
-					<p>- <strong>0.12</strong> Matic </p>
-					<p> gas = <strong>-5.72</strong> Matic ($12.94USD)</p>
+					<p>
+						<strong>5,6</strong> Matic
+					</p>
+					<p>
+						- <strong>0.12</strong> Matic{" "}
+					</p>
+					<p>
+						{" "}
+						gas = <strong>-5.72</strong> Matic ($12.94USD)
+					</p>
 				</div>
 				<SubmitButton
 					autoFocus={!inactive && !disabled && !yearCount}
