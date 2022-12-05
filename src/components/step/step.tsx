@@ -18,7 +18,7 @@ export type StepAnimation = { from: MovingDirection; to: MovingDirection }
 
 export type StepState = "inTransition" | "transitionDone"
 
-const windowHeight = window.visualViewport?.height
+// const windowHeight = window.visualViewport?.height
 
 export type StepPart = FC<{
 	disabled: boolean
@@ -46,7 +46,7 @@ type StepProps = {
 }
 
 const isPhantom = !!navigator.userAgent.match("Phantom")
-const isIphone = !!navigator.userAgent.match("iPhone")
+// const isIphone = !!navigator.userAgent.match("iPhone")
 
 export const Step: FC<StepProps> = ({
 	onNext,

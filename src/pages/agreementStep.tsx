@@ -30,12 +30,7 @@ export const AgreementStep: FC<PageProps> = ({
 	disabled = false,
 	inactive = false,
 }) => {
-	const {
-		dispatch,
-		data: {
-			translations: { agreementStep: translations },
-		},
-	} = useContext(StateContext)
+	const { dispatch } = useContext(StateContext)
 
 	const kycDaoContext = useContext(KycDaoContext)
 
@@ -90,10 +85,9 @@ export const AgreementStep: FC<PageProps> = ({
 					We use soulbound NFTs to prove your compliant account. Strictly no
 					PII!
 				</p>
-				{/*<p>{translations?.body2}</p>*/}
 			</>
 		)
-	}, [translations])
+	}, [])
 
 	if (!kycDaoContext) {
 		return <>Something went seriously wrong!</>

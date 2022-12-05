@@ -166,7 +166,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 				alert(e)
 			}
 		}
-	}, [disableSubmit, dispatch, emailValue])
+	}, [disableSubmit, dispatch, emailValue, kycDao?.kycDao])
 
 	const onPrev = useCallback(() => {
 		dispatch({
