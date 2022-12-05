@@ -47,6 +47,14 @@
 					.material-icons {
 						color: black;
 					}
+
+					&:focus{
+
+						span,
+						.material-icons {
+							color: black;
+						}
+					}
 				}
 
 				&:focus {
@@ -61,7 +69,13 @@
 				&:active {
 					background: var(--kyc-cybergreen);
 					border: 2px solid var(--kyc-cybergreen);
-					box-shadow: 0 0 0 5px var(--kyc-cybergreen-35)
+					box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
+					//box-shadow: 0 0 0 5px rgba(black, 0.35);
+
+					span,
+					.material-icons {
+						color: black;
+					}
 				}
 
 				&:focus-visible {

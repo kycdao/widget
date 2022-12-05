@@ -14,6 +14,8 @@
 	color: black;
 	border-radius: $--border-radius-light;
 	font-size: 12pt;
+	font-family: var(--primary-font);
+
 
 	border: 2px solid black;
 	//padding-right: 3em;
@@ -22,18 +24,22 @@
 
 	::placeholder {
 		color: black;
+		font-family: var(--primary-font);
 	}
 
 	::-webkit-input-placeholder {
 		color: black;
+		font-family: var(--primary-font);
 	}
 
 	:-ms-input-placeholder {
 		color: black;
+		font-family: var(--primary-font);
 	}
 
 	::-ms-input-placeholder {
 		color: black;
+		font-family: var(--primary-font);
 	}
 
 	&:hover {
@@ -99,7 +105,7 @@ div.kyc-option {
 	color: black;
 
 	strong {
-		font-family: "gilroyBold";
+		font-family: var(--primary-font);
 		font-weight: 800;
 	}
 
@@ -120,6 +126,11 @@ div.autocomplete {
 	bottom: 0;
 
 	.kyc-option {
+
+		strong{
+			font-family: var(--primary-font);
+			font-weight: 800;
+		}
 	}
 }
 

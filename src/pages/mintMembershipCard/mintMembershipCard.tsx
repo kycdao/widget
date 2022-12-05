@@ -206,7 +206,7 @@ export const MintStep: FC<PageProps> = ({
 							<div className="sum"
 								>
 								<span className="price">${5 * (yearCount || 0)}</span>
-								<span className="subscription"> / year</span>
+								{/*<span className="subscription"> / year</span>*/}
 							</div>
 						</div>
 					</div>

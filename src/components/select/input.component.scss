@@ -11,11 +11,16 @@
 	position: relative;
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	background: #ecf0fe;
-	color: var(&kyc-dark-purple);
 	border-radius: var(--border-radius-light);
 	font-size: 12pt;
 	border-width: 2pt;
 	border-style: solid;
+
+
+	//color: var(&kyc-dark-purple);
+	color: black;
+	font-family: var(--primary-font);
+
 
 	&.open {
 		border-bottom-left-radius: 0;
@@ -28,18 +33,22 @@
 
 	::placeholder {
 		color: var(&kyc-dark-purple);
+		font-family: var(--primary-font);
 	}
 
 	::-webkit-input-placeholder {
 		color: var(&kyc-dark-purple);
+		font-family: var(--primary-font);
 	}
 
 	:-ms-input-placeholder {
 		color: var(&kyc-dark-purple);
+		font-family: var(--primary-font);
 	}
 
 	::-ms-input-placeholder {
 		color: var(&kyc-dark-purple);
+		font-family: var(--primary-font);
 	}
 
 	&:hover {
@@ -66,6 +75,7 @@
 }
 
 .kyc-option {
+
 	&.first {
 		margin-top: -1em;
 	}
@@ -80,6 +90,7 @@
 	position: relative;
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	background: #ecf0fe;
-	color: var(&kyc-dark-purple);
+	//color: var(&kyc-dark-purple);
+	color: black;
 	font-size: 12pt;
 }

@@ -31,10 +31,17 @@ button.kyc-button {
 	&[disabled] {
 		background: $--inactive !important;
 		pointer-events: none !important;
+		border: 2px solid black;
+
+		span, i{
+			color: black !important;
+		}
+
 	}
 
 	&.black {
 		background: black;
+		border: 2px solid black;
 
 		span,
 		.material-icons {
