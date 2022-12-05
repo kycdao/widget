@@ -1,26 +1,11 @@
 @import "../../style/variables";
 
 button.kyc-button {
-  &.centered {
-    justify-content: center;
-    padding-left: 0;
-    padding-right: 0;
-
-    span {
-      margin: 0;
-    }
-  }
-
-  &.square {
-    width: 3em;
-    height: 3em;
-  }
 
 	height: $--button-height;
 	display: inline-flex;
 	justify-content: space-between;
 	box-sizing: border-box;
-	padding-left: 1.5em;
 	align-items: center;
 
 	position: relative;
@@ -153,41 +138,6 @@ button.kyc-button {
 		}
 	}
 
-  &.clean {
-    background: rgb(0, 0, 0, 0);
-    border: 2px $--kyc-normal-blue solid;
-
-		span,
-		.material-icons {
-			font-weight: 400;
-			color: $--kyc-normal-blue;
-		}
-
-		&:hover {
-			box-shadow: 0 0 0 10px $--kyc-normal-blue-35;
-
-			span,
-			.material-icons {
-				font-weight: 400;
-				color: $--kyc-normal-blue;
-				//margin-left: 0.5em;
-			}
-		}
-
-		&:focus {
-			background: $--kyc-normal-blue-35;
-			box-shadow: 0 0 0 5px $--kyc-dark-blue-35;
-		}
-
-		&:active {
-			box-shadow: 0 0 0 5px $--kyc-dark-blue-35;
-		}
-
-		&:focus-visible {
-			outline: none;
-			border: none;
-		}
-	}
 
 	/* GYURI : COPY STYLE */
 	&.underline {
@@ -219,5 +169,13 @@ button.kyc-button {
 				height: 8px;
 			}
 		}
+	}
+
+	&.kyc-submit-button{
+
+		span{
+			padding-left: 1.5rem;
+		}
+
 	}
 }

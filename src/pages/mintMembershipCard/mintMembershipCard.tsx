@@ -179,19 +179,12 @@ export const MintStep: FC<PageProps> = ({
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive, onEnter }) => (
 			<>
-				<p className="p">Membership period:</p>
-				<div>
-					<div style={{ display: "flex", flexDirection: "column" }}>
-						<div
-							style={{
-								justifyContent: "space-evenly",
-								flexDirection: "row",
-								display: "flex",
-								marginBottom: "2em",
-							}}>
+				<div className="calculator-wrapper">
+					<p className="p">Membership period:</p>
+					<div className="calculator" style={{ display: "flex", flexDirection: "column" }}>
+						<div>
 							<Button
-								style={{ marginBlock: "auto" }}
-								className="centered clean square"
+								className="centered clean square calculator-button"
 								onClick={decrease}>
 								<i style={{ lineHeight: "2em" }} className="material-icons">
 									remove
@@ -199,31 +192,19 @@ export const MintStep: FC<PageProps> = ({
 							</Button>
 							<div
 								className="yearCount"
-								style={{
-									display: "flex",
-									alignItems: "center",
-									marginBlock: "auto",
-									flex: 1,
-									justifyContent: "center",
-								}}>
+								>
 								{yearCount} year
 							</div>
 							<Button
-								style={{ lineHeight: "2em", marginBlock: "auto" }}
-								className="centered clean square"
-								onClick={increase}>
+								className="centered clean square calculator-button"
+								onClick={increase}
+								>
 								<i style={{ lineHeight: "2em" }} className="material-icons">
 									add
 								</i>
 							</Button>
-							<div
-								style={{
-									flexDirection: "column",
-									marginBlock: "auto",
-									flex: 1,
-									justifyContent: "center",
-									marginLeft: "1em",
-								}}>
+							<div className="sum"
+								>
 								<span className="price">${5 * (yearCount || 0)}</span>
 								<span className="subscription"> / year</span>
 							</div>
@@ -231,8 +212,10 @@ export const MintStep: FC<PageProps> = ({
 					</div>
 				</div>
 				<div className="value">
-					<strong>5,6 Matic</strong> - <strong>0.12 Matic</strong> gas =
-					<strong>-5.72 Matic</strong> ($12.94USD)
+					<i className="material-icons">info</i>
+					<p><strong>5,6</strong> Matic</p>
+					<p>- <strong>0.12</strong> Matic </p>
+					<p> gas = <strong>-5.72</strong> Matic ($12.94USD)</p>
 				</div>
 				<SubmitButton
 					autoFocus={!inactive && !disabled && !yearCount}

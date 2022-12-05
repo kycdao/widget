@@ -1,36 +1,158 @@
 @import "../../style/variables";
 @import "../../style/style";
 
+
+
+.step-footer{
+
+	.calculator-wrapper{
+
+		p{
+			font-family: var(--primary-font);
+		}
+
+		.calculator{
+			display: flex;
+			flex-flow: column;
+
+			&>div{
+				justify-content: space-evenly;
+				flex-direction: row;
+				display: flex;
+				margin-bottom: 1em;
+			}
+
+			.calculator-button {
+				margin-block: auto;
+				line-height: 2em;
+				justify-content: center;
+				padding-left: 0;
+				padding-right: 0;
+				width: 3em;
+				height: 3em;
+
+				//background: rgb(0, 0, 0, 0);
+				background: black;
+				border: 2px black solid;
+
+				span,
+				.material-icons {
+					color: white;
+				}
+
+				&:hover {
+					//box-shadow: 0 0 0 10px $--kyc-normal-blue-35;
+					background: var(--kyc-cybergreen);
+
+					span,
+					.material-icons {
+						color: black;
+					}
+				}
+
+				&:focus {
+
+					span,
+					.material-icons {
+						color: black;
+					}
+				}
+
+				&:active {
+					background: var(--kyc-cybergreen);
+					border: 2px solid var(--kyc-cybergreen);
+					box-shadow: 0 0 0 5px var(--kyc-cybergreen-35)
+				}
+
+				&:focus-visible {
+					outline: none;
+					border: none;
+				}
+
+				i{
+
+				}
+
+			}
+
+			.sum{
+				display: flex;
+				align-items: center;
+				flex: 1;
+				justify-content: center;
+
+				.price {
+					color: black;
+					font-weight: bold;
+					font-weight: 800;
+					font-family: var(--primary-font);
+				}
+
+				.subscription {
+					font-family: var(--primary-font);
+				}
+			}
+
+			.yearCount {
+				font-family: var(--primary-font);
+				color: black;
+				display: flex;
+				align-items: center;
+				margin-block: auto;
+				flex: 1;
+				justify-content: center;
+			}
+
+		}
+	}
+
+	.value{
+
+
+
+	}
+
+}
+
+
 .value {
 	@extend .policy;
-	margin-bottom: 2em;
-	font-family: "gilroyRegular";
+	display: flex;
+	margin-bottom: 1em;
+	font-family: var(--primary-font);
 
-	> strong {
-		color: $--kyc-normal-blue;
-		font-weight: normal;
+	padding: 0.5rem;
+	background: var(--kyc-cybergreen-35);
+	border-radius: 4px;
+	align-items: center;
+
+	i{
+		margin-left: -2px;
+		margin-right: 2px;
 	}
+
+	p{
+		display: flex;
+		font-size: 12px;
+		padding-right: 3px;
+
+		> strong {
+			padding-right: 3px;
+			color: black;
+			font-weight: 800;
+		}
+	}
+
+
+
 }
 
 .subscription-selector {
-	font-family: "gilroyRegular";
+	font-family: var(--primary-font);
+
 	> strong {
 		color: $--kyc-normal-blue;
 	}
 }
 
-.price {
-	color: $--kyc-normal-blue;
-	font-weight: bold;
-	font-weight: bold;
-	font-family: "gilroyRegular";
-}
 
-.subscription {
-	font-family: "gilroyRegular";
-}
-
-.yearCount {
-	font-family: "gilroyRegular";
-	color: $--kyc-normal-blue;
-}
