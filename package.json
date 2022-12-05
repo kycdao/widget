@@ -87,7 +87,7 @@
 		"build": "yarn clean && yarn build:lib && yarn build:web && mv ./build/* ./dist/ && yarn run copy-files",
 		"test": "react-app-rewired test",
 		"eject": "create-react-app --eject",
-		"lint": "eslint --ext ts,tsx src/*/*.*",
+		"lint": "eslint --ext ts,tsx src/**/*.*",
 		"clean": "rimraf build dist",
 		"copy-files": "copyfiles -u 1 \"./src/**/*.css\" \"./src/**/*.scss\" ./dist/es "
 	},

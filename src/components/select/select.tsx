@@ -41,8 +41,12 @@ export const Select: FC<PropsWithChildren<InputProps>> = ({
 	const ref = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		const closeEventHndlr = (event: any) => {
-			if (ref.current && !ref.current.contains(event.target)) {
+		function closeEventHndlr(this: Document, event: globalThis.MouseEvent) {
+			if (
+				ref.current &&
+				event.target &&
+				!ref.current.contains(event.target as Node)
+			) {
 				setOpen(false)
 			}
 		}
