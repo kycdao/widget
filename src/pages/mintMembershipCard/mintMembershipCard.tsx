@@ -78,7 +78,7 @@ export const MintStep: FC<PageProps> = ({
 	const [yearCount, setYearCount] = useState<number | null>(null)
 
 	const onSubmit = useCallback(async () => {
-		if (kycDao) {
+		if (kycDao && yearCount && yearCount > 0) {
 			try {
 				dispatch({
 					type: DataActionTypes.changePage,
@@ -117,7 +117,7 @@ export const MintStep: FC<PageProps> = ({
 				}
 			}
 		}
-	}, [dispatch, kycDao, termsAccepted, imageId])
+	}, [dispatch, kycDao, termsAccepted, imageId, yearCount])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
@@ -126,7 +126,7 @@ export const MintStep: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 			dispatch({
-				payload: { button: HeaderButtons.next, state: "enabled" },
+				payload: { button: HeaderButtons.next, state: "hidden" },
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}
@@ -138,6 +138,21 @@ export const MintStep: FC<PageProps> = ({
 			return next.unsubscribe.bind(next)
 		}
 	}, [disabled, inactive, onSubmit])
+
+	useEffect(() => {
+		if (!disabled && !inactive && yearCount && yearCount > 0) {
+			dispatch({
+				payload: { button: HeaderButtons.next, state: "enabled" },
+				type: DataActionTypes.SetHeaderButtonState,
+			})
+		}
+		if (disabled || inactive || yearCount === null) {
+			dispatch({
+				payload: { button: HeaderButtons.next, state: "hidden" },
+				type: DataActionTypes.SetHeaderButtonState,
+			})
+		}
+	}, [disabled, inactive, yearCount, dispatch])
 
 	const increase = useCallback(() => {
 		setYearCount((prevValue) => (prevValue ? ++prevValue : 1))
@@ -181,7 +196,9 @@ export const MintStep: FC<PageProps> = ({
 			<>
 				<div className="calculator-wrapper">
 					<p className="p">Membership period:</p>
-					<div className="calculator" style={{ display: "flex", flexDirection: "column" }}>
+					<div
+						className="calculator"
+						style={{ display: "flex", flexDirection: "column" }}>
 						<div>
 							<Button
 								className="centered clean square calculator-button"
@@ -190,21 +207,15 @@ export const MintStep: FC<PageProps> = ({
 									remove
 								</i>
 							</Button>
-							<div
-								className="yearCount"
-								>
-								{yearCount} year
-							</div>
+							<div className="yearCount">{yearCount} year</div>
 							<Button
 								className="centered clean square calculator-button"
-								onClick={increase}
-								>
+								onClick={increase}>
 								<i style={{ lineHeight: "2em" }} className="material-icons">
 									add
 								</i>
 							</Button>
-							<div className="sum"
-								>
+							<div className="sum">
 								<span className="price">${5 * (yearCount || 0)}</span>
 								{/*<span className="subscription"> / year</span>*/}
 							</div>
@@ -213,9 +224,16 @@ export const MintStep: FC<PageProps> = ({
 				</div>
 				<div className="value">
 					<i className="material-icons">info</i>
-					<p><strong>5,6</strong> Matic</p>
-					<p>- <strong>0.12</strong> Matic </p>
-					<p> gas = <strong>-5.72</strong> Matic ($12.94USD)</p>
+					<p>
+						<strong>5,6</strong> Matic
+					</p>
+					<p>
+						- <strong>0.12</strong> Matic{" "}
+					</p>
+					<p>
+						{" "}
+						gas = <strong>-5.72</strong> Matic ($12.94USD)
+					</p>
 				</div>
 				<SubmitButton
 					autoFocus={!inactive && !disabled && !yearCount}

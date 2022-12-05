@@ -143,7 +143,6 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 				dispatch({ type: DataActionTypes.emailChange, payload: emailValue })
 
 				try {
-					await kycDao.kycDao.registerOrLogin()
 					await kycDao.kycDao.updateEmail(emailValue)
 
 					const emailCheck = async () => {

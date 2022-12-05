@@ -44,6 +44,11 @@ const Header = () => (
 	</h1>
 )
 
+type Nft = {
+	id: string
+	url: string
+}
+
 export const NftSelection: FC<PageProps> = ({
 	className,
 	animation,
@@ -53,17 +58,22 @@ export const NftSelection: FC<PageProps> = ({
 	const { dispatch } = useContext(StateContext)
 	const kycDao = useContext(KycDaoContext)
 
-	const [nftImages, setNftImages] = useState<string[]>([])
+	const [nftImages, setNftImages] = useState<Nft[]>([])
 
 	useEffect(() => {
 		kycDao?.kycDao.getNftImageOptions().then((options) => {
-			const images = [] as string[]
+			const images = [] as Nft[]
 
 			Object.entries(options).forEach(([, url]) => {
-				images.push(url)
-			})
+				const splitUrl = url.split("/")
 
-			setNftImages(images)
+				if (splitUrl.length > 0) {
+					const id = splitUrl[splitUrl.length - 1]
+
+					images.push({ url: url + "?timestamp=" + Date.now().toString(), id })
+					setNftImages(images)
+				}
+			})
 		})
 	}, [kycDao])
 
@@ -115,15 +125,21 @@ export const NftSelection: FC<PageProps> = ({
 	}, [disabled, inactive, dispatch])
 
 	const onRegenerate = useCallback(() => {
-		kycDao?.kycDao.regenerateNftImage().then(() => {
-			kycDao?.kycDao.getNftImageOptions().then((options) => {
-				const images = [] as string[]
+		kycDao?.kycDao.regenerateNftImageOptions().then((options) => {
+			const images = [] as Nft[]
 
-				Object.entries(options).forEach(([, value]) => {
-					images.push(value)
-				})
+			Object.entries(options).forEach(([, url]) => {
+				const splitUrl = url.split("/")
 
-				setNftImages(images)
+				if (splitUrl.length > 0) {
+					const id = splitUrl[splitUrl.length - 1]
+
+					images.push({
+						url: url + "?timestamp=" + Date.now(),
+						id,
+					})
+					setNftImages(images)
+				}
 			})
 		})
 	}, [kycDao?.kycDao])
@@ -134,11 +150,11 @@ export const NftSelection: FC<PageProps> = ({
 				<div className="nft-image-wrapper">
 					{nftImages.map((image) => {
 						return (
-							<div className="nft-image"
-								key={image}
-								onClick={onSubmit(image)}
-								>
-								<img alt="Nft" src={image} />
+							<div
+								className="nft-image"
+								key={image.id}
+								onClick={onSubmit(image.id)}>
+								<img alt="Nft" src={image.url} />
 							</div>
 						)
 					})}

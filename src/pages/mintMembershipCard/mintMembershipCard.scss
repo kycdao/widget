@@ -1,12 +1,9 @@
 @import "../../style/variables";
 @import "../../style/style";
 
-
-.step-footer{
-
-	.calculator-wrapper{
-
-		p{
+.step-footer {
+	.calculator-wrapper {
+		p {
 			font-family: var(--primary-font);
 		}
 
@@ -69,13 +66,7 @@
 				&:active {
 					background: var(--kyc-cybergreen);
 					border: 2px solid var(--kyc-cybergreen);
-					box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
-					//box-shadow: 0 0 0 5px rgba(black, 0.35);
-
-					span,
-					.material-icons {
-						color: black;
-					}
+					box-shadow: 0 0 0 5px var(--kyc-cybergreen-35)
 				}
 
 				&:focus-visible {
@@ -83,13 +74,12 @@
 					border: none;
 				}
 
-				i{
-
+				i {
 				}
 
 			}
 
-			.sum{
+			.sum {
 				display: flex;
 				align-items: center;
 				flex: 1;
@@ -115,13 +105,9 @@
 				flex: 1;
 				justify-content: center;
 			}
-
 		}
 	}
-
-
 }
-
 
 .value {
 	@extend .policy;
@@ -134,12 +120,12 @@
 	border-radius: 4px;
 	align-items: center;
 
-	i{
+	i {
 		margin-left: -2px;
 		margin-right: 2px;
 	}
 
-	p{
+	p {
 		display: flex;
 		font-size: 12px;
 		padding-right: 3px;
@@ -150,7 +136,6 @@
 			font-weight: 800;
 		}
 	}
-
 }
 
 .subscription-selector {
@@ -160,5 +145,3 @@
 		color: black;
 	}
 }
-
-

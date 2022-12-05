@@ -242,9 +242,8 @@ mintStep = 12
 
 /* 07 STEP -  nftArtSelection */
 
-.nft-image-wrapper{
-
-	.nft-image{
+.nft-image-wrapper {
+	.nft-image {
 		cursor: pointer;
 		height: 150px;
 		width: 150px;
@@ -254,13 +253,11 @@ mintStep = 12
 
 		@extend .tr2;
 
-		&:hover{
+		&:hover {
 			box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
 			border: 2px solid black;
 		}
-
 	}
-
 }
 
 .nft-button-wrapper {

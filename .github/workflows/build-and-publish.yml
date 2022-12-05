@@ -26,11 +26,15 @@ jobs:
              yarn set version $( grep -Po  'packageManager": "yarn@\K[^"]+' package.json )
 
       - run: yarn install --immutable
-      # - run: yarn build
-      # - run: yarn bundle
-      # - run: yarn lint:nofix
-      # - run: yarn format:check
+
       - run: yarn build
+
+      - name: Cache for Github Pages
+        if: env.PUBLISH == 'true'
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: dist
+
       - name: Cache package
         if: env.PUBLISH == 'true'
         uses: actions/upload-artifact@v3
