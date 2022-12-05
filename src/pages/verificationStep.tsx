@@ -58,7 +58,8 @@ const Body = () => {
 	return (
 		<>
 			<p className="p">
-				Our partners use 3rd party partners to collect information for verification.
+				Our partners use 3rd party partners to collect information for
+				verification.
 			</p>
 			<p className="p">During the account opening you will be asked:</p>
 			<ul>
