@@ -26,7 +26,7 @@ export type StepPart = FC<{
 	onNext?: () => void
 	onPrev?: () => void
 	onEnter?: () => void
-	// Thanks apple
+	// Thanks apple & Phantom
 	onInputFocused?: () => void
 	onInputBlurred?: () => void
 }>

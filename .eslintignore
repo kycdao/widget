@@ -3,6 +3,8 @@
 *.scss
 *.css
 *.svg
+*.ico
+*.test.tsx
 /build
 /dist
 /src/index.js
