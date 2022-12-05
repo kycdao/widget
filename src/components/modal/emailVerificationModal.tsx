@@ -43,7 +43,7 @@ export const EmailVerificationModal = () => {
 				<Button className="underline centered" onClick={onResend}>
 					<>
 						<i className="material-icons">refresh</i>
-						<span>resend</span>
+						<span>regenerate</span>
 					</>
 				</Button>
 
