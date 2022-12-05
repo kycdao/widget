@@ -33,11 +33,7 @@ jobs:
         if: env.PUBLISH == 'true'
         uses: actions/upload-pages-artifact@v1
         with:
-          path: |
-            dist
-            index.d.ts
-            package.json
-            README.md
+          path: dist
 
       - name: Cache package
         if: env.PUBLISH == 'true'
