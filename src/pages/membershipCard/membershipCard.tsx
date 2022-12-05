@@ -157,6 +157,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 			if (network) {
 				try {
 					await kycDaoContext.kycDao.connectWallet(network)
+					await kycDaoContext.kycDao.registerOrLogin()
 					dispatch({
 						type: DataActionTypes.changePage,
 						payload: {
