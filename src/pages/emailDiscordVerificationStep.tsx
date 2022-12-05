@@ -146,7 +146,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 					await kycDao.kycDao.updateEmail(emailValue)
 
 					const emailCheck = async () => {
-						const emailData = { isConfirmed: true } // await kycDao?.kycDao.checkEmailConfirmed()
+						const emailData = await kycDao?.kycDao.checkEmailConfirmed()
 
 						if (emailData?.isConfirmed) {
 							dispatch({
