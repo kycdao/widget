@@ -74,14 +74,21 @@ export const AgreementStep: FC<PageProps> = ({
 			<>
 				<p>
 					<b>The last proof you need in web3.</b>
-					<br/><br/>
+					<br />
+					<br />
 					kycDAO is a web3 native reusable compliance framework.
-					<br/><br/>
-					CEXs/Ramps already know your wallet address; kycDAO makes it composable.
-					<br/><br/>
-					Our proofs allow smart contracts and services to interacting with trusted wallets.
-					<br/><br/>
-					We use soulbound NFTs to prove your compliant account. Strictly no PII!
+					<br />
+					<br />
+					CEXs/Ramps already know your wallet address; kycDAO makes it
+					composable.
+					<br />
+					<br />
+					Our proofs allow smart contracts and services to interacting with
+					trusted wallets.
+					<br />
+					<br />
+					We use soulbound NFTs to prove your compliant account. Strictly no
+					PII!
 				</p>
 				{/*<p>{translations?.body2}</p>*/}
 			</>

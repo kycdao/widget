@@ -59,8 +59,8 @@ const Header = () => (
 
 const Body = () => (
 	<p className="p">
-		Verify your email via the magic link sent to you. <br/> <br/>
-		kycDAO won’t know who you are, your account is with our partners. <br/>
+		Verify your email via the magic link sent to you. <br /> <br />
+		kycDAO won’t know who you are, your account is with our partners. <br />
 		Yet, we need to establish a communication channel with members.
 	</p>
 )

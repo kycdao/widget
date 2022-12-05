@@ -56,7 +56,7 @@
 	.step-body {
 		box-sizing: border-box;
 		align-items: stretch;
-	
+
 		p {
 			font-family: var(--primary-font);
 			font-weight: 400;
@@ -80,7 +80,6 @@
 			margin: 1rem 0;
 		}
 	}
-
 }
 
 .loading-animation {
@@ -150,7 +149,6 @@ body {
 	}
 }
 
-
 /* STEP ORDER:
 
 AgreementStep = 1,
@@ -171,7 +169,6 @@ mintStep = 12
 /* STEP 02 - kycDAOMembershipStep */
 
 .the-process {
-
 	ul {
 		padding: 1rem 0;
 		margin: 0 auto;
@@ -196,7 +193,6 @@ mintStep = 12
 			}
 
 			&:last-child {
-
 				&:after {
 					display: none;
 				}
@@ -215,21 +211,21 @@ mintStep = 12
 				font-family: "gilroy-bold";
 			}
 
-			& > div{
+			& > div {
 				margin-left: 1rem;
 				display: flex;
 				flex-flow: column;
 
-				p, b{
+				p,
+				b {
 					font-family: var(--primary-font);
 					font-weight: 400;
 				}
 
-				b{
+				b {
 					font-size: 12px;
 				}
 			}
-
 		}
 	}
 }
@@ -246,19 +242,17 @@ mintStep = 12
 
 /* 07 STEP -  nftArtSelection */
 
-.nft-button-wrapper{
+.nft-button-wrapper {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.nft-image-wrapper{
+.nft-image-wrapper {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 2rem;
 	justify-content: space-around;
 	align-content: center;
 	height: 75%;
-
 }
-

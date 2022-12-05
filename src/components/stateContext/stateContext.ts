@@ -82,7 +82,7 @@ export const DefaultData = {
 	translations: {
 		agreementStep: {
 			body1: "",
-			body2: ""
+			body2: "",
 		},
 	},
 	currentModal: null,
