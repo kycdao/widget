@@ -29,8 +29,6 @@ export const EmailVerificationModal = () => {
 
 	return (
 		<div className="emailVerificationModal">
-
-
 			<div className="header">
 				<i className="material-icons">hourglass_bottom</i>
 				<p>Waiting your mail verification</p>
@@ -42,31 +40,19 @@ export const EmailVerificationModal = () => {
 			</div>
 
 			<div className="button-wrapper">
-
-				<Button
-					className="underline centered"
-					onClick={onResend}
-					>
+				<Button className="underline centered" onClick={onResend}>
 					<>
-						<i className="material-icons">
-							refresh
-						</i>
-						<span>resend</span>
+						<i className="material-icons">refresh</i>
+						<span>regenerate</span>
 					</>
 				</Button>
 
-				<Button
-					className="underline centered"
-					onClick={onChangeEmail}
-				>
+				<Button className="underline centered" onClick={onChangeEmail}>
 					<>
-						<i className="material-icons">
-							refresh
-						</i>
+						<i className="material-icons">refresh</i>
 						<span>change email</span>
 					</>
 				</Button>
-
 			</div>
 		</div>
 	)
