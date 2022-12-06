@@ -1,4 +1,11 @@
-import { useContext, useCallback, FC, useEffect, useState } from "react"
+import {
+	useContext,
+	useCallback,
+	FC,
+	useEffect,
+	useState,
+	useMemo,
+} from "react"
 import { Button } from "../../components/button/button"
 import { KycDaoContext } from "../../components/kycDao.provider"
 import {
@@ -79,41 +86,32 @@ export const MintStep: FC<PageProps> = ({
 
 	const onSubmit = useCallback(async () => {
 		if (kycDao && yearCount && yearCount > 0) {
+			dispatch({
+				type: DataActionTypes.changePage,
+				payload: { current: StepID.loading, prev: StepID.mintStep },
+			})
 			try {
+				await kycDao.kycDao.startMinting({
+					disclaimerAccepted: termsAccepted,
+					verificationType: VerificationTypes.KYC,
+					imageId,
+				})
 				dispatch({
 					type: DataActionTypes.changePage,
-					payload: { current: StepID.loading, prev: StepID.mintStep },
+					payload: { current: StepID.finalStep, prev: StepID.loading },
 				})
-				try {
-					await kycDao.kycDao.startMinting({
-						disclaimerAccepted: termsAccepted,
-						verificationType: VerificationTypes.KYC,
-						imageId,
-					})
-					dispatch({
-						type: DataActionTypes.changePage,
-						payload: { current: StepID.finalStep, prev: StepID.loading },
-					})
-				} catch (error) {
-					dispatch({
-						type: DataActionTypes.changePage,
-						payload: { current: StepID.mintStep, prev: StepID.loading },
-					})
-					console.error(error)
-					alert(error)
-				}
 			} catch (e: unknown) {
 				if (typeof e === "object") {
-					const f = e as Record<string, unknown>
-					if (f.code && f.code === 4001) {
-						dispatch({
-							type: DataActionTypes.changePage,
-							payload: {
-								current: StepID.mintStep,
-								prev: StepID.loading,
-							},
-						})
-					}
+					alert(JSON.stringify(e))
+					dispatch({
+						type: DataActionTypes.changePage,
+						payload: {
+							current: StepID.mintStep,
+							prev: StepID.loading,
+						},
+					})
+				} else {
+					alert(e)
 				}
 			}
 		}
@@ -191,6 +189,10 @@ export const MintStep: FC<PageProps> = ({
 		}
 	}, [disabled, inactive, onPrev])
 
+	const price = useMemo(() => {
+		return 5 * (yearCount || 0)
+	}, [yearCount])
+
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive, onEnter }) => (
 			<>
@@ -245,7 +247,7 @@ export const MintStep: FC<PageProps> = ({
 				/>
 			</>
 		),
-		[decrease, increase, yearCount, kycDao]
+		[decrease, increase, yearCount, kycDao, price]
 	)
 
 	if (!kycDao) {
