@@ -102,6 +102,10 @@
 		position: relative;
 		top: -20px;
 	}
+
+	.loading-animation svg path {
+		fill: var(--kyc-cybergreen);
+	}
 }
 
 .part-1 {
@@ -273,4 +277,16 @@ mintStep = 12
 	justify-content: space-around;
 	align-content: center;
 	height: 75%;
+}
+
+/* 11 STEP -  nftArtSelection */
+
+
+.final-texts{
+	display: flex;
+	justify-content: center;
+	flex-flow: column;
+	align-items: center;
+	height: 100%;
+
 }

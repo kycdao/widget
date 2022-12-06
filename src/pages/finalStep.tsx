@@ -60,14 +60,7 @@ export const FinalStep: FC<PageProps> = ({
 					You have successfully minted your kycNFT on{" "}
 					{kycDao?.kycDao.connectedWallet?.blockchainNetwork}
 				</h1>
-				<div
-					style={{
-						display: "flex",
-						justifyContent: "center",
-						flexFlow: "column",
-						alignItems: "center",
-						height: "100%",
-					}}>
+				<div className="final-texts">
 					{nftImageUrl ? (
 						<img alt="" src={nftImageUrl} width="300px" height="300px" />
 					) : (
