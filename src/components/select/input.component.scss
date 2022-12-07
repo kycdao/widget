@@ -15,12 +15,8 @@
 	font-size: 12pt;
 	border-width: 2pt;
 	border-style: solid;
-
-
-	//color: var(&kyc-dark-purple);
-	color: black;
 	font-family: var(--primary-font);
-
+	color: black;
 
 	&.open {
 		border-bottom-left-radius: 0;
@@ -90,7 +86,6 @@
 	position: relative;
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	background: #ecf0fe;
-	//color: var(&kyc-dark-purple);
 	color: black;
 	font-size: 12pt;
 }

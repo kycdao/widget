@@ -34,8 +34,8 @@ export const EmailVerificationModal = () => {
 				<p>Waiting your mail verification</p>
 			</div>
 
-			<div style={{ margin: "1em" }}>
-				<p className="policy">Your email address is:</p>
+			<div className="e-mail-address">
+				<p className="policy">Please verify yourself through the <b>link</b> we've sent you to the following address:</p>
 				<p>{email}</p>
 			</div>
 

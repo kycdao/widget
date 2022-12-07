@@ -7,12 +7,12 @@ button.kyc-toggle-button {
 	align-items: center;
 	outline: none;
 	border: 1px solid transparent;
-	border-radius: $--border-radius-light;
+	border-radius: var(--border-radius-light);
 	cursor: pointer;
-	height: $--button-height;
+	height: var(--button-height);
 	color: white;
-	background: $--kyc-normal-blue;
-	box-shadow: 0 0 1pt 0 $--kyc-normal-blue-35;
+	background: var(--kyc-normal-blue);
+	box-shadow: 0 0 1pt 0 var(--kyc-normal-blue-35);
 	margin-top: 1em;
 
 	&.full-width {
@@ -20,7 +20,7 @@ button.kyc-toggle-button {
 	}
 
 	&[disabled] {
-		background: $--inactive !important;
+		background: var(--inactive) !important;
 		pointer-events: none !important;
 	}
 
@@ -31,15 +31,15 @@ button.kyc-toggle-button {
 	}
 
 	span {
-		font-family: $--light-font;
+		font-family: var(--light-font);
 		font-weight: 200;
 		font-size: 18px;
 		margin-left: 0;
 	}
 
 	&:hover {
-		background: $--kyc-green;
-		box-shadow: 0 0 0 1pt $--kyc-green-35;
+		background: var(--kyc-green);
+		box-shadow: 0 0 0 1pt var(--kyc-green-35);
 
 		span,
 		.material-icons {
@@ -49,8 +49,8 @@ button.kyc-toggle-button {
 	}
 
 	&.toggled {
-		background: $--kyc-green;
-		box-shadow: 0 0 0 1pt $--kyc-green-35;
+		background: var(--kyc-green);
+		box-shadow: 0 0 0 1pt var(--kyc-green-35);
 
 		span,
 		.material-icons {
@@ -60,11 +60,11 @@ button.kyc-toggle-button {
 	}
 
 	&:focus {
-		box-shadow: 0 0 0 1pt $--kyc-green-50;
+		box-shadow: 0 0 0 1pt var(--kyc-green-50);
 	}
 
 	&:active {
-		box-shadow: 0 0 0 1pt $--kyc-green-75;
+		box-shadow: 0 0 0 1pt var(--kyc-green-75);
 	}
 
 	&:focus-visible {

@@ -26,14 +26,32 @@
 
 		p {
 			margin-left: 1em;
+			font-family: var(--primary-font);
 		}
 	}
 
+	.e-mail-address{
+		margin: 1rem;
+
+		p{
+			font-family: var(--primary-font);
+
+			b{
+				font-weight: 800;
+			}
+		}
+
+	}
+
 	.button-wrapper {
-		padding: 0 1rem;
+		padding: 0 1rem 1rem;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		width: 100%;
+
+		.kyc-button{
+			padding: 0;
+		}
 	}
 }

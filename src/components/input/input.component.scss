@@ -1,7 +1,7 @@
 @import "../../style/variables";
 
 .kyc-input {
-	height: $--button-height;
+	height: var(--button-height);
 	display: inline-flex;
 	justify-content: space-between;
 	box-sizing: border-box;
@@ -12,7 +12,7 @@
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	background: white;
 	color: black;
-	border-radius: $--border-radius-light;
+	border-radius: var(--border-radius-light);
 	font-size: 12pt;
 	font-family: var(--primary-font);
 
@@ -73,7 +73,7 @@ div.clear {
 	display: flex;
 	color: black;
 	cursor: pointer;
-	border-radius: $--border-radius-light;
+	border-radius: var(--border-radius-light);
 	background: transparent;
 	padding: 3px 9px;
 	line-height: 132%;
@@ -99,7 +99,7 @@ div.kyc-option {
 	cursor: pointer;
 	line-height: 2.5em;
 	padding-left: 1.5em;
-	border-bottom: 1px solid $--kyc-normal-blue-15;
+	border-bottom: 1px solid var(--kyc-normal-blue-15);
 	font-family: var(--primary-font);
 	font-weight: 400;
 	color: black;

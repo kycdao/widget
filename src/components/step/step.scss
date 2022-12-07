@@ -13,12 +13,10 @@
 	flex-direction: column;
 	padding: 1em;
 	justify-content: space-between;
-	// height: 100%;
 	padding-top: 0;
 	padding-bottom: 0;
 	align-items: center;
 	right: 0;
-	// height: auto;
 	top: 64px;
 	bottom: 0;
 
@@ -86,7 +84,6 @@
 	display: flex;
 	flex-flow: column;
 	align-items: center;
-	//height: 56px;
 	@extend .tr2;
 
 	.part-1 {
@@ -103,7 +100,7 @@
 		top: -20px;
 	}
 
-	.loading-animation svg path {
+	svg path {
 		fill: var(--kyc-cybergreen);
 	}
 }
@@ -173,6 +170,10 @@ mintStep = 12
 /* STEP 02 - kycDAOMembershipStep */
 
 .the-process {
+	display: flex;
+	height: 100%;
+	align-items: center;
+
 	ul {
 		padding: 1rem 0;
 		margin: 0 auto;
@@ -212,7 +213,8 @@ mintStep = 12
 				border-radius: 999rem;
 				background: var(--kyc-cybergreen);
 				color: black;
-				font-family: "gilroy-bold";
+				font-weight: 800;
+				//font-family: "gilroy-bold";
 			}
 
 			& > div {
@@ -277,6 +279,7 @@ mintStep = 12
 	justify-content: space-around;
 	align-content: center;
 	height: 75%;
+
 }
 
 /* 11 STEP -  nftArtSelection */
