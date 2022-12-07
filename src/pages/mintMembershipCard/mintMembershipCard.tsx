@@ -1,11 +1,4 @@
-import {
-	useContext,
-	useCallback,
-	FC,
-	useEffect,
-	useState,
-	useMemo,
-} from "react"
+import { useContext, useCallback, FC, useEffect, useState } from "react"
 import { Button } from "../../components/button/button"
 import {
 	DataActionTypes,
@@ -160,9 +153,9 @@ export const MintStep: FC<PageProps> = ({
 		}
 	}, [disabled, inactive, onPrev])
 
-	const price = useMemo(() => {
+	/*const price = useMemo(() => {
 		return 5 * (yearCount || 0)
-	}, [yearCount])
+	}, [yearCount])*/
 
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive, onEnter }) => (
@@ -218,7 +211,7 @@ export const MintStep: FC<PageProps> = ({
 				/>
 			</>
 		),
-		[decrease, increase, yearCount, kycDao, price]
+		[decrease, increase, yearCount, kycDao]
 	)
 
 	if (!kycDao) {

@@ -136,4 +136,4 @@ export type DataChangeActions =
 	| EmailConfirmedChangeAction
 	| NftImageChangeAction
 
-export type ModalType = "emailVerification"
+export type ModalType = "emailVerification" | "minting" | "mintingFailed"

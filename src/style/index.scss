@@ -1,13 +1,13 @@
-@use "../components/button/button.scss";
-@use "../components/header/header.scss";
-@use "../components/modal/emailVerificationModal.scss";
-@use "../components/select/select.scss";
-@use "../components/step/step.scss";
-@use "../components/submitButton/submitButton.scss";
-@use "../components/toggleButton/toggleButton.scss";
-@use "../components/router/router.scss";
-@use "../pages/mintMembershipCard/mintMembershipCard.scss";
-@use "../components/input/input.component.scss";
+@use "../components/button/button";
+@use "../components/header/header";
+@use "../components/modal/emailVerificationModal";
+@use "../components/select/select";
+@use "../components/step/step";
+@use "../components/submitButton/submitButton";
+@use "../components/toggleButton/toggleButton";
+@use "../components/router/router";
+@use "../pages/mintMembershipCard/mintMembershipCard";
+@use "../components/input/input.component";
 
 @use "reset";
 @use "style";

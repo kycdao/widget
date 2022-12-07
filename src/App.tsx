@@ -14,6 +14,8 @@ import { Header } from "./components/header/header"
 import { Router } from "./components/router/router"
 import { ModalRouter } from "./components/modal/modal"
 
+import "./style/index.scss"
+
 if ("virtualKeyboard" in navigator) {
 	navigator.virtualKeyboard.overlaysContent = true
 }
