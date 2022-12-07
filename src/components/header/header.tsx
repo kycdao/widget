@@ -1,6 +1,5 @@
 import { CSSProperties, FC, useCallback, useContext } from "react"
 import { DataActionTypes, HeaderButtons, StateContext } from "../stateContext"
-import "./header.scss"
 
 export const Header: FC<{ style?: CSSProperties }> = ({ style }) => {
 	const {

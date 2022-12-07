@@ -1,5 +1,4 @@
 import { CSSProperties, FC } from "react"
-import "./button.scss"
 
 export type ButtonProps = {
 	onClick?: () => void

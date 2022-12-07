@@ -8,8 +8,6 @@ import {
 	useState,
 } from "react"
 
-import "./input.component.scss"
-
 type InputProps = {
 	placeholder?: string
 	onChange: (value: string) => void

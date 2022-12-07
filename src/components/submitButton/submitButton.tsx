@@ -6,7 +6,6 @@ import {
 	useRef,
 	useState,
 } from "react"
-import "./submitButton.scss"
 
 export type ButtonProps = {
 	onClick?: () => void

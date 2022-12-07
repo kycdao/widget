@@ -3,7 +3,6 @@ import { useKycDao } from "../../hooks/useKycDao"
 import { Button } from "../button/button"
 import { DataActionTypes } from "../stateContext"
 import { StateContext } from "../stateContext/stateContext"
-import "./emailVerificationModal.scss"
 
 export const EmailVerificationModal = () => {
 	const {

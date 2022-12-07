@@ -1,5 +1,4 @@
 import { CSSProperties, FC } from "react"
-import "./toggleButton.scss"
 
 export type ToggleButtonProps = {
 	onClick?: () => void

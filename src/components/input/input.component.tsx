@@ -10,8 +10,6 @@ import {
 	useState,
 } from "react"
 
-import "./input.component.scss"
-
 const specialRegex = /[!$(){}[\]:;<+?\\>]/g
 
 type InputProps = {

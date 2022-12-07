@@ -11,7 +11,7 @@ import {
 } from "./components/stateContext"
 import { Loading } from "./pages/loading"
 import { Header } from "./components/header/header"
-import { Router } from "./router"
+import { Router } from "./components/router/router"
 import { ModalRouter } from "./components/modal/modal"
 
 if ("virtualKeyboard" in navigator) {

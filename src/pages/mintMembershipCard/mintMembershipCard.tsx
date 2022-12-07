@@ -18,7 +18,6 @@ import {
 import { StepPart, Step } from "../../components/step/step"
 import { SubmitButton } from "../../components/submitButton/submitButton"
 import { PageProps } from "../pageProps"
-import "./mintMembershipCard.scss"
 import { useKycDao } from "../../hooks/useKycDao"
 import { useMinting } from "../../hooks/useMinting"
 

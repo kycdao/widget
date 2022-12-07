@@ -11,9 +11,6 @@ import {
 	VerificationType,
 } from "@kycdao/kycdao-sdk/dist/types"
 
-import "./style/_style.scss"
-import "./index.css"
-
 export type IframeOptions = {
 	url?: string
 	messageTargetOrigin: string

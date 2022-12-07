@@ -10,7 +10,6 @@ import {
 } from "react"
 import { useSwipeable } from "react-swipeable"
 import { StateContext } from "../stateContext/stateContext"
-import "./step.scss"
 
 export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
 
