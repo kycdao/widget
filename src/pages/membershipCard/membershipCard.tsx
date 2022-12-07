@@ -32,7 +32,6 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 const Body = () => {
 	return (
 		<>
-
 			{/*<p className="p">*/}
 			{/*	kycDAO is building a trusted web3 ecosystem linked together by verified*/}
 			{/*	wallets.*/}

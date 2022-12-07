@@ -1,4 +1,4 @@
-@import "../../style/variables";
+@use "../../style/variables";
 
 .kyc-submit-button {
 	overflow: hidden;
@@ -7,14 +7,14 @@
 		position: absolute;
 		right: 3rem;
 		opacity: 0;
-		@include translateX(0);
+		@include variables.translateX(0);
 		@extend .tr2;
 	}
 
 	.second-arrow {
 		position: absolute;
 		right: 1rem;
-		@include translateX(0);
+		@include variables.translateX(0);
 		@extend .tr2;
 	}
 
@@ -23,12 +23,12 @@
 
 	&:hover {
 		.first-arrow {
-			@include translateX(2rem);
+			@include variables.translateX(2rem);
 			opacity: 1;
 		}
 
 		.second-arrow {
-			@include translateX(8rem);
+			@include variables.translateX(8rem);
 		}
 	}
 }

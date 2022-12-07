@@ -11,7 +11,7 @@ import {
 	VerificationType,
 } from "@kycdao/kycdao-sdk/dist/types"
 
-import "./style/style.scss"
+import "./style/_style.scss"
 import "./index.css"
 
 export type IframeOptions = {

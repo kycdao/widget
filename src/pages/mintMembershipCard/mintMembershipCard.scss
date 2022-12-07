@@ -1,5 +1,4 @@
-@import "../../style/variables";
-@import "../../style/style";
+@use "../../style/variables";
 
 .step-footer {
 	.calculator-wrapper {
@@ -110,7 +109,8 @@
 }
 
 .value {
-	@extend .policy;
+	color: black;
+	font-size: 12px;
 	display: flex;
 	margin-bottom: 1em;
 	font-family: var(--primary-font);
