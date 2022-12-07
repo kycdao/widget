@@ -25,7 +25,7 @@ export const MintingFailedModal = () => {
 			<Button className="underline centered" onClick={onRetry}>
 				<>
 					<i className="material-icons">refresh</i>
-					<span>Resend</span>
+					<span>Retry</span>
 				</>
 			</Button>
 		</div>
