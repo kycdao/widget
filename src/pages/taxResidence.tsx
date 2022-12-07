@@ -9,7 +9,6 @@ import {
 	useRef,
 } from "react"
 import { Input } from "../components/input/input.component"
-import { KycDaoContext } from "../components/kycDao.provider"
 import {
 	StateContext,
 	StepID,
@@ -20,6 +19,7 @@ import {
 } from "../components/stateContext"
 import { StepPart, Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
+import { useKycDao } from "../hooks/useKycDao"
 import { PageProps } from "./pageProps"
 
 export const Body = () => {
@@ -79,7 +79,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 	)
 	const taxResidence = useRef(taxResidency)
 	const inputValue = useRef(null)
-	const kycDao = useContext(KycDaoContext)
+	const kycDao = useKycDao()
 
 	useEffect(() => {
 		if (taxResidency) {

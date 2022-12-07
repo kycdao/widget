@@ -1,5 +1,4 @@
 import { useContext, useCallback, useEffect, FC, useRef } from "react"
-import { KycDaoContext } from "../components/kycDao.provider"
 import {
 	StateContext,
 	DataActionTypes,
@@ -7,6 +6,7 @@ import {
 } from "../components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { PageProps } from "./pageProps"
+import { useKycDao } from "../hooks/useKycDao"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const onError = useCallback((error: string) => {
@@ -25,7 +25,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 			isEmailConfirmed,
 		},
 	} = useContext(StateContext)
-	const kycDao = useContext(KycDaoContext)
+	const kycDao = useKycDao()
 	const verifyingModalOpen = useRef(false)
 
 	const onComplete = useCallback(async () => {

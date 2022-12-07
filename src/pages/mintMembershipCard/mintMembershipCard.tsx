@@ -7,7 +7,6 @@ import {
 	useMemo,
 } from "react"
 import { Button } from "../../components/button/button"
-import { KycDaoContext } from "../../components/kycDao.provider"
 import {
 	DataActionTypes,
 	HeaderButtons,
@@ -20,7 +19,8 @@ import { StepPart, Step } from "../../components/step/step"
 import { SubmitButton } from "../../components/submitButton/submitButton"
 import { PageProps } from "../pageProps"
 import "./mintMembershipCard.scss"
-import { VerificationTypes } from "@kycdao/kycdao-sdk"
+import { useKycDao } from "../../hooks/useKycDao"
+import { useMinting } from "../../hooks/useMinting"
 
 const Body = () => {
 	return (
@@ -76,46 +76,18 @@ export const MintStep: FC<PageProps> = ({
 	disabled = false,
 	inactive = false,
 }) => {
-	const {
-		dispatch,
-		data: { termsAccepted, imageId },
-	} = useContext(StateContext)
-	const kycDao = useContext(KycDaoContext)
+	const { dispatch } = useContext(StateContext)
+	const kycDao = useKycDao()
 
 	const [yearCount, setYearCount] = useState<number | null>(null)
 
+	const minting = useMinting()
+
 	const onSubmit = useCallback(async () => {
 		if (kycDao && yearCount && yearCount > 0) {
-			dispatch({
-				type: DataActionTypes.changePage,
-				payload: { current: StepID.loading, prev: StepID.mintStep },
-			})
-			try {
-				await kycDao.kycDao.startMinting({
-					disclaimerAccepted: termsAccepted,
-					verificationType: VerificationTypes.KYC,
-					imageId,
-				})
-				dispatch({
-					type: DataActionTypes.changePage,
-					payload: { current: StepID.finalStep, prev: StepID.loading },
-				})
-			} catch (e: unknown) {
-				if (typeof e === "object") {
-					alert(JSON.stringify(e))
-					dispatch({
-						type: DataActionTypes.changePage,
-						payload: {
-							current: StepID.mintStep,
-							prev: StepID.loading,
-						},
-					})
-				} else {
-					alert(e)
-				}
-			}
+			minting()
 		}
-	}, [dispatch, kycDao, termsAccepted, imageId, yearCount])
+	}, [kycDao, yearCount, minting])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {

@@ -20,7 +20,7 @@ import {
 import { StepPart, Step } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
-import { KycDaoContext } from "../components/kycDao.provider"
+import { useKycDao } from "../hooks/useKycDao"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
@@ -76,7 +76,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 		dispatch,
 	} = useContext(StateContext)
 
-	const kycDao = useContext(KycDaoContext)
+	const kycDao = useKycDao()
 
 	const [buttonAutofocus, setButtonAutoFocus] = useState(false)
 

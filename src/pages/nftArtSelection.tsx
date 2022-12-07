@@ -1,6 +1,5 @@
 import { useContext, useState, useCallback, FC, useEffect } from "react"
 import { Button } from "../components/button/button"
-import { KycDaoContext } from "../components/kycDao.provider"
 import {
 	StateContext,
 	DataActionTypes,
@@ -9,6 +8,8 @@ import {
 	OnPrev,
 } from "../components/stateContext"
 import { StepPart, Step } from "../components/step/step"
+import { useKycDao } from "../hooks/useKycDao"
+import { useMinting } from "../hooks/useMinting"
 import { PageProps } from "./pageProps"
 
 const Header = () => (
@@ -56,7 +57,8 @@ export const NftSelection: FC<PageProps> = ({
 	inactive = false,
 }) => {
 	const { dispatch } = useContext(StateContext)
-	const kycDao = useContext(KycDaoContext)
+	const kycDao = useKycDao()
+	const startMinting = useMinting()
 
 	const [nftImages, setNftImages] = useState<Nft[]>([])
 
@@ -80,15 +82,20 @@ export const NftSelection: FC<PageProps> = ({
 	const onSubmit = useCallback(
 		(id: string) => () => {
 			dispatch({ type: DataActionTypes.nftImageChange, payload: id })
-			dispatch({
-				type: DataActionTypes.changePage,
-				payload: {
-					current: StepID.mintStep,
-					prev: StepID.nftArtSelection,
-				},
-			})
+
+			if (kycDao?.kycDao.subscribed) {
+				startMinting()
+			} else {
+				dispatch({
+					type: DataActionTypes.changePage,
+					payload: {
+						current: StepID.mintStep,
+						prev: StepID.nftArtSelection,
+					},
+				})
+			}
 		},
-		[dispatch]
+		[dispatch, kycDao?.kycDao.subscribed, startMinting]
 	)
 
 	const onPrev = useCallback(() => {

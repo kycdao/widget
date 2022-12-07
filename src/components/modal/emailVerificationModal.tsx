@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react"
+import { useKycDao } from "../../hooks/useKycDao"
 import { Button } from "../button/button"
-import { KycDaoContext } from "../kycDao.provider"
 import { DataActionTypes } from "../stateContext"
 import { StateContext } from "../stateContext/stateContext"
 import "./emailVerificationModal.scss"
@@ -11,7 +11,7 @@ export const EmailVerificationModal = () => {
 		dispatch,
 	} = useContext(StateContext)
 
-	const kycDao = useContext(KycDaoContext)
+	const kycDao = useKycDao()
 
 	const onResend = useCallback(async () => {
 		try {

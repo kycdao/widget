@@ -1,5 +1,4 @@
 import { FC, useCallback, useContext, useEffect } from "react"
-import { KycDaoContext } from "../components/kycDao.provider"
 import {
 	DataActionTypes,
 	HeaderButtons,
@@ -9,6 +8,7 @@ import {
 } from "../components/stateContext"
 import { Step, StepPart } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
+import { useKycDao } from "../hooks/useKycDao"
 import { PageProps } from "./pageProps"
 
 const Header: StepPart = () => <h1 className="h1">KycDAO</h1>
@@ -32,7 +32,7 @@ export const AgreementStep: FC<PageProps> = ({
 }) => {
 	const { dispatch } = useContext(StateContext)
 
-	const kycDaoContext = useContext(KycDaoContext)
+	const kycDaoContext = useKycDao()
 
 	const onSubmit = useCallback(() => {
 		dispatch({

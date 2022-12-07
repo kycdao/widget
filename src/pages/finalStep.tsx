@@ -1,7 +1,6 @@
 import { useContext, useCallback, useState, useEffect, FC } from "react"
 import { Step, StepPart } from "../components/step/step"
 import { Button } from "../components/button/button"
-import { KycDaoContext } from "../components/kycDao.provider"
 import { Placeholder } from "../components/placeholder/placeholder"
 import {
 	DataActionTypes,
@@ -9,6 +8,7 @@ import {
 	StateContext,
 } from "../components/stateContext"
 import { PageProps } from "./pageProps"
+import { useKycDao } from "../hooks/useKycDao"
 
 const Header = () => <h1>Congrats!</h1>
 
@@ -18,7 +18,7 @@ export const FinalStep: FC<PageProps> = ({
 	disabled = false,
 	// inactive = false,
 }) => {
-	const kycDao = useContext(KycDaoContext)
+	const kycDao = useKycDao()
 	const {
 		dispatch,
 		data: { messageTargetOrigin },

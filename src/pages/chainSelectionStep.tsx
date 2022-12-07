@@ -6,7 +6,6 @@ import {
 	useMemo,
 	useState,
 } from "react"
-import { KycDaoContext } from "../components/kycDao.provider"
 import {
 	StateContext,
 	DataActionTypes,
@@ -18,6 +17,7 @@ import {
 import { Step, StepPart } from "../components/step/step"
 import { SubmitButton } from "../components/submitButton/submitButton"
 import { ToggleButton } from "../components/toggleButton/toggleButton"
+import { useKycDao } from "../hooks/useKycDao"
 import { PageProps } from "./pageProps"
 
 type Chains = "Near" | "Ethereum" | "Solana"
@@ -30,7 +30,7 @@ export const ChainSelection: FC<PageProps> = ({
 	disabled = false,
 	inactive,
 }) => {
-	const kycDao = useContext(KycDaoContext)
+	const kycDao = useKycDao()
 	const { dispatch } = useContext(StateContext)
 
 	const [connectedWallet, setConnectedWallet] = useState<Chains | undefined>(

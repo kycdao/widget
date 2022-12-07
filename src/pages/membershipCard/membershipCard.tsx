@@ -1,5 +1,4 @@
 import { FC, useContext, useCallback, useEffect } from "react"
-import { KycDaoContext } from "../../components/kycDao.provider"
 import {
 	DataActionTypes,
 	HeaderButtons,
@@ -10,6 +9,7 @@ import {
 } from "../../components/stateContext"
 import { StepPart, Step } from "../../components/step/step"
 import { SubmitButton } from "../../components/submitButton/submitButton"
+import { useKycDao } from "../../hooks/useKycDao"
 import { PageProps } from "../pageProps"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
@@ -132,7 +132,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 }) => {
 	const { dispatch } = useContext(StateContext)
 
-	const kycDaoContext = useContext(KycDaoContext)
+	const kycDaoContext = useKycDao()
 
 	const onPrev = useCallback(() => {
 		dispatch({
