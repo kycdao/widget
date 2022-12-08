@@ -167,6 +167,7 @@ export const MintStep: FC<PageProps> = ({
 						style={{ display: "flex", flexDirection: "column" }}>
 						<div>
 							<Button
+								disabled={disabled}
 								className="centered clean square calculator-button"
 								onClick={decrease}>
 								<i style={{ lineHeight: "2em" }} className="material-icons">
@@ -175,6 +176,7 @@ export const MintStep: FC<PageProps> = ({
 							</Button>
 							<div className="yearCount">{yearCount} year</div>
 							<Button
+								disabled={disabled}
 								className="centered clean square calculator-button"
 								onClick={increase}>
 								<i style={{ lineHeight: "2em" }} className="material-icons">

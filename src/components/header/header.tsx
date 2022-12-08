@@ -34,7 +34,7 @@ export const Header: FC<{ style?: CSSProperties }> = ({ style }) => {
 			className={`step-header${currentModal ? " blurred" : ""}`}>
 			<div className="button-wrapper">
 				<button
-					disabled={prevButtonState === "disabled"}
+					disabled={prevButtonState === "disabled" || !!currentModal}
 					className={`material-icons${
 						prevButtonState === "hidden" ? " hidden" : ""
 					}`}
@@ -42,7 +42,7 @@ export const Header: FC<{ style?: CSSProperties }> = ({ style }) => {
 					chevron_left
 				</button>
 				<button
-					disabled={nextButtonState === "disabled"}
+					disabled={nextButtonState === "disabled" || !!currentModal}
 					className={`material-icons${
 						nextButtonState === "hidden" ? " hidden" : ""
 					}`}
@@ -51,7 +51,7 @@ export const Header: FC<{ style?: CSSProperties }> = ({ style }) => {
 				</button>
 			</div>
 			<button
-				disabled={closeButtonState === "disabled"}
+				disabled={closeButtonState === "disabled" || !!currentModal}
 				className={`material-icons close-button${
 					closeButtonState === "hidden" ? " hidden" : ""
 				}`}
