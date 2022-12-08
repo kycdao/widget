@@ -14,7 +14,7 @@ export const useMinting = () => {
 	return async function StartMinting() {
 		if (kycDao) {
 			const {
-				data: { termsAccepted, imageId, currentPage },
+				data: { termsAccepted, imageId, currentPage, subscriptionYears },
 				dispatch,
 			} = state
 
@@ -28,6 +28,11 @@ export const useMinting = () => {
 					disclaimerAccepted: termsAccepted,
 					verificationType: VerificationTypes.KYC,
 					imageId,
+					subscriptionYears,
+				})
+				dispatch({
+					type: DataActionTypes.setModal,
+					payload: null,
 				})
 				dispatch({
 					type: DataActionTypes.changePage,
