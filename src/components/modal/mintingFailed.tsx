@@ -16,7 +16,7 @@ export const MintingFailedModal = () => {
 				<p>Minting failed</p>
 			</div>
 
-			<div className="e-mail-address">
+			<div className="body">
 				<p className="policy">
 					Minting failed because of an error. Please try mint kycNFT again.
 				</p>

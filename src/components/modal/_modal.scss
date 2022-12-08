@@ -28,6 +28,19 @@
 		}
 	}
 
+	.body{
+		margin: 1rem;
+
+		p{
+			font-family: var(--primary-font);
+
+			b{
+				font-weight: 800;
+			}
+		}
+
+	}
+
 	.button-wrapper {
 		padding: 0 1rem 1rem;
 		display: flex;

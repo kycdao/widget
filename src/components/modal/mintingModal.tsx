@@ -6,7 +6,7 @@ export const MintingModal = () => {
 				<p>Minting in progress</p>
 			</div>
 
-			<div className="e-mail-address">
+			<div className="body">
 				<p className="policy">
 					Your kycNFT is being minted, please wait, until it's ready
 				</p>
