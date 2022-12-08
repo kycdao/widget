@@ -77,9 +77,13 @@ export const MintStep: FC<PageProps> = ({
 
 	const onSubmit = useCallback(async () => {
 		if (kycDao && yearCount && yearCount > 0) {
+			dispatch({
+				payload: yearCount,
+				type: DataActionTypes.subscriptionYearsChange,
+			})
 			minting()
 		}
-	}, [kycDao, yearCount, minting])
+	}, [kycDao, yearCount, minting, dispatch])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {

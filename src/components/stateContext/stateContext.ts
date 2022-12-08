@@ -29,6 +29,8 @@ export const reducer = (
 			return { ...data, email: payload }
 		case DataActionTypes.setModal:
 			return { ...data, currentModal: payload }
+		case DataActionTypes.subscriptionYearsChange:
+			return { ...data, subscriptionYears: payload }
 		case DataActionTypes.changePage:
 			return {
 				...data,
