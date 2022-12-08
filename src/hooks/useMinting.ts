@@ -36,7 +36,7 @@ export const useMinting = () => {
 				})
 				dispatch({
 					type: DataActionTypes.changePage,
-					payload: { current: currentPage, next: StepID.finalStep },
+					payload: { prev: currentPage, current: StepID.finalStep },
 				})
 			} catch (e: unknown) {
 				if (typeof e === "object") {
