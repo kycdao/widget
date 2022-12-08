@@ -1,6 +1,10 @@
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { useContext } from "react"
-import { DataActionTypes, StateContext } from "../components/stateContext"
+import {
+	DataActionTypes,
+	StateContext,
+	StepID,
+} from "../components/stateContext"
 import { useKycDao } from "./useKycDao"
 
 export const useMinting = () => {
@@ -10,7 +14,7 @@ export const useMinting = () => {
 	return async function StartMinting() {
 		if (kycDao) {
 			const {
-				data: { termsAccepted, imageId },
+				data: { termsAccepted, imageId, currentPage },
 				dispatch,
 			} = state
 
@@ -26,14 +30,14 @@ export const useMinting = () => {
 					imageId,
 				})
 				dispatch({
-					type: DataActionTypes.setModal,
-					payload: "mintingFailed",
+					type: DataActionTypes.changePage,
+					payload: { current: currentPage, next: StepID.finalStep },
 				})
 			} catch (e: unknown) {
 				if (typeof e === "object") {
-					alert(JSON.stringify(e))
+					console.error(JSON.stringify(e))
 				} else {
-					alert(e)
+					console.error(e)
 				}
 				dispatch({
 					type: DataActionTypes.setModal,
