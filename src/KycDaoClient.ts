@@ -30,23 +30,10 @@ export function KycDaoClient(
 	this.onSuccess = onSuccess
 	this.isSuccessful = false
 
-	this.onOutsideClick = this.onOutsideClick.bind(this)
 	this.messageHndlr = this.messageHndlr.bind(this)
 	this.open = this.open.bind(this)
 	this.close = this.close.bind(this)
 	this.getParentElement = this.getParentElement.bind(this)
-}
-
-KycDaoClient.prototype.onOutsideClick = function (
-	this: KycDaoClientInterface,
-	event: MouseEvent
-) {
-	if (this.modal && !event.composedPath().includes(this.modal as EventTarget)) {
-		this.close()
-		if (this.onFail) {
-			this.onFail("cancelled")
-		}
-	}
 }
 
 KycDaoClient.prototype.messageHndlr = function (
@@ -113,18 +100,14 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 		this.parent.appendChild(this.modal)
 		this.isOpen = true
 
-		// The setTimeout needed because the close event handler would close the modal instantly, because even the open button click counts
-		setTimeout(() => {
-			window.parent.addEventListener("click", this.onOutsideClick)
-			window.parent.addEventListener("message", this.messageHndlr)
+		window.parent.addEventListener("message", this.messageHndlr)
 
-			BootstrapKycDaoModal({
-				config: this.config,
-				height: this.height,
-				parent: container,
-				width: this.width,
-			})
-		}, 0)
+		BootstrapKycDaoModal({
+			config: this.config,
+			height: this.height,
+			parent: container,
+			width: this.width,
+		})
 	}
 }
 
@@ -136,7 +119,6 @@ KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
 		if (parentNode) {
 			parentNode.removeChild(this.modal)
 		}
-		window.removeEventListener("click", this.onOutsideClick)
 		window.removeEventListener("message", this.messageHndlr)
 		this.isOpen = false
 	}
