@@ -1,8 +1,8 @@
 export const MintingModal = () => {
 	return (
-		<div className="emailVerificationModal">
+		<div className="mintingModal">
 			<div className="header">
-				<i className="material-icons">hourglass_bottom</i>
+				<i className="material-icons">error</i>
 				<p>Minting in progress</p>
 			</div>
 
@@ -58,7 +58,7 @@ export const MintingModal = () => {
 					/>
 				</svg>
 			</div>
-			<h1 className="h1" style={{ justifyContent: "center" }}>
+			<h1 className="h1" style={{ justifyContent: "center", display: "flex" }}>
 				Loading
 			</h1>
 		</div>

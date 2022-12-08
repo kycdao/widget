@@ -103,10 +103,12 @@ div.kyc-option {
 	font-family: var(--primary-font);
 	font-weight: 400;
 	color: black;
+	justify-content: left;
 
 	strong {
 		font-family: var(--primary-font);
 		font-weight: 800;
+		justify-content: center;
 	}
 
 	&:hover {

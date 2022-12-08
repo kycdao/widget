@@ -1,0 +1,11 @@
+@use "modal";
+
+.mintingFailedModal {
+	@extend .modal;
+
+    .header {
+        .material-icons {
+            background: var(--kyc-red-35);
+        }
+    }
+}

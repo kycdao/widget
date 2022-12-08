@@ -10,9 +10,9 @@ export const MintingFailedModal = () => {
 	}, [minting])
 
 	return (
-		<div className="emailVerificationModal">
+		<div className="mintingFailedModal">
 			<div className="header">
-				<i className="material-icons">hourglass_bottom</i>
+				<i className="material-icons">error</i>
 				<p>Minting failed</p>
 			</div>
 
