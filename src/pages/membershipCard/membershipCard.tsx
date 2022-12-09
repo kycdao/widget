@@ -168,7 +168,19 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 					})
 					dispatch({ type: DataActionTypes.termsAcceptedChange, payload: true })
 				} catch (e) {
-					alert(e)
+					dispatch({
+						type: DataActionTypes.SetErrorModalText,
+						payload: {
+							header: "An error happened",
+							body: "Connecting to your wallet failed, because of an error. Please try again.",
+						},
+					})
+					dispatch({ type: DataActionTypes.setModal, payload: "genericError" })
+					if (typeof e === "string") {
+						console.error(e)
+					} else {
+						console.error(JSON.stringify(e))
+					}
 				}
 			}
 		}

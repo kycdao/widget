@@ -38,6 +38,13 @@ export const reducer = (
 				prevPage: payload.prev,
 				currentPage: payload.current,
 			}
+		case DataActionTypes.SetErrorModalText: {
+			return {
+				...data,
+				errorModalHeader: payload.header,
+				errorModalBody: payload.header,
+			}
+		}
 		case DataActionTypes.taxResidenceChange:
 			return { ...data, taxResidency: payload }
 		case DataActionTypes.termsAcceptedChange:

@@ -24,6 +24,7 @@ export enum DataActionTypes {
 	setEmailConfirmed,
 	nftImageChange,
 	subscriptionYearsChange,
+	SetErrorModalText,
 }
 
 export enum StepID {
@@ -60,6 +61,8 @@ export type Data = {
 	translations: { [key: string]: { [key: string]: string } }
 	isEmailConfirmed: boolean
 	subscriptionYears?: number
+	errorModalHeader?: string
+	errorModalBody?: string
 }
 
 export type HeaderButtonState = "enabled" | "disabled" | "hidden"
@@ -129,6 +132,11 @@ export type SetSubscriptionYearsAction = {
 	payload: number
 }
 
+export type SetErrorModalTextAction = {
+	type: DataActionTypes.SetErrorModalText
+	payload: { header: string; body: string }
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -143,5 +151,10 @@ export type DataChangeActions =
 	| EmailConfirmedChangeAction
 	| NftImageChangeAction
 	| SetSubscriptionYearsAction
+	| SetErrorModalTextAction
 
-export type ModalType = "emailVerification" | "minting" | "mintingFailed"
+export type ModalType =
+	| "emailVerification"
+	| "minting"
+	| "mintingFailed"
+	| "genericError"

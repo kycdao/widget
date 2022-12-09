@@ -12,7 +12,7 @@ import {
 import { Loading } from "./pages/loading"
 import { Header } from "./components/header/header"
 import { Router } from "./components/router/router"
-import { ModalRouter } from "./components/modal/modal"
+import { ModalRouter } from "./components/modal/modalRouter"
 
 import "./style/index.scss"
 

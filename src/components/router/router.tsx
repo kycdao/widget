@@ -117,6 +117,7 @@ export const Router: FC = () => {
 				stepID={currentPage}
 				animation={currentModal ? undefined : currentAnimation}
 				inactive={!!currentModal}
+				disabled={!!currentModal}
 				style={stepStyle}
 			/>
 			{nextPage && (

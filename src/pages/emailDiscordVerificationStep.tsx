@@ -146,31 +146,62 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 					await kycDao.kycDao.updateEmail(emailValue)
 
 					const emailCheck = async () => {
-						const emailData = await kycDao?.kycDao.checkEmailConfirmed()
+						try {
+							const emailData = await kycDao?.kycDao.checkEmailConfirmed()
 
-						if (emailData?.isConfirmed) {
+							if (emailData?.isConfirmed) {
+								dispatch({
+									type: DataActionTypes.setEmailConfirmed,
+									payload: true,
+								})
+								dispatch({
+									type: DataActionTypes.changePage,
+									payload: {
+										current: StepID.taxResidenceStep,
+										prev: StepID.emailDiscordVerificationStep,
+									},
+								})
+								dispatch({
+									type: DataActionTypes.setModal,
+									payload: null,
+								})
+
+								clearInterval(confirmationInterval.current)
+							}
+						} catch (e) {
 							dispatch({
-								type: DataActionTypes.setEmailConfirmed,
-								payload: true,
-							})
-							dispatch({
-								type: DataActionTypes.changePage,
+								type: DataActionTypes.SetErrorModalText,
 								payload: {
-									current: StepID.taxResidenceStep,
-									prev: StepID.emailDiscordVerificationStep,
+									header: "An error happened",
+									body: "Email validation failed, because of an error. Please try again.",
 								},
 							})
 							dispatch({
 								type: DataActionTypes.setModal,
-								payload: null,
+								payload: "genericError",
 							})
-
-							clearInterval(confirmationInterval.current)
+							if (typeof e === "string") {
+								console.error(e)
+							} else {
+								console.error(JSON.stringify(e))
+							}
 						}
 					}
 					confirmationInterval.current = setInterval(emailCheck, 1500)
 				} catch (e) {
-					alert(e)
+					dispatch({
+						type: DataActionTypes.SetErrorModalText,
+						payload: {
+							header: "An error happened",
+							body: "Email validation failed, because of an error. Please try again.",
+						},
+					})
+					dispatch({ type: DataActionTypes.setModal, payload: "genericError" })
+					if (typeof e === "string") {
+						console.error(e)
+					} else {
+						console.error(JSON.stringify(e))
+					}
 				}
 			} else {
 				dispatch({

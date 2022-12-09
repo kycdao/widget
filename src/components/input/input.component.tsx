@@ -117,19 +117,28 @@ export const Input: FC<InputProps> = ({
 						.filter((v) =>
 							v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
 						)
-						.map((v, i) => (
-							<div
-								dangerouslySetInnerHTML={{
-									__html: v.replace(
-										new RegExp(`(${value.replace(specialRegex, "")})`, "ig"),
-										"<strong>$1</strong>"
-									),
-								}}
-								className={`kyc-option full-width${i === 0 ? " first" : ""}`}
-								onClick={onAutocompleteHndlr(v)}
-								key={v}
-							/>
-						))}
+						.map((v, i) => {
+							return value !== "" ? (
+								<div
+									dangerouslySetInnerHTML={{
+										__html: v.replace(
+											new RegExp(`(${value.replace(specialRegex, "")})`, "ig"),
+											"<strong>$1</strong>"
+										),
+									}}
+									className={`kyc-option full-width${i === 0 ? " first" : ""}`}
+									onClick={onAutocompleteHndlr(v)}
+									key={v}
+								/>
+							) : (
+								<div
+									className={`kyc-option full-width${i === 0 ? " first" : ""}`}
+									onClick={onAutocompleteHndlr(v)}
+									key={v}>
+									{v}
+								</div>
+							)
+						})}
 				</div>
 			)}
 			<input
