@@ -194,7 +194,7 @@ export const MintStep: FC<PageProps> = ({
 						</div>
 					</div>
 				</div>
-				<div className="value">
+				<div style={{ display: "none" }} className="value">
 					<i className="material-icons">info</i>
 					<p>
 						<strong>5,6</strong> Matic
@@ -213,11 +213,11 @@ export const MintStep: FC<PageProps> = ({
 					className="full-width black"
 					onClick={onEnter}
 					inactive={inactive}
-					label={`Pay + mint on ${kycDao?.kycDao.connectedWallet?.blockchain}`}
+					label={`Pay + mint`}
 				/>
 			</>
 		),
-		[decrease, increase, yearCount, kycDao]
+		[decrease, increase, yearCount]
 	)
 
 	if (!kycDao) {

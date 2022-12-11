@@ -15,6 +15,10 @@
 			window.onload = function () {
 				const client = new KycDaoClient({
 					parent: "#modalRoot",
+					// configFromUrl: true,
+					config: {
+						evmProvider: "ethereum"
+					},
 					config: {
 						demoMode: true,
 						enabledBlockchainNetworks: ["PolygonMumbai", "SolanaDevnet",],

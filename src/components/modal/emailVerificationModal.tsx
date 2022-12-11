@@ -35,8 +35,8 @@ export const EmailVerificationModal = () => {
 
 			<div className="body">
 				<p className="policy">
-					Please verify yourself through the <b>link</b> we've sent you to the
-					following address:
+					Please verify yourself through the <b>link</b> we&apos;ve sent you to
+					the following address:
 				</p>
 				<p>{email}</p>
 			</div>

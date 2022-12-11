@@ -152,7 +152,7 @@ export const NftSelection: FC<PageProps> = ({
 	}, [kycDao?.kycDao])
 
 	const body = useCallback<StepPart>(
-		({ disabled, inactive }) => (
+		({ disabled }) => (
 			<>
 				<div className="nft-image-wrapper">
 					{nftImages.map((image) => {
@@ -166,7 +166,14 @@ export const NftSelection: FC<PageProps> = ({
 						)
 					})}
 				</div>
+			</>
+		),
+		[nftImages, onSubmit]
+	)
 
+	const footer = useCallback<StepPart>(
+		({ disabled, inactive }) => {
+			return (
 				<div className="nft-button-wrapper">
 					<Button
 						inactive={inactive}
@@ -179,9 +186,9 @@ export const NftSelection: FC<PageProps> = ({
 						</>
 					</Button>
 				</div>
-			</>
-		),
-		[onRegenerate, nftImages, onSubmit]
+			)
+		},
+		[onRegenerate]
 	)
 
 	if (!kycDao) {
@@ -198,6 +205,7 @@ export const NftSelection: FC<PageProps> = ({
 			className={className}
 			header={Header}
 			body={body}
+			footer={footer}
 		/>
 	)
 }

@@ -16,10 +16,6 @@ import { ModalRouter } from "./components/modal/modalRouter"
 
 import "./style/index.scss"
 
-if ("virtualKeyboard" in navigator) {
-	navigator.virtualKeyboard.overlaysContent = true
-}
-
 export type KycDaoModalProps = {
 	width?: number | string
 	height?: number | string
@@ -35,6 +31,12 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 }) => {
 	const [data, dispatch] = useReducer(reducer, DefaultData)
 	const [kycDao, setKycDao] = useState<KycDaoState>()
+
+	useEffect(() => {
+		if (iframeOptions && "virtualKeyboard" in navigator) {
+			navigator.virtualKeyboard.overlaysContent = true
+		}
+	}, [iframeOptions])
 
 	useEffect(() => {
 		KycDao.initialize(config).then((results) => {

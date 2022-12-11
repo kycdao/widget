@@ -17,6 +17,10 @@ export default function KycDaoClient(
 		config,
 	}: KycDaoClientOptions
 ) {
+	if ("virtualKeyboard" in navigator) {
+		navigator.virtualKeyboard.overlaysContent = true
+	}
+
 	this.config = config
 	this.iframeOptions = iframeOptions
 
@@ -121,7 +125,7 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 			navigator.virtualKeyboard.overlaysContent = true
 		}
 
-		window.parent.addEventListener("message", this.messageHndlr)
+		window.addEventListener("message", this.messageHndlr)
 	}
 }
 

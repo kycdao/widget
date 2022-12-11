@@ -13,7 +13,7 @@ export const GenericErrorModal = () => {
 
 	return (
 		<div className="mintingFailedModal">
-			<div className="header">
+			<div className="header" style={{ justifyContent: "space-between" }}>
 				<i className="material-icons">error</i>
 				<p>{errorModalHeader}</p>
 				<button className="material-icons close-button" onClick={onClose}>
