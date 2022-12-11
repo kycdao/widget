@@ -1,4 +1,7 @@
-import { BootstrapKycDaoModal } from "./BootstrapKycDaoModal"
+import {
+	BootstrapIframeKycDaoModal,
+	BootstrapKycDaoModal,
+} from "./BootstrapKycDaoModal"
 import "./KycDaoClient.scss"
 import {
 	KycDaoClientInterface,
@@ -16,6 +19,7 @@ export function KycDaoClient(
 		onSuccess,
 		iframeOptions,
 		config,
+		configFromUrl = false,
 	}: KycDaoClientOptions
 ) {
 	this.config = config
@@ -34,6 +38,8 @@ export function KycDaoClient(
 	this.open = this.open.bind(this)
 	this.close = this.close.bind(this)
 	this.getParentElement = this.getParentElement.bind(this)
+
+	this.configFromUrl = configFromUrl
 }
 
 KycDaoClient.prototype.messageHndlr = function (
@@ -100,14 +106,20 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 		this.parent.appendChild(this.modal)
 		this.isOpen = true
 
-		window.parent.addEventListener("message", this.messageHndlr)
+		window.addEventListener("message", this.messageHndlr)
 
-		BootstrapKycDaoModal({
-			config: this.config,
-			height: this.height,
-			parent: container,
-			width: this.width,
-		})
+		if (this.configFromUrl) {
+			BootstrapIframeKycDaoModal({
+				parent: container,
+			})
+		} else {
+			BootstrapKycDaoModal({
+				config: this.config,
+				height: this.height,
+				parent: container,
+				width: this.width,
+			})
+		}
 	}
 }
 

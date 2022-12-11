@@ -15,8 +15,20 @@ import { PageProps } from "../pageProps"
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<>
 		<div className="policy">
-			By starting verification you accept <a href="#1">Privacy Policy</a> and{" "}
-			<a href="#2">Terms &#38; Conditions.</a>
+			By starting verification you accept{" "}
+			<a
+				target="_blank"
+				rel="noreferrer"
+				href="https://kycdao.xyz/terms-and-conditions">
+				Privacy Policy
+			</a>{" "}
+			and{" "}
+			<a
+				target="_blank"
+				rel="noreferrer"
+				href="https://kycdao.xyz/privacy-policy">
+				Terms &#38; Conditions.
+			</a>
 		</div>
 		<SubmitButton
 			autoFocus={!inactive && !disabled}
@@ -168,7 +180,29 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 					})
 					dispatch({ type: DataActionTypes.termsAcceptedChange, payload: true })
 				} catch (e) {
-					alert(e)
+					// TODO: nicer error handling for unsupported network https://kycdao.atlassian.net/browse/KYC-505
+					let errorMsg = 'Connecting to your wallet failed, because of an error. Please try again.'
+					if (e instanceof Error) {
+						if (e.message.includes("Connected EVM network is not enabled")) {
+							errorMsg = `Please switch your wallet to ${kycDaoContext.kycDao.sdkStatus.availableBlockchainNetworks[0]}`;
+						}	 else { 
+							errorMsg = `${errorMsg} (${e.message})`;
+						}
+					}
+
+					dispatch({
+						type: DataActionTypes.SetErrorModalText,
+						payload: {
+							header: "An error happened",
+							body: `${errorMsg}`,
+						},
+					})
+					dispatch({ type: DataActionTypes.setModal, payload: "genericError" })
+					if (typeof e === "string" || e instanceof Error) {
+						console.error(e)
+					} else {
+						console.error(JSON.stringify(e))
+					}
 				}
 			}
 		}
