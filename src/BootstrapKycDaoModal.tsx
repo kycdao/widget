@@ -47,8 +47,8 @@ export type UrlParams = {
 
 export function BootstrapKycDaoModal({
 	parent,
-	height,
-	width,
+	height = 650,
+	width = 400,
 	config,
 }: {
 	width: number | string
@@ -56,6 +56,9 @@ export function BootstrapKycDaoModal({
 	parent: HTMLElement | string
 	config: SdkConfiguration
 }) {
+
+	// TODO: add sanity checking https://kycdao.atlassian.net/browse/KYC-591
+
 	const root = createRoot(
 		typeof parent === "string"
 			? (document.querySelector(parent) as HTMLElement)

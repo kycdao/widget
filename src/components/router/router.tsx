@@ -1,4 +1,5 @@
 import { CSSProperties, FC, useContext, useMemo } from "react"
+
 import { StepID, StateContext } from "../stateContext"
 import { StepAnimation, MovingDirection } from "../step/step"
 import { AgreementStep } from "../../pages/agreementStep"
@@ -12,6 +13,9 @@ import { MintStep } from "../../pages/mintMembershipCard/mintMembershipCard"
 import { NftSelection } from "../../pages/nftArtSelection"
 import { TaxResidenceStep } from "../../pages/taxResidence"
 import { VerificationStep } from "../../pages/verificationStep"
+
+import "./style/_router.scss"
+
 
 const RoutedStep: FC<{
 	stepID: StepID
