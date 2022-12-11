@@ -8,7 +8,7 @@ export const MintingModal = () => {
 
 			<div className="body">
 				<p className="policy">
-					Your kycNFT is being minted, please wait, until it's ready
+					Your kycNFT is being minted, please wait, until it is ready
 				</p>
 			</div>
 
