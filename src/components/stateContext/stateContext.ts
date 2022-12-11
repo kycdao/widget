@@ -42,7 +42,7 @@ export const reducer = (
 			return {
 				...data,
 				errorModalHeader: payload.header,
-				errorModalBody: payload.header,
+				errorModalBody: payload.body,
 			}
 		}
 		case DataActionTypes.taxResidenceChange:
