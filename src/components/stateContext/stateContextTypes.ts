@@ -25,6 +25,7 @@ export enum DataActionTypes {
 	nftImageChange,
 	subscriptionYearsChange,
 	SetErrorModalText,
+	setChainExplorerUrl,
 }
 
 export enum StepID {
@@ -63,6 +64,7 @@ export type Data = {
 	subscriptionYears?: number
 	errorModalHeader?: string
 	errorModalBody?: string
+	chainExplorerUrl?: string
 }
 
 export type HeaderButtonState = "enabled" | "disabled" | "hidden"
@@ -137,6 +139,11 @@ export type SetErrorModalTextAction = {
 	payload: { header: string; body: string }
 }
 
+export type SetChainExplorerUrl = {
+	type: DataActionTypes.setChainExplorerUrl
+	payload: string
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -152,6 +159,7 @@ export type DataChangeActions =
 	| NftImageChangeAction
 	| SetSubscriptionYearsAction
 	| SetErrorModalTextAction
+	| SetChainExplorerUrl
 
 export type ModalType =
 	| "emailVerification"

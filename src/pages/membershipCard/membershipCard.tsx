@@ -15,8 +15,20 @@ import { PageProps } from "../pageProps"
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<>
 		<div className="policy">
-			By starting verification you accept <a href="#1">Privacy Policy</a> and{" "}
-			<a href="#2">Terms &#38; Conditions.</a>
+			By starting verification you accept{" "}
+			<a
+				target="_blank"
+				rel="noreferrer"
+				href="https://kycdao.xyz/terms-and-conditions">
+				Privacy Policy
+			</a>{" "}
+			and{" "}
+			<a
+				target="_blank"
+				rel="noreferrer"
+				href="https://kycdao.xyz/privacy-policy">
+				Terms &#38; Conditions.
+			</a>
 		</div>
 		<SubmitButton
 			autoFocus={!inactive && !disabled}

@@ -53,6 +53,8 @@ export const reducer = (
 			return { ...data, verifyingModalOpen: payload }
 		case DataActionTypes.nftImageChange:
 			return { ...data, imageId: payload }
+		case DataActionTypes.setChainExplorerUrl:
+			return { ...data, chainExplorerUrl: payload }
 		case DataActionTypes.SetHeaderButtonState:
 			switch (payload.button) {
 				case HeaderButtons.close:

@@ -21,7 +21,7 @@ export const FinalStep: FC<PageProps> = ({
 	const kycDao = useKycDao()
 	const {
 		dispatch,
-		data: { messageTargetOrigin },
+		data: { messageTargetOrigin, chainExplorerUrl },
 	} = useContext(StateContext)
 
 	const onTransitionDone = useCallback(() => {
@@ -40,8 +40,8 @@ export const FinalStep: FC<PageProps> = ({
 	const [nftImageUrl, setNftImageUrl] = useState("")
 
 	const onCheck = useCallback(() => {
-		// dispatch({ type: DataActionTypes.nexPage, payload: StepID.finalStep })
-	}, [])
+		window.open(chainExplorerUrl, "_blank")
+	}, [chainExplorerUrl])
 
 	useEffect(() => {
 		if (kycDao) {
@@ -73,15 +73,19 @@ export const FinalStep: FC<PageProps> = ({
 	)
 
 	const footer = useCallback<StepPart>(
-		(props) => (
-			<Button
-				{...props}
-				className="full-width underline centered"
-				onClick={onCheck}>
-				Check on chain
-			</Button>
-		),
-		[onCheck]
+		({ disabled, inactive }) =>
+			chainExplorerUrl ? (
+				<div style={{ justifyContent: "center", display: "flex" }}>
+					<Button
+						disabled={disabled}
+						inactive={inactive}
+						className="full-width underline centered"
+						onClick={onCheck}>
+						Check on chain
+					</Button>
+				</div>
+			) : null,
+		[onCheck, chainExplorerUrl]
 	)
 
 	if (!kycDao) {
