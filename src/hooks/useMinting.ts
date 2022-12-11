@@ -45,7 +45,7 @@ export const useMinting = () => {
 					})
 				}
 			} catch (e: unknown) {
-				if (typeof e === "object") {
+				if (typeof e === "object" && !(e instanceof Error)) {
 					console.error(JSON.stringify(e))
 				} else {
 					console.error(e)

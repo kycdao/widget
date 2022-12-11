@@ -180,7 +180,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 								type: DataActionTypes.setModal,
 								payload: "genericError",
 							})
-							if (typeof e === "string") {
+							if (typeof e === "string" || e instanceof Error) {
 								console.error(e)
 							} else {
 								console.error(JSON.stringify(e))
@@ -197,7 +197,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 						},
 					})
 					dispatch({ type: DataActionTypes.setModal, payload: "genericError" })
-					if (typeof e === "string") {
+					if (typeof e === "string" || e instanceof Error) {
 						console.error(e)
 					} else {
 						console.error(JSON.stringify(e))
