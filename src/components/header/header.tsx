@@ -35,12 +35,12 @@ const Button = styled.button<{ hidden?: boolean }>`
 	justify-content: center;
 	border-radius: var(--border-radius-light);
 
-	${tr2}
-	${materialIcon}
-	
-  	${({ hidden }) => hidden && "visibility: hidden;"}
-	
-  	&:hover:not([disabled]) {
+	${tr2};
+	${materialIcon};
+
+	${({ hidden }) => hidden && "visibility: hidden;"}
+
+	&:hover:not([disabled]) {
 		cursor: pointer;
 		background: var(--kyc-cybergreen-35);
 	}
@@ -65,8 +65,8 @@ const CloseButton = styled.button<{ hidden?: boolean }>`
 
 	font-size: 24px;
 	color: black;
-	${tr2}
-	${materialIcon}
+	${tr2};
+	${materialIcon};
 
 	${({ hidden }) => hidden && "visibility: hidden;"}
 
