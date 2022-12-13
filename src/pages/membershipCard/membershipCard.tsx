@@ -181,12 +181,13 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 					dispatch({ type: DataActionTypes.termsAcceptedChange, payload: true })
 				} catch (e) {
 					// TODO: nicer error handling for unsupported network https://kycdao.atlassian.net/browse/KYC-505
-					let errorMsg = 'Connecting to your wallet failed, because of an error. Please try again.'
+					let errorMsg =
+						"Connecting to your wallet failed, because of an error. Please try again."
 					if (e instanceof Error) {
 						if (e.message.includes("Connected EVM network is not enabled")) {
-							errorMsg = `Please switch your wallet to ${kycDaoContext.kycDao.sdkStatus.availableBlockchainNetworks[0]}`;
-						}	 else { 
-							errorMsg = `${errorMsg} (${e.message})`;
+							errorMsg = `Please switch your wallet to ${kycDaoContext.kycDao.sdkStatus.availableBlockchainNetworks[0]}`
+						} else {
+							errorMsg = `${errorMsg} (${e.message})`
 						}
 					}
 

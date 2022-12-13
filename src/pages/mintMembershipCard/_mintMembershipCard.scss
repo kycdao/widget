@@ -6,11 +6,11 @@
 			font-family: var(--primary-font);
 		}
 
-		.calculator{
+		.calculator {
 			display: flex;
 			flex-flow: column;
 
-			&>div{
+			& > div {
 				justify-content: space-evenly;
 				flex-direction: row;
 				display: flex;
@@ -44,8 +44,7 @@
 						color: black;
 					}
 
-					&:focus{
-
+					&:focus {
 						span,
 						.material-icons {
 							color: black;
@@ -65,7 +64,7 @@
 				&:active {
 					background: var(--kyc-cybergreen);
 					border: 2px solid var(--kyc-cybergreen);
-					box-shadow: 0 0 0 5px var(--kyc-cybergreen-35)
+					box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
 				}
 
 				&:focus-visible {
@@ -75,7 +74,6 @@
 
 				i {
 				}
-
 			}
 
 			.sum {

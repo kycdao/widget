@@ -56,7 +56,6 @@ export function BootstrapKycDaoModal({
 	parent: HTMLElement | string
 	config: SdkConfiguration
 }) {
-
 	// TODO: add sanity checking https://kycdao.atlassian.net/browse/KYC-591
 
 	const root = createRoot(

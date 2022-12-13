@@ -16,7 +16,6 @@ import { VerificationStep } from "../../pages/verificationStep"
 
 import "./_router.scss"
 
-
 const RoutedStep: FC<{
 	stepID: StepID
 	animation?: StepAnimation

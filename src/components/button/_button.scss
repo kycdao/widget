@@ -32,10 +32,10 @@ button.kyc-button {
 		pointer-events: none !important;
 		border: 2px solid black;
 
-		span, i{
+		span,
+		i {
 			color: black !important;
 		}
-
 	}
 
 	&.black {
@@ -171,7 +171,6 @@ button.kyc-button {
 		}
 
 		&:hover {
-
 			&:after {
 				height: 8px;
 			}
@@ -179,7 +178,6 @@ button.kyc-button {
 	}
 
 	&.kyc-submit-button {
-
 		span {
 			padding-left: 1.5rem;
 		}
