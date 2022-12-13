@@ -12,7 +12,10 @@ jobs:
       PUBLISH: ${{ env.PUBLISH }}
     steps:
       - uses: actions/checkout@v3
-      - uses: erclu/check-crlf@v1
+      - name: Check for Windows line endings
+        run: |
+          find ! -path "./.git/*" -type f | xargs file | grep CRLF && exit 1
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
