@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.8",
+	"version": "0.3.0-rc.9",
 	"license": "unlicensed",
 	"scripts": {
 		"postinstall": "husky install .husky",
