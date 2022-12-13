@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
+          cache: "yarn"
       - uses: actions/cache@v3
         with:
           path: |
@@ -23,7 +23,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - run: |
-             yarn set version $( grep -Po  'packageManager": "yarn@\K[^"]+' package.json )
+          yarn set version $( grep -Po  'packageManager": "yarn@\K[^"]+' package.json )
 
       - run: yarn install --immutable
 
@@ -71,12 +71,12 @@ jobs:
       - name: Setup Node (using cache)
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "18.x"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Enable corepack
         run: corepack enable
-        
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
