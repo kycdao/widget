@@ -258,9 +258,9 @@ mintStep = 12
 		border: 2px solid transparent;
 		border-radius: 999rem;
 		box-shadow: 0 0 0 5px transparent;
-		
+
 		@extend .tr2;
-		
+
 		&:hover:not(.disabled) {
 			cursor: pointer;
 			box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
@@ -282,16 +282,14 @@ mintStep = 12
 	justify-content: space-around;
 	align-content: center;
 	height: 75%;
-
 }
 
 /* 11 STEP -  nftArtSelection */
 
-.final-texts{
+.final-texts {
 	display: flex;
 	justify-content: center;
 	flex-flow: column;
 	align-items: center;
 	height: 100%;
-
 }
