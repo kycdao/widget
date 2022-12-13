@@ -1,5 +1,4 @@
 @use "../components/button/button";
-@use "../components/header/header";
 @use "../components/modal/emailVerificationModal";
 @use "../components/modal/mintingFailedModal";
 @use "../components/modal/mintingModal";
@@ -29,6 +28,7 @@ code {
 		monospace;
 }
 
+// @deprecated, use styled-components instead
 .material-icons {
 	font-family: "Material Icons";
 	font-weight: normal;
