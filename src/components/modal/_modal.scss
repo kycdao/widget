@@ -28,17 +28,20 @@
 		}
 	}
 
-	.body{
+	.body {
 		margin: 1rem;
 
-		p{
+		p {
 			font-family: var(--primary-font);
 
-			b{
+			b {
 				font-weight: 800;
 			}
 		}
+	}
 
+	.close-button {
+		cursor: pointer;
 	}
 
 	.button-wrapper {

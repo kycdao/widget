@@ -9,6 +9,8 @@ const StepHeader = styled.div<{ blurred: boolean }>`
 	align-items: center;
 	justify-content: space-between;
 	padding: 1rem;
+	position: relative;
+	z-index: 10;
 
 	filter: ${({ blurred }) => (blurred ? "brightness(50%)" : "unset")};
 	background: ${({ blurred }) => (blurred ? "#fefefe" : "unset")};

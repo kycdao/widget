@@ -29,7 +29,7 @@ export const EmailVerificationModal = () => {
 	return (
 		<div className="emailVerificationModal">
 			<div className="header">
-				<i className="material-icons">hourglass_bottom</i>
+				<i className="material-icons icon">hourglass_bottom</i>
 				<p>Waiting your mail verification</p>
 			</div>
 
