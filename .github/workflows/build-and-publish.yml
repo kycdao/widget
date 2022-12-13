@@ -12,6 +12,7 @@ jobs:
       PUBLISH: ${{ env.PUBLISH }}
     steps:
       - uses: actions/checkout@v3
+      - uses: erclu/check-crlf@v1
       - uses: actions/setup-node@v3
         with:
           node-version: 18
