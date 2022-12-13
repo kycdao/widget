@@ -24,3 +24,7 @@ index.d.ts
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# playwright test results
+test-results
+playwright-report

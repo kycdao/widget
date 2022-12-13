@@ -2322,6 +2322,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.20.2"
     "@babel/preset-react": "npm:^7.18.6"
     "@kycdao/kycdao-sdk": "npm:^0.3.12"
+    "@playwright/test": "npm:^1.20.0"
     "@testing-library/jest-dom": "npm:^5.16.5"
     "@testing-library/react": "npm:^13.4.0"
     "@testing-library/user-event": "npm:^14.4.3"
@@ -2568,6 +2569,18 @@ __metadata:
   version: 1.0.1
   resolution: "@pedrouid/environment@npm:1.0.1"
   checksum: 1c4d1dbabe48a9557d5e1cc5d7805cfa742d1001342fe6a73d9bd4c6c71ade7578c008e606b6dd9c4b4e9c7055d625ff11d9dd68ab4cdaacf19a505370f44b07
+  languageName: node
+  linkType: hard
+
+"@playwright/test@npm:^1.20.0":
+  version: 1.28.1
+  resolution: "@playwright/test@npm:1.28.1"
+  dependencies:
+    "@types/node": "npm:*"
+    playwright-core: "npm:1.28.1"
+  bin:
+    playwright: cli.js
+  checksum: f84a92783a629cb724a781c60058b96c0354c56471e601cdd8815b7e216ea4fccc630dd063ab530259574cfbf6c265b6113a64c9a1d2dea34a560cf0b3f4db95
   languageName: node
   linkType: hard
 
@@ -14709,6 +14722,15 @@ __metadata:
   dependencies:
     find-up: "npm:^3.0.0"
   checksum: 98db94ac40bd11694516ed7298bb971f38a064ec78e0d123a159d0056791834611289f9588313e573c65f07268d565c4550ec1463ddc24008bc453505afac996
+  languageName: node
+  linkType: hard
+
+"playwright-core@npm:1.28.1":
+  version: 1.28.1
+  resolution: "playwright-core@npm:1.28.1"
+  bin:
+    playwright: cli.js
+  checksum: 0137714ab5e1452b01b5b080648b26964372b8bf77fabb0c97efef42e4b2ddfe0598f150db57558dc8791e5340ab48eb9ce329f3ce7e2d71bdd80263aa57d8af
   languageName: node
   linkType: hard
 
