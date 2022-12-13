@@ -1,7 +1,12 @@
 .routerContainer {
-	position: relative;
 	display: flex;
 	flex-flow: column;
 	width: 100%;
-	height: calc(100% - var(--header-height));
+
+	//position: relative;
+	//height: calc(100% - var(--header-height));
+
+	position: absolute;
+	height: 100%;
+	top: 0;
 }

@@ -6,6 +6,8 @@
 	align-items: center;
 	justify-content: space-between;
 	padding: 1rem;
+	position: relative;
+	z-index: 10;
 
 	&.blurred {
 		filter: brightness(50%);
@@ -22,19 +24,19 @@
 			height: 2rem;
 			background: none;
 			border: none;
-			
+
 			color: black;
-			
+
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			border-radius: var(--border-radius-light);
 			@extend .tr2;
-			
+
 			&.hidden {
 				visibility: hidden;
 			}
-			
+
 			&:hover:not([disabled]) {
 				cursor: pointer;
 				background: var(--kyc-cybergreen-35);
@@ -52,17 +54,17 @@
 		border: none;
 		background: transparent;
 		align-items: center;
-		
+
 		display: flex;
 		width: 2rem;
 		height: 2rem;
 		justify-content: center;
 		border-radius: 999rem;
-		
+
 		font-size: 24px;
 		color: black;
 		@extend .tr2;
-		
+
 		&:hover:not([disabled]) {
 			background: var(--kyc-cybergreen-35);
 			cursor: pointer;

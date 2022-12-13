@@ -14,7 +14,7 @@ export const GenericErrorModal = () => {
 	return (
 		<div className="mintingFailedModal">
 			<div className="header" style={{ justifyContent: "flex-start" }}>
-				<i className="material-icons">error</i>
+				<i className="material-icons icon">error</i>
 				<p style={{ flex: 1 }}>{errorModalHeader}</p>
 				<button className="material-icons close-button" onClick={onClose}>
 					close
