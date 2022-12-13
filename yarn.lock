@@ -2345,6 +2345,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.5.0"
     eslint-plugin-import: "npm:^2.26.0"
     eslint-plugin-jsx-a11y: "npm:^6.6.1"
+    eslint-plugin-playwright: "npm:^0.11.2"
     eslint-plugin-prettier: "npm:^4.2.1"
     eslint-plugin-react: "npm:^7.31.11"
     eslint-plugin-react-hooks: "npm:^4.6.0"
@@ -9291,6 +9292,19 @@ __metadata:
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
   checksum: 4feacb2da9dcf74c8599deb488c760d764f8503cf771370a836d9fb5050ba096e7fd9f2dbf86f882bca21ed73b346b10ded320d5cf1f1eed8b8eb85d4b424626
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-playwright@npm:^0.11.2":
+  version: 0.11.2
+  resolution: "eslint-plugin-playwright@npm:0.11.2"
+  peerDependencies:
+    eslint: ">=7"
+    eslint-plugin-jest: ">=24"
+  peerDependenciesMeta:
+    eslint-plugin-jest:
+      optional: true
+  checksum: 1c221e4097686105aedee15c31fda8373c197b00accd476d357bad2aacd3bc3bcc9d7a24dec2ed792548d7fa929ce992154d56276ad264c5e3d849dffb9c8c00
   languageName: node
   linkType: hard
 

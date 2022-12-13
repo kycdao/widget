@@ -8,3 +8,5 @@
 /build
 /dist
 /src/index.js
+playwright.config.ts
+tests/*.ts
