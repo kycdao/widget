@@ -29,10 +29,10 @@ module.exports = function override(config, env) {
 	config.output.path = path.resolve(outDir)
 	config.resolve.fallback = fallback
 	config.resolve.modules = ["node_modules"]
-	config.resolve.alias = {
-		...config.resolve.alias,
-		"@": path.resolve(__dirname, "src"),
-	}
+	// config.resolve.alias = {
+	// 	...config.resolve.alias,
+	// 	"@": path.resolve(__dirname, "src"),
+	// }
 
 	config.plugins = (config.plugins || []).concat([
 		new webpack.ProvidePlugin({
