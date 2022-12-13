@@ -121,5 +121,8 @@
 			"eslint"
 		],
 		"*.html": "prettier --write"
+	},
+	"resolutions": {
+		"styled-components": "^5"
 	}
 }
