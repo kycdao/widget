@@ -21,10 +21,6 @@ module.exports = function override(config, env) {
 		filename: "[name].min.js",
 		library: "kycDaoWebSdk",
 	}
-	config.resolve.alias = {
-		...config.resolve.alias,
-		"@": path.resolve(__dirname, "src"),
-	}
 
 	config.output.path = path.resolve(outDir)
 	config.resolve.fallback = fallback

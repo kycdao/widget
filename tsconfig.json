@@ -21,10 +21,7 @@
 		"removeComments": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"baseUrl": "./src",
-		"paths": {
-			"@/*": ["*"]
-		}
+		"baseUrl": "./src"
 	},
 	"include": ["src"],
 	"exclude": [

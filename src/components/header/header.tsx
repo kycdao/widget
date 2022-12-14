@@ -1,7 +1,7 @@
 import { CSSProperties, FC, useCallback, useContext } from "react"
 import { DataActionTypes, HeaderButtons, StateContext } from "../stateContext"
 import styled from "styled-components"
-import { materialIcon, tr2 } from "@/style"
+import { materialIcon, tr2 } from "../../style"
 
 const StepHeader = styled.div<{ blurred: boolean }>`
 	display: flex;
