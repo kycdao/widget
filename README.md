@@ -34,3 +34,8 @@ You must use a version above or including 4.0.0-rc.27.
 # Contribution
 
 Feel free to contribute by forking the repository and opening a pull request.
+
+## If you wish to contribute to the project, run the following command as well
+```
+yarn install-precommit-hook
+```

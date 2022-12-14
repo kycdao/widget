@@ -1,9 +1,9 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.10",
+	"version": "0.3.0-rc.11",
 	"license": "unlicensed",
 	"scripts": {
-		"postinstall": "husky install .husky",
+		"install-precommit-hook": "husky install .husky",
 		"start": "yarn start-https",
 		"start-https": "cross-env HTTPS=true PORT=4002 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
 		"start-http": "cross-env HTTPS=false PORT=4002 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
