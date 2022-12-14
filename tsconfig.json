@@ -20,7 +20,11 @@
 		"jsx": "react-jsx",
 		"removeComments": true,
 		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true
+		"emitDecoratorMetadata": true,
+		"baseUrl": "./src",
+		"paths": {
+			"@/*": ["*"]
+		}
 	},
 	"include": ["src"],
 	"exclude": [
