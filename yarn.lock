@@ -2334,14 +2334,14 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^5.43.0"
     "@typescript-eslint/parser": "npm:^5.43.0"
     babel-cli: "npm:^6.26.0"
-    babel-preset-es2015: "npm:6.24.1"
+    babel-preset-es2015: "npm:^6.24.1"
     buffer: "npm:^6.0.3"
     copy-files: "npm:^0.1.0"
     copyfiles: "npm:^2.4.1"
     create-react-app: "npm:^5.0.1"
     cross-env: "npm:^7.0.3"
     crypto-browserify: "npm:^3.12.0"
-    eslint: "npm:^8.28.0"
+    eslint: "npm:^8.29.0"
     eslint-config-airbnb: "npm:^19.0.4"
     eslint-config-prettier: "npm:^8.5.0"
     eslint-plugin-import: "npm:^2.26.0"
@@ -2356,7 +2356,7 @@ __metadata:
     near-api-js: "npm:^1.1.0"
     npm-dts-webpack-plugin: "npm:^1.3.12"
     persona: "npm:^4.7.1"
-    prettier: "npm:^2.7.1"
+    prettier: "npm:^2.8.1"
     process: "npm:^0.11.10"
     react: "npm:^18.2.0"
     react-app-rewired: "npm:^2.2.1"
@@ -2365,12 +2365,12 @@ __metadata:
     react-scripts: "npm:^5.0.1"
     react-swipeable: "npm:^7.0.0"
     rimraf: "npm:^3.0.2"
-    rxjs: "npm:^7.5.7"
-    sass: "npm:^1.56.1"
-    stream: "npm:0.0.2"
+    rxjs: "npm:^7.6.0"
+    sass: "npm:^1.56.2"
+    stream: "npm:^0.0.2"
     styled-components: "npm:^5.3.6"
     tsc: "npm:^2.0.4"
-    typescript: "npm:4.9.3"
+    typescript: "npm:^4.9.4"
   peerDependencies:
     react: ^18
     react-dom: ^18
@@ -6340,7 +6340,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-preset-es2015@npm:6.24.1":
+"babel-preset-es2015@npm:^6.24.1":
   version: 6.24.1
   resolution: "babel-preset-es2015@npm:6.24.1"
   dependencies:
@@ -9474,7 +9474,56 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.28.0, eslint@npm:^8.3.0":
+"eslint@npm:^8.29.0":
+  version: 8.29.0
+  resolution: "eslint@npm:8.29.0"
+  dependencies:
+    "@eslint/eslintrc": "npm:^1.3.3"
+    "@humanwhocodes/config-array": "npm:^0.11.6"
+    "@humanwhocodes/module-importer": "npm:^1.0.1"
+    "@nodelib/fs.walk": "npm:^1.2.8"
+    ajv: "npm:^6.10.0"
+    chalk: "npm:^4.0.0"
+    cross-spawn: "npm:^7.0.2"
+    debug: "npm:^4.3.2"
+    doctrine: "npm:^3.0.0"
+    escape-string-regexp: "npm:^4.0.0"
+    eslint-scope: "npm:^7.1.1"
+    eslint-utils: "npm:^3.0.0"
+    eslint-visitor-keys: "npm:^3.3.0"
+    espree: "npm:^9.4.0"
+    esquery: "npm:^1.4.0"
+    esutils: "npm:^2.0.2"
+    fast-deep-equal: "npm:^3.1.3"
+    file-entry-cache: "npm:^6.0.1"
+    find-up: "npm:^5.0.0"
+    glob-parent: "npm:^6.0.2"
+    globals: "npm:^13.15.0"
+    grapheme-splitter: "npm:^1.0.4"
+    ignore: "npm:^5.2.0"
+    import-fresh: "npm:^3.0.0"
+    imurmurhash: "npm:^0.1.4"
+    is-glob: "npm:^4.0.0"
+    is-path-inside: "npm:^3.0.3"
+    js-sdsl: "npm:^4.1.4"
+    js-yaml: "npm:^4.1.0"
+    json-stable-stringify-without-jsonify: "npm:^1.0.1"
+    levn: "npm:^0.4.1"
+    lodash.merge: "npm:^4.6.2"
+    minimatch: "npm:^3.1.2"
+    natural-compare: "npm:^1.4.0"
+    optionator: "npm:^0.9.1"
+    regexpp: "npm:^3.2.0"
+    strip-ansi: "npm:^6.0.1"
+    strip-json-comments: "npm:^3.1.0"
+    text-table: "npm:^0.2.0"
+  bin:
+    eslint: bin/eslint.js
+  checksum: a819bf506466fd9a3931c4dbc07ea540824313fac13ae93f2320e78d9fdd71de5bb19205b3567274d3a841f48956a03b42ce51a29c0dc67fc3a769195d7d5cd2
+  languageName: node
+  linkType: hard
+
+"eslint@npm:^8.3.0":
   version: 8.28.0
   resolution: "eslint@npm:8.28.0"
   dependencies:
@@ -15663,12 +15712,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.7.1":
-  version: 2.8.0
-  resolution: "prettier@npm:2.8.0"
+"prettier@npm:^2.8.1":
+  version: 2.8.1
+  resolution: "prettier@npm:2.8.1"
   bin:
     prettier: bin-prettier.js
-  checksum: c95699326db607eac7f63274d38ca9c21462fa538fb69cf06cb3be2122f2d53daa02f96f69cffa985af852a95c6211472ddf3798dbdb2f20c520aded15f78684
+  checksum: 06a74a0f7aa5877a3912aeeeae3558014b10e438d945f88bd313222e75e7282eb7f41299d204353ec7d00b208377ddc36ffe4c7d2151f0502e783139b934d66d
   languageName: node
   linkType: hard
 
@@ -16920,6 +16969,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rxjs@npm:^7.6.0":
+  version: 7.6.0
+  resolution: "rxjs@npm:7.6.0"
+  dependencies:
+    tslib: "npm:^2.1.0"
+  checksum: 061c02f4e345b803b8737e6853e401f6c571b6d82179a8966e196c096e458be3e1a50923f2ed0b65ff76a1ab70eff290ca4d6f50fba06a0daca3fc1fd7986c33
+  languageName: node
+  linkType: hard
+
 "safe-buffer@npm:5.1.2, safe-buffer@npm:~5.1.0, safe-buffer@npm:~5.1.1":
   version: 5.1.2
   resolution: "safe-buffer@npm:5.1.2"
@@ -17019,16 +17077,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.56.1":
-  version: 1.56.1
-  resolution: "sass@npm:1.56.1"
+"sass@npm:^1.56.2":
+  version: 1.56.2
+  resolution: "sass@npm:1.56.2"
   dependencies:
     chokidar: "npm:>=3.0.0 <4.0.0"
     immutable: "npm:^4.0.0"
     source-map-js: "npm:>=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: e48cbad4d2624d6a33bdf0595e3263a6c13e296b556af5e0e5fb44047ae7b2fbd6b240d0d5bb6fed403203cafb6b39b89a03a17e17d6ca2a98422abdf54754f7
+  checksum: 6fc46a1190489e2d0d023cc9b5a51cbbfbe393e6dbecef0a3743faab7936afb2880ed2f9ce6b21acb0fbb4ddbde30535d9958a5a3ae035cd6e22926c45f1be8f
   languageName: node
   linkType: hard
 
@@ -17786,7 +17844,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stream@npm:0.0.2":
+"stream@npm:^0.0.2":
   version: 0.0.2
   resolution: "stream@npm:0.0.2"
   dependencies:
@@ -18690,7 +18748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.9.3, typescript@npm:^4.6.2":
+"typescript@npm:^4.6.2":
   version: 4.9.3
   resolution: "typescript@npm:4.9.3"
   bin:
@@ -18700,13 +18758,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A4.9.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^4.6.2#optional!builtin<compat/typescript>":
+"typescript@npm:^4.9.4":
+  version: 4.9.4
+  resolution: "typescript@npm:4.9.4"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: b142d5e50785d0e5055771e4d9e712b01be58985ff29be3d3acc64f0fddd5fd8ade8b28583ba502f2565783c23bd5b509c5abcc1a93a2d7d4f05b8e4ee731fc9
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A^4.6.2#optional!builtin<compat/typescript>":
   version: 4.9.3
   resolution: "typescript@patch:typescript@npm%3A4.9.3#optional!builtin<compat/typescript>::version=4.9.3&hash=d73830"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 06fd518bc55d054127b39aa7ad11551fd132bb7a8395913ed84fd5caf715455393d622e884ccb4fcf962d4eb5182600009c096b82ec516e8fadd09bf2150bb93
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A^4.9.4#optional!builtin<compat/typescript>":
+  version: 4.9.4
+  resolution: "typescript@patch:typescript@npm%3A4.9.4#optional!builtin<compat/typescript>::version=4.9.4&hash=ad5954"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: e7321aeb1e2c0e3c19599808707208e2b730de8d17a5624f0a7297b9a1ffa39974edd4a819108b3b635bc00171476ddfa339e04d928a03ce8d8c6944cb8ec008
   languageName: node
   linkType: hard
 
