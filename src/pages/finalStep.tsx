@@ -9,6 +9,7 @@ import {
 } from "../components/stateContext"
 import { PageProps } from "./pageProps"
 import { useKycDao } from "../hooks/useKycDao"
+import { SubmitButton } from "../components/submitButton/submitButton"
 
 const Header = () => <h1>Congrats!</h1>
 
@@ -34,6 +35,10 @@ export const FinalStep: FC<PageProps> = ({
 				payload: { button: HeaderButtons.next, state: "hidden" },
 				type: DataActionTypes.SetHeaderButtonState,
 			})
+			dispatch({
+				payload: { button: HeaderButtons.close, state: "hidden" },
+				type: DataActionTypes.SetHeaderButtonState,
+			})
 		}
 	}, [disabled, dispatch])
 
@@ -45,10 +50,6 @@ export const FinalStep: FC<PageProps> = ({
 
 	useEffect(() => {
 		if (kycDao) {
-			window.parent.postMessage(
-				{ type: "kycDaoSuccess" },
-				messageTargetOrigin || window.location.origin
-			)
 			setNftImageUrl(kycDao.kycDao.getNftImageUrl())
 		}
 	}, [messageTargetOrigin, kycDao])
@@ -72,6 +73,13 @@ export const FinalStep: FC<PageProps> = ({
 		[kycDao, nftImageUrl]
 	)
 
+	const onFinish = useCallback(() => {
+		window.parent.postMessage(
+			{ type: "kycDaoSuccess", data: chainExplorerUrl },
+			messageTargetOrigin
+		)
+	}, [messageTargetOrigin, chainExplorerUrl])
+
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive }) =>
 			chainExplorerUrl ? (
@@ -83,9 +91,17 @@ export const FinalStep: FC<PageProps> = ({
 						onClick={onCheck}>
 						Check on chain
 					</Button>
+					<SubmitButton
+						autoFocus={!inactive && !disabled}
+						disabled={disabled}
+						className="full-width black"
+						onClick={onFinish}
+						inactive={inactive}
+						label={"Finish"}
+					/>
 				</div>
 			) : null,
-		[onCheck, chainExplorerUrl]
+		[onCheck, chainExplorerUrl, onFinish]
 	)
 
 	if (!kycDao) {

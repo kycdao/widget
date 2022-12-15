@@ -3,12 +3,12 @@ export const MintingModal = () => {
 		<div className="mintingModal">
 			<div className="header">
 				<i className="material-icons">error</i>
-				<p>Minting in progress</p>
+				<p>Mint authorization in progress</p>
 			</div>
 
 			<div className="body">
 				<p className="policy">
-					Your kycNFT is being minted, please wait, until it is ready
+					Your kycNFT is getting ready, please wait
 				</p>
 			</div>
 
