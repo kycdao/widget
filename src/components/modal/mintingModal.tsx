@@ -7,9 +7,7 @@ export const MintingModal = () => {
 			</div>
 
 			<div className="body">
-				<p className="policy">
-					Your kycNFT is getting ready, please wait
-				</p>
+				<p className="policy">Your kycNFT is getting ready, please wait</p>
 			</div>
 
 			<div className="loading-animation">
