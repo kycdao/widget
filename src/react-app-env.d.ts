@@ -1,5 +1,6 @@
 /// <reference types="react-scripts" />
 import { MetaMaskInpageProvider } from "@metamask/providers"
+import { KycDaoWidgetConfig } from "./widget"
 
 type VirtualKeyboardEvent = UIEvent & {
 	target: { boundingRect: { height: string } }
@@ -10,6 +11,7 @@ declare global {
 		ethereum: MetaMaskInpageProvider
 		KycDaoClient
 		KycDaoIframeClient
+		KycDaoWidget: React.FC<KycDaoWidgetConfig>
 	}
 
 	interface Navigator {

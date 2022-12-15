@@ -16,7 +16,12 @@ module.exports = function override(config, env) {
 
 	const outDir = "./build"
 	config.target = "web"
-	config.entry = { client: "./src/KycDaoClient.ts", iframeClient: "./src/KycDaoIframeClient.ts", app: "./src/index.js" }
+	config.entry = {
+		client: "./src/KycDaoClient.ts",
+		iframeClient: "./src/KycDaoIframeClient.ts",
+		app: "./src/index.js",
+		widget: "./src/widget.tsx",
+	}
 	config.output = {
 		filename: "[name].min.js",
 		library: "kycDaoWebSdk",
@@ -24,13 +29,13 @@ module.exports = function override(config, env) {
 
 	config.output.path = path.resolve(outDir)
 	config.resolve.fallback = fallback
-	config.resolve.modules = ['node_modules']
+	config.resolve.modules = ["node_modules"]
 
 	config.plugins = (config.plugins || []).concat([
 		new webpack.ProvidePlugin({
 			process: "process/browser",
 			Buffer: ["buffer", "Buffer"],
-			ethereum: ["ethereum", "ethereum"]
+			ethereum: ["ethereum", "ethereum"],
 		}),
 	])
 
@@ -68,7 +73,7 @@ module.exports = function override(config, env) {
 			filename: "[name].css",
 		})
 	)
-	
+
 	config.devtool = "source-map"
 
 	return config
