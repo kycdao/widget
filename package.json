@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.14",
+	"version": "0.3.0-rc.15",
 	"license": "unlicensed",
 	"scripts": {
 		"install-precommit-hook": "husky install .husky",
