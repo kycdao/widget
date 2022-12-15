@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.13",
+	"version": "0.3.0-rc.14",
 	"license": "unlicensed",
 	"scripts": {
 		"install-precommit-hook": "husky install .husky",
@@ -40,7 +40,8 @@
 			"script": "./dist/iframeClient.min.js",
 			"style": "./dist/iframeClient.css"
 		},
-		"./es": "./dist/es/"
+		"./es": "./dist/es/",
+		"./widget": "./dist/widget.min.js"
 	},
 	"types": "./index.d.ts",
 	"dependencies": {
