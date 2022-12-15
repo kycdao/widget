@@ -48,11 +48,11 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 		const close = OnClose.subscribe(() => {
 			window.parent.postMessage(
 				{ type: "kycDaoCloseModal" },
-				iframeOptions?.messageTargetOrigin || window.location.origin
+				data.messageTargetOrigin
 			)
 		})
 		return close.unsubscribe.bind(close)
-	}, [iframeOptions])
+	}, [data])
 
 	useEffect(() => {
 		if (kycDao) {
@@ -60,8 +60,12 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 				payload: { current: StepID.AgreementStep, prev: StepID.loading },
 				type: DataActionTypes.changePage,
 			})
+			dispatch({
+				payload: iframeOptions?.messageTargetOrigin || window.location.origin,
+				type: DataActionTypes.setMessageTargetOrigin,
+			})
 		}
-	}, [kycDao])
+	}, [kycDao, iframeOptions])
 
 	const contextData = useMemo(() => ({ data, dispatch }), [data, dispatch])
 

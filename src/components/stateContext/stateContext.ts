@@ -21,6 +21,8 @@ export const reducer = (
 	{ payload, type }: DataChangeActions
 ): Data => {
 	switch (type) {
+		case DataActionTypes.setMessageTargetOrigin:
+			return { ...data, messageTargetOrigin: payload }
 		case DataActionTypes.setEmailConfirmed:
 			return { ...data, isEmailConfirmed: payload }
 		case DataActionTypes.chainChange:
@@ -98,6 +100,7 @@ export const DefaultData = {
 	},
 	currentModal: null,
 	isEmailConfirmed: false,
+	messageTargetOrigin: "",
 } as Data
 
 export const StateContext = createContext<{

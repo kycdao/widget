@@ -26,6 +26,7 @@ export enum DataActionTypes {
 	subscriptionYearsChange,
 	SetErrorModalText,
 	setChainExplorerUrl,
+	setMessageTargetOrigin,
 }
 
 export enum StepID {
@@ -58,7 +59,7 @@ export type Data = {
 	prevButtonState: HeaderButtonState
 	nextButtonState: HeaderButtonState
 	closeButtonState: HeaderButtonState
-	messageTargetOrigin?: string
+	messageTargetOrigin: string
 	translations: { [key: string]: { [key: string]: string } }
 	isEmailConfirmed: boolean
 	subscriptionYears?: number
@@ -144,6 +145,11 @@ export type SetChainExplorerUrl = {
 	payload: string
 }
 
+export type SetMessageTargetOrigin = {
+	type: DataActionTypes.setMessageTargetOrigin
+	payload: string
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -160,6 +166,7 @@ export type DataChangeActions =
 	| SetSubscriptionYearsAction
 	| SetErrorModalTextAction
 	| SetChainExplorerUrl
+	| SetMessageTargetOrigin
 
 export type ModalType =
 	| "emailVerification"
