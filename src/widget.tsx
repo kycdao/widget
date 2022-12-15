@@ -3,7 +3,6 @@ import { FC, useEffect, useRef } from "react"
 import "./style/index.scss"
 import { KycDaoClient } from "./KycDaoClient"
 import {
-	IframeOptions,
 	KycDaoClientInterface,
 	KycDaoClientOptions,
 } from "./KycDaoClientCommon"
