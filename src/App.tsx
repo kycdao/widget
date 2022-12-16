@@ -80,7 +80,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	return (
 		<KycDaoContext.Provider value={kycDao}>
 			<StateContext.Provider value={contextData}>
-				<div style={{ height, width }}>
+				<div>
 					<Header />
 					<Router />
 					<ModalRouter />
