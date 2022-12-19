@@ -18,6 +18,7 @@ export type KycDaoClientInterface = {
 	height: string
 	isOpen: boolean
 	modal: HTMLElement
+	isModal: boolean
 	parent: HTMLElement | string
 	isSuccessful: boolean
 	configFromUrl: boolean
@@ -32,6 +33,7 @@ export type KycDaoClientInterface = {
 }
 
 export type KycDaoClientOptions = {
+	modal?: boolean
 	width: number | string
 	height: number | string
 	parent: HTMLElement | string

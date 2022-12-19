@@ -21,6 +21,7 @@ export function KycDaoClient(
 		config,
 		configFromUrl = false,
 		backdrop = true,
+		modal = false,
 	}: KycDaoClientOptions
 ) {
 	this.config = config
@@ -35,6 +36,7 @@ export function KycDaoClient(
 	this.onSuccess = onSuccess
 	this.isSuccessful = false
 	this.backdrop = backdrop
+	this.isModal = modal
 
 	this.messageHndlr = this.messageHndlr.bind(this)
 	this.open = this.open.bind(this)
@@ -93,14 +95,20 @@ KycDaoClient.prototype.getParentElement = function (
 KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 	if (!this.isOpen) {
 		this.parent = this.getParentElement() || document.body
-		this.parent.classList.add("KycDaoModalRoot")
+
+		if (this.isModal) {
+			this.parent.classList.add("KycDaoModalRoot")
+		}
 
 		this.modal = document.createElement("div")
-		this.modal.classList.add("KycDaoModal")
-		this.modal.style.setProperty("--width", this.width)
-		this.modal.style.setProperty("--height", this.height)
 
-		if (this.backdrop) {
+		if (this.isModal) {
+			this.modal.classList.add("KycDaoModal")
+			this.modal.style.setProperty("--width", this.width)
+			this.modal.style.setProperty("--height", this.height)
+		}
+
+		if (this.backdrop && this.isModal) {
 			this.parent.style.setProperty(
 				"--backdrop",
 				typeof this.backdrop === "boolean"
@@ -111,7 +119,9 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 
 		const container = document.createElement("div")
 
-		container.classList.add("KycDaoModalFrame")
+		if (this.isModal) {
+			container.classList.add("KycDaoModalFrame")
+		}
 
 		this.modal.appendChild(container)
 
@@ -130,6 +140,7 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 				height: this.height,
 				parent: container,
 				width: this.width,
+				isModal: this.isModal,
 			})
 		}
 	}
@@ -138,7 +149,10 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
 	if (this.isOpen && this.modal) {
 		const parentNode = this.getParentElement()
-		parentNode.classList.remove("KycDaoModalRoot")
+
+		if (this.isModal) {
+			parentNode.classList.remove("KycDaoModalRoot")
+		}
 
 		if (parentNode) {
 			parentNode.removeChild(this.modal)

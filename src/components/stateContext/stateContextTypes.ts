@@ -27,6 +27,7 @@ export enum DataActionTypes {
 	SetErrorModalText,
 	setChainExplorerUrl,
 	setMessageTargetOrigin,
+	setModalMode,
 }
 
 export enum StepID {
@@ -66,6 +67,7 @@ export type Data = {
 	errorModalHeader?: string
 	errorModalBody?: string
 	chainExplorerUrl?: string
+	isModal: boolean
 }
 
 export type HeaderButtonState = "enabled" | "disabled" | "hidden"
@@ -150,6 +152,11 @@ export type SetMessageTargetOrigin = {
 	payload: string
 }
 
+export type SetModalMode = {
+	type: DataActionTypes.setModalMode
+	payload: boolean
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -167,6 +174,7 @@ export type DataChangeActions =
 	| SetErrorModalTextAction
 	| SetChainExplorerUrl
 	| SetMessageTargetOrigin
+	| SetModalMode
 
 export type ModalType =
 	| "emailVerification"

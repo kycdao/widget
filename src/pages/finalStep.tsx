@@ -36,7 +36,7 @@ export const FinalStep: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 			dispatch({
-				payload: { button: HeaderButtons.close, state: "hidden" },
+				payload: { button: HeaderButtons.close, state: "enabled" },
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}

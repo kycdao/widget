@@ -21,6 +21,8 @@ export const reducer = (
 	{ payload, type }: DataChangeActions
 ): Data => {
 	switch (type) {
+		case DataActionTypes.setModalMode:
+			return { ...data, isModal: payload }
 		case DataActionTypes.setMessageTargetOrigin:
 			return { ...data, messageTargetOrigin: payload }
 		case DataActionTypes.setEmailConfirmed:
@@ -101,6 +103,7 @@ export const DefaultData = {
 	currentModal: null,
 	isEmailConfirmed: false,
 	messageTargetOrigin: "",
+	isModal: false,
 } as Data
 
 export const StateContext = createContext<{

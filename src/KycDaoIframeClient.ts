@@ -105,9 +105,11 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 		params.set("messageTargetOrigin", this.iframeOptions.messageTargetOrigin)
 
 		this.parent = this.getParentElement() || document.body
-		this.parent.classList.add("KycDaoModalRoot")
+		if (this.isModal) {
+			this.parent.classList.add("KycDaoModalRoot")
+		}
 
-		if (this.backdrop) {
+		if (this.backdrop && this.isModal) {
 			this.parent.style.setProperty(
 				"--backdrop",
 				typeof this.backdrop === "boolean"
@@ -117,16 +119,22 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 		}
 
 		this.modal = document.createElement("div")
-		this.modal.classList.add("KycDaoModal")
-		this.modal.style.setProperty("--width", this.width)
-		this.modal.style.setProperty("--height", this.height)
+
+		if (this.isModal) {
+			this.modal.classList.add("KycDaoModal")
+			this.modal.style.setProperty("--width", this.width)
+			this.modal.style.setProperty("--height", this.height)
+		}
 
 		const container = document.createElement("iframe")
 		container.allow = "encrypted-media; camera"
 		container.src = this.iframeOptions.url + "?" + params.toString()
 		container.width = this.width
 		container.height = this.height
-		container.classList.add("KycDaoModalIFrame")
+
+		if (this.isModal) {
+			container.classList.add("KycDaoModalIFrame")
+		}
 
 		this.modal.appendChild(container)
 
@@ -145,7 +153,10 @@ KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
 	if (this.isOpen) {
 		if (this.modal) {
 			const parentNode = this.getParentElement()
-			parentNode.classList.remove("KycDaoModalRoot")
+
+			if (this.isModal) {
+				parentNode.classList.remove("KycDaoModalRoot")
+			}
 
 			if (parentNode) {
 				parentNode.removeChild(this.modal)

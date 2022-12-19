@@ -30,6 +30,8 @@ export const KycDaoWidget: FC<KycDaoWidgetConfig> = (config) => {
 				width: 400,
 				height: 650,
 				configFromUrl: false,
+				modal: false,
+				backdrop: false,
 			})
 			client.current.open()
 		} else {

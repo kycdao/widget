@@ -50,11 +50,13 @@ export function BootstrapKycDaoModal({
 	height = 650,
 	width = 400,
 	config,
+	isModal,
 }: {
 	width: number | string
 	height: number | string
 	parent: HTMLElement | string
 	config: SdkConfiguration
+	isModal: boolean
 }) {
 	// TODO: add sanity checking https://kycdao.atlassian.net/browse/KYC-591
 
@@ -67,7 +69,12 @@ export function BootstrapKycDaoModal({
 	root.render(
 		<StrictMode>
 			<ErrorBoundary FallbackComponent={ErrorPage}>
-				<KycDaoModal config={config} height={height} width={width} />
+				<KycDaoModal
+					isModal={isModal}
+					config={config}
+					height={height}
+					width={width}
+				/>
 			</ErrorBoundary>
 		</StrictMode>
 	)
@@ -149,6 +156,7 @@ export function BootstrapIframeKycDaoModal({
 					}}
 					height={height}
 					width={width}
+					isModal
 				/>
 			</ErrorBoundary>
 		</StrictMode>

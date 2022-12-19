@@ -108,14 +108,14 @@ export const Header: FC<{ style?: CSSProperties }> = ({ style }) => {
 				</Button>
 				<Button
 					disabled={nextButtonState === "disabled" || !!currentModal}
-					hidden={prevButtonState === "hidden"}
+					hidden={nextButtonState === "hidden"}
 					onClick={OnNext}>
 					chevron_right
 				</Button>
 			</ButtonWrapper>
 			<CloseButton
 				disabled={closeButtonState === "disabled" || !!currentModal}
-				hidden={prevButtonState === "hidden"}
+				hidden={closeButtonState === "hidden"}
 				onClick={OnClose}>
 				close
 			</CloseButton>

@@ -8,6 +8,7 @@ import {
 	DefaultData,
 	OnClose,
 	DataActionTypes,
+	HeaderButtons,
 } from "./components/stateContext"
 import { Loading } from "./pages/loading"
 import { Header } from "./components/header/header"
@@ -21,6 +22,7 @@ export type KycDaoModalProps = {
 	height?: number | string
 	config: Partial<SdkConfiguration>
 	iframeOptions?: { messageTargetOrigin: string }
+	isModal: boolean
 }
 
 export const KycDaoModal: FC<KycDaoModalProps> = ({
@@ -28,7 +30,10 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	width = 400,
 	config,
 	iframeOptions,
+	isModal,
 }) => {
+	DefaultData.isModal = isModal
+
 	const [data, dispatch] = useReducer(reducer, DefaultData)
 	const [kycDao, setKycDao] = useState<KycDaoState>()
 
@@ -49,17 +54,23 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	}, [config, width, height])
 
 	useEffect(() => {
-		const close = OnClose.subscribe(() => {
-			window.parent.postMessage(
-				{ type: "kycDaoCloseModal" },
-				data.messageTargetOrigin
-			)
-		})
-		return close.unsubscribe.bind(close)
-	}, [data])
+		if (isModal) {
+			const close = OnClose.subscribe(() => {
+				window.parent.postMessage(
+					{ type: "kycDaoCloseModal" },
+					data.messageTargetOrigin
+				)
+			})
+			return close.unsubscribe.bind(close)
+		}
+	}, [data, isModal])
 
 	useEffect(() => {
 		if (kycDao) {
+			dispatch({
+				type: DataActionTypes.setModalMode,
+				payload: isModal,
+			})
 			dispatch({
 				payload: { current: StepID.AgreementStep, prev: StepID.loading },
 				type: DataActionTypes.changePage,
@@ -68,8 +79,14 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 				payload: iframeOptions?.messageTargetOrigin || window.location.origin,
 				type: DataActionTypes.setMessageTargetOrigin,
 			})
+			if (!isModal) {
+				dispatch({
+					type: DataActionTypes.SetHeaderButtonState,
+					payload: { button: HeaderButtons.close, state: "hidden" },
+				})
+			}
 		}
-	}, [kycDao, iframeOptions])
+	}, [kycDao, iframeOptions, isModal])
 
 	const contextData = useMemo(() => ({ data, dispatch }), [data, dispatch])
 
