@@ -125,6 +125,12 @@ export function BootstrapIframeKycDaoModal({
 		)
 	}
 
+	if (!urlParams.enabledBlockchainNetworks) {
+		throw new Error(
+			"You need to give the enabledBlockchainNetworks, if you want to use the page in an iframe!"
+		)
+	}
+
 	const {
 		apiKey,
 		baseUrl,

@@ -20,7 +20,7 @@ import "./style/index.scss"
 export type KycDaoModalProps = {
 	width?: number | string
 	height?: number | string
-	config: Partial<SdkConfiguration>
+	config: SdkConfiguration
 	iframeOptions?: { messageTargetOrigin: string }
 	isModal: boolean
 }
@@ -45,8 +45,6 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 
 	useEffect(() => {
 		KycDao.initialize({
-			baseUrl: "https://staging.kycdao.xyz",
-			enabledVerificationTypes: ["KYC"],
 			...config,
 		}).then((results) => {
 			setKycDao({ ...results, width, height })

@@ -2294,9 +2294,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kycdao/kycdao-sdk@npm:^0.3.12":
-  version: 0.3.12
-  resolution: "@kycdao/kycdao-sdk@npm:0.3.12"
+"@kycdao/kycdao-sdk@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "@kycdao/kycdao-sdk@npm:0.4.1"
   dependencies:
     "@solana/spl-token": "npm:^0.3.5"
     "@solana/wallet-adapter-base": "npm:^0.9.18"
@@ -2310,7 +2310,7 @@ __metadata:
     react: ^18.1.0
     react-dom: ^18.1.0
     styled-components: ^5.3.5
-  checksum: d70bd449e507ab1d5c4106d6e3b65e9c5a380dacf963104122f4ef4c02e70701aa57d5ea74b472f2f6cef94262906dff7efd01efce700dd7f5eab80971e48a8d
+  checksum: aa474658bf310f63082c1d8ac29edf90a85ea4eb122eb44f096bbb71d48f53333339d59bcd3548dc708d7e189bb6119c06c14bb38064f29c933dc703c4b86a0a
   languageName: node
   linkType: hard
 
@@ -2321,7 +2321,7 @@ __metadata:
     "@babel/plugin-transform-typescript": "npm:^7.20.2"
     "@babel/preset-env": "npm:^7.20.2"
     "@babel/preset-react": "npm:^7.18.6"
-    "@kycdao/kycdao-sdk": "npm:^0.3.12"
+    "@kycdao/kycdao-sdk": "npm:^0.4.1"
     "@playwright/test": "npm:^1.20.0"
     "@testing-library/jest-dom": "npm:^5.16.5"
     "@testing-library/react": "npm:^13.4.0"

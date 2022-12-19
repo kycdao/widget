@@ -16,13 +16,14 @@
 				const client = new KycDaoClient({
 					parent: "#modalRoot",
 					// configFromUrl: true,
+					modal: true,
 					backdrop: true,
 					config: {
 						evmProvider: "ethereum",
 					},
 					config: {
 						demoMode: true,
-						enabledBlockchainNetworks: ["PolygonMumbai", "SolanaDevnet"],
+						enabledBlockchainNetworks: ["SolanaDevnet"],
 						enabledVerificationTypes: ["KYC"],
 						evmProvider: window.ethereum,
 						baseUrl: "https://staging.kycdao.xyz",
