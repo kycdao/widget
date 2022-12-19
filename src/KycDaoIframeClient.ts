@@ -15,6 +15,7 @@ export default function KycDaoClient(
 		onSuccess,
 		iframeOptions,
 		config,
+		backdrop = true,
 	}: KycDaoClientOptions
 ) {
 	if ("virtualKeyboard" in navigator) {
@@ -37,6 +38,7 @@ export default function KycDaoClient(
 	this.open = this.open.bind(this)
 	this.close = this.close.bind(this)
 	this.getParentElement = this.getParentElement.bind(this)
+	this.backdrop = backdrop
 }
 
 KycDaoClient.prototype.messageHndlr = function (
@@ -104,6 +106,15 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 
 		this.parent = this.getParentElement() || document.body
 		this.parent.classList.add("KycDaoModalRoot")
+
+		if (this.backdrop) {
+			this.parent.style.setProperty(
+				"--backdrop",
+				typeof this.backdrop === "boolean"
+					? "rgba(0, 0, 0, 0.7)"
+					: this.backdrop
+			)
+		}
 
 		this.modal = document.createElement("div")
 		this.modal.classList.add("KycDaoModal")

@@ -33,7 +33,7 @@
 }
 
 .KycDaoModalRoot {
-	background: rgba(0, 0, 0, 0.7);
+	background: var(--backdrop, auto);
 	position: absolute;
 	// height: 100%;
 	width: 100%;

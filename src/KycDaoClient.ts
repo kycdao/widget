@@ -20,6 +20,7 @@ export function KycDaoClient(
 		iframeOptions,
 		config,
 		configFromUrl = false,
+		backdrop = true,
 	}: KycDaoClientOptions
 ) {
 	this.config = config
@@ -33,6 +34,7 @@ export function KycDaoClient(
 	this.onFail = onFail
 	this.onSuccess = onSuccess
 	this.isSuccessful = false
+	this.backdrop = backdrop
 
 	this.messageHndlr = this.messageHndlr.bind(this)
 	this.open = this.open.bind(this)
@@ -97,6 +99,15 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 		this.modal.classList.add("KycDaoModal")
 		this.modal.style.setProperty("--width", this.width)
 		this.modal.style.setProperty("--height", this.height)
+
+		if (this.backdrop) {
+			this.parent.style.setProperty(
+				"--backdrop",
+				typeof this.backdrop === "boolean"
+					? "rgba(0, 0, 0, 0.7)"
+					: this.backdrop
+			)
+		}
 
 		const container = document.createElement("div")
 

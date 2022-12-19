@@ -21,6 +21,7 @@ export type KycDaoClientInterface = {
 	parent: HTMLElement | string
 	isSuccessful: boolean
 	configFromUrl: boolean
+	backdrop: boolean
 	onFail?: (reason: string) => void
 	onSuccess?: (data?: string) => void
 	open: () => void
@@ -36,6 +37,7 @@ export type KycDaoClientOptions = {
 	parent: HTMLElement | string
 	config: SdkConfiguration
 	configFromUrl: boolean
+	backdrop?: boolean
 	iframeOptions?: IframeOptions
 	onFail?: (reason: string) => void
 	onSuccess?: (data?: string) => void
