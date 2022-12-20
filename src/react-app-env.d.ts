@@ -9,8 +9,10 @@ type VirtualKeyboardEvent = UIEvent & {
 declare global {
 	interface Window {
 		ethereum: MetaMaskInpageProvider
-		KycDaoClient
-		KycDaoIframeClient
+		KycDaoClient: { new (config: KycDaoClientOptions): KycDaoClientInterface }
+		KycDaoIframeClient: {
+			new (config: KycDaoClientOptions): KycDaoClientInterface
+		}
 		KycDaoWidget: React.FC<KycDaoWidgetConfig>
 	}
 

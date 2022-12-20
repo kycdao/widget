@@ -167,4 +167,6 @@ KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
 	}
 }
 
-window.KycDaoIframeClient = KycDaoClient
+window.KycDaoIframeClient = KycDaoClient as unknown as {
+	new (config: KycDaoClientOptions): KycDaoClientInterface
+}
