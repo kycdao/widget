@@ -1,13 +1,17 @@
-import { useCallback } from "react"
+import { StateContext } from "components/stateContext"
+import { useCallback, useContext } from "react"
 import { useMinting } from "../../hooks/useMinting"
 import { Button } from "../button/button"
 
 export const MintingFailedModal = () => {
 	const minting = useMinting()
+	const {
+		data: { subscriptionYears },
+	} = useContext(StateContext)
 
 	const onRetry = useCallback(() => {
-		minting()
-	}, [minting])
+		minting(subscriptionYears)
+	}, [minting, subscriptionYears])
 
 	return (
 		<div className="mintingFailedModal">
