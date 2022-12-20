@@ -11,10 +11,10 @@ export const useMinting = () => {
 	const kycDao = useKycDao()
 	const state = useContext(StateContext)
 
-	return async function StartMinting() {
+	return async function StartMinting(subscriptionYears?: number) {
 		if (kycDao) {
 			const {
-				data: { termsAccepted, imageId, currentPage, subscriptionYears },
+				data: { termsAccepted, imageId, currentPage },
 				dispatch,
 			} = state
 

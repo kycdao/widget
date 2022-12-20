@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.18",
+	"version": "0.3.0-rc.20",
 	"license": "unlicensed",
 	"scripts": {
 		"install-precommit-hook": "husky install .husky",
@@ -31,16 +31,16 @@
 			"style": "./dist/app.css"
 		},
 		"./KycDaoClient": {
-			"import": "./dist/KycDaoClient.js",
+			"import": "./dist/es/KycDaoClient.js",
 			"script": "./dist/client.min.js",
 			"style": "./dist/client.css"
 		},
 		"./IframeClient": {
-			"import": "./dist/IframeClient.js",
+			"import": "./dist/es/IframeClient.js",
 			"script": "./dist/iframeClient.min.js",
 			"style": "./dist/iframeClient.css"
 		},
-		"./es": "./dist/es/"
+		"./es/**/*.*": "./dist/es/**/*.*"
 	},
 	"types": "./index.d.ts",
 	"dependencies": {

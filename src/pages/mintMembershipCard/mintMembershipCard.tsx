@@ -81,7 +81,7 @@ export const MintStep: FC<PageProps> = ({
 				payload: yearCount,
 				type: DataActionTypes.subscriptionYearsChange,
 			})
-			minting()
+			minting(yearCount)
 		}
 	}, [kycDao, yearCount, minting, dispatch])
 
