@@ -1,4 +1,4 @@
-import { StateContext } from "components/stateContext"
+import { StateContext } from "../../components/stateContext"
 import { useCallback, useContext } from "react"
 import { useMinting } from "../../hooks/useMinting"
 import { Button } from "../button/button"
