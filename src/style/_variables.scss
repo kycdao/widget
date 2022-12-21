@@ -1,19 +1,19 @@
 :root {
 	--primary-font: "neue-machina";
-	--kyc-cybergreen: #00ffb3;
-	--kyc-cybergreen-35: rgba(0, 255, 177, 0.35);
-	--kyc-cybergreen-50: rgba(0, 255, 177, 0.5);
+	--kyc-sdk-cybergreen: #00ffb3;
+	--kyc-sdk-cybergreen-35: rgba(0, 255, 177, 0.35);
+	--kyc-sdk-cybergreen-50: rgba(0, 255, 177, 0.5);
 	--darken-green: #0af292;
 
-	--kyc-normal-blue: #3a4be9;
-	--kyc-dark-blue: #181f60;
-	--kyc-dark-purple: #21114a;
-	--kyc-green: #03f682;
-	--kyc-green-darken: #0bcb77;
-	--kyc-dark-green: #09b678;
-	--kyc-cyberpunk: #72f9d1;
-	--kyc-red: #ff4646;
-	--kyc-red-darken: #d51f4f;
+	--kyc-sdk-normal-blue: #3a4be9;
+	--kyc-sdk-dark-blue: #181f60;
+	--kyc-sdk-dark-purple: #21114a;
+	--kyc-sdk-green: #03f682;
+	--kyc-sdk-green-darken: #0bcb77;
+	--kyc-sdk-dark-green: #09b678;
+	--kyc-sdk-cyberpunk: #72f9d1;
+	--kyc-sdk-red: #ff4646;
+	--kyc-sdk-red-darken: #d51f4f;
 
 	--border: rgba(24, 31, 96, 0.05);
 	--steps-padding: 2rem;
@@ -26,24 +26,24 @@
 	--unit: 4.166666666666667vw;
 	--connect-button-width: 19rem;
 
-	--kyc-normal-blue-75: rgba(58, 75, 233, 0.75);
-	--kyc-normal-blue-50: rgba(58, 75, 233, 0.5);
-	--kyc-normal-blue-35: rgba(58, 75, 233, 0.35);
-	--kyc-normal-blue-15: rgba(58, 75, 233, 0.15);
+	--kyc-sdk-normal-blue-75: rgba(58, 75, 233, 0.75);
+	--kyc-sdk-normal-blue-50: rgba(58, 75, 233, 0.5);
+	--kyc-sdk-normal-blue-35: rgba(58, 75, 233, 0.35);
+	--kyc-sdk-normal-blue-15: rgba(58, 75, 233, 0.15);
 
-	--kyc-dark-blue-35: rgba(24, 31, 96, 0.35);
-	--kyc-dark-blue-50: rgba(24, 31, 96, 0.5);
-	--kyc-dark-blue-75: rgba(24, 31, 96, 0.75);
+	--kyc-sdk-dark-blue-35: rgba(24, 31, 96, 0.35);
+	--kyc-sdk-dark-blue-50: rgba(24, 31, 96, 0.5);
+	--kyc-sdk-dark-blue-75: rgba(24, 31, 96, 0.75);
 
-	--kyc-green-35: rgba(3, 246, 13, 0.35);
-	--kyc-green-50: rgba(3, 246, 13, 0.5);
-	--kyc-green-75: rgba(3, 246, 13, 0.75);
+	--kyc-sdk-green-35: rgba(3, 246, 13, 0.35);
+	--kyc-sdk-green-50: rgba(3, 246, 13, 0.5);
+	--kyc-sdk-green-75: rgba(3, 246, 13, 0.75);
 
-	--kyc-cyberpunk-15: rgba(144, 249, 209, 0.15);
-	--kyc-cyberpunk-35: rgba(144, 249, 209, 0.35);
-	--kyc-cyberpunk-50: rgba(144, 249, 209, 0.5);
+	--kyc-sdk-cyberpunk-15: rgba(144, 249, 209, 0.15);
+	--kyc-sdk-cyberpunk-35: rgba(144, 249, 209, 0.35);
+	--kyc-sdk-cyberpunk-50: rgba(144, 249, 209, 0.5);
 
-	--kyc-red-35: rgba(255, 70, 70, 0.35);
+	--kyc-sdk-red-35: rgba(255, 70, 70, 0.35);
 
 	--light-font: gilroyLight;
 	--display-font: gilroyBold;

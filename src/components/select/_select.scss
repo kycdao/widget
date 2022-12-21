@@ -1,4 +1,4 @@
-.kyc-select {
+.kyc-sdk-select {
 	height: var(--button-height);
 	display: inline-flex;
 	justify-content: space-between;
@@ -26,33 +26,33 @@
 	}
 
 	::placeholder {
-		color: var(&kyc-dark-purple);
+		color: var(&kyc-sdk-dark-purple);
 		font-family: var(--primary-font);
 	}
 
 	::-webkit-input-placeholder {
-		color: var(&kyc-dark-purple);
+		color: var(&kyc-sdk-dark-purple);
 		font-family: var(--primary-font);
 	}
 
 	:-ms-input-placeholder {
-		color: var(&kyc-dark-purple);
+		color: var(&kyc-sdk-dark-purple);
 		font-family: var(--primary-font);
 	}
 
 	::-ms-input-placeholder {
-		color: var(&kyc-dark-purple);
+		color: var(&kyc-sdk-dark-purple);
 		font-family: var(--primary-font);
 	}
 
 	&:hover {
-		box-shadow: 0 0 0 10px var(&kyc-normal-blue-35);
-		border-color: var(&kyc-normal-blue);
+		box-shadow: 0 0 0 10px var(&kyc-sdk-normal-blue-35);
+		border-color: var(&kyc-sdk-normal-blue);
 	}
 
 	&:focus {
-		box-shadow: 0 0 0 10px var(&kyc-normal-blue-50);
-		border-color: var(&kyc-normal-blue);
+		box-shadow: 0 0 0 10px var(&kyc-sdk-normal-blue-50);
+		border-color: var(&kyc-sdk-normal-blue);
 	}
 
 	&.full-width {
@@ -64,11 +64,11 @@
 .disabled {
 	position: relative;
 	z-index: 10;
-	border: 2px solid var(&kyc-green);
-	box-shadow: 0 0 0 10px var(&kyc-green-35);
+	border: 2px solid var(&kyc-sdk-green);
+	box-shadow: 0 0 0 10px var(&kyc-sdk-green-35);
 }
 
-.kyc-option {
+.kyc-sdk-option {
 	&.first {
 		// margin-top: -1em;
 	}

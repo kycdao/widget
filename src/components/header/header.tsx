@@ -36,12 +36,12 @@ const Button = styled.button<{ hidden?: boolean }>`
 	${({ hidden }) => hidden && "visibility: hidden;"}
 	&:hover:not([disabled]) {
 		cursor: pointer;
-		background: var(--kyc-cybergreen-35);
+		background: var(--kyc-sdk-cybergreen-35);
 	}
 	&:active:not([disabled]) {
 		color: #09b678;
 		cursor: pointer;
-		background: var(--kyc-cybergreen-35);
+		background: var(--kyc-sdk-cybergreen-35);
 	}
 `
 
@@ -60,13 +60,13 @@ const CloseButton = styled.button<{ hidden?: boolean }>`
 	${materialIcon};
 	${({ hidden }) => hidden && "visibility: hidden;"}
 	&:hover:not([disabled]) {
-		background: var(--kyc-cybergreen-35);
+		background: var(--kyc-sdk-cybergreen-35);
 		cursor: pointer;
 	}
 	&:active:not([disabled]) {
-		color: var(--kyc-dark-green);
+		color: var(--kyc-sdk-dark-green);
 		cursor: pointer;
-		background: var(--kyc-cybergreen-35);
+		background: var(--kyc-sdk-cybergreen-35);
 	}
 `
 

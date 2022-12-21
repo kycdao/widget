@@ -58,7 +58,7 @@ export const Select: FC<PropsWithChildren<InputProps>> = ({
 		<div ref={ref}>
 			<div
 				id={id}
-				className={`kyc-select full-width ${disabled ? "disabled" : ""}${
+				className={`kyc-sdk-select full-width ${disabled ? "disabled" : ""}${
 					className ? ` ${className}` : ""
 				}${open ? " open" : ""}`}
 				placeholder={placeholder}
@@ -68,7 +68,7 @@ export const Select: FC<PropsWithChildren<InputProps>> = ({
 			{open &&
 				values.map(({ label, value }, i) => (
 					<div
-						className={`kyc-option full-width${i === 0 ? " first" : ""}`}
+						className={`kyc-sdk-option full-width${i === 0 ? " first" : ""}`}
 						onClick={onChangeEventHndlr(value)}
 						key={value}>
 						{label}

@@ -36,8 +36,8 @@
 				}
 
 				&:hover {
-					box-shadow: 0 0 0 0px var(--kyc-cybergreen-35);
-					background: var(--kyc-cybergreen);
+					box-shadow: 0 0 0 0px var(--kyc-sdk-cybergreen-35);
+					background: var(--kyc-sdk-cybergreen);
 
 					span,
 					.material-icons {
@@ -53,7 +53,7 @@
 				}
 
 				&:focus {
-					box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
+					box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
 
 					span,
 					.material-icons {
@@ -62,9 +62,9 @@
 				}
 
 				&:active {
-					background: var(--kyc-cybergreen);
-					border: 2px solid var(--kyc-cybergreen);
-					box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
+					background: var(--kyc-sdk-cybergreen);
+					border: 2px solid var(--kyc-sdk-cybergreen);
+					box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
 				}
 
 				&:focus-visible {
@@ -114,7 +114,7 @@
 	font-family: var(--primary-font);
 
 	padding: 0.5rem;
-	background: var(--kyc-cybergreen-35);
+	background: var(--kyc-sdk-cybergreen-35);
 	border-radius: 4px;
 	align-items: center;
 

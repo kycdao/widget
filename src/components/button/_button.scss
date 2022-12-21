@@ -1,6 +1,6 @@
 @use "../../style/variables";
 
-button.kyc-button {
+button.kyc-sdk-button {
 	height: var(--button-height);
 	display: inline-flex;
 	justify-content: space-between;
@@ -10,7 +10,7 @@ button.kyc-button {
 	position: relative;
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	background: #ecf0fe;
-	color: var(--kyc-dark-purple);
+	color: var(--kyc-sdk-dark-purple);
 	border-radius: var(--border-radius-light);
 	font-size: 12pt;
 	cursor: pointer;
@@ -49,8 +49,8 @@ button.kyc-button {
 		}
 
 		&:hover {
-			background: var(--kyc-cybergreen);
-			box-shadow: 0 0 0 0px var(--kyc-cybergreen-35);
+			background: var(--kyc-sdk-cybergreen);
+			box-shadow: 0 0 0 0px var(--kyc-sdk-cybergreen-35);
 
 			span,
 			i {
@@ -59,8 +59,8 @@ button.kyc-button {
 		}
 
 		&:focus {
-			background: var(--kyc-cybergreen);
-			box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
+			background: var(--kyc-sdk-cybergreen);
+			box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
 
 			span,
 			i {
@@ -70,7 +70,7 @@ button.kyc-button {
 
 		&:active {
 			background: var(--darken-green);
-			box-shadow: 0 0 0 5px var(--kyc-cybergreen-35);
+			box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
 		}
 
 		&:focus-visible {
@@ -81,7 +81,7 @@ button.kyc-button {
 
 	/*
 	&.blue {
-		background: $--kyc-normal-blue;
+		background: $--kyc-sdk-normal-blue;
 
 		span,
 		.material-icons {
@@ -90,17 +90,17 @@ button.kyc-button {
 		}
 
 		&:hover {
-			background: $--kyc-normal-blue;
-			box-shadow: 0 0 0 10px $--kyc-normal-blue-35;
+			background: $--kyc-sdk-normal-blue;
+			box-shadow: 0 0 0 10px $--kyc-sdk-normal-blue-35;
 		}
 
 		&:focus {
-			background: $--kyc-normal-blue;
-			box-shadow: 0 0 0 5px $--kyc-normal-blue-50;
+			background: $--kyc-sdk-normal-blue;
+			box-shadow: 0 0 0 5px $--kyc-sdk-normal-blue-50;
 		}
 
 		&:active {
-			box-shadow: 0 0 0 5px $--kyc-normal-blue-35;
+			box-shadow: 0 0 0 5px $--kyc-sdk-normal-blue-35;
 		}
 
 		&:focus-visible {
@@ -111,7 +111,7 @@ button.kyc-button {
 	 */
 
 	&.green {
-		background: var(--kyc-cyberpunk);
+		background: var(--kyc-sdk-cyberpunk);
 
 		span,
 		.material-icons {
@@ -120,24 +120,24 @@ button.kyc-button {
 		}
 
 		&:hover {
-			background: var(--kyc-cyberpunk);
-			box-shadow: 0 0 0 10px var(--kyc-normal-blue-35);
+			background: var(--kyc-sdk-cyberpunk);
+			box-shadow: 0 0 0 10px var(--kyc-sdk-normal-blue-35);
 
 			span,
 			.material-icons {
 				font-weight: 400;
-				color: var(--kyc-dark-blue);
+				color: var(--kyc-sdk-dark-blue);
 				//margin-left: 0.5em;
 			}
 		}
 
 		&:focus {
-			background: var(--kyc-cyberpunk);
-			box-shadow: 0 0 0 5px var(--kyc-cyberpunk-35);
+			background: var(--kyc-sdk-cyberpunk);
+			box-shadow: 0 0 0 5px var(--kyc-sdk-cyberpunk-35);
 		}
 
 		&:active {
-			box-shadow: 0 0 0 5px var(--kyc-dark-blue-35);
+			box-shadow: 0 0 0 5px var(--kyc-sdk-dark-blue-35);
 		}
 
 		&:focus-visible {
@@ -159,7 +159,7 @@ button.kyc-button {
 			display: inline-flex;
 			height: 2px;
 			width: 100%;
-			background-color: var(--kyc-cybergreen);
+			background-color: var(--kyc-sdk-cybergreen);
 			position: absolute;
 			bottom: 6px;
 			@extend .tr2;
@@ -177,7 +177,7 @@ button.kyc-button {
 		}
 	}
 
-	&.kyc-submit-button {
+	&.kyc-sdk-submit-button {
 		span {
 			padding-left: 1.5rem;
 		}

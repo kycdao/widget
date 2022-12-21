@@ -50,7 +50,7 @@ export const SubmitButton: FC<ButtonProps> = ({
 			ref={ref}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
-			className={`kyc-submit-button kyc-button ${className}`}
+			className={`kyc-sdk-submit-button kyc-sdk-button ${className}`}
 			onClick={inactive ? undefined : onClick}>
 			<i className="material-icons first-arrow"> arrow_forward </i>
 			<span>{innerHtml}</span>

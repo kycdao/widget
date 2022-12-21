@@ -5,18 +5,18 @@
 
 	.header {
 		.material-icons.icon {
-			background: var(--kyc-red-35);
+			background: var(--kyc-sdk-red-35);
 		}
 
 		.first-arrow {
-			background: var(--kyc-red-35);
+			background: var(--kyc-sdk-red-35);
 		}
 
 		.close-button {
 			background: transparent;
 
 			&:hover {
-				background: var(--kyc-red-35);
+				background: var(--kyc-sdk-red-35);
 			}
 		}
 	}

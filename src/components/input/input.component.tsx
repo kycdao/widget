@@ -126,13 +126,17 @@ export const Input: FC<InputProps> = ({
 											"<strong>$1</strong>"
 										),
 									}}
-									className={`kyc-option full-width${i === 0 ? " first" : ""}`}
+									className={`kyc-sdk-option full-width${
+										i === 0 ? " first" : ""
+									}`}
 									onClick={onAutocompleteHndlr(v)}
 									key={v}
 								/>
 							) : (
 								<div
-									className={`kyc-option full-width${i === 0 ? " first" : ""}`}
+									className={`kyc-sdk-option full-width${
+										i === 0 ? " first" : ""
+									}`}
 									onClick={onAutocompleteHndlr(v)}
 									key={v}>
 									{v}
@@ -146,7 +150,7 @@ export const Input: FC<InputProps> = ({
 				onFocus={onInputFocused}
 				ref={inputRef}
 				id={id}
-				className={`kyc-input ${disabled ? "disabled" : ""} ${className}`}
+				className={`kyc-sdk-input ${disabled ? "disabled" : ""} ${className}`}
 				type={type || "text"}
 				placeholder={placeholder}
 				onChange={onChangeEventHndlr}

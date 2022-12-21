@@ -21,7 +21,7 @@ export const Button: FC<ButtonProps> = ({
 		<button
 			style={style}
 			disabled={disabled}
-			className={`kyc-button${className ? ` ${className}` : ""}`}
+			className={`kyc-sdk-button${className ? ` ${className}` : ""}`}
 			onClick={inactive ? undefined : onClick}>
 			<span>{children}</span>
 		</button>

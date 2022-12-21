@@ -25,7 +25,7 @@ export const ToggleButton: FC<ToggleButtonProps> = ({
 		<button
 			style={style}
 			disabled={disabled}
-			className={`kyc-toggle-button ${className}${
+			className={`kyc-sdk-toggle-button ${className}${
 				toggle ? " toggled" : ""
 			} full-width`}
 			onClick={inactive ? undefined : onClick}>

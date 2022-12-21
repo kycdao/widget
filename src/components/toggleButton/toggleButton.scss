@@ -1,4 +1,4 @@
-button.kyc-toggle-button {
+button.kyc-sdk-toggle-button {
 	display: inline-flex;
 	justify-content: space-between;
 	padding-left: 1.5rem;
@@ -9,8 +9,8 @@ button.kyc-toggle-button {
 	cursor: pointer;
 	height: var(--button-height);
 	color: white;
-	background: var(--kyc-normal-blue);
-	box-shadow: 0 0 1pt 0 var(--kyc-normal-blue-35);
+	background: var(--kyc-sdk-normal-blue);
+	box-shadow: 0 0 1pt 0 var(--kyc-sdk-normal-blue-35);
 	margin-top: 1em;
 
 	&.full-width {
@@ -36,8 +36,8 @@ button.kyc-toggle-button {
 	}
 
 	&:hover {
-		background: var(--kyc-green);
-		box-shadow: 0 0 0 1pt var(--kyc-green-35);
+		background: var(--kyc-sdk-green);
+		box-shadow: 0 0 0 1pt var(--kyc-sdk-green-35);
 
 		span,
 		.material-icons {
@@ -47,8 +47,8 @@ button.kyc-toggle-button {
 	}
 
 	&.toggled {
-		background: var(--kyc-green);
-		box-shadow: 0 0 0 1pt var(--kyc-green-35);
+		background: var(--kyc-sdk-green);
+		box-shadow: 0 0 0 1pt var(--kyc-sdk-green-35);
 
 		span,
 		.material-icons {
@@ -58,11 +58,11 @@ button.kyc-toggle-button {
 	}
 
 	&:focus {
-		box-shadow: 0 0 0 1pt var(--kyc-green-50);
+		box-shadow: 0 0 0 1pt var(--kyc-sdk-green-50);
 	}
 
 	&:active {
-		box-shadow: 0 0 0 1pt var(--kyc-green-75);
+		box-shadow: 0 0 0 1pt var(--kyc-sdk-green-75);
 	}
 
 	&:focus-visible {

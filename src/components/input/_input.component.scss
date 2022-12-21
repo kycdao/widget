@@ -1,6 +1,6 @@
 @use "../../style/variables";
 
-.kyc-input {
+.kyc-sdk-input {
 	height: var(--button-height);
 	display: inline-flex;
 	justify-content: space-between;
@@ -43,16 +43,16 @@
 
 	&:hover {
 		background: white;
-		//background: $--kyc-normal-blue-15;
-		border: 2px solid var(--kyc-cybergreen);
-		box-shadow: 0 0 0 10px var(--kyc-cybergreen-35);
+		//background: $--kyc-sdk-normal-blue-15;
+		border: 2px solid var(--kyc-sdk-cybergreen);
+		box-shadow: 0 0 0 10px var(--kyc-sdk-cybergreen-35);
 		@extend .tr2;
 	}
 
 	&:focus {
 		background: black;
-		border: 2px solid var(--kyc-cybergreen);
-		box-shadow: 0 0 0 5px var(--kyc-cybergreen-50);
+		border: 2px solid var(--kyc-sdk-cybergreen);
+		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
 		@extend .tr2;
 
 		color: white;
@@ -80,12 +80,12 @@ div.clear {
 	@extend .tr2;
 
 	&:hover {
-		background: var(--kyc-cybergreen-35);
+		background: var(--kyc-sdk-cybergreen-35);
 	}
 
 	&:active {
 		background: black;
-		color: var(--kyc-cybergreen);
+		color: var(--kyc-sdk-cybergreen);
 	}
 
 	&.disabled {
@@ -93,12 +93,12 @@ div.clear {
 	}
 }
 
-div.kyc-option {
+div.kyc-sdk-option {
 	height: 2.5em;
 	cursor: pointer;
 	line-height: 2.5em;
 	padding-left: 1.5em;
-	border-bottom: 1px solid var(--kyc-normal-blue-15);
+	border-bottom: 1px solid var(--kyc-sdk-normal-blue-15);
 	font-family: var(--primary-font);
 	font-weight: 400;
 	color: black;
@@ -111,7 +111,7 @@ div.kyc-option {
 	}
 
 	&:hover {
-		background: var(--kyc-cybergreen-35);
+		background: var(--kyc-sdk-cybergreen-35);
 		color: black;
 	}
 }
@@ -126,7 +126,7 @@ div.autocomplete {
 	overflow-y: auto;
 	bottom: 0;
 
-	.kyc-option {
+	.kyc-sdk-option {
 		white-space: pre;
 
 		strong {
