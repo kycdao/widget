@@ -5,7 +5,7 @@ import {
 	KycDaoClientOptions,
 } from "./KycDaoClientCommon"
 
-export default function KycDaoClient(
+function kycDaoIframeClient(
 	this: KycDaoClientInterface,
 	{
 		height = "100%",
@@ -41,7 +41,7 @@ export default function KycDaoClient(
 	this.backdrop = backdrop
 }
 
-KycDaoClient.prototype.messageHndlr = function (
+kycDaoIframeClient.prototype.messageHndlr = function (
 	this: KycDaoClientInterface,
 	{ data: { data, type } }: KycDaoClientMessage
 ) {
@@ -69,7 +69,7 @@ KycDaoClient.prototype.messageHndlr = function (
 	}
 }
 
-KycDaoClient.prototype.getParentElement = function (
+kycDaoIframeClient.prototype.getParentElement = function (
 	this: KycDaoClientInterface
 ) {
 	if (typeof this.parent === "string") {
@@ -87,7 +87,7 @@ KycDaoClient.prototype.getParentElement = function (
 	return this.parent
 }
 
-KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
+kycDaoIframeClient.prototype.open = function (this: KycDaoClientInterface) {
 	if (!this.iframeOptions?.url) {
 		throw new Error(
 			"An URL is needed if you want to use an iframe! What do you want to display?"
@@ -149,7 +149,7 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 	}
 }
 
-KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
+kycDaoIframeClient.prototype.close = function (this: KycDaoClientInterface) {
 	if (this.isOpen) {
 		if (this.modal) {
 			const parentNode = this.getParentElement()
@@ -167,6 +167,10 @@ KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
 	}
 }
 
-window.KycDaoIframeClient = KycDaoClient as unknown as {
+window.KycDaoIframeClient = kycDaoIframeClient as unknown as {
+	new (config: KycDaoClientOptions): KycDaoClientInterface
+}
+
+export default kycDaoIframeClient as unknown as {
 	new (config: KycDaoClientOptions): KycDaoClientInterface
 }

@@ -84,21 +84,25 @@ export const FinalStep: FC<PageProps> = ({
 		({ disabled, inactive }) =>
 			chainExplorerUrl ? (
 				<div style={{ justifyContent: "center", display: "flex" }}>
-					<Button
-						disabled={disabled}
-						inactive={inactive}
-						className="full-width underline centered"
-						onClick={onCheck}>
-						Check on chain
-					</Button>
-					<SubmitButton
-						autoFocus={!inactive && !disabled}
-						disabled={disabled}
-						className="full-width black"
-						onClick={onFinish}
-						inactive={inactive}
-						label={"Finish"}
-					/>
+					<div style={{ flex: 1 }}>
+						<Button
+							disabled={disabled}
+							inactive={inactive}
+							className="full-width underline centered"
+							onClick={onCheck}>
+							Check on chain
+						</Button>
+					</div>
+					<div style={{ flex: 1 }}>
+						<SubmitButton
+							autoFocus={!inactive && !disabled}
+							disabled={disabled}
+							className="full-width black"
+							onClick={onFinish}
+							inactive={inactive}
+							label={"Finish"}
+						/>
+					</div>
 				</div>
 			) : null,
 		[onCheck, chainExplorerUrl, onFinish]

@@ -9,7 +9,7 @@ import {
 	KycDaoClientOptions,
 } from "./KycDaoClientCommon"
 
-export function KycDaoClient(
+function kycDaoClient(
 	this: KycDaoClientInterface,
 	{
 		height = "100%",
@@ -46,7 +46,7 @@ export function KycDaoClient(
 	this.configFromUrl = configFromUrl
 }
 
-KycDaoClient.prototype.messageHndlr = function (
+kycDaoClient.prototype.messageHndlr = function (
 	this: KycDaoClientInterface,
 	{ data: { data, type } }: KycDaoClientMessage
 ) {
@@ -74,7 +74,7 @@ KycDaoClient.prototype.messageHndlr = function (
 	}
 }
 
-KycDaoClient.prototype.getParentElement = function (
+kycDaoClient.prototype.getParentElement = function (
 	this: KycDaoClientInterface
 ) {
 	if (typeof this.parent === "string") {
@@ -92,7 +92,7 @@ KycDaoClient.prototype.getParentElement = function (
 	return this.parent
 }
 
-KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
+kycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 	if (!this.isOpen) {
 		this.parent = this.getParentElement() || document.body
 
@@ -146,7 +146,7 @@ KycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 	}
 }
 
-KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
+kycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
 	if (this.isOpen && this.modal) {
 		const parentNode = this.getParentElement()
 
@@ -162,6 +162,10 @@ KycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
 	}
 }
 
-window.KycDaoClient = KycDaoClient as unknown as {
+window.KycDaoClient = kycDaoClient as unknown as {
+	new (config: KycDaoClientOptions): KycDaoClientInterface
+}
+
+export const KycDaoClient = kycDaoClient as unknown as {
 	new (config: KycDaoClientOptions): KycDaoClientInterface
 }
