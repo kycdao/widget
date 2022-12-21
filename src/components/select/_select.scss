@@ -1,5 +1,5 @@
 .kyc-sdk-select {
-	height: var(--button-height);
+	height: var(--kyc-sdk-button-height);
 	display: inline-flex;
 	justify-content: space-between;
 	padding-left: 1.5em;
@@ -9,11 +9,11 @@
 	position: relative;
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	background: #ecf0fe;
-	border-radius: var(--border-radius-light);
+	border-radius: var(--kyc-sdk-border-radius-light);
 	font-size: 12pt;
 	border-width: 2pt;
 	border-style: solid;
-	font-family: var(--primary-font);
+	font-family: var(--kyc-sdk-primary-font);
 	color: black;
 
 	&.open {
@@ -27,22 +27,22 @@
 
 	::placeholder {
 		color: var(&kyc-sdk-dark-purple);
-		font-family: var(--primary-font);
+		font-family: var(--kyc-sdk-primary-font);
 	}
 
 	::-webkit-input-placeholder {
 		color: var(&kyc-sdk-dark-purple);
-		font-family: var(--primary-font);
+		font-family: var(--kyc-sdk-primary-font);
 	}
 
 	:-ms-input-placeholder {
 		color: var(&kyc-sdk-dark-purple);
-		font-family: var(--primary-font);
+		font-family: var(--kyc-sdk-primary-font);
 	}
 
 	::-ms-input-placeholder {
 		color: var(&kyc-sdk-dark-purple);
-		font-family: var(--primary-font);
+		font-family: var(--kyc-sdk-primary-font);
 	}
 
 	&:hover {
@@ -75,7 +75,7 @@
 
 	border: 1pt;
 	border-style: solid;
-	height: var(--button-height);
+	height: var(--kyc-sdk-button-height);
 	display: flex;
 	justify-content: space-between;
 	padding-left: 1.5em;

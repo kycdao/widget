@@ -30,7 +30,7 @@ const Button = styled.button<{ hidden?: boolean }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: var(--border-radius-light);
+	border-radius: var(--kyc-sdk-border-radius-light);
 	${tr2};
 	${materialIcon};
 	${({ hidden }) => hidden && "visibility: hidden;"}

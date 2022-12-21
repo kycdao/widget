@@ -5,9 +5,9 @@ button.kyc-sdk-toggle-button {
 	align-items: center;
 	outline: none;
 	border: 1px solid transparent;
-	border-radius: var(--border-radius-light);
+	border-radius: var(--kyc-sdk-border-radius-light);
 	cursor: pointer;
-	height: var(--button-height);
+	height: var(--kyc-sdk-button-height);
 	color: white;
 	background: var(--kyc-sdk-normal-blue);
 	box-shadow: 0 0 1pt 0 var(--kyc-sdk-normal-blue-35);
@@ -18,7 +18,7 @@ button.kyc-sdk-toggle-button {
 	}
 
 	&[disabled] {
-		background: var(--inactive) !important;
+		background: var(--kyc-sdk-inactive) !important;
 		pointer-events: none !important;
 	}
 

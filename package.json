@@ -19,7 +19,8 @@
 	},
 	"files": [
 		"dist/*",
-		"README.md"
+		"README.md",
+		"index.d.ts"
 	],
 	"repository": {
 		"url": "https://github.com/kycdao/web-sdk",

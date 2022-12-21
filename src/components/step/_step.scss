@@ -42,7 +42,7 @@
 	}
 
 	h1 {
-		font-family: var(--primary-font);
+		font-family: var(--kyc-sdk-primary-font);
 		align-items: flex-start;
 		font-weight: 400;
 		display: flex;
@@ -56,7 +56,7 @@
 		align-items: stretch;
 
 		p {
-			font-family: var(--primary-font);
+			font-family: var(--kyc-sdk-primary-font);
 			font-weight: 400;
 			color: black;
 		}
@@ -227,7 +227,7 @@ mintStep = 12
 
 				p,
 				b {
-					font-family: var(--primary-font);
+					font-family: var(--kyc-sdk-primary-font);
 					font-weight: 400;
 				}
 
@@ -240,7 +240,7 @@ mintStep = 12
 }
 
 .policy {
-	font-family: var(--primary-font);
+	font-family: var(--kyc-sdk-primary-font);
 	color: black;
 	font-size: 12px;
 

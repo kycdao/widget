@@ -17,6 +17,8 @@ import { ModalRouter } from "./components/modal/modalRouter"
 
 import "./style/index.scss"
 
+//set body to unscrollable temporarily
+
 export type KycDaoModalProps = {
 	width?: number | string
 	height?: number | string

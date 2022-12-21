@@ -3,7 +3,7 @@
 .step-footer {
 	.calculator-wrapper {
 		p {
-			font-family: var(--primary-font);
+			font-family: var(--kyc-sdk-primary-font);
 		}
 
 		.calculator {
@@ -85,16 +85,16 @@
 				.price {
 					color: black;
 					font-weight: 800;
-					font-family: var(--primary-font);
+					font-family: var(--kyc-sdk-primary-font);
 				}
 
 				.subscription {
-					font-family: var(--primary-font);
+					font-family: var(--kyc-sdk-primary-font);
 				}
 			}
 
 			.yearCount {
-				font-family: var(--primary-font);
+				font-family: var(--kyc-sdk-primary-font);
 				color: black;
 				display: flex;
 				align-items: center;
@@ -111,7 +111,7 @@
 	font-size: 12px;
 	display: flex;
 	margin-bottom: 1em;
-	font-family: var(--primary-font);
+	font-family: var(--kyc-sdk-primary-font);
 
 	padding: 0.5rem;
 	background: var(--kyc-sdk-cybergreen-35);
@@ -137,7 +137,7 @@
 }
 
 .subscription-selector {
-	font-family: var(--primary-font);
+	font-family: var(--kyc-sdk-primary-font);
 
 	> strong {
 		color: black;

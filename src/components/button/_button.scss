@@ -1,7 +1,7 @@
 @use "../../style/variables";
 
 button.kyc-sdk-button {
-	height: var(--button-height);
+	height: var(--kyc-sdk-button-height);
 	display: inline-flex;
 	justify-content: space-between;
 	box-sizing: border-box;
@@ -11,13 +11,13 @@ button.kyc-sdk-button {
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	background: #ecf0fe;
 	color: var(--kyc-sdk-dark-purple);
-	border-radius: var(--border-radius-light);
+	border-radius: var(--kyc-sdk-border-radius-light);
 	font-size: 12pt;
 	cursor: pointer;
 	@extend .tr2;
 
 	span {
-		font-family: var(--primary-font);
+		font-family: var(--kyc-sdk-primary-font);
 		font-weight: 400;
 		font-size: 16px;
 		margin-left: 0;
@@ -28,7 +28,7 @@ button.kyc-sdk-button {
 	}
 
 	&[disabled] {
-		background: var(--inactive) !important;
+		background: var(--kyc-sdk-inactive) !important;
 		pointer-events: none !important;
 		border: 2px solid black;
 

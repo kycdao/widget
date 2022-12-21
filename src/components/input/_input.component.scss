@@ -1,7 +1,7 @@
 @use "../../style/variables";
 
 .kyc-sdk-input {
-	height: var(--button-height);
+	height: var(--kyc-sdk-button-height);
 	display: inline-flex;
 	justify-content: space-between;
 	box-sizing: border-box;
@@ -12,9 +12,9 @@
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	background: white;
 	color: black;
-	border-radius: var(--border-radius-light);
+	border-radius: var(--kyc-sdk-border-radius-light);
 	font-size: 12pt;
-	font-family: var(--primary-font);
+	font-family: var(--kyc-sdk-primary-font);
 
 	border: 2px solid black;
 	//padding-right: 3em;
@@ -23,22 +23,22 @@
 
 	::placeholder {
 		color: black;
-		font-family: var(--primary-font);
+		font-family: var(--kyc-sdk-primary-font);
 	}
 
 	::-webkit-input-placeholder {
 		color: black;
-		font-family: var(--primary-font);
+		font-family: var(--kyc-sdk-primary-font);
 	}
 
 	:-ms-input-placeholder {
 		color: black;
-		font-family: var(--primary-font);
+		font-family: var(--kyc-sdk-primary-font);
 	}
 
 	::-ms-input-placeholder {
 		color: black;
-		font-family: var(--primary-font);
+		font-family: var(--kyc-sdk-primary-font);
 	}
 
 	&:hover {
@@ -72,7 +72,7 @@ div.clear {
 	display: flex;
 	color: black;
 	cursor: pointer;
-	border-radius: var(--border-radius-light);
+	border-radius: var(--kyc-sdk-border-radius-light);
 	background: transparent;
 	padding: 3px 9px;
 	line-height: 132%;
@@ -99,13 +99,13 @@ div.kyc-sdk-option {
 	line-height: 2.5em;
 	padding-left: 1.5em;
 	border-bottom: 1px solid var(--kyc-sdk-normal-blue-15);
-	font-family: var(--primary-font);
+	font-family: var(--kyc-sdk-primary-font);
 	font-weight: 400;
 	color: black;
 	justify-content: left;
 
 	strong {
-		font-family: var(--primary-font);
+		font-family: var(--kyc-sdk-primary-font);
 		font-weight: 800;
 		justify-content: center;
 	}
@@ -130,7 +130,7 @@ div.autocomplete {
 		white-space: pre;
 
 		strong {
-			font-family: var(--primary-font);
+			font-family: var(--kyc-sdk-primary-font);
 			font-weight: 800;
 		}
 	}
