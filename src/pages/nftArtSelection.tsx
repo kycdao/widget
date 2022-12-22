@@ -208,12 +208,12 @@ export const NftSelection: FC<PageProps> = ({
 						className="full-width black"
 						onClick={onEnter}
 						inactive={inactive}
-						label={"Mint free kycNFT"}
+						label={kycDao?.kycDao.subscribed ? "Mint free kycNFT" : "Submit"}
 					/>
 				</>
 			)
 		},
-		[currentArt, onRegenerate]
+		[currentArt, onRegenerate, kycDao?.kycDao.subscribed]
 	)
 
 	if (!kycDao) {
