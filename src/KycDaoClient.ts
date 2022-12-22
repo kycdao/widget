@@ -143,6 +143,12 @@ kycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 				isModal: this.isModal,
 			})
 		}
+
+		this.originalBodyHeight = document.body.style.height
+		this.originalBodyOverflow = document.body.style.overflow
+
+		document.body.style.setProperty("height", "100%")
+		document.body.style.setProperty("overflow", "hidden")
 	}
 }
 
@@ -159,6 +165,8 @@ kycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
 		}
 		window.removeEventListener("message", this.messageHndlr)
 		this.isOpen = false
+		document.body.style.setProperty("height", this.originalBodyHeight)
+		document.body.style.setProperty("overflow", this.originalBodyOverflow)
 	}
 }
 

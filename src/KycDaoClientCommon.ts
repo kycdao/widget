@@ -30,6 +30,8 @@ export type KycDaoClientInterface = {
 	onOutsideClick: (event: MouseEvent) => void
 	messageHndlr: () => KycDaoClientMessageHandler
 	getParentElement: () => HTMLElement
+	originalBodyHeight: string
+	originalBodyOverflow: string
 }
 
 export type KycDaoClientOptions = {

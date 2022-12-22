@@ -3,6 +3,7 @@ const path = require("path")
 const NpmDtsPlugin = require("npm-dts-webpack-plugin")
 const process = require("process")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 const WebpackManifestPlugin =
 	require("webpack-manifest-plugin").WebpackManifestPlugin
 
@@ -72,6 +73,35 @@ module.exports = function override(config, env) {
 		new MiniCssExtractPlugin({
 			filename: "[name].css",
 		})
+	)
+
+	config.plugins.push(
+		new HtmlWebpackPlugin(
+			Object.assign(
+				{},
+				{
+					inject: true,
+					template: "public/iframe.html",
+				},
+				env === "production"
+					? {
+							minify: {
+								removeComments: true,
+								collapseWhitespace: true,
+								removeRedundantAttributes: true,
+								useShortDoctype: true,
+								removeEmptyAttributes: true,
+								removeStyleLinkTypeAttributes: true,
+								keepClosingSlash: true,
+								minifyJS: true,
+								minifyCSS: true,
+								minifyURLs: true,
+							},
+					  }
+					: undefined,
+				{ filename: "iframe.html" }
+			)
+		)
 	)
 
 	config.devtool = "source-map"
