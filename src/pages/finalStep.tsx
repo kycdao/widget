@@ -84,13 +84,15 @@ export const FinalStep: FC<PageProps> = ({
 		({ disabled, inactive }) =>
 			chainExplorerUrl ? (
 				<>
-					<Button
-						disabled={disabled}
-						inactive={inactive}
-						className="full-width underline centered"
-						onClick={onCheck}>
-						Check on chain
-					</Button>
+					<div className="nft-button-wrapper">
+						<Button
+							disabled={disabled}
+							inactive={inactive}
+							className="full-width underline centered"
+							onClick={onCheck}>
+							Check on chain
+						</Button>
+					</div>
 					<SubmitButton
 						autoFocus={!inactive && !disabled}
 						disabled={disabled}
