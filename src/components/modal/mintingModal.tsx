@@ -7,7 +7,8 @@ export const MintingModal = () => {
 			</div>
 
 			<div className="body">
-				<p className="policy">Your kycNFT is getting ready, please wait</p>
+				{/* TODO: KYC-697 && KYC-701  */}
+				<p className="policy">Your kycNFT is getting ready! Please open your wallet and wait for the dialog to confirm the minting transaction</p>
 			</div>
 
 			<div className="loading-animation">
