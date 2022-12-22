@@ -63,8 +63,8 @@ kycDaoClient.prototype.messageHndlr = function (
 			this.isSuccessful = true
 			if (this.onSuccess) {
 				this.onSuccess(data)
-				this.close()
 			}
+			this.close()
 			break
 		case "kycDaoFail": {
 			if (this.onFail) {

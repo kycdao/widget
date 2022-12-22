@@ -57,10 +57,17 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	useEffect(() => {
 		if (isModal) {
 			const close = OnClose.subscribe(() => {
-				window.parent.postMessage(
-					{ type: "kycDaoCloseModal" },
-					data.messageTargetOrigin
-				)
+				if (data.currentPage === StepID.finalStep) {
+					window.parent.postMessage(
+						{ type: "kycDaoSuccess", data: data.chainExplorerUrl },
+						data.messageTargetOrigin
+					)
+				} else {
+					window.parent.postMessage(
+						{ type: "kycDaoCloseModal" },
+						data.messageTargetOrigin
+					)
+				}
 			})
 			return close.unsubscribe.bind(close)
 		}
