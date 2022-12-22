@@ -82,18 +82,50 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 					)
 					await kycDao.kycDao.registerOrLogin()
 
-					const startPage = kycDao.kycDao.subscribed
-						? StepID.subscribedStartStep
-						: StepID.AgreementStep
-
 					dispatch({
 						type: DataActionTypes.setModalMode,
 						payload: isModal,
 					})
+
+					let startPage
+					if (kycDao.redirectEvent) {
+						switch (kycDao.redirectEvent) {
+							case "NearLogin":
+								startPage = StepID.verificationStep
+								dispatch({
+									type: DataActionTypes.termsAcceptedChange,
+									payload: true,
+								})
+								break
+							case "NearUserRejectedError":
+								startPage = StepID.nftArtSelection
+								dispatch({
+									type: DataActionTypes.termsAcceptedChange,
+									payload: true,
+								})
+								break
+							case "NearMint":
+								startPage = StepID.finalStep
+								if (kycDao.transactionUrl) {
+									dispatch({
+										type: DataActionTypes.setChainExplorerUrl,
+										payload: kycDao.transactionUrl,
+									})
+								}
+						}
+					} else {
+						if (kycDao.kycDao.subscribed) {
+							startPage = StepID.subscribedStartStep
+						} else {
+							startPage = StepID.AgreementStep
+						}
+					}
+
 					dispatch({
 						payload: { current: startPage, prev: StepID.loading },
 						type: DataActionTypes.changePage,
 					})
+
 					dispatch({
 						payload:
 							iframeOptions?.messageTargetOrigin || window.location.origin,
@@ -105,8 +137,19 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 							payload: { button: HeaderButtons.close, state: "hidden" },
 						})
 					}
-				} catch (e) {
-					console.log(e)
+				} catch (err) {
+					dispatch({
+						type: DataActionTypes.SetErrorModalText,
+						payload: {
+							header: "An error happened",
+							body: `${err}`,
+						},
+					})
+					dispatch({
+						type: DataActionTypes.setModal,
+						payload: "genericError",
+					})
+					console.error(err)
 				}
 			})()
 		}
