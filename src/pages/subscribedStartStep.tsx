@@ -85,7 +85,7 @@ export const SubscribedStartStep: FC<PageProps> = ({
 			type: DataActionTypes.changePage,
 			payload: {
 				current: StepID.nftArtSelection,
-				prev: StepID.AgreementStep,
+				prev: StepID.subscribedStartStep,
 			},
 		})
 	}, [dispatch])
