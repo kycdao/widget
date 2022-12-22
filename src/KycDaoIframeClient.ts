@@ -8,8 +8,8 @@ import {
 function kycDaoIframeClient(
 	this: KycDaoClientInterface,
 	{
-		height = "100%",
-		width = "100%",
+		height = 650,
+		width = 400,
 		parent = document.body,
 		onFail,
 		onSuccess,
