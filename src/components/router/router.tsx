@@ -15,6 +15,7 @@ import { TaxResidenceStep } from "../../pages/taxResidence"
 import { VerificationStep } from "../../pages/verificationStep"
 
 import "./_router.scss"
+import { SubscribedStartStep } from "../../pages/subscribedStartStep"
 
 const RoutedStep: FC<{
 	stepID: StepID
@@ -56,6 +57,9 @@ const RoutedStep: FC<{
 		}
 		case StepID.mintStep: {
 			return <MintStep {...options} />
+		}
+		case StepID.subscribedStartStep: {
+			return <SubscribedStartStep {...options} />
 		}
 		default: {
 			return <>Something went wrong</>

@@ -1,4 +1,5 @@
 import { FC, useContext, useCallback, useEffect } from "react"
+import { getNetworkType } from "../../utils/getNetworkType"
 import {
 	DataActionTypes,
 	HeaderButtons,
@@ -114,26 +115,6 @@ const Header = () => (
 		KycDAO Membership
 	</h1>
 )
-
-const getNetworkType = (
-	network: string
-): "Solana" | "Ethereum" | "Near" | undefined => {
-	const test = network.match("(Solana|Ethereum|Near)")?.[0]
-
-	if (!test) {
-		switch (network) {
-			case "PolygonMainnet":
-			case "PolygonMumbai":
-				return "Ethereum"
-		}
-	}
-
-	if (test !== "Solana" && test !== "Near" && test !== "Ethereum") {
-		return
-	}
-
-	return test
-}
 
 export const KycDAOMembershipStep: FC<PageProps> = ({
 	className,

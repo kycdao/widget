@@ -6,12 +6,14 @@ import { Button } from "../button/button"
 export const MintingFailedModal = () => {
 	const minting = useMinting()
 	const {
-		data: { subscriptionYears },
+		data: { subscriptionYears, imageId },
 	} = useContext(StateContext)
 
 	const onRetry = useCallback(() => {
-		minting(subscriptionYears)
-	}, [minting, subscriptionYears])
+		if (imageId) {
+			minting(imageId, subscriptionYears)
+		}
+	}, [minting, subscriptionYears, imageId])
 
 	return (
 		<div className="mintingFailedModal">

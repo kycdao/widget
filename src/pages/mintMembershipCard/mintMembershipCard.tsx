@@ -68,7 +68,10 @@ export const MintStep: FC<PageProps> = ({
 	disabled = false,
 	inactive = false,
 }) => {
-	const { dispatch } = useContext(StateContext)
+	const {
+		dispatch,
+		data: { imageId },
+	} = useContext(StateContext)
 	const kycDao = useKycDao()
 
 	const [yearCount, setYearCount] = useState<number | null>(null)
@@ -76,14 +79,14 @@ export const MintStep: FC<PageProps> = ({
 	const minting = useMinting()
 
 	const onSubmit = useCallback(async () => {
-		if (kycDao && yearCount && yearCount > 0) {
+		if (kycDao && yearCount && yearCount > 0 && imageId) {
 			dispatch({
 				payload: yearCount,
 				type: DataActionTypes.subscriptionYearsChange,
 			})
-			minting(yearCount)
+			minting(imageId, yearCount)
 		}
-	}, [kycDao, yearCount, minting, dispatch])
+	}, [kycDao, yearCount, minting, dispatch, imageId])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
@@ -213,7 +216,7 @@ export const MintStep: FC<PageProps> = ({
 					className="full-width black"
 					onClick={onEnter}
 					inactive={inactive}
-					label={`Pay + mint`}
+					label={"Pay + mint"}
 				/>
 			</>
 		),

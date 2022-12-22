@@ -1,3 +1,4 @@
+import { SubmitButton } from "../components/submitButton/submitButton"
 import { useContext, useState, useCallback, FC, useEffect } from "react"
 import { Button } from "../components/button/button"
 import {
@@ -59,8 +60,18 @@ export const NftSelection: FC<PageProps> = ({
 	const { dispatch } = useContext(StateContext)
 	const kycDao = useKycDao()
 	const startMinting = useMinting()
+	const [currentArt, setCurrentArt] = useState<string>()
 
 	const [nftImages, setNftImages] = useState<Nft[]>([])
+
+	const onArtClick = useCallback(
+		(id: string) => () => {
+			if (!disabled) {
+				setCurrentArt(id)
+			}
+		},
+		[disabled]
+	)
 
 	useEffect(() => {
 		kycDao?.kycDao.getNftImageOptions().then((options) => {
@@ -79,12 +90,12 @@ export const NftSelection: FC<PageProps> = ({
 		})
 	}, [kycDao])
 
-	const onSubmit = useCallback(
-		(id: string) => () => {
-			dispatch({ type: DataActionTypes.nftImageChange, payload: id })
+	const onSubmit = useCallback(() => {
+		if (currentArt) {
+			dispatch({ type: DataActionTypes.nftImageChange, payload: currentArt })
 
 			if (kycDao?.kycDao.subscribed) {
-				startMinting()
+				startMinting(currentArt)
 			} else {
 				dispatch({
 					type: DataActionTypes.changePage,
@@ -94,19 +105,20 @@ export const NftSelection: FC<PageProps> = ({
 					},
 				})
 			}
-		},
-		[dispatch, kycDao?.kycDao.subscribed, startMinting]
-	)
+		}
+	}, [dispatch, kycDao?.kycDao.subscribed, startMinting, currentArt])
 
 	const onPrev = useCallback(() => {
 		dispatch({
 			type: DataActionTypes.changePage,
 			payload: {
-				current: StepID.taxResidenceStep,
+				current: kycDao?.kycDao.subscribed
+					? StepID.subscribedStartStep
+					: StepID.taxResidenceStep,
 				next: StepID.nftArtSelection,
 			},
 		})
-	}, [dispatch])
+	}, [dispatch, kycDao])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
@@ -134,6 +146,7 @@ export const NftSelection: FC<PageProps> = ({
 	const onRegenerate = useCallback(() => {
 		kycDao?.kycDao.regenerateNftImageOptions().then((options) => {
 			const images = [] as Nft[]
+			setCurrentArt(undefined)
 
 			Object.entries(options).forEach(([, url]) => {
 				const splitUrl = url.split("/")
@@ -155,40 +168,52 @@ export const NftSelection: FC<PageProps> = ({
 		({ disabled }) => (
 			<>
 				<div className="nft-image-wrapper">
-					{nftImages.map((image) => {
+					{nftImages.map(({ id, url }) => {
 						return (
 							<div
-								className={`nft-image${disabled ? " disabled" : ""}`}
-								key={image.id}
-								onClick={onSubmit(image.id)}>
-								<img alt="Nft" src={image.url} />
+								className={`nft-image${disabled ? " disabled" : ""}${
+									currentArt === id ? " selected" : ""
+								}`}
+								key={id}
+								onClick={onArtClick(id)}>
+								<img alt="Nft" src={url} />
 							</div>
 						)
 					})}
 				</div>
 			</>
 		),
-		[nftImages, onSubmit]
+		[nftImages, onArtClick, currentArt]
 	)
 
 	const footer = useCallback<StepPart>(
-		({ disabled, inactive }) => {
+		({ disabled, inactive, onEnter }) => {
 			return (
-				<div className="nft-button-wrapper">
-					<Button
+				<>
+					<div className="nft-button-wrapper">
+						<Button
+							inactive={inactive}
+							disabled={disabled}
+							className="full-width underline centered"
+							onClick={onRegenerate}>
+							<>
+								<i className="material-icons">refresh</i>
+								<span>regenerate</span>
+							</>
+						</Button>
+					</div>
+					<SubmitButton
+						autoFocus={!inactive && !disabled && !!currentArt}
+						disabled={disabled || !currentArt}
+						className="full-width black"
+						onClick={onEnter}
 						inactive={inactive}
-						disabled={disabled}
-						className="full-width underline centered"
-						onClick={onRegenerate}>
-						<>
-							<i className="material-icons">refresh</i>
-							<span>regenerate</span>
-						</>
-					</Button>
-				</div>
+						label={"Mint free kycNFT"}
+					/>
+				</>
 			)
 		},
-		[onRegenerate]
+		[currentArt, onRegenerate]
 	)
 
 	if (!kycDao) {
@@ -206,6 +231,7 @@ export const NftSelection: FC<PageProps> = ({
 			header={Header}
 			body={body}
 			footer={footer}
+			onEnter={onSubmit}
 		/>
 	)
 }

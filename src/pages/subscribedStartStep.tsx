@@ -11,6 +11,21 @@ import { SubmitButton } from "../components/submitButton/submitButton"
 import { useKycDao } from "../hooks/useKycDao"
 import { PageProps } from "./pageProps"
 
+const Body = () => {
+	return (
+		<p>
+			<b>Welcome back trusted anon.</b>
+			<br />
+			<br />
+			You are already a member, but a smart contract requires a kycNFT on this
+			chain.
+			<br />
+			<br />
+			Please go ahead and mint a free kycNFT.
+		</p>
+	)
+}
+
 const Header: StepPart = () => (
 	<h1 className="h1">
 		<span className="logo">
@@ -40,27 +55,8 @@ const Header: StepPart = () => (
 				/>
 			</svg>
 		</span>
-		KycDAO
+		Welcome back to kycDAO
 	</h1>
-)
-
-const Body = () => (
-	<p>
-		<b>The last proof you need in web3.</b>
-		<br />
-		<br />
-		kycDAO is a web3 native reusable compliance framework.
-		<br />
-		<br />
-		CEXs/Ramps already know your wallet address; kycDAO makes it composable.
-		<br />
-		<br />
-		Our proofs allow smart contracts and services to interacting with trusted
-		wallets.
-		<br />
-		<br />
-		We use soulbound NFTs to prove your compliant account. Strictly no PII!
-	</p>
 )
 
 const Footer: StepPart = ({ inactive, disabled, onEnter }) => (
@@ -70,11 +66,11 @@ const Footer: StepPart = ({ inactive, disabled, onEnter }) => (
 		className="full-width black"
 		onClick={onEnter}
 		inactive={inactive}
-		label={"Start"}
+		label={"Let's go"}
 	/>
 )
 
-export const AgreementStep: FC<PageProps> = ({
+export const SubscribedStartStep: FC<PageProps> = ({
 	className,
 	animation,
 	disabled = false,
@@ -88,7 +84,7 @@ export const AgreementStep: FC<PageProps> = ({
 		dispatch({
 			type: DataActionTypes.changePage,
 			payload: {
-				current: StepID.kycDAOMembershipStep,
+				current: StepID.nftArtSelection,
 				prev: StepID.AgreementStep,
 			},
 		})

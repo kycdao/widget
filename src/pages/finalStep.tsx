@@ -83,27 +83,23 @@ export const FinalStep: FC<PageProps> = ({
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive }) =>
 			chainExplorerUrl ? (
-				<div style={{ justifyContent: "center", display: "flex" }}>
-					<div style={{ flex: 1 }}>
-						<Button
-							disabled={disabled}
-							inactive={inactive}
-							className="full-width underline centered"
-							onClick={onCheck}>
-							Check on chain
-						</Button>
-					</div>
-					<div style={{ flex: 1 }}>
-						<SubmitButton
-							autoFocus={!inactive && !disabled}
-							disabled={disabled}
-							className="full-width black"
-							onClick={onFinish}
-							inactive={inactive}
-							label={"Finish"}
-						/>
-					</div>
-				</div>
+				<>
+					<Button
+						disabled={disabled}
+						inactive={inactive}
+						className="full-width underline centered"
+						onClick={onCheck}>
+						Check on chain
+					</Button>
+					<SubmitButton
+						autoFocus={!inactive && !disabled}
+						disabled={disabled}
+						className="full-width black"
+						onClick={onFinish}
+						inactive={inactive}
+						label={"Finish"}
+					/>
+				</>
 			) : null,
 		[onCheck, chainExplorerUrl, onFinish]
 	)

@@ -16,6 +16,7 @@ import { Router } from "./components/router/router"
 import { ModalRouter } from "./components/modal/modalRouter"
 
 import "./style/index.scss"
+import { getNetworkType } from "./utils/getNetworkType"
 
 //set body to unscrollable temporarily
 
@@ -67,26 +68,42 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 
 	useEffect(() => {
 		if (kycDao) {
-			dispatch({
-				type: DataActionTypes.setModalMode,
-				payload: isModal,
-			})
-			dispatch({
-				payload: { current: StepID.AgreementStep, prev: StepID.loading },
-				type: DataActionTypes.changePage,
-			})
-			dispatch({
-				payload: iframeOptions?.messageTargetOrigin || window.location.origin,
-				type: DataActionTypes.setMessageTargetOrigin,
-			})
-			if (!isModal) {
-				dispatch({
-					type: DataActionTypes.SetHeaderButtonState,
-					payload: { button: HeaderButtons.close, state: "hidden" },
-				})
-			}
+			;(async () => {
+				try {
+					await kycDao.kycDao.connectWallet(
+						getNetworkType(config.enabledBlockchainNetworks[0])
+					)
+					await kycDao.kycDao.registerOrLogin()
+
+					const startPage = kycDao.kycDao.subscribed
+						? StepID.subscribedStartStep
+						: StepID.AgreementStep
+
+					dispatch({
+						type: DataActionTypes.setModalMode,
+						payload: isModal,
+					})
+					dispatch({
+						payload: { current: startPage, prev: StepID.loading },
+						type: DataActionTypes.changePage,
+					})
+					dispatch({
+						payload:
+							iframeOptions?.messageTargetOrigin || window.location.origin,
+						type: DataActionTypes.setMessageTargetOrigin,
+					})
+					if (!isModal) {
+						dispatch({
+							type: DataActionTypes.SetHeaderButtonState,
+							payload: { button: HeaderButtons.close, state: "hidden" },
+						})
+					}
+				} catch (e) {
+					console.log(e)
+				}
+			})()
 		}
-	}, [kycDao, iframeOptions, isModal])
+	}, [kycDao, iframeOptions, isModal, config.enabledBlockchainNetworks])
 
 	const contextData = useMemo(() => ({ data, dispatch }), [data, dispatch])
 

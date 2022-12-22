@@ -43,6 +43,7 @@ export enum StepID {
 	termsAccepted,
 	loading,
 	mintStep,
+	subscribedStartStep,
 }
 
 export type Data = {

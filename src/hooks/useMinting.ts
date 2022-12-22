@@ -11,10 +11,13 @@ export const useMinting = () => {
 	const kycDao = useKycDao()
 	const state = useContext(StateContext)
 
-	return async function StartMinting(subscriptionYears?: number) {
+	return async function StartMinting(
+		imageId: string,
+		subscriptionYears?: number
+	) {
 		if (kycDao) {
 			const {
-				data: { termsAccepted, imageId, currentPage },
+				data: { termsAccepted, currentPage },
 				dispatch,
 			} = state
 
@@ -25,7 +28,7 @@ export const useMinting = () => {
 
 			try {
 				const chainExplorerUrl = await kycDao.kycDao.startMinting({
-					disclaimerAccepted: termsAccepted,
+					disclaimerAccepted: termsAccepted || kycDao.kycDao.subscribed,
 					verificationType: VerificationTypes.KYC,
 					imageId,
 					subscriptionYears,
