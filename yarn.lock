@@ -2382,6 +2382,7 @@ __metadata:
     stream: "npm:^0.0.2"
     styled-components: "npm:^5.3.6"
     tsc: "npm:^2.0.4"
+    tsc-alias: "npm:^1.8.2"
     typescript: "npm:^4.9.4"
   peerDependencies:
     react: ^18
@@ -7590,7 +7591,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^9.4.1":
+"commander@npm:^9.0.0, commander@npm:^9.4.1":
   version: 9.4.1
   resolution: "commander@npm:9.4.1"
   checksum: 7d4c1f3bd4ad451f43fce51b9c73dc2d61fca00a9249196aa2d3d66fc46f2460c917c73ea9221c278fb8d35f496384f5125806e69108581a8e8bc673752c94e6
@@ -13792,6 +13793,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mylas@npm:^2.1.9":
+  version: 2.1.13
+  resolution: "mylas@npm:2.1.13"
+  checksum: c09a473bf9d272fbefe08f31d889edb27f7556e3384b844a5e24b0ea4704fba0d4e37fce8e68aa8985cc55ac564cb6a740917d997511748162482f722ecd3bc6
+  languageName: node
+  linkType: hard
+
 "nan@npm:^2.12.1, nan@npm:^2.14.0, nan@npm:^2.14.2":
   version: 2.17.0
   resolution: "nan@npm:2.17.0"
@@ -14806,6 +14814,15 @@ __metadata:
   bin:
     playwright: cli.js
   checksum: 289eb362aefea4168ac78589f59005dd154c8244f8b422d986c9d7ada0ec5f7f83a1f180f69e6d074daf43f98f1acdd9c371b0b4b0da7d41d5ff7f90a5d75491
+  languageName: node
+  linkType: hard
+
+"plimit-lit@npm:^1.2.6":
+  version: 1.5.0
+  resolution: "plimit-lit@npm:1.5.0"
+  dependencies:
+    queue-lit: "npm:^1.5.0"
+  checksum: e88095193c81c248be63553063f86fe218df7fa330881564bce67270c20bea7eede27514c865b8680bdefde4d3699833de9763837456195f31bedbb3ca2bb226
   languageName: node
   linkType: hard
 
@@ -15960,6 +15977,13 @@ __metadata:
   version: 2.2.0
   resolution: "querystringify@npm:2.2.0"
   checksum: e372995f3e1314a6491bd8f99b15d138911c095608d5236cca745794ee2b631755fdc68be31b0fda1a7be0469a55bc6a2d5e0da8c1da03e9cd649fa8cf86aa44
+  languageName: node
+  linkType: hard
+
+"queue-lit@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "queue-lit@npm:1.5.0"
+  checksum: a2279aaa594548073dab9786ae93145a46ea9ced86ba04b6eb4570c3b370943072fe1140eec1a72323abf04a362e581d998781e9d948e0eedc2425fe1b0a2325
   languageName: node
   linkType: hard
 
@@ -18591,6 +18615,22 @@ __metadata:
   version: 1.0.1
   resolution: "tryer@npm:1.0.1"
   checksum: 96f8850e23b97b7cad733b5ab1ebc47704768a63483ab612ecdf9b717f8d2aa70d8369caffcd0581ced41c7649467d78839a00da1865e010cb607a8510fef212
+  languageName: node
+  linkType: hard
+
+"tsc-alias@npm:^1.8.2":
+  version: 1.8.2
+  resolution: "tsc-alias@npm:1.8.2"
+  dependencies:
+    chokidar: "npm:^3.5.3"
+    commander: "npm:^9.0.0"
+    globby: "npm:^11.0.4"
+    mylas: "npm:^2.1.9"
+    normalize-path: "npm:^3.0.0"
+    plimit-lit: "npm:^1.2.6"
+  bin:
+    tsc-alias: dist/bin/index.js
+  checksum: 5bddd9e954826f4dd5d6f2f5ee4bf3d2ab7166f9d4efd342648a4bf47f6a49ac455f7c66717e5fcd27ea272f8115c8fe328ac5e9c5d0c6e89655c189d33a66cb
   languageName: node
   linkType: hard
 

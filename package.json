@@ -1,13 +1,13 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.25",
+	"version": "0.3.0-rc.26",
 	"license": "unlicensed",
 	"scripts": {
 		"install-precommit-hook": "husky install .husky",
 		"start": "yarn start-https",
 		"start-https": "cross-env HTTPS=true PORT=4002 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
 		"start-http": "cross-env HTTPS=false PORT=4002 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
-		"build:lib": "tsc",
+		"build:lib": "tsc && tsc-alias",
 		"build:web": "GENERATE_SOURCEMAP=false react-app-rewired build",
 		"build": "yarn clean && yarn build:lib && yarn build:web && mv ./build/* ./dist/ && yarn run copy-files",
 		"test": "react-app-rewired test",
@@ -103,6 +103,7 @@
 		"react-dom": "^18.2.0",
 		"rimraf": "^3.0.2",
 		"tsc": "^2.0.4",
+		"tsc-alias": "^1.8.2",
 		"typescript": "^4.9.4"
 	},
 	"eslintConfig": {
