@@ -1,14 +1,14 @@
-@use "@Components/button/button";
-@use "@Components/modal/emailVerificationModal";
-@use "@Components/modal/mintingFailedModal";
-@use "@Components/modal/mintingModal";
-@use "@Components/step/step";
-@use "@Components/submitButton/submitButton";
-@use "@Components/toggleButton/toggleButton";
-@use "@Components/router/router";
-@use "@Pages/mintMembershipCard/mintMembershipCard";
-@use "@Components/input/input.component";
-@use "@Components/select/select";
+@use "../components/button/button";
+@use "../components/modal/emailVerificationModal";
+@use "../components/modal/mintingFailedModal";
+@use "../components/modal/mintingModal";
+@use "../components/step/step";
+@use "../components/submitButton/submitButton";
+@use "../components/toggleButton/toggleButton";
+@use "../components/router/router";
+@use "../pages/mintMembershipCard/mintMembershipCard";
+@use "../components/input/input.component";
+@use "../components/select/select";
 
 @use "reset";
 @use "style";
