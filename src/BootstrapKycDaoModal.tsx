@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client"
 import KycDaoModal from "./App"
 import { SdkConfiguration } from "@kycdao/kycdao-sdk"
 import { ErrorBoundary } from "react-error-boundary"
-import { ErrorPage } from "./pages/ErrorPage"
+import { ErrorPage } from "@Pages/ErrorPage"
 import buffer from "buffer"
 import {
 	BlockchainNetwork,

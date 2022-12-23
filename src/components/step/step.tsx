@@ -9,7 +9,7 @@ import {
 	useState,
 } from "react"
 import { useSwipeable } from "react-swipeable"
-import { StateContext } from "../stateContext/stateContext"
+import { StateContext } from "@Components/stateContext/stateContext"
 
 export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
 

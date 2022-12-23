@@ -1,5 +1,5 @@
 import { FC, useCallback } from "react"
-import { Step } from "../components/step/step"
+import { Step } from "@Components/step/step"
 import { FallbackProps } from "react-error-boundary"
 
 const Header = () => <h1>Something went wrong!</h1>

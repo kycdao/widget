@@ -1,5 +1,5 @@
 import { FC, useContext, useCallback, useEffect } from "react"
-import { getNetworkType } from "../../utils/getNetworkType"
+import { getNetworkType } from "@Utils/getNetworkType"
 import {
 	DataActionTypes,
 	HeaderButtons,
@@ -7,10 +7,10 @@ import {
 	OnPrev,
 	StateContext,
 	StepID,
-} from "../../components/stateContext"
-import { StepPart, Step } from "../../components/step/step"
-import { SubmitButton } from "../../components/submitButton/submitButton"
-import { useKycDao } from "../../hooks/useKycDao"
+} from "@Components/stateContext"
+import { StepPart, Step } from "@Components/step/step"
+import { SubmitButton } from "@Components/submitButton/submitButton"
+import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "../pageProps"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (

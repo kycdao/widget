@@ -1,5 +1,5 @@
 import { useCallback, useContext } from "react"
-import { useKycDao } from "../../hooks/useKycDao"
+import { useKycDao } from "@Hooks/useKycDao"
 import { Button } from "../button/button"
 import { DataActionTypes } from "../stateContext"
 import { StateContext } from "../stateContext/stateContext"

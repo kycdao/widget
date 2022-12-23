@@ -1,6 +1,6 @@
-import { StateContext } from "../../components/stateContext"
+import { StateContext } from "@Components/stateContext"
 import { useCallback, useContext } from "react"
-import { useMinting } from "../../hooks/useMinting"
+import { useMinting } from "@Hooks/useMinting"
 import { Button } from "../button/button"
 
 export const MintingFailedModal = () => {

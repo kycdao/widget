@@ -3,8 +3,8 @@ import {
 	DataActionTypes,
 	HeaderButtons,
 	StateContext,
-} from "../components/stateContext"
-import { Step } from "../components/step/step"
+} from "@Components/stateContext"
+import { Step } from "@Components/step/step"
 import { PageProps } from "./pageProps"
 
 const Body = () => {

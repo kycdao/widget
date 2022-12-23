@@ -1,6 +1,6 @@
 import { KycDao, SdkConfiguration } from "@kycdao/kycdao-sdk"
 import { FC, useEffect, useMemo, useReducer, useState } from "react"
-import { KycDaoContext, KycDaoState } from "./components/kycDao.provider"
+import { KycDaoContext, KycDaoState } from "@Components/kycDao.provider"
 import {
 	StepID,
 	reducer,
@@ -9,11 +9,11 @@ import {
 	OnClose,
 	DataActionTypes,
 	HeaderButtons,
-} from "./components/stateContext"
+} from "@Components/stateContext"
 import { Loading } from "./pages/loading"
-import { Header } from "./components/header/header"
-import { Router } from "./components/router/router"
-import { ModalRouter } from "./components/modal/modalRouter"
+import { Header } from "@Components/header/header"
+import { Router } from "@Components/router/router"
+import { ModalRouter } from "@Components/modal/modalRouter"
 
 import "./style/index.scss"
 import { getNetworkType } from "./utils/getNetworkType"

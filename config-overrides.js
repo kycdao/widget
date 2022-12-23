@@ -32,6 +32,15 @@ module.exports = function override(config, env) {
 	config.resolve.fallback = fallback
 	config.resolve.modules = ["node_modules"]
 
+	config.resolve.alias = {
+		"@Pages": path.resolve(__dirname, "src/pages/"),
+		"@Components": path.resolve(__dirname, "src/components/"),
+		"@App": path.resolve(__dirname, "src/app/"),
+		"@Utils": path.resolve(__dirname, "src/utils/"),
+		"@Style": path.resolve(__dirname, "src/style/"),
+		"@Hooks": path.resolve(__dirname, "src/hooks/"),
+	}
+
 	config.plugins = (config.plugins || []).concat([
 		new webpack.ProvidePlugin({
 			process: "process/browser",

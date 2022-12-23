@@ -1,5 +1,9 @@
 import { CSSProperties, FC, useCallback, useContext } from "react"
-import { DataActionTypes, HeaderButtons, StateContext } from "../stateContext"
+import {
+	DataActionTypes,
+	HeaderButtons,
+	StateContext,
+} from "@Components/stateContext"
 import styled from "styled-components"
 import { materialIcon, tr2 } from "../../style"
 

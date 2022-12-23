@@ -1,6 +1,10 @@
 /// <reference types="react-scripts" />
 import { MetaMaskInpageProvider } from "@metamask/providers"
 import { KycDaoWidgetConfig } from "./widget"
+import {
+	KycDaoClientOptions,
+	KycDaoClientInterface,
+} from "./KycDaoClientCommon"
 
 type VirtualKeyboardEvent = UIEvent & {
 	target: { boundingRect: { height: string } }

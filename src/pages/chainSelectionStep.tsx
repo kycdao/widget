@@ -13,11 +13,11 @@ import {
 	HeaderButtons,
 	OnNext,
 	OnPrev,
-} from "../components/stateContext"
-import { Step, StepPart } from "../components/step/step"
-import { SubmitButton } from "../components/submitButton/submitButton"
-import { ToggleButton } from "../components/toggleButton/toggleButton"
-import { useKycDao } from "../hooks/useKycDao"
+} from "@Components/stateContext"
+import { Step, StepPart } from "@Components/step/step"
+import { SubmitButton } from "@Components/submitButton/submitButton"
+import { ToggleButton } from "@Components/toggleButton/toggleButton"
+import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "./pageProps"
 
 type Chains = "Near" | "Ethereum" | "Solana"

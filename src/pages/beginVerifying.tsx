@@ -1,12 +1,8 @@
 import { useContext, useCallback, useEffect, FC, useRef } from "react"
-import {
-	StateContext,
-	DataActionTypes,
-	StepID,
-} from "../components/stateContext"
+import { StateContext, DataActionTypes, StepID } from "@Components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { PageProps } from "./pageProps"
-import { useKycDao } from "../hooks/useKycDao"
+import { useKycDao } from "@Hooks/useKycDao"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const onError = useCallback((error: string) => {

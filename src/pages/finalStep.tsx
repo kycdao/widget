@@ -1,15 +1,15 @@
 import { useContext, useCallback, useState, useEffect, FC } from "react"
-import { Step, StepPart } from "../components/step/step"
-import { Button } from "../components/button/button"
-import { Placeholder } from "../components/placeholder/placeholder"
+import { Step, StepPart } from "@Components/step/step"
+import { Button } from "@Components/button/button"
+import { Placeholder } from "@Components/placeholder/placeholder"
 import {
 	DataActionTypes,
 	HeaderButtons,
 	StateContext,
-} from "../components/stateContext"
+} from "@Components/stateContext"
 import { PageProps } from "./pageProps"
-import { useKycDao } from "../hooks/useKycDao"
-import { SubmitButton } from "../components/submitButton/submitButton"
+import { useKycDao } from "@Hooks/useKycDao"
+import { SubmitButton } from "@Components/submitButton/submitButton"
 
 const Header = () => <h1>Congrats!</h1>
 

@@ -21,7 +21,16 @@
 		"removeComments": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"baseUrl": "./src"
+		"baseUrl": "./src",
+		"paths": {
+			"@Components/*": ["components/*"],
+			"@Environments/*": ["environments/*"],
+			"@Pages/*": ["pages/*"],
+			"@App/*": ["app/*"],
+			"@Utils/*": ["utils/*"],
+			"@Style/*": ["style/*"],
+			"@Hooks/*": ["hooks/*"]
+		}
 	},
 	"include": ["src"],
 	"exclude": [
