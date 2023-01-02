@@ -10,6 +10,7 @@ import { useSwipeable } from "react-swipeable"
 import { StateContext } from "@Components/stateContext/stateContext"
 import styled from "styled-components"
 import clsx from "clsx"
+import { h1 } from "@Style/index"
 
 export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
 
@@ -70,6 +71,7 @@ const StyledStep = styled.div`
 		width: 100%;
 		box-sizing: border-box;
 		color: black;
+		${h1}
 	}
 
 	&.blurred {

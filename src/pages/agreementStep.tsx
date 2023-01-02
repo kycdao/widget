@@ -11,25 +11,12 @@ import { Step, StepPart } from "@Components/step/step"
 import { SubmitButton } from "@Components/submitButton/submitButton"
 import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "./pageProps"
-import styled from "styled-components"
-import { h1 } from "@Style/index"
-
-const LogoWithText = styled.h1`
-	font-family: var(--kyc-sdk-primary-font);
-	align-items: center;
-	font-weight: 400;
-	display: flex;
-	width: 100%;
-	box-sizing: border-box;
-	color: black;
-	${h1}
-`
 
 const Header: StepPart = () => (
-	<LogoWithText>
+	<h1>
 		<Logo />
 		KycDAO
-	</LogoWithText>
+	</h1>
 )
 
 const Body = () => (
