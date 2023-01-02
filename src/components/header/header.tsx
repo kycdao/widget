@@ -37,11 +37,17 @@ const Button = styled.button<{ hidden?: boolean }>`
 	border-radius: var(--kyc-sdk-border-radius-light);
 	${tr2};
 	${materialIcon};
-	${({ hidden }) => hidden && "visibility: hidden;"}
+
+	${({ hidden }) =>
+		hidden && {
+			opacity: "0.3",
+		}}
+
 	&:hover:not([disabled]) {
 		cursor: pointer;
 		background: var(--kyc-sdk-cybergreen-35);
 	}
+
 	&:active:not([disabled]) {
 		color: #09b678;
 		cursor: pointer;
@@ -62,11 +68,17 @@ const CloseButton = styled.button<{ hidden?: boolean }>`
 	color: black;
 	${tr2};
 	${materialIcon};
-	${({ hidden }) => hidden && "visibility: hidden;"}
+
+	${({ hidden }) =>
+		hidden && {
+			visibility: "hidden",
+		}}
+
 	&:hover:not([disabled]) {
 		background: var(--kyc-sdk-cybergreen-35);
 		cursor: pointer;
 	}
+
 	&:active:not([disabled]) {
 		color: var(--kyc-sdk-dark-green);
 		cursor: pointer;

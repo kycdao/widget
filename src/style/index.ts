@@ -17,3 +17,9 @@ export const materialIcon = css`
 	-webkit-font-feature-settings: "liga";
 	-webkit-font-smoothing: antialiased;
 `
+
+export const h1 = css`
+	margin-bottom: 1em;
+	font-size: 1.6rem;
+	color: black;
+`

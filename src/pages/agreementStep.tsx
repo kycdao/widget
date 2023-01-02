@@ -13,7 +13,7 @@ import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "./pageProps"
 
 const Header: StepPart = () => (
-	<h1 className="h1">
+	<h1>
 		<Logo />
 		KycDAO
 	</h1>

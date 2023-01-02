@@ -2351,6 +2351,7 @@ __metadata:
     babel-cli: "npm:^6.26.0"
     babel-preset-es2015: "npm:^6.24.1"
     buffer: "npm:^6.0.3"
+    clsx: "npm:^1.2.1"
     copy-files: "npm:^0.1.0"
     copyfiles: "npm:^2.4.1"
     create-react-app: "npm:^5.0.1"
@@ -7452,6 +7453,13 @@ __metadata:
     strip-ansi: "npm:^6.0.1"
     wrap-ansi: "npm:^7.0.0"
   checksum: 4db0fc81f3dbd46b65840a739a43ce83a69e58d7da5ae701948fbfc14c25d82a02dd3a3dbed5a20828000e93b4bf2217b181a0a089d580af5daf9452e9c9eab3
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "clsx@npm:1.2.1"
+  checksum: cae17fd0fd5ea449d000c681169a8a6f7add4929b369cae3e2d5b604fba2798b39334121e467dbf6ac752562c28a6894a443f30761b004317c0668eb031af52d
   languageName: node
   linkType: hard
 
