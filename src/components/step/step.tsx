@@ -1,15 +1,15 @@
 import {
-	CSSProperties,
 	FC,
 	useCallback,
 	useContext,
 	useEffect,
 	useLayoutEffect,
-	useMemo,
 	useState,
 } from "react"
 import { useSwipeable } from "react-swipeable"
 import { StateContext } from "@Components/stateContext/stateContext"
+import styled from "styled-components"
+import clsx from "clsx"
 
 export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
 
@@ -46,6 +46,78 @@ type StepProps = {
 
 const isPhantom = !!navigator.userAgent.match("Phantom")
 // const isIphone = !!navigator.userAgent.match("iPhone")
+
+const StyledStep = styled.div`
+	display: flex;
+	width: 100%;
+	box-sizing: border-box;
+	flex-direction: column;
+	padding: 0 1em 0 1em;
+	justify-content: space-between;
+	align-items: center;
+	right: 0;
+	top: 64px;
+	bottom: 0;
+	position: absolute;
+	transition: right 0.25s;
+	overflow: hidden;
+
+	h1 {
+		font-family: var(--kyc-sdk-primary-font);
+		align-items: center;
+		font-weight: 400;
+		display: flex;
+		width: 100%;
+		box-sizing: border-box;
+		color: black;
+	}
+
+	&.blurred {
+		filter: brightness(50%);
+		background: #fefefe;
+	}
+
+	&.moving-center {
+		right: 0;
+	}
+
+	&.moving-in {
+		right: -100%;
+	}
+
+	&.moving-out {
+		right: 100%;
+	}
+`
+
+const StepHead = styled.div`
+	width: 100%;
+`
+
+const StepBody = styled.div`
+	box-sizing: border-box;
+	align-items: stretch;
+	width: 100%;
+	height: 75%;
+	flex-flow: column;
+
+	p {
+		font-family: var(--kyc-sdk-primary-font);
+		font-weight: 400;
+		color: black;
+	}
+`
+
+const StepFooter = styled.div`
+	padding-bottom: 1rem;
+	width: 100%;
+	box-sizing: border-box;
+	position: relative;
+
+	.kyc-sdk-input {
+		margin: 1rem 0;
+	}
+`
 
 export const Step: FC<StepProps> = ({
 	onNext,
@@ -137,15 +209,6 @@ export const Step: FC<StepProps> = ({
 		}
 	}, [])
 
-	const containerStyle = useMemo<CSSProperties>(
-		() => ({
-			position: "absolute",
-			display: "flex",
-			paddingBottom: marginBottom,
-		}),
-		[marginBottom]
-	)
-
 	if (!state) {
 		return (
 			<>
@@ -158,14 +221,16 @@ export const Step: FC<StepProps> = ({
 	const transitionNotDone = transitionState !== "transitionDone"
 
 	return (
-		<div
+		<StyledStep
 			{...(!inactive && !disabled && transitionNotDone ? swipeHandlers : {})}
-			className={`step${animatedClass ? ` ${animatedClass}` : ""}${
-				className ? ` ${className}` : ""
-			}${state.data.currentModal ? " blurred" : ""}`}
-			style={containerStyle}>
+			className={clsx(className, animatedClass, {
+				blurred: state.data.currentModal,
+			})}
+			style={{
+				paddingBottom: marginBottom,
+			}}>
 			{header ? (
-				<div className={`step-head`}>
+				<StepHead>
 					{header({
 						disabled,
 						inactive: inactive || transitionNotDone,
@@ -175,10 +240,10 @@ export const Step: FC<StepProps> = ({
 						onInputBlurred,
 						onInputFocused,
 					})}
-				</div>
+				</StepHead>
 			) : null}
 			{body ? (
-				<div className={`step-body`}>
+				<StepBody>
 					{body({
 						disabled,
 						inactive: inactive || transitionNotDone,
@@ -188,10 +253,10 @@ export const Step: FC<StepProps> = ({
 						onInputBlurred,
 						onInputFocused,
 					})}
-				</div>
+				</StepBody>
 			) : null}
 			{footer ? (
-				<div className={`step-footer`}>
+				<StepFooter>
 					{footer({
 						disabled,
 						inactive: inactive || transitionNotDone,
@@ -201,8 +266,8 @@ export const Step: FC<StepProps> = ({
 						onInputBlurred,
 						onInputFocused,
 					})}
-				</div>
+				</StepFooter>
 			) : null}
-		</div>
+		</StyledStep>
 	)
 }
