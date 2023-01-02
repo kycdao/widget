@@ -7,6 +7,8 @@ export const getNetworkType = (
 		switch (network) {
 			case "PolygonMainnet":
 			case "PolygonMumbai":
+			case "CeloMainnet":
+			case "CeloAlfajores":
 				return "Ethereum"
 		}
 	}
