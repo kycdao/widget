@@ -34,6 +34,9 @@
 		"./dist/appStyle.css": {
 			"import": "./dist/appStyle.css"
 		},
+		"./dist/clientStyle.css": {
+			"import": "./dist/clientStyle.css"
+		},
 		"./KycDaoClient": {
 			"import": "./dist/es/KycDaoClient.js",
 			"script": "./dist/client.min.js",
