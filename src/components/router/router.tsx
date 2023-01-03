@@ -14,7 +14,6 @@ import { NftSelection } from "@Pages/nftArtSelection"
 import { TaxResidenceStep } from "@Pages/taxResidence"
 import { VerificationStep } from "@Pages/verificationStep"
 
-import "./_router.scss"
 import { SubscribedStartStep } from "@Pages/subscribedStartStep"
 
 const RoutedStep: FC<{

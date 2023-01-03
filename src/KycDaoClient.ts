@@ -2,7 +2,6 @@ import {
 	BootstrapIframeKycDaoModal,
 	BootstrapKycDaoModal,
 } from "./BootstrapKycDaoModal"
-import "./KycDaoClient.scss"
 import {
 	KycDaoClientInterface,
 	KycDaoClientMessage,

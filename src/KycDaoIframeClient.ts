@@ -1,4 +1,3 @@
-import "./KycDaoClient.scss"
 import {
 	KycDaoClientInterface,
 	KycDaoClientMessage,
