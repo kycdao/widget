@@ -1,6 +1,6 @@
 export function Logo(): JSX.Element {
 	return (
-		<span className="logo">
+		<span className="kyc-sdk-logo">
 			<svg
 				width="16"
 				height="21"

@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.30",
+	"version": "0.3.0-rc.31",
 	"license": "unlicensed",
 	"main": "dist/cjs/index.js",
 	"types": "./dist/types/index.d.ts",
@@ -40,19 +40,20 @@
 			"import": "./dist/clientStyle.css"
 		},
 		"./KycDaoClient": {
-			"import": "./dist/esm/KycDaoClient.js",
+			"import": "./dist/client.min.js",
 			"script": "./dist/client.min.js",
 			"style": "./dist/client.css"
 		},
 		"./IframeClient": {
-			"import": "./dist/esm/IframeClient.js",
+			"import": "./dist/iframeClient.min.js",
 			"script": "./dist/iframeClient.min.js",
 			"style": "./dist/iframeClient.css"
 		},
-		"./esm": "./dist/es/index.js",
+		"./esm": "./dist/esm/index.js",
 		"./cjs": "./dist/cjs/index.js",
-		"./esm/**/*.*": "./dist/es/**/*.*",
-		"./cjs/**/*.*": "./dist/cjs/**/*.*"
+		"./esm/**/*.*": "./dist/esm/**/*.*",
+		"./cjs/**/*.*": "./dist/cjs/**/*.*",
+		"./dist/**/*.*": "./dist/**/*.*"
 	},
 	"dependencies": {
 		"@kycdao/kycdao-sdk": "^0.4.1",
