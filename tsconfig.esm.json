@@ -19,6 +19,8 @@
 		"removeComments": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
+		"outDir": "dist/esm",
+		"module": "ES2020",
 		"baseUrl": "./src",
 		"paths": {
 			"@Components/*": ["components/*"],
