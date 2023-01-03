@@ -1,7 +1,5 @@
 import { CSSProperties, FC } from "react"
 
-import "./placeholder.css"
-
 export type PlaceholderProps = {
 	width: string
 	height: string

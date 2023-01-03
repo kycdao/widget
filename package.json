@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.29",
+	"version": "0.3.0-rc.30",
 	"license": "unlicensed",
 	"scripts": {
 		"install-precommit-hook": "husky install .husky",
@@ -30,6 +30,9 @@
 		".": {
 			"import": "./dist/es/index.js",
 			"style": "./dist/app.css"
+		},
+		"./dist/appStyle.css": {
+			"import": "./dist/appStyle.css"
 		},
 		"./KycDaoClient": {
 			"import": "./dist/es/KycDaoClient.js",
