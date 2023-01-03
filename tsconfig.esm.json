@@ -19,8 +19,9 @@
 		"removeComments": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
+		"outDir": "dist/esm",
+		"module": "ES2020",
 		"baseUrl": "./src",
-		"declarationDir": "dist/types",
 		"paths": {
 			"@Components/*": ["components/*"],
 			"@Environments/*": ["environments/*"],
@@ -29,13 +30,15 @@
 			"@Utils/*": ["utils/*"],
 			"@Style/*": ["style/*"],
 			"@Hooks/*": ["hooks/*"]
-		}
+		},
+		"declarationDir": "dist/types",
 	},
 	"include": ["src"],
 	"exclude": [
 		"dist",
 		"node_modules",
 		"src/**/*.test.tsx",
-		"src/**/*.stories.tsx"
+		"src/**/*.stories.tsx",
+		"src/setupTests.ts"
 	]
 }

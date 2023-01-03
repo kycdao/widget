@@ -15,7 +15,6 @@ import { Header } from "@Components/header/header"
 import { Router } from "@Components/router/router"
 import { ModalRouter } from "@Components/modal/modalRouter"
 
-import "./style/index.scss"
 import { getNetworkType } from "./utils/getNetworkType"
 
 //set body to unscrollable temporarily

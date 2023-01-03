@@ -19,8 +19,10 @@
 		"removeComments": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"baseUrl": "./src",
+		"outDir": "dist/cjs",
+		"module": "CommonJS",
 		"declarationDir": "dist/types",
+		"baseUrl": "./src",
 		"paths": {
 			"@Components/*": ["components/*"],
 			"@Environments/*": ["environments/*"],
@@ -36,6 +38,7 @@
 		"dist",
 		"node_modules",
 		"src/**/*.test.tsx",
-		"src/**/*.stories.tsx"
+		"src/**/*.stories.tsx",
+		"src/setupTests.ts"
 	]
 }
