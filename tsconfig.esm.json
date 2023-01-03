@@ -30,13 +30,15 @@
 			"@Utils/*": ["utils/*"],
 			"@Style/*": ["style/*"],
 			"@Hooks/*": ["hooks/*"]
-		}
+		},
+		"declarationDir": "dist/types",
 	},
 	"include": ["src"],
 	"exclude": [
 		"dist",
 		"node_modules",
 		"src/**/*.test.tsx",
-		"src/**/*.stories.tsx"
+		"src/**/*.stories.tsx",
+		"src/setupTests.ts"
 	]
 }

@@ -20,6 +20,7 @@
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"baseUrl": "./src",
+		"declarationDir": "dist/types",
 		"paths": {
 			"@Components/*": ["components/*"],
 			"@Environments/*": ["environments/*"],

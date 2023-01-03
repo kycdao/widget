@@ -20,7 +20,8 @@
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"outDir": "dist/cjs",
-		"module": "ES2020",
+		"module": "CommonJS",
+		"declarationDir": "dist/types",
 		"baseUrl": "./src",
 		"paths": {
 			"@Components/*": ["components/*"],
@@ -37,6 +38,7 @@
 		"dist",
 		"node_modules",
 		"src/**/*.test.tsx",
-		"src/**/*.stories.tsx"
+		"src/**/*.stories.tsx",
+		"src/setupTests.ts"
 	]
 }

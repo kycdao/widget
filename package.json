@@ -2,6 +2,8 @@
 	"name": "@kycdao/kycdao-web-sdk",
 	"version": "0.3.0-rc.30",
 	"license": "unlicensed",
+	"main": "dist/cjs/index.js",
+	"types": "./dist/types/index.d.ts",
 	"scripts": {
 		"install-precommit-hook": "husky install .husky",
 		"start": "yarn start-https",
@@ -9,13 +11,12 @@
 		"start-http": "cross-env HTTPS=false PORT=4002 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
 		"build:lib": "tsc --project tsconfig.esm.json && tsc --project tsconfig.cjs.json && tsc-alias -p tsconfig.cjs.json && tsc-alias -p tsconfig.esm.json",
 		"build:web": "GENERATE_SOURCEMAP=false react-app-rewired build",
-		"build": "yarn clean && yarn build:lib && yarn build:web && mv ./build/* ./dist/ && yarn run copy-files",
+		"build": "yarn clean && yarn build:lib && yarn build:web && mv ./build/* ./dist/",
 		"test": "react-app-rewired test",
 		"eject": "create-react-app --eject",
 		"lint": "eslint 'src/**/*.{ts,tsx,scss}' --fix",
 		"format": "prettier -w package.json .github/ src/",
-		"clean": "rimraf build dist",
-		"copy-files": "copyfiles -u 1 ./dist/es "
+		"clean": "rimraf build dist"
 	},
 	"files": [
 		"dist/*",
@@ -47,9 +48,12 @@
 			"import": "./dist/esm/IframeClient.js",
 			"script": "./dist/iframeClient.min.js",
 			"style": "./dist/iframeClient.css"
-		}
+		},
+		"./esm": "./dist/es/index.js",
+		"./cjs": "./dist/cjs/index.js",
+		"./esm/**/*.*": "./dist/es/**/*.*",
+		"./cjs/**/*.*": "./dist/cjs/**/*.*"
 	},
-	"types": "./index.d.ts",
 	"dependencies": {
 		"@kycdao/kycdao-sdk": "^0.4.1",
 		"buffer": "^6.0.3",
