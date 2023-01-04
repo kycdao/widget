@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.33",
+	"version": "0.3.0-rc.34",
 	"license": "unlicensed",
 	"main": "dist/cjs/index.js",
 	"types": "./dist/types/index.d.ts",
@@ -33,18 +33,21 @@
 			"require": "./dist/cjs/index.js",
 			"style": "./dist/app.css"
 		},
-		"./style.css": {
-			"import": "./dist/appStyle.css"
+		"./app.css": {
+			"import": "./dist/kycDaoApp.css"
 		},
 		"./client.css": {
-			"import": "./dist/clientStyle.css"
+			"import": "./dist/client.css"
 		},
-		"./KycDaoClient": {
-			"import": "./dist/client.min.js",
-			"script": "./dist/client.min.js",
+		"./iframeClient.css": {
+			"import": "./dist/iframeClient.css"
+		},
+		"./client": {
+			"import": "./dist/esm/client.min.js",
+			"script": "./dist/cjs/client.min.js",
 			"style": "./dist/client.css"
 		},
-		"./IframeClient": {
+		"./iframeClient": {
 			"import": "./dist/iframeClient.min.js",
 			"script": "./dist/iframeClient.min.js",
 			"style": "./dist/iframeClient.css"

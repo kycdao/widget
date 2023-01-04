@@ -8,23 +8,8 @@
 	overflow: hidden;
 }
 
-.KycDaoModalIFrame {
-	@extend .KycDaoModalFrame;
-	border: 0px;
-	border-width: 0;
-}
-
 @media only screen and (min-width: 992px) {
 	.KycDaoModalFrame {
-		width: var(--width);
-		height: var(--height);
-		margin: auto;
-		border-radius: 12px;
-	}
-}
-
-@media only screen and (min-width: 992px) {
-	.KycDaoModalIFrame {
 		width: var(--width);
 		height: var(--height);
 		margin: auto;

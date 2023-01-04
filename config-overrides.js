@@ -22,8 +22,9 @@ module.exports = function override(config, env) {
 		iframeClient: "./src/KycDaoIframeClient.ts",
 		app: "./src/index.js",
 		widget: "./src/widget.tsx",
-		appStyle: "./src/style/index.scss",
-		clientStyle: "./src/KycDaoClient.scss",
+		app: "./src/style/index.scss",
+		client: "./src/KycDaoClient.scss",
+		iframeClient: "./src/KycDaoClient.scss",
 	}
 	config.output = {
 		filename: "[name].min.js",
