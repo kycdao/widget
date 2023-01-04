@@ -6,7 +6,7 @@
 	"types": "./dist/types/index.d.ts",
 	"scripts": {
 		"install-precommit-hook": "husky install .husky",
-		"start": "yarn start-https",
+		"start": "yarn start:sass && yarn start-https",
 		"start-https": "cross-env HTTPS=true PORT=4002 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
 		"start-http": "cross-env HTTPS=false PORT=4002 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
 		"build:lib": "tsc --project tsconfig.esm.json && tsc --project tsconfig.cjs.json && tsc-alias -p tsconfig.cjs.json && tsc-alias -p tsconfig.esm.json",
@@ -17,7 +17,8 @@
 		"lint": "eslint 'src/**/*.{ts,tsx,scss}' --fix",
 		"format": "prettier -w package.json .github/ src/",
 		"clean": "rimraf build dist",
-		"build:sass": "sass --no-source-map ./src/style/index.scss dist/app.css --style=compressed && sass --no-source-map ./src/KycDaoClient.scss --style=compressed dist/client.css && sass --no-source-map --style=compressed ./src/KycDaoIframeClient.scss dist/iframe.css"
+		"build:sass": "sass --no-source-map ./src/style/index.scss dist/app.css --style=compressed && sass --no-source-map ./src/KycDaoClient.scss --style=compressed dist/client.css && sass --no-source-map --style=compressed ./src/KycDaoIframeClient.scss dist/iframeClient.css",
+		"start:sass": "sass --no-source-map ./src/style/index.scss public/app.css --style=compressed && sass --no-source-map ./src/KycDaoClient.scss --style=compressed public/client.css && sass --no-source-map --style=compressed ./src/KycDaoIframeClient.scss public/iframeClient.css"
 	},
 	"files": [
 		"dist/*",
@@ -41,17 +42,19 @@
 			"import": "./dist/client.css"
 		},
 		"./iframeClient.css": {
-			"import": "./dist/iframe.css"
+			"import": "./dist/iframeClient.css"
 		},
 		"./client": {
-			"import": "./dist/esm/client.min.js",
-			"script": "./dist/cjs/client.min.js",
-			"style": "./dist/client.css"
+			"import": "./dist/esm/client.js",
+			"script": "./dist/client.min.js",
+			"style": "./dist/client.css",
+			"require": "./dist/cjs/client.js"
 		},
 		"./iframeClient": {
-			"import": "./dist/iframeClient.min.js",
+			"import": "./dist/esm/iframeClient.js",
 			"script": "./dist/iframeClient.min.js",
-			"style": "./dist/iframe.css"
+			"style": "./dist/iframeClient.css",
+			"require": "./dist/cjs/client.js"
 		},
 		"./esm": "./dist/esm/index.js",
 		"./cjs": "./dist/cjs/index.js",
