@@ -17,8 +17,8 @@
 		"lint": "eslint 'src/**/*.{ts,tsx,scss}' --fix",
 		"format": "prettier -w package.json .github/ src/",
 		"clean": "rimraf build dist",
-		"build:sass": "sass --no-source-map ./src/style/index.scss dist/app.css --style=compressed && sass --no-source-map ./src/KycDaoClient.scss --style=compressed dist/client.css && sass --no-source-map --style=compressed ./src/KycDaoIframeClient.scss dist/iframeClient.css",
-		"start:sass": "sass --no-source-map ./src/style/index.scss public/app.css --style=compressed && sass --no-source-map ./src/KycDaoClient.scss --style=compressed public/client.css && sass --no-source-map --style=compressed ./src/KycDaoIframeClient.scss public/iframeClient.css"
+		"build:sass": "sass ./src/style/index.scss dist/app.css --style=compressed && sass ./src/KycDaoClient.scss --style=compressed dist/client.css && sass --style=compressed ./src/KycDaoIframeClient.scss dist/iframeClient.css",
+		"start:sass": "sass ./src/style/index.scss public/app.css --style=compressed && sass ./src/KycDaoClient.scss --style=compressed public/client.css && sass --style=compressed ./src/KycDaoIframeClient.scss public/iframeClient.css"
 	},
 	"files": [
 		"dist/*",
