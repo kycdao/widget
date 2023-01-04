@@ -15,6 +15,7 @@ function kycDaoIframeClient(
 		iframeOptions,
 		config,
 		backdrop = true,
+		modal = true,
 	}: KycDaoClientOptions
 ) {
 	if ("virtualKeyboard" in navigator) {
@@ -32,6 +33,7 @@ function kycDaoIframeClient(
 	this.onFail = onFail
 	this.onSuccess = onSuccess
 	this.isSuccessful = false
+	this.isModal = modal
 
 	this.messageHndlr = this.messageHndlr.bind(this)
 	this.open = this.open.bind(this)
