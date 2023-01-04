@@ -43,12 +43,12 @@ const Button = styled.button<{ hidden?: boolean }>`
 			opacity: "0.3",
 		}}
 
-	&:hover:not([disabled]) {
+	&:hover:not([disabled]):not([hidden]) {
 		cursor: pointer;
 		background: var(--kyc-sdk-cybergreen-35);
 	}
 
-	&:active:not([disabled]) {
+	&:active:not([disabled]):not([hidden]) {
 		color: #09b678;
 		cursor: pointer;
 		background: var(--kyc-sdk-cybergreen-35);
@@ -74,12 +74,12 @@ const CloseButton = styled.button<{ hidden?: boolean }>`
 			visibility: "hidden",
 		}}
 
-	&:hover:not([disabled]) {
+	&:hover:not([disabled]):not([hidden]) {
 		background: var(--kyc-sdk-cybergreen-35);
 		cursor: pointer;
 	}
 
-	&:active:not([disabled]) {
+	&:active:not([disabled]):not([hidden]) {
 		color: var(--kyc-sdk-dark-green);
 		cursor: pointer;
 		background: var(--kyc-sdk-cybergreen-35);
