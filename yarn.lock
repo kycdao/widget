@@ -2382,7 +2382,7 @@ __metadata:
     react-swipeable: "npm:^7.0.0"
     rimraf: "npm:^3.0.2"
     rxjs: "npm:^7.8.0"
-    sass: "npm:^1.57.1"
+    sass: "npm:1.57.1"
     stream: "npm:^0.0.2"
     styled-components: "npm:^5.3.6"
     tsc: "npm:^2.0.4"
@@ -17182,7 +17182,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.57.1":
+"sass@npm:1.57.1":
   version: 1.57.1
   resolution: "sass@npm:1.57.1"
   dependencies:

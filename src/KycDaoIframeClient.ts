@@ -4,7 +4,7 @@ import {
 	KycDaoClientOptions,
 } from "./KycDaoClientCommon"
 
-function kycDaoIframeClient(
+export function kycDaoIframeClient(
 	this: KycDaoClientInterface,
 	{
 		height = 650,
@@ -180,6 +180,6 @@ window.KycDaoIframeClient = kycDaoIframeClient as unknown as {
 	new (config: KycDaoClientOptions): KycDaoClientInterface
 }
 
-export default kycDaoIframeClient as unknown as {
+export const KycDaoIframeClient = kycDaoIframeClient as unknown as {
 	new (config: KycDaoClientOptions): KycDaoClientInterface
 }

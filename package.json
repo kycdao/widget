@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.34",
+	"version": "0.3.0-rc.35",
 	"license": "unlicensed",
 	"main": "dist/cjs/index.js",
 	"types": "./dist/types/index.d.ts",
@@ -11,12 +11,13 @@
 		"start-http": "cross-env HTTPS=false PORT=4002 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
 		"build:lib": "tsc --project tsconfig.esm.json && tsc --project tsconfig.cjs.json && tsc-alias -p tsconfig.cjs.json && tsc-alias -p tsconfig.esm.json",
 		"build:web": "GENERATE_SOURCEMAP=false react-app-rewired build",
-		"build": "yarn clean && yarn build:lib && yarn build:web && mv ./build/* ./dist/",
+		"build": "yarn clean && yarn build:lib && yarn build:web && mv ./build/* ./dist/ && yarn build:sass",
 		"test": "react-app-rewired test",
 		"eject": "create-react-app --eject",
 		"lint": "eslint 'src/**/*.{ts,tsx,scss}' --fix",
 		"format": "prettier -w package.json .github/ src/",
-		"clean": "rimraf build dist"
+		"clean": "rimraf build dist",
+		"build:sass": "sass --no-source-map ./src/style/index.scss dist/app.css --style=compressed && sass --no-source-map ./src/KycDaoClient.scss --style=compressed dist/client.css && sass --no-source-map --style=compressed ./src/KycDaoIframeClient.scss dist/iframe.css"
 	},
 	"files": [
 		"dist/*",
@@ -34,13 +35,13 @@
 			"style": "./dist/app.css"
 		},
 		"./app.css": {
-			"import": "./dist/kycDaoApp.css"
+			"import": "./dist/app.css"
 		},
 		"./client.css": {
 			"import": "./dist/client.css"
 		},
 		"./iframeClient.css": {
-			"import": "./dist/iframeClient.css"
+			"import": "./dist/iframe.css"
 		},
 		"./client": {
 			"import": "./dist/esm/client.min.js",
@@ -50,7 +51,7 @@
 		"./iframeClient": {
 			"import": "./dist/iframeClient.min.js",
 			"script": "./dist/iframeClient.min.js",
-			"style": "./dist/iframeClient.css"
+			"style": "./dist/iframe.css"
 		},
 		"./esm": "./dist/esm/index.js",
 		"./cjs": "./dist/cjs/index.js",
@@ -117,6 +118,7 @@
 		"react-app-rewired": "^2.2.1",
 		"react-dom": "^18.2.0",
 		"rimraf": "^3.0.2",
+		"sass": "1.57.1",
 		"tsc": "^2.0.4",
 		"tsc-alias": "^1.8.2",
 		"typescript": "^4.9.4"
