@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.35",
+	"version": "0.3.0-rc.36",
 	"license": "unlicensed",
 	"main": "dist/cjs/index.js",
 	"types": "./dist/types/index.d.ts",
