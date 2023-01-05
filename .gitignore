@@ -32,3 +32,10 @@ playwright-report
 .vscode
 .idea
 
+# dynamically created styles in the public, we build them everytime
+public/app.css*
+public/app.css
+public/client.css.*
+public/client.css
+public/iframeClient.css.*
+public/iframeClient.css

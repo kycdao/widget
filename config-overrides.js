@@ -8,12 +8,10 @@ const WebpackManifestPlugin =
 	require("webpack-manifest-plugin").WebpackManifestPlugin
 
 module.exports = function override(config, env) {
-	const fallback = config.resolve.fallback
-		? {
-				...config.resolve.fallback,
-				crypto: require.resolve("crypto-browserify"),
-		  }
-		: { crypto: require.resolve("crypto-browserify") }
+	const fallback = {
+		...(config.resolve.fallback ? config.resolve.fallback : {}),
+		crypto: false,
+	}
 
 	const outDir = "./build"
 	config.target = "web"
@@ -21,7 +19,7 @@ module.exports = function override(config, env) {
 		client: "./src/KycDaoClient.ts",
 		iframeClient: "./src/KycDaoIframeClient.ts",
 		app: "./src/index.js",
-		widget: "./src/widget.tsx"
+		widget: "./src/widget.tsx",
 	}
 	config.output = {
 		filename: "[name].min.js",
