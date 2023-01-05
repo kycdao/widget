@@ -1,107 +1,102 @@
 @use "../../style/variables";
 
-.step-footer {
-	.calculator-wrapper {
-		p {
-			font-family: var(--kyc-sdk-primary-font);
+.calculator-wrapper {
+	p {
+		font-family: var(--kyc-sdk-primary-font);
+	}
+
+	.calculator {
+		display: flex;
+		flex-flow: column;
+
+		& > div {
+			justify-content: space-evenly;
+			flex-direction: row;
+			display: flex;
+			margin-bottom: 1em;
 		}
 
-		.calculator {
-			display: flex;
-			flex-flow: column;
+		.calculator-button {
+			margin-block: auto;
+			line-height: 2em;
+			justify-content: center;
+			padding-left: 0;
+			padding-right: 0;
+			width: 3em;
+			height: 3em;
 
-			& > div {
-				justify-content: space-evenly;
-				flex-direction: row;
-				display: flex;
-				margin-bottom: 1em;
+			//background: rgb(0, 0, 0, 0);
+			background: black;
+			border: 2px black solid;
+
+			span,
+			.material-icons {
+				color: white;
 			}
 
-			.calculator-button {
-				margin-block: auto;
-				line-height: 2em;
-				justify-content: center;
-				padding-left: 0;
-				padding-right: 0;
-				width: 3em;
-				height: 3em;
+			&:hover {
+				box-shadow: 0 0 0 0px var(--kyc-sdk-cybergreen-35);
+				background: var(--kyc-sdk-cybergreen);
 
-				//background: rgb(0, 0, 0, 0);
-				background: black;
-				border: 2px black solid;
+				span,
+				.material-icons {
+					color: black;
+				}
+
+				&:focus {
+					span,
+					.material-icons {
+						color: black;
+					}
+				}
+			}
+
+			&:focus {
+				box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
 
 				span,
 				.material-icons {
 					color: white;
 				}
-
-				&:hover {
-					box-shadow: 0 0 0 0px var(--kyc-sdk-cybergreen-35);
-					background: var(--kyc-sdk-cybergreen);
-
-					span,
-					.material-icons {
-						color: black;
-					}
-
-					&:focus {
-						span,
-						.material-icons {
-							color: black;
-						}
-					}
-				}
-
-				&:focus {
-					box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
-
-					span,
-					.material-icons {
-						color: white;
-					}
-				}
-
-				&:active {
-					background: var(--kyc-sdk-cybergreen);
-					border: 2px solid var(--kyc-sdk-cybergreen);
-					box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
-				}
-
-				&:focus-visible {
-					outline: none;
-					border: none;
-				}
-
-				i {
-				}
 			}
 
-			.sum {
-				display: flex;
-				align-items: center;
-				flex: 1;
-				justify-content: center;
-
-				.price {
-					color: black;
-					font-weight: 800;
-					font-family: var(--kyc-sdk-primary-font);
-				}
-
-				.subscription {
-					font-family: var(--kyc-sdk-primary-font);
-				}
+			&:active {
+				background: var(--kyc-sdk-cybergreen);
+				border: 2px solid var(--kyc-sdk-cybergreen);
+				box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
 			}
 
-			.yearCount {
-				font-family: var(--kyc-sdk-primary-font);
+			&:focus-visible {
+				outline: none;
+				border: none;
+			}
+		}
+
+		.sum {
+			display: flex;
+			align-items: center;
+			flex: 1;
+			justify-content: center;
+
+			.price {
 				color: black;
-				display: flex;
-				align-items: center;
-				margin-block: auto;
-				flex: 1;
-				justify-content: center;
+				font-weight: 800;
+				font-family: var(--kyc-sdk-primary-font);
 			}
+
+			.subscription {
+				font-family: var(--kyc-sdk-primary-font);
+			}
+		}
+
+		.yearCount {
+			font-family: var(--kyc-sdk-primary-font);
+			color: black;
+			display: flex;
+			align-items: center;
+			margin-block: auto;
+			flex: 1;
+			justify-content: center;
 		}
 	}
 }

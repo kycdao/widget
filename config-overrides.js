@@ -1,7 +1,6 @@
 const webpack = require("webpack")
 const path = require("path")
 const NpmDtsPlugin = require("npm-dts-webpack-plugin")
-const process = require("process")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const WebpackManifestPlugin =
@@ -41,7 +40,6 @@ module.exports = function override(config, env) {
 
 	config.plugins = (config.plugins || []).concat([
 		new webpack.ProvidePlugin({
-			process: "process/browser",
 			Buffer: ["buffer", "Buffer"],
 			ethereum: ["ethereum", "ethereum"],
 		}),
