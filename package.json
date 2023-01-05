@@ -11,7 +11,7 @@
 		"start-http": "cross-env HTTPS=false PORT=4002 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
 		"build:lib": "tsc --project tsconfig.esm.json & tsc --project tsconfig.umd.json && tsc-alias -p tsconfig.umd.json & tsc-alias -p tsconfig.esm.json",
 		"build:web": "GENERATE_SOURCEMAP=false react-app-rewired build",
-		"build": "yarn clean && yarn build:sass & yarn build:lib & yarn build:web && mv ./build/* ./dist/ && rm ./dist/index.html & rm ./dist/iframe.html",
+		"build": "yarn clean && yarn build:sass & yarn build:lib & yarn build:web && mv ./build/* ./dist/",
 		"test": "react-app-rewired test",
 		"eject": "create-react-app --eject",
 		"lint": "eslint 'src/**/*.{ts,tsx,scss}' --fix",

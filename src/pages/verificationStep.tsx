@@ -25,7 +25,7 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 const Header = () => (
 	<h1 className="h1">
 		<Logo />
-		ID Verification
+		Open account
 	</h1>
 )
 
