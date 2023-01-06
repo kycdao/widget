@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.38",
+	"version": "0.3.0-rc.39",
 	"license": "unlicensed",
 	"main": "dist/umd/index.js",
 	"scripts": {
@@ -70,7 +70,7 @@
 		"./dist/**/*.*": "./dist/**/*.*"
 	},
 	"dependencies": {
-		"@kycdao/kycdao-sdk": "^0.4.1",
+		"@kycdao/kycdao-sdk": "^0.4.2",
 		"buffer": "^6.0.3",
 		"clsx": "^1.2.1",
 		"near-api-js": "0.44.2",
