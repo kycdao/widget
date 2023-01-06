@@ -31,7 +31,7 @@
 			"@Style/*": ["style/*"],
 			"@Hooks/*": ["hooks/*"]
 		},
-		"declarationDir": "dist/types",
+		"declarationDir": "dist/esm",
 	},
 	"include": ["src"],
 	"exclude": [

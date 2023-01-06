@@ -20,7 +20,6 @@
 		"emitDecoratorMetadata": true,
 		"outDir": "dist/umd",
 		"module": "UMD",
-		"declarationDir": "dist/types",
 		"baseUrl": "./src",
 		"paths": {
 			"@Components/*": ["components/*"],
@@ -30,7 +29,8 @@
 			"@Utils/*": ["utils/*"],
 			"@Style/*": ["style/*"],
 			"@Hooks/*": ["hooks/*"]
-		}
+		},
+		"declarationDir": "dist/umd",
 	},
 	"include": ["src"],
 	"exclude": [

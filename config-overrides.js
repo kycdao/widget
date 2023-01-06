@@ -53,7 +53,9 @@ module.exports = function override(config, env) {
 
 	if (env === "production") {
 		if (process.env.NODE_ENV !== "development") {
-			config.plugins.push(new NpmDtsPlugin())
+			config.plugins.push(new NpmDtsPlugin({
+				tsc: "--declarationDir build"
+			}))
 		}
 	}
 

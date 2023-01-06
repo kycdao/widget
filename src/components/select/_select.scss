@@ -26,33 +26,33 @@
 	}
 
 	::placeholder {
-		color: var(&kyc-sdk-dark-purple);
+		color: var(--kyc-sdk-dark-purple);
 		font-family: var(--kyc-sdk-primary-font);
 	}
 
 	::-webkit-input-placeholder {
-		color: var(&kyc-sdk-dark-purple);
+		color: var(--kyc-sdk-dark-purple);
 		font-family: var(--kyc-sdk-primary-font);
 	}
 
 	:-ms-input-placeholder {
-		color: var(&kyc-sdk-dark-purple);
+		color: var(--kyc-sdk-dark-purple);
 		font-family: var(--kyc-sdk-primary-font);
 	}
 
 	::-ms-input-placeholder {
-		color: var(&kyc-sdk-dark-purple);
+		color: var(--kyc-sdk-dark-purple);
 		font-family: var(--kyc-sdk-primary-font);
 	}
 
 	&:hover {
-		box-shadow: 0 0 0 10px var(&kyc-sdk-normal-blue-35);
-		border-color: var(&kyc-sdk-normal-blue);
+		box-shadow: 0 0 0 10px var(--kyc-sdk-normal-blue-35);
+		border-color: var(--kyc-sdk-normal-blue);
 	}
 
 	&:focus {
-		box-shadow: 0 0 0 10px var(&kyc-sdk-normal-blue-50);
-		border-color: var(&kyc-sdk-normal-blue);
+		box-shadow: 0 0 0 10px var(--kyc-sdk-normal-blue-50);
+		border-color: var(--kyc-sdk-normal-blue);
 	}
 
 	&.full-width {
@@ -64,8 +64,8 @@
 .disabled {
 	position: relative;
 	z-index: 10;
-	border: 2px solid var(&kyc-sdk-green);
-	box-shadow: 0 0 0 10px var(&kyc-sdk-green-35);
+	border: 2px solid var(--kyc-sdk-green);
+	box-shadow: 0 0 0 10px var(--kyc-sdk-green-35);
 }
 
 .kyc-sdk-option {

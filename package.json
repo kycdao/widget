@@ -3,7 +3,6 @@
 	"version": "0.3.0-rc.37",
 	"license": "unlicensed",
 	"main": "dist/umd/index.js",
-	"types": "./dist/types/index.d.ts",
 	"scripts": {
 		"install-precommit-hook": "husky install .husky",
 		"start": "yarn start:sass & yarn start-https",
@@ -11,7 +10,7 @@
 		"start-http": "cross-env HTTPS=false PORT=4002 GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true BROWSER=none react-app-rewired start",
 		"build:lib": "tsc --project tsconfig.esm.json & tsc --project tsconfig.umd.json && tsc-alias -p tsconfig.umd.json & tsc-alias -p tsconfig.esm.json",
 		"build:web": "GENERATE_SOURCEMAP=false react-app-rewired build",
-		"build": "yarn clean && yarn build:sass & yarn build:lib & yarn build:web && mv ./build/* ./dist/",
+		"build": "yarn clean && yarn build:sass & yarn build:lib & yarn build:web && mv ./build/ ./dist/web && mv ./dist/web/*.(html|ico) ./dist",
 		"test": "react-app-rewired test",
 		"eject": "create-react-app --eject",
 		"lint": "eslint 'src/**/*.{ts,tsx,scss}' --fix",
@@ -33,26 +32,33 @@
 		".": {
 			"import": "./dist/esm/index.js",
 			"require": "./dist/umd/index.js",
-			"style": "./dist/app.css"
+			"style": "./dist/app.css",
+			"script": "./dist/web/app.min.js"
 		},
 		"./app.css": {
-			"import": "./dist/app.css"
+			"style": "./dist/app.css",
+			"import": "./dist/app.css",
+			"require": "./dist/app.css"
 		},
 		"./client.css": {
-			"import": "./dist/client.css"
+			"style": "./dist/client.css",
+			"import": "./dist/client.css",
+			"require": "./dist/client.css"
 		},
 		"./iframeClient.css": {
-			"import": "./dist/iframeClient.css"
+			"style": "./dist/iframeClient.css",
+			"import": "./dist/iframeClient.css",
+			"require": "./dist/iframeClient.css"
 		},
 		"./client": {
 			"import": "./dist/esm/client.js",
-			"script": "./dist/client.min.js",
+			"script": "./dist/web/client.min.js",
 			"style": "./dist/client.css",
 			"require": "./dist/umd/client.js"
 		},
 		"./iframeClient": {
 			"import": "./dist/esm/iframeClient.js",
-			"script": "./dist/iframeClient.min.js",
+			"script": "./dist/web/iframeClient.min.js",
 			"style": "./dist/iframeClient.css",
 			"require": "./dist/umd/client.js"
 		},
@@ -60,6 +66,7 @@
 		"./umd": "./dist/umd/index.js",
 		"./esm/**/*.*": "./dist/esm/**/*.*",
 		"./umd/**/*.*": "./dist/umd/**/*.*",
+		"./web/**/*.*": "./dist/web/**/*.*",
 		"./dist/**/*.*": "./dist/**/*.*"
 	},
 	"dependencies": {
