@@ -1,7 +1,7 @@
 @use "../../style/tr2";
 @use "../../style/translateX";
 
-.kyc-sdk-submit-button {
+.button {
 	overflow: hidden;
 
 	.first-arrow {
@@ -19,7 +19,8 @@
 		@extend .tr2;
 	}
 
-	span {
+	span,
+	.material-icons {
 		padding-left: 1.5rem;
 	}
 

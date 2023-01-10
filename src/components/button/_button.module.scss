@@ -43,7 +43,7 @@
 		border: 2px solid black;
 
 		span,
-		.material-icons {
+		i {
 			font-weight: 400;
 			color: white;
 		}
@@ -114,7 +114,7 @@
 		background: var(--kyc-sdk-cyberpunk);
 
 		span,
-		.material-icons {
+		i {
 			font-weight: 400;
 			color: white;
 		}
@@ -123,8 +123,7 @@
 			background: var(--kyc-sdk-cyberpunk);
 			box-shadow: 0 0 0 10px var(--kyc-sdk-normal-blue-35);
 
-			span,
-			.material-icons {
+			span {
 				font-weight: 400;
 				color: var(--kyc-sdk-dark-blue);
 				//margin-left: 0.5em;

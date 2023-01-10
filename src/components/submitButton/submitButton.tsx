@@ -59,11 +59,11 @@ export const SubmitButton: FC<ButtonProps> = ({
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
 			className={clsx(
-				classes["kyc-sdk-submit-button"],
+				classes.button,
 				buttonClasses.button,
 				className,
-				fullWidth ? buttonClasses["full-width"] : null,
-				black ? buttonClasses["black"] : null
+				fullWidth && buttonClasses["full-width"],
+				black && buttonClasses.black
 				// disabled ? buttonClasses[disabled] : null
 			)}
 			onClick={inactive ? undefined : onClick}>

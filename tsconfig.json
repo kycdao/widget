@@ -1,7 +1,8 @@
 {
 	"compilerOptions": {
+		"plugins": [{ "name": "typescript-plugin-css-modules" }],
 		"skipDefaultLibCheck": true,
-		"target": "ES2020",
+		"target": "ES6",
 		"declaration": true,
 		"downlevelIteration": true,
 		"sourceMap": true,
@@ -16,6 +17,7 @@
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"jsx": "react-jsx",
+		"module": "ES2020",
 		"removeComments": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
