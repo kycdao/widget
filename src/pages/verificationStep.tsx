@@ -14,6 +14,8 @@ import { Logo } from "@Components/logo/logo"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<SubmitButton
+		black
+		fullWidth
 		autoFocus={!disabled && !inactive}
 		disabled={disabled}
 		inactive={inactive}

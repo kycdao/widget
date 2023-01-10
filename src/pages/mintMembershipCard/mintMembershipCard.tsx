@@ -14,6 +14,9 @@ import { PageProps } from "../pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
 import { useMinting } from "@Hooks/useMinting"
 import { Logo } from "@Components/logo/logo"
+import classes from "./_mintMembershipCard.module.scss"
+import styled from "styled-components"
+import clsx from "clsx"
 
 const Body = () => {
 	return (
@@ -36,6 +39,16 @@ const Header = () => (
 		Mint membership
 	</h1>
 )
+
+const unstyledButtonIcon = ({
+	children,
+}: {
+	children: JSX.Element | string
+}) => <i className="material-icons">{children}</i>
+
+const ButtonIcon = styled(unstyledButtonIcon)`
+	line-height: 2em;
+`
 
 export const MintStep: FC<PageProps> = ({
 	className,
@@ -142,53 +155,62 @@ export const MintStep: FC<PageProps> = ({
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive, onEnter }) => (
 			<>
-				<div className="calculator-wrapper">
+				<div className={classes["calculator-wrapper"]}>
 					<p className="p">Membership period:</p>
-					<div
-						className="calculator"
-						style={{ display: "flex", flexDirection: "column" }}>
+					<div className={classes.calculator}>
 						<div>
 							<Button
-								disabled={disabled}
-								className="centered clean square calculator-button"
+								centered
+								disabled={disabled || yearCount === 0}
+								className={clsx(
+									"clean",
+									"square",
+									classes["calculator-button"]
+								)}
 								onClick={decrease}>
-								<i style={{ lineHeight: "2em" }} className="material-icons">
-									remove
-								</i>
+								<ButtonIcon>remove</ButtonIcon>
 							</Button>
-							<div className="yearCount">{yearCount} year</div>
+							<div className={classes.yearCount}>{yearCount} year</div>
 							<Button
+								centered
 								disabled={disabled}
-								className="centered clean square calculator-button"
+								className={clsx(
+									"clean",
+									"square",
+									classes["calculator-button"]
+								)}
 								onClick={increase}>
-								<i style={{ lineHeight: "2em" }} className="material-icons">
-									add
-								</i>
+								<ButtonIcon>add</ButtonIcon>
 							</Button>
-							<div className="sum">
-								<span className="price">${5 * (yearCount || 0)}</span>
+							<div className={classes["sum"]}>
+								<span className={classes["price"]}>
+									${5 * (yearCount || 0)}
+								</span>
 								{/*<span className="subscription"> / year</span>*/}
 							</div>
 						</div>
 					</div>
 				</div>
-				<div style={{ display: "none" }} className="value">
-					<i className="material-icons">info</i>
-					<p>
-						<strong>5,6</strong> Matic
-					</p>
-					<p>
-						- <strong>0.12</strong> Matic{" "}
-					</p>
-					<p>
-						{" "}
-						gas = <strong>-5.72</strong> Matic ($12.94USD)
-					</p>
-				</div>
+				{false && (
+					<div className={classes["value"]}>
+						<i className="material-icons">info</i>
+						<p>
+							<strong>5,6</strong> Matic
+						</p>
+						<p>
+							- <strong>0.12</strong> Matic{" "}
+						</p>
+						<p>
+							{" "}
+							gas = <strong>-5.72</strong> Matic ($12.94USD)
+						</p>
+					</div>
+				)}
 				<SubmitButton
+					black
+					fullWidth
 					autoFocus={!inactive && !disabled && !yearCount}
 					disabled={disabled || !yearCount}
-					className="full-width black"
 					onClick={onEnter}
 					inactive={inactive}
 					label={"Pay + mint"}

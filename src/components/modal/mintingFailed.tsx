@@ -3,6 +3,8 @@ import { useCallback, useContext } from "react"
 import { useMinting } from "@Hooks/useMinting"
 import { Button } from "../button/button"
 
+import modalClasses from "./_modal.module.scss"
+
 export const MintingFailedModal = () => {
 	const minting = useMinting()
 	const {
@@ -16,24 +18,26 @@ export const MintingFailedModal = () => {
 	}, [minting, subscriptionYears, imageId])
 
 	return (
-		<div className="mintingFailedModal">
-			<div className="header">
+		<div className={modalClasses.modal}>
+			<div className={modalClasses.header}>
 				<i className="material-icons">error</i>
 				<p>Minting failed</p>
 			</div>
 
-			<div className="body">
-				<p className="policy">
+			<div className={modalClasses.body}>
+				<p className={"policy"}>
 					Minting failed because of an error. Please try mint kycNFT again.
 				</p>
 			</div>
 
-			<Button className="underline centered" onClick={onRetry}>
-				<>
-					<i className="material-icons">refresh</i>
-					<span>Retry</span>
-				</>
-			</Button>
+			<div className={modalClasses["button-wrapper"]}>
+				<Button underline centered onClick={onRetry}>
+					<>
+						<i className="material-icons">refresh</i>
+						<span>Retry</span>
+					</>
+				</Button>
+			</div>
 		</div>
 	)
 }

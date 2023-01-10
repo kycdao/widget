@@ -1,4 +1,7 @@
+import clsx from "clsx"
 import { CSSProperties, FC } from "react"
+
+import classes from "./_button.module.scss"
 
 export type ButtonProps = {
 	onClick?: () => void
@@ -7,6 +10,9 @@ export type ButtonProps = {
 	style?: CSSProperties
 	children: JSX.Element[] | JSX.Element | string
 	inactive?: boolean
+	fullWidth?: boolean
+	underline?: boolean
+	centered?: boolean
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -16,12 +22,21 @@ export const Button: FC<ButtonProps> = ({
 	className,
 	inactive,
 	children,
+	fullWidth,
+	underline,
+	centered,
 }) => {
 	return (
 		<button
 			style={style}
 			disabled={disabled}
-			className={`kyc-sdk-button${className ? ` ${className}` : ""}`}
+			className={clsx(
+				classes.button,
+				className,
+				fullWidth && classes["full-width"],
+				underline && classes.underline,
+				centered && classes.centered
+			)}
 			onClick={inactive ? undefined : onClick}>
 			<span>{children}</span>
 		</button>

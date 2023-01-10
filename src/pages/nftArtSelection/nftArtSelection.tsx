@@ -11,8 +11,11 @@ import {
 import { StepPart, Step } from "@Components/step/step"
 import { useKycDao } from "@Hooks/useKycDao"
 import { useMinting } from "@Hooks/useMinting"
-import { PageProps } from "./pageProps"
+import { PageProps } from "../pageProps"
 import { Logo } from "@Components/logo/logo"
+
+import classes from "./nftArtSelection.module.scss"
+import clsx from "clsx"
 
 const Header = () => (
 	<h1 className="h1">
@@ -142,13 +145,15 @@ export const NftSelection: FC<PageProps> = ({
 	const body = useCallback<StepPart>(
 		({ disabled }) => (
 			<>
-				<div className="nft-image-wrapper">
+				<div className={classes["nft-image-wrapper"]}>
 					{nftImages.map(({ id, url }) => {
 						return (
 							<div
-								className={`nft-image${disabled ? " disabled" : ""}${
-									currentArt === id ? " selected" : ""
-								}`}
+								className={clsx(
+									classes["nft-image"],
+									disabled ? classes.disabled : null,
+									currentArt === id ? classes.selected : null
+								)}
 								key={id}
 								onClick={onArtClick(id)}>
 								<img alt="Nft" src={url} />
@@ -165,11 +170,13 @@ export const NftSelection: FC<PageProps> = ({
 		({ disabled, inactive, onEnter }) => {
 			return (
 				<>
-					<div className="nft-button-wrapper">
+					<div className={classes["nft-button-wrapper"]}>
 						<Button
 							inactive={inactive}
 							disabled={disabled}
-							className="full-width underline centered"
+							fullWidth
+							underline
+							centered
 							onClick={onRegenerate}>
 							<>
 								<i className="material-icons">refresh</i>
@@ -178,9 +185,10 @@ export const NftSelection: FC<PageProps> = ({
 						</Button>
 					</div>
 					<SubmitButton
+						black
+						fullWidth
 						autoFocus={!inactive && !disabled && !!currentArt}
 						disabled={disabled || !currentArt}
-						className="full-width black"
 						onClick={onEnter}
 						inactive={inactive}
 						label={kycDao?.kycDao.subscribed ? "Mint free kycNFT" : "Submit"}

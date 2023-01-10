@@ -36,9 +36,10 @@ const Header: StepPart = () => (
 
 const Footer: StepPart = ({ inactive, disabled, onEnter }) => (
 	<SubmitButton
+		black
+		fullWidth
 		autoFocus={!inactive && !disabled}
 		disabled={disabled}
-		className="full-width black"
 		onClick={onEnter}
 		inactive={inactive}
 		label={"Let's go"}

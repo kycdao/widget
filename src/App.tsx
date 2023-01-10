@@ -10,12 +10,14 @@ import {
 	DataActionTypes,
 	HeaderButtons,
 } from "@Components/stateContext"
-import { Loading } from "./pages/loading"
+import { LoadingCard } from "./pages/loading/loading"
 import { Header } from "@Components/header/header"
 import { Router } from "@Components/router/router"
 import { ModalRouter } from "@Components/modal/modalRouter"
 
 import { getNetworkType } from "./utils/getNetworkType"
+
+import "./style/index.scss"
 
 //set body to unscrollable temporarily
 
@@ -115,7 +117,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 					} else {
 						startPage = kycDao.kycDao.subscribed
 							? StepID.subscribedStartStep
-							: StepID.AgreementStep
+							: StepID.mintStep
 					}
 
 					dispatch({
@@ -155,7 +157,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	const contextData = useMemo(() => ({ data, dispatch }), [data, dispatch])
 
 	if (!kycDao) {
-		return <Loading />
+		return <LoadingCard />
 	}
 
 	return (

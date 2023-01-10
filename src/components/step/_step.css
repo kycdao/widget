@@ -1,0 +1,18 @@
+
+.step-part {
+	display: flex;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+body {
+	padding: 20px;
+}
+
+.final-texts {
+	display: flex;
+	justify-content: center;
+	flex-flow: column;
+	align-items: center;
+	height: 100%;
+}

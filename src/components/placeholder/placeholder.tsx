@@ -1,4 +1,5 @@
 import { CSSProperties, FC } from "react"
+import styled from "styled-components"
 
 export type PlaceholderProps = {
 	width: string
@@ -8,7 +9,7 @@ export type PlaceholderProps = {
 	showSize?: boolean
 }
 
-export const Placeholder: FC<PlaceholderProps> = ({
+const unstyledPlaceholder: FC<PlaceholderProps> = ({
 	height,
 	width,
 	onClick,
@@ -23,9 +24,19 @@ export const Placeholder: FC<PlaceholderProps> = ({
 				height,
 				cursor: onClick ? "pointer" : "default",
 				...style,
-			}}
-			className="placeholder">
+			}}>
 			{showSize ? `${width}&times;${height}` : ""}
 		</div>
 	)
 }
+
+export const Placeholder = styled(unstyledPlaceholder)`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: grey;
+	color: white;
+	user-select: none;
+	font-family: sans-serif;
+	font-size: 3vw;
+`

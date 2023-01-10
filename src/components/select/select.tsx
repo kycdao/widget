@@ -1,3 +1,4 @@
+import clsx from "clsx"
 import {
 	FC,
 	MouseEvent,
@@ -7,6 +8,10 @@ import {
 	useRef,
 	useState,
 } from "react"
+
+import classes from "./_select.module.scss"
+
+import { Option } from "./option"
 
 type InputProps = {
 	placeholder?: string
@@ -58,21 +63,24 @@ export const Select: FC<PropsWithChildren<InputProps>> = ({
 		<div ref={ref}>
 			<div
 				id={id}
-				className={`kyc-sdk-select full-width ${disabled ? "disabled" : ""}${
-					className ? ` ${className}` : ""
-				}${open ? " open" : ""}`}
+				className={clsx(
+					classes.select,
+					disabled && classes.disabled,
+					className,
+					open && "open"
+				)}
 				placeholder={placeholder}
 				onClick={(e: MouseEvent) => setOpen(true)}>
 				{values.find((v) => v.value === value)?.label}
 			</div>
 			{open &&
 				values.map(({ label, value }, i) => (
-					<div
-						className={`kyc-sdk-option full-width${i === 0 ? " first" : ""}`}
+					<Option
+						className={clsx(i === 0 && "first")}
 						onClick={onChangeEventHndlr(value)}
 						key={value}>
 						{label}
-					</div>
+					</Option>
 				))}
 		</div>
 	)

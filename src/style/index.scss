@@ -1,16 +1,3 @@
-@use "../components/button/button";
-@use "../components/modal/emailVerificationModal";
-@use "../components/modal/mintingFailedModal";
-@use "../components/modal/mintingModal";
-@use "../components/step/step";
-@use "../components/submitButton/submitButton";
-@use "../components/toggleButton/toggleButton";
-@use "../components/router/router";
-@use "../pages/mintMembershipCard/mintMembershipCard";
-@use "../components/input/input.component";
-@use "../components/select/select";
-@use "../components/placeholder/placeholder";
-
 @use "reset";
 @use "style";
 @use "variables";

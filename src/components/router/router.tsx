@@ -7,14 +7,17 @@ import { BeginVerifyingStep } from "@Pages/beginVerifying"
 import { ChainSelection } from "@Pages/chainSelectionStep"
 import { EmailDiscordVerificationStep } from "@Pages/emailDiscordVerificationStep"
 import { FinalStep } from "@Pages/finalStep"
-import { Loading } from "@Pages/loading"
+import { LoadingCard } from "@Pages/loading/loading"
 import { KycDAOMembershipStep } from "@Pages/membershipCard/membershipCard"
 import { MintStep } from "@Pages/mintMembershipCard/mintMembershipCard"
-import { NftSelection } from "@Pages/nftArtSelection"
+import { NftSelection } from "@Pages/nftArtSelection/nftArtSelection"
 import { TaxResidenceStep } from "@Pages/taxResidence"
 import { VerificationStep } from "@Pages/verificationStep"
 
 import { SubscribedStartStep } from "@Pages/subscribedStartStep"
+import clsx from "clsx"
+
+import classes from "./_router.module.css"
 
 const RoutedStep: FC<{
 	stepID: StepID
@@ -52,7 +55,7 @@ const RoutedStep: FC<{
 			return <FinalStep {...options} />
 		}
 		case StepID.loading: {
-			return <Loading {...options} />
+			return <LoadingCard {...options} />
 		}
 		case StepID.mintStep: {
 			return <MintStep {...options} />
@@ -105,7 +108,7 @@ export const Router: FC = () => {
 	}, [nextPage, prevPage])
 
 	const containerClasses = useMemo(
-		() => `routerContainer${currentModal ? " blurred" : ""}`,
+		() => clsx(currentModal && "blurred", classes.routerContainer),
 		[currentModal]
 	)
 

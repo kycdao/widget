@@ -1,3 +1,4 @@
+import clsx from "clsx"
 import {
 	ChangeEventHandler,
 	createRef,
@@ -9,6 +10,8 @@ import {
 	useRef,
 	useState,
 } from "react"
+
+import classes from "./_input.module.scss"
 
 const specialRegex = /[!$(){}[\]:;<+?\\>]/g
 
@@ -25,6 +28,7 @@ type InputProps = {
 	onInputBlurred?: () => void
 	onInputFocused?: () => void
 	type?: HTMLInputTypeAttribute
+	fullWidth?: boolean
 }
 
 export const Input: FC<InputProps> = ({
@@ -40,6 +44,7 @@ export const Input: FC<InputProps> = ({
 	onInputBlurred,
 	onInputFocused,
 	type,
+	fullWidth = true,
 }) => {
 	const [showAutoComplete, setShowAutoComplete] = useState(false)
 	const autocompleteRef = useRef<HTMLDivElement>(null)
@@ -112,7 +117,7 @@ export const Input: FC<InputProps> = ({
 	return (
 		<>
 			{showAutoComplete && autoCompleteData && (
-				<div ref={autocompleteRef} className="autocomplete">
+				<div ref={autocompleteRef} className={classes.autocomplete}>
 					{autoCompleteData
 						.filter((v) =>
 							v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
@@ -126,17 +131,21 @@ export const Input: FC<InputProps> = ({
 											"<strong>$1</strong>"
 										),
 									}}
-									className={`kyc-sdk-option full-width${
-										i === 0 ? " first" : ""
-									}`}
+									className={clsx(
+										classes.option,
+										classes["full-width"],
+										i === 0 && "first"
+									)}
 									onClick={onAutocompleteHndlr(v)}
 									key={v}
 								/>
 							) : (
 								<div
-									className={`kyc-sdk-option full-width${
-										i === 0 ? " first" : ""
-									}`}
+									className={clsx(
+										classes.option,
+										classes["full-width"],
+										i === 0 && "first"
+									)}
 									onClick={onAutocompleteHndlr(v)}
 									key={v}>
 									{v}
@@ -150,7 +159,12 @@ export const Input: FC<InputProps> = ({
 				onFocus={onInputFocused}
 				ref={inputRef}
 				id={id}
-				className={`kyc-sdk-input ${disabled ? "disabled" : ""} ${className}`}
+				className={clsx(
+					classes.input,
+					disabled && classes.disabled,
+					className,
+					fullWidth && classes["full-width"]
+				)}
 				type={type || "text"}
 				placeholder={placeholder}
 				onChange={onChangeEventHndlr}
@@ -158,7 +172,7 @@ export const Input: FC<InputProps> = ({
 				value={value}
 			/>
 			<div
-				className={`clear${value === "" ? " disabled" : ""}`}
+				className={clsx(classes.clear, value === "" && classes.disabled)}
 				onClick={onClear}>
 				&times;
 			</div>

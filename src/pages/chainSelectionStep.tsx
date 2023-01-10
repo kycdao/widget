@@ -149,6 +149,8 @@ export const ChainSelection: FC<PageProps> = ({
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive, onEnter }) => (
 			<SubmitButton
+				black
+				fullWidth
 				inactive={inactive}
 				autoFocus={!!connectedWallet && !inactive}
 				disabled={!connectedWallet || disabled}

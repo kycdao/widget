@@ -94,6 +94,8 @@ export const FinalStep: FC<PageProps> = ({
 						</Button>
 					</div>
 					<SubmitButton
+						black
+						fullWidth
 						autoFocus={!inactive && !disabled}
 						disabled={disabled}
 						className="full-width black"

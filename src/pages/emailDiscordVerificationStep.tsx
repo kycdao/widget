@@ -232,15 +232,15 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 					disabled={disabled}
 					value={emailValue}
 					placeholder={"email"}
-					className="full-width"
 					onChange={onEmailChange}
 					type="email"
 				/>
 				<SubmitButton
+					black
+					fullWidth
 					autoFocus={buttonAutofocus}
 					inactive={inactive}
 					disabled={disableSubmit || disabled}
-					className="full-width black"
 					onClick={onNext}
 				/>
 			</>

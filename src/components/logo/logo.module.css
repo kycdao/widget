@@ -1,0 +1,11 @@
+.logo {
+	background: var(--kyc-sdk-cybergreen);
+	display: inline-flex;
+	justify-content: center;
+	margin-right: 8px;
+	flex: 1;
+	padding: 8px 10px;
+	border-radius: 4px;
+	max-width: 18px;
+	box-sizing: content-box;
+}

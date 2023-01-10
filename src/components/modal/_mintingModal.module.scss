@@ -1,0 +1,11 @@
+@use "./modal.module";
+
+.mintingModal {
+	@extend .modal;
+
+	.loading {
+		justify-content: center;
+		display: flex;
+		margin-bottom: 1em;
+	}
+}

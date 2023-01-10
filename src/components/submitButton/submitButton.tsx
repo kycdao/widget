@@ -1,3 +1,4 @@
+import clsx from "clsx"
 import {
 	CSSProperties,
 	FC,
@@ -7,6 +8,9 @@ import {
 	useState,
 } from "react"
 
+import classes from "./submitButton.module.scss"
+import buttonClasses from "../button/_button.module.scss"
+
 export type ButtonProps = {
 	onClick?: () => void
 	className?: string
@@ -15,6 +19,8 @@ export type ButtonProps = {
 	style?: CSSProperties
 	autoFocus?: boolean
 	inactive?: boolean
+	fullWidth?: boolean
+	black?: boolean
 }
 
 export const SubmitButton: FC<ButtonProps> = ({
@@ -25,6 +31,8 @@ export const SubmitButton: FC<ButtonProps> = ({
 	autoFocus,
 	inactive = false,
 	label,
+	black = false,
+	fullWidth = false,
 }) => {
 	const ref = useRef<HTMLButtonElement>(null)
 	const [innerHtml, setInnerHtml] = useState(label ? label : "Submit")
@@ -50,11 +58,22 @@ export const SubmitButton: FC<ButtonProps> = ({
 			ref={ref}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
-			className={`kyc-sdk-submit-button kyc-sdk-button ${className}`}
+			className={clsx(
+				classes["kyc-sdk-submit-button"],
+				buttonClasses.button,
+				className,
+				fullWidth ? buttonClasses["full-width"] : null,
+				black ? buttonClasses["black"] : null
+				// disabled ? buttonClasses[disabled] : null
+			)}
 			onClick={inactive ? undefined : onClick}>
-			<i className="material-icons first-arrow"> arrow_forward </i>
+			<i className={clsx("material-icons", classes["first-arrow"])}>
+				arrow_forward
+			</i>
 			<span>{innerHtml}</span>
-			<i className="material-icons second-arrow"> arrow_forward </i>
+			<i className={clsx("material-icons", classes["second-arrow"])}>
+				arrow_forward
+			</i>
 		</button>
 	)
 }

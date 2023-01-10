@@ -14,10 +14,12 @@ import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "../pageProps"
 import { Logo } from "@Components/logo/logo"
 
+import classes from "./membershipCard.module.scss"
+
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<>
 		<div className="policy">
-			By starting verification you accept{" "}
+			By starting verification you accept
 			<a
 				target="_blank"
 				rel="noreferrer"
@@ -33,6 +35,8 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 			</a>
 		</div>
 		<SubmitButton
+			black
+			fullWidth
 			autoFocus={!inactive && !disabled}
 			disabled={disabled}
 			inactive={inactive}
@@ -45,42 +49,31 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 
 const Body = () => {
 	return (
-		<>
-			{/*<p className="p">*/}
-			{/*	kycDAO is building a trusted web3 ecosystem linked together by verified*/}
-			{/*	wallets.*/}
-			{/*</p>*/}
-			{/*<p className="p">*/}
-			{/*	Once verified and proof is minted on-chain, all kycDAO partner services*/}
-			{/*	will accept the verification.*/}
-			{/*</p>*/}
-
-			<div className="the-process">
-				<ul>
-					<li>
-						<span>1</span>
-						<div>
-							<p>Connect</p>
-							<b>Using your wallet</b>
-						</div>
-					</li>
-					<li>
-						<span>2</span>
-						<div>
-							<p>Verify</p>
-							<b>Log-in or Open a compliant account</b>
-						</div>
-					</li>
-					<li>
-						<span>3</span>
-						<div>
-							<p>Mint</p>
-							<b>kycNFT - $5</b>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</>
+		<div className={classes.process}>
+			<ul>
+				<li>
+					<span>1</span>
+					<div>
+						<p>Connect</p>
+						<b>Using your wallet</b>
+					</div>
+				</li>
+				<li>
+					<span>2</span>
+					<div>
+						<p>Verify</p>
+						<b>Log-in or Open a compliant account</b>
+					</div>
+				</li>
+				<li>
+					<span>3</span>
+					<div>
+						<p>Mint</p>
+						<b>kycNFT - $5</b>
+					</div>
+				</li>
+			</ul>
+		</div>
 	)
 }
 

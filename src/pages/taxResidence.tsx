@@ -172,14 +172,15 @@ export const TaxResidenceStep: FC<PageProps> = ({
 					autoCompleteData={autoCompleteData}
 					value={value}
 					placeholder={"Type your tax residence here"}
-					className="full-width"
+					fullWidth
 					onChange={onChange}
 				/>
 				<SubmitButton
+					black
+					fullWidth
 					inactive={inactive}
 					autoFocus={!submitDisabled && !inactive}
 					disabled={submitDisabled || disabled}
-					className="full-width black"
 					onClick={onEnter}
 				/>
 			</>

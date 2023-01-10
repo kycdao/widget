@@ -1,0 +1,66 @@
+.process {
+	display: flex;
+	height: 100%;
+	align-items: center;
+
+	ul {
+		padding: 1rem 0;
+		margin: 0 auto;
+		width: fit-content;
+
+		li {
+			list-style: none;
+			display: flex;
+			margin-bottom: 2rem;
+			align-items: center;
+			position: relative;
+
+			&:after {
+				display: block;
+				content: "";
+				height: 100%;
+				width: 1px;
+				background-color: var(--kyc-sdk-cybergreen);
+				position: absolute;
+				top: 2rem;
+				left: 1rem;
+			}
+
+			&:last-child {
+				&:after {
+					display: none;
+				}
+			}
+
+			span {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 2rem;
+				width: 2rem;
+				outline: 0.5rem solid var(--kyc-sdk-cybergreen-35);
+				border-radius: 999rem;
+				background: var(--kyc-sdk-cybergreen);
+				color: black;
+				font-weight: 800;
+				//font-family: "gilroy-bold";
+			}
+
+			& > div {
+				margin-left: 1rem;
+				display: flex;
+				flex-flow: column;
+
+				p,
+				b {
+					font-family: var(--kyc-sdk-primary-font);
+					font-weight: 400;
+				}
+
+				b {
+					font-size: 12px;
+				}
+			}
+		}
+	}
+}

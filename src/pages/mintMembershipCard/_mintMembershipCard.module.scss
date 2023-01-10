@@ -1,5 +1,3 @@
-@use "../../style/variables";
-
 .calculator-wrapper {
 	p {
 		font-family: var(--kyc-sdk-primary-font);
@@ -8,6 +6,7 @@
 	.calculator {
 		display: flex;
 		flex-flow: column;
+		flex-direction: "column";
 
 		& > div {
 			justify-content: space-evenly;
@@ -29,23 +28,24 @@
 			background: black;
 			border: 2px black solid;
 
-			span,
-			.material-icons {
+			span {
 				color: white;
+
+				i {
+					vertical-align: middle;
+				}
 			}
 
 			&:hover {
 				box-shadow: 0 0 0 0px var(--kyc-sdk-cybergreen-35);
 				background: var(--kyc-sdk-cybergreen);
 
-				span,
-				.material-icons {
+				span {
 					color: black;
 				}
 
 				&:focus {
-					span,
-					.material-icons {
+					span {
 						color: black;
 					}
 				}
@@ -54,8 +54,7 @@
 			&:focus {
 				box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
 
-				span,
-				.material-icons {
+				span {
 					color: white;
 				}
 			}

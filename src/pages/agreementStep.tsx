@@ -42,7 +42,8 @@ const Footer: StepPart = ({ inactive, disabled, onEnter }) => (
 	<SubmitButton
 		autoFocus={!inactive && !disabled}
 		disabled={disabled}
-		className="full-width black"
+		black
+		fullWidth
 		onClick={onEnter}
 		inactive={inactive}
 		label={"Start"}

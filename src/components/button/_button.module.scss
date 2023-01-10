@@ -1,6 +1,6 @@
-@use "../../style/variables";
+@use "../../style/tr2";
 
-button.kyc-sdk-button {
+.button {
 	height: var(--kyc-sdk-button-height);
 	display: inline-flex;
 	justify-content: space-between;
@@ -80,35 +80,35 @@ button.kyc-sdk-button {
 	}
 
 	/*
-	&.blue {
-		background: $--kyc-sdk-normal-blue;
-
-		span,
-		.material-icons {
-			font-weight: 400;
-			color: white;
-		}
-
-		&:hover {
+		&.blue {
 			background: $--kyc-sdk-normal-blue;
-			box-shadow: 0 0 0 10px $--kyc-sdk-normal-blue-35;
+	
+			span,
+			.material-icons {
+				font-weight: 400;
+				color: white;
+			}
+	
+			&:hover {
+				background: $--kyc-sdk-normal-blue;
+				box-shadow: 0 0 0 10px $--kyc-sdk-normal-blue-35;
+			}
+	
+			&:focus {
+				background: $--kyc-sdk-normal-blue;
+				box-shadow: 0 0 0 5px $--kyc-sdk-normal-blue-50;
+			}
+	
+			&:active {
+				box-shadow: 0 0 0 5px $--kyc-sdk-normal-blue-35;
+			}
+	
+			&:focus-visible {
+				outline: none;
+				border: none;
+			}
 		}
-
-		&:focus {
-			background: $--kyc-sdk-normal-blue;
-			box-shadow: 0 0 0 5px $--kyc-sdk-normal-blue-50;
-		}
-
-		&:active {
-			box-shadow: 0 0 0 5px $--kyc-sdk-normal-blue-35;
-		}
-
-		&:focus-visible {
-			outline: none;
-			border: none;
-		}
-	}
-	 */
+		 */
 
 	&.green {
 		background: var(--kyc-sdk-cyberpunk);
@@ -177,9 +177,9 @@ button.kyc-sdk-button {
 		}
 	}
 
-	&.kyc-sdk-submit-button {
-		span {
-			padding-left: 1.5rem;
-		}
+	&.centered {
+		justify-content: center;
+		padding-left: 0;
+		padding-right: 0;
 	}
 }

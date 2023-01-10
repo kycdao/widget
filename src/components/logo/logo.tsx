@@ -1,6 +1,8 @@
+import classes from "./logo.module.css"
+
 export function Logo(): JSX.Element {
 	return (
-		<span className="kyc-sdk-logo">
+		<span className={classes.logo}>
 			<svg
 				width="16"
 				height="21"

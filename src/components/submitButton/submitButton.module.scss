@@ -1,4 +1,5 @@
-@use "../../style/variables";
+@use "../../style/tr2";
+@use "../../style/translateX";
 
 .kyc-sdk-submit-button {
 	overflow: hidden;
@@ -7,28 +8,29 @@
 		position: absolute;
 		right: 3rem;
 		opacity: 0;
-		@include variables.translateX(0);
+		@include translateX.translateX(0);
 		@extend .tr2;
 	}
 
 	.second-arrow {
 		position: absolute;
 		right: 1rem;
-		@include variables.translateX(0);
+		@include translateX.translateX(0);
 		@extend .tr2;
 	}
 
 	span {
+		padding-left: 1.5rem;
 	}
 
 	&:hover {
 		.first-arrow {
-			@include variables.translateX(2rem);
+			@include translateX.translateX(2rem);
 			opacity: 1;
 		}
 
 		.second-arrow {
-			@include variables.translateX(8rem);
+			@include translateX.translateX(8rem);
 		}
 	}
 }

@@ -25,11 +25,6 @@ h4 {
 	text-align: center;
 }
 
-.policy {
-	font-size: 10pt;
-	margin-bottom: 1em;
-}
-
 .li {
 	margin-left: 2em;
 	font-size: 12pt;
@@ -45,14 +40,14 @@ body {
 	margin: 0;
 }
 
-.kyc-sdk-logo {
-	background: var(--kyc-sdk-cybergreen);
-	display: inline-flex;
-	justify-content: center;
-	margin-right: 8px;
-	flex: 1;
-	padding: 8px 10px;
-	border-radius: 4px;
-	max-width: 18px;
-	box-sizing: content-box;
+.policy {
+	font-family: var(--kyc-sdk-primary-font);
+	color: black;
+	font-size: 12px;
+
+	margin-bottom: 1em;
+
+	a {
+		font-size: 12px;
+	}
 }

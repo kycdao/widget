@@ -2,10 +2,6 @@
 	display: flex;
 	flex-flow: column;
 	width: 100%;
-
-	//position: relative;
-	//height: calc(100% - var(--kyc-sdk-header-height));
-
 	position: absolute;
 	height: 100%;
 	top: 0;
