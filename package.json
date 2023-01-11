@@ -17,7 +17,7 @@
 		"lint": "eslint 'src/**/*.{ts,tsx,scss}' --fix",
 		"format": "prettier -w package.json .github/ src/",
 		"clean": "rimraf build dist",
-		"build:hotfix": "cp ./dist/web/*.js* ./dist/ & cp ./dist/web/*.ts* ./dist/",
+		"build:hotfix": "cp ./dist/web/*.js* ./dist/ & cp ./dist/web/*.ts* ./dist/ & cp ./dist/web/iframeclient.min.js ./",
 		"build:web-styles": "sass ./src/style/web.scss >> ./dist/index.css"
 	},
 	"files": [
@@ -33,8 +33,7 @@
 		".": {
 			"import": "./dist/esm/index.js",
 			"require": "./dist/umd/index.js",
-			"style": "./dist/app.css",
-			"script": "./dist/web/app.min.js"
+			"style": "./dist/app.css"
 		},
 		"./index.css": {
 			"style": "./dist/index.css",
@@ -46,30 +45,31 @@
 			"import": "./dist/app.css",
 			"require": "./dist/app.css"
 		},
-		"./client.css": {
-			"style": "./dist/client.css",
-			"import": "./dist/client.css",
-			"require": "./dist/client.css"
+		"./KycdaoClient.css": {
+			"style": "./dist/KycDaoClient.css",
+			"import": "./dist/KycDaoClient.css",
+			"require": "./dist/KycDaoClient.css"
 		},
-		"./iframeClient.css": {
-			"style": "./dist/iframeClient.css",
-			"import": "./dist/iframeClient.css",
-			"require": "./dist/iframeClient.css"
+		"./KycdaoIframeClient.css": {
+			"style": "./dist/KycDaoIframeClient.css",
+			"import": "./dist/KycDaoIframeClient.css",
+			"require": "./dist/KycDaoIframeClient.css"
 		},
-		"./client": {
-			"import": "./dist/esm/client.js",
-			"script": "./dist/web/client.min.js",
-			"style": "./dist/client.css",
+		"./KycdaoClient": {
+			"import": "./dist/esm/KycdaoClient.js",
+			"script": "./dist/web/KycdaoClient.js",
+			"style": "./dist/KycDaoClient.css",
 			"require": "./dist/umd/client.js"
 		},
-		"./iframeClient": {
-			"import": "./dist/esm/iframeClient.js",
-			"script": "./dist/web/iframeClient.min.js",
-			"style": "./dist/iframeClient.css",
-			"require": "./dist/umd/client.js"
+		"./KycdaoIframeClient": {
+			"import": "./dist/esm/KycdaoIframeClient.js",
+			"script": "./dist/web/KycdaoIframeClient.js",
+			"style": "./dist/KycdaoIframeClient.css",
+			"require": "./dist/umd/KycdaoIframeClient.js"
 		},
 		"./esm": "./dist/esm/index.js",
 		"./umd": "./dist/umd/index.js",
+		"./web": "./dist/web/index.js",
 		"./esm/": "./dist/esm/",
 		"./umd/": "./dist/umd/",
 		"./web/": "./dist/web/",

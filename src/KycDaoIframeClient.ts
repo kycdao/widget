@@ -4,6 +4,8 @@ import {
 	KycDaoClientOptions,
 } from "./KycDaoClientCommon"
 
+import "./KycDaoIframeCLient.scss"
+
 export function kycDaoIframeClient(
 	this: KycDaoClientInterface,
 	{
