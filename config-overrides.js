@@ -15,13 +15,13 @@ module.exports = function override(config, env) {
 	const outDir = "./build"
 	config.target = "web"
 	config.entry = {
-		client: "./src/KycDaoClient.ts",
-		iframeClient: "./src/KycDaoIframeClient.ts",
-		app: "./src/index.js",
-		widget: "./src/widget.tsx",
+		"KycDaoClient.min": "./src/KycDaoClient.ts",
+		"KycDaoIframeClient.min": "./src/KycDaoIframeClient.ts",
+		"index.min": "./src/index.js",
+		"widget.min": "./src/widget.tsx",
 	}
 	config.output = {
-		filename: "[name].min.js",
+		filename: "[name].js",
 		library: "kycDaoWebSdk",
 	}
 
@@ -78,7 +78,7 @@ module.exports = function override(config, env) {
 
 	config.plugins.push(
 		new MiniCssExtractPlugin({
-			filename: "[name].css",
+			filename: "index.css",
 		})
 	)
 

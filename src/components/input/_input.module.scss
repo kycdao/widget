@@ -1,6 +1,6 @@
 @use "../../style/tr2";
 
-.input {
+.kyc-dao-web-sdk-input {
 	height: var(--kyc-sdk-button-height);
 	display: inline-flex;
 	justify-content: space-between;
@@ -20,7 +20,7 @@
 	border: 2px solid black;
 	//padding-right: 3em;
 
-	@extend .tr2;
+	@extend .kyc-dao-web-sdk-tr2;
 	::placeholder {
 		color: black;
 		font-family: var(--kyc-sdk-primary-font);
@@ -36,7 +36,7 @@
 		font-family: var(--kyc-sdk-primary-font);
 	}
 
-	&.full-width {
+	&.kyc-dao-web-sdk-full-width {
 		display: flex;
 		width: 100%;
 	}
@@ -46,20 +46,20 @@
 		//background: $--kyc-sdk-normal-blue-15;
 		border: 2px solid var(--kyc-sdk-cybergreen);
 		box-shadow: 0 0 0 10px var(--kyc-sdk-cybergreen-35);
-		@extend .tr2;
+		@extend .kyc-dao-web-sdk-tr2;
 	}
 
 	&:focus {
 		background: black;
 		border: 2px solid var(--kyc-sdk-cybergreen);
 		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
-		@extend .tr2;
+		@extend .kyc-dao-web-sdk-tr2;
 
 		color: white;
 	}
 }
 
-.clear {
+.kyc-dao-web-sdk-clear {
 	position: absolute;
 	right: 5px;
 	bottom: 85px;
@@ -72,7 +72,7 @@
 	padding: 3px 9px;
 	line-height: 132%;
 
-	@extend .tr2;
+	@extend .kyc-dao-web-sdk-tr2;
 
 	&:hover {
 		background: var(--kyc-sdk-cybergreen-35);
@@ -83,12 +83,12 @@
 		color: var(--kyc-sdk-cybergreen);
 	}
 
-	&.disabled {
+	&.kyc-dao-web-sdk-disabled {
 		color: lightgrey;
 	}
 }
 
-.option {
+.kyc-dao-web-sdk-option {
 	height: 2.5em;
 	cursor: pointer;
 	line-height: 2.5em;
@@ -112,7 +112,7 @@
 }
 
 // TODO Virtual keyboard and stuff
-.autocomplete {
+.kyc-dao-web-sdk-autocomplete {
 	//width: 368px;
 	width: 100%;
 	max-height: 18vh;
@@ -120,7 +120,7 @@
 	overflow-y: auto;
 	bottom: 0;
 
-	.option {
+	.kyc-dao-web-sdk-option {
 		white-space: pre;
 
 		strong {
@@ -131,7 +131,7 @@
 }
 
 @media only screen and (min-width: 992px) {
-	.autocomplete {
+	.kyc-dao-web-sdk-autocomplete {
 		max-height: 20vh;
 	}
 }

@@ -19,7 +19,7 @@ import classes from "./membershipCard.module.scss"
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<>
 		<div className="policy">
-			By starting verification you accept
+			By starting verification you accept{" "}
 			<a
 				target="_blank"
 				rel="noreferrer"
@@ -40,7 +40,6 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 			autoFocus={!inactive && !disabled}
 			disabled={disabled}
 			inactive={inactive}
-			className="full-width black"
 			onClick={onEnter}
 			label="Join"
 		/>
@@ -49,7 +48,7 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 
 const Body = () => {
 	return (
-		<div className={classes.process}>
+		<div className={classes["kyc-dao-web-sdk-process"]}>
 			<ul>
 				<li>
 					<span>1</span>

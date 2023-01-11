@@ -12,6 +12,8 @@ export type ToggleButtonProps = {
 	inactive?: boolean
 }
 
+// not used btw
+
 export const ToggleButton: FC<ToggleButtonProps> = ({
 	toggle,
 	style,

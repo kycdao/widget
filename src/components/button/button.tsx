@@ -31,11 +31,11 @@ export const Button: FC<ButtonProps> = ({
 			style={style}
 			disabled={disabled}
 			className={clsx(
-				classes.button,
+				classes["kyc-dao-web-sdk-button"],
 				className,
-				fullWidth && classes["full-width"],
-				underline && classes.underline,
-				centered && classes.centered
+				fullWidth && classes["kyc-dao-web-sdk-full-width"],
+				underline && classes["kyc-dao-web-sdk-underline"],
+				centered && classes["kyc-dao-web-sdk-centered"]
 			)}
 			onClick={inactive ? undefined : onClick}>
 			<span>{children}</span>

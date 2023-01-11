@@ -7,18 +7,17 @@ import {
 import { Step } from "@Components/step/step"
 import { PageProps } from "../pageProps"
 
-import classes from "./loading.module.scss"
-import clsx from "clsx"
 import { Loading } from "@Components/loading/loading"
+import styled from "styled-components"
+
+const H1 = styled.h1`
+	justify-content: center;
+`
 
 const Body = () => {
 	return (
 		<>
-			<h1
-				className={clsx(classes.headerText, "h1")}
-				style={{ justifyContent: "center" }}>
-				Loading
-			</h1>
+			<H1 className={"h1"}>Loading</H1>
 			<Loading />
 		</>
 	)

@@ -154,7 +154,6 @@ export const ChainSelection: FC<PageProps> = ({
 				inactive={inactive}
 				autoFocus={!!connectedWallet && !inactive}
 				disabled={!connectedWallet || disabled}
-				className="full-width black"
 				onClick={onEnter}
 			/>
 		),

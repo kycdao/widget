@@ -2,9 +2,9 @@ import classes from "./loading.module.scss"
 
 export function Loading() {
 	return (
-		<div className={classes["loading-animation"]}>
+		<div className={classes["kyc-dao-web-sdk-loading-animation"]}>
 			<svg
-				className={classes["part-1"]}
+				className={classes["kyc-dao-web-sdk-part-1"]}
 				width="43"
 				height="26"
 				viewBox="0 0 43 26"
@@ -19,7 +19,7 @@ export function Loading() {
 			</svg>
 
 			<svg
-				className={classes["part-2"]}
+				className={classes["kyc-dao-web-sdk-part-2"]}
 				width="43"
 				height="26"
 				viewBox="0 0 43 26"
@@ -34,7 +34,7 @@ export function Loading() {
 			</svg>
 
 			<svg
-				className={classes["part-3"]}
+				className={classes["kyc-dao-web-sdk-part-3"]}
 				width="43"
 				height="26"
 				viewBox="0 0 43 26"

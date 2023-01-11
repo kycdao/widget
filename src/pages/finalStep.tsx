@@ -61,7 +61,7 @@ export const FinalStep: FC<PageProps> = ({
 					You have successfully minted your kycNFT on{" "}
 					{kycDao?.kycDao.connectedWallet?.blockchainNetwork}
 				</h1>
-				<div className="final-texts">
+				<div style={{ textAlign: "center" }} className="final-texts">
 					{nftImageUrl ? (
 						<img alt="" src={nftImageUrl} width="300px" height="300px" />
 					) : (
@@ -88,7 +88,9 @@ export const FinalStep: FC<PageProps> = ({
 						<Button
 							disabled={disabled}
 							inactive={inactive}
-							className="full-width underline centered"
+							centered
+							fullWidth
+							underline
 							onClick={onCheck}>
 							Check on chain
 						</Button>
@@ -98,7 +100,6 @@ export const FinalStep: FC<PageProps> = ({
 						fullWidth
 						autoFocus={!inactive && !disabled}
 						disabled={disabled}
-						className="full-width black"
 						onClick={onFinish}
 						inactive={inactive}
 						label={"Finish"}

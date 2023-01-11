@@ -59,19 +59,27 @@ export const SubmitButton: FC<ButtonProps> = ({
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
 			className={clsx(
-				classes.button,
-				buttonClasses.button,
+				classes["kyc-dao-web-sdk-submit-button"],
+				buttonClasses["kyc-dao-web-sdk-button"],
 				className,
-				fullWidth && buttonClasses["full-width"],
-				black && buttonClasses.black
+				fullWidth && buttonClasses["kyc-dao-web-sdk-full-width"],
+				black && buttonClasses["kyc-dao-web-sdk-black"]
 				// disabled ? buttonClasses[disabled] : null
 			)}
 			onClick={inactive ? undefined : onClick}>
-			<i className={clsx("material-icons", classes["first-arrow"])}>
+			<i
+				className={clsx(
+					"material-icons",
+					classes["kyc-dao-web-sdk-first-arrow"]
+				)}>
 				arrow_forward
 			</i>
 			<span>{innerHtml}</span>
-			<i className={clsx("material-icons", classes["second-arrow"])}>
+			<i
+				className={clsx(
+					"material-icons",
+					classes["kyc-dao-web-sdk-second-arrow"]
+				)}>
 				arrow_forward
 			</i>
 		</button>

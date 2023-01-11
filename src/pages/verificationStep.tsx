@@ -19,7 +19,6 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 		autoFocus={!disabled && !inactive}
 		disabled={disabled}
 		inactive={inactive}
-		className="full-width black"
 		onClick={onEnter}
 	/>
 )

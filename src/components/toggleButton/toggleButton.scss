@@ -1,4 +1,4 @@
-button.kyc-sdk-toggle-button {
+.kyc-dao-web-sdk-toggle-button {
 	display: inline-flex;
 	justify-content: space-between;
 	padding-left: 1.5rem;
@@ -13,7 +13,7 @@ button.kyc-sdk-toggle-button {
 	box-shadow: 0 0 1pt 0 var(--kyc-sdk-normal-blue-35);
 	margin-top: 1em;
 
-	&.full-width {
+	&.kyc-dao-web-sdk-full-width {
 		width: 100%;
 	}
 
@@ -22,7 +22,7 @@ button.kyc-sdk-toggle-button {
 		pointer-events: none !important;
 	}
 
-	&.centered {
+	&.kyc-dao-web-sdk-centered {
 		justify-content: center;
 		padding-left: 0;
 		padding-right: 0;

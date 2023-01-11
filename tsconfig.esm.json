@@ -22,6 +22,7 @@
 		"emitDecoratorMetadata": true,
 		"outDir": "dist/esm",
 		"module": "ES2020",
+		"emitDeclarationOnly": true,
 		"baseUrl": "./src",
 		"paths": {
 			"@Components/*": ["components/*"],
@@ -31,8 +32,7 @@
 			"@Utils/*": ["utils/*"],
 			"@Style/*": ["style/*"],
 			"@Hooks/*": ["hooks/*"]
-		},
-		"declarationDir": "dist/esm",
+		}
 	},
 	"include": ["src"],
 	"exclude": [

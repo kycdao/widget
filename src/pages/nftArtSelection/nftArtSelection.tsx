@@ -145,14 +145,14 @@ export const NftSelection: FC<PageProps> = ({
 	const body = useCallback<StepPart>(
 		({ disabled }) => (
 			<>
-				<div className={classes["nft-image-wrapper"]}>
+				<div className={classes["kyc-dao-web-sdk-nft-image-wrapper"]}>
 					{nftImages.map(({ id, url }) => {
 						return (
 							<div
 								className={clsx(
-									classes["nft-image"],
+									classes["kyc-dao-web-sdk-nft-image"],
 									disabled ? classes.disabled : null,
-									currentArt === id ? classes.selected : null
+									currentArt === id ? classes["kyc-dao-web-sdk-selected"] : null
 								)}
 								key={id}
 								onClick={onArtClick(id)}>
@@ -170,7 +170,7 @@ export const NftSelection: FC<PageProps> = ({
 		({ disabled, inactive, onEnter }) => {
 			return (
 				<>
-					<div className={classes["nft-button-wrapper"]}>
+					<div className={classes["kyc-dao-web-sdk-nft-button-wrapper"]}>
 						<Button
 							inactive={inactive}
 							disabled={disabled}

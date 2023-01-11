@@ -29,13 +29,13 @@ export const EmailVerificationModal = () => {
 	}, [dispatch])
 
 	return (
-		<div className={modalClasses.modal}>
-			<div className={modalClasses.header}>
+		<div className={modalClasses["kyc-dao-web-sdk-modal"]}>
+			<div className={modalClasses["kyc-dao-web-sdk-header"]}>
 				<i className="material-icons icon">hourglass_bottom</i>
 				<p>Waiting your mail verification</p>
 			</div>
 
-			<div className={modalClasses.body}>
+			<div className={modalClasses["kyc-dao-web-sdk-body"]}>
 				<p className={"policy"}>
 					Please verify yourself through the <b>link</b> we have sent you to the
 					following address:
@@ -43,7 +43,7 @@ export const EmailVerificationModal = () => {
 				<p>{email}</p>
 			</div>
 
-			<div className={modalClasses["button-wrapper"]}>
+			<div className={modalClasses["kyc-dao-web-sdk-button-wrapper"]}>
 				<Button underline centered onClick={onResend}>
 					<>
 						<i className="material-icons">refresh</i>

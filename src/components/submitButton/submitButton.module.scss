@@ -1,22 +1,22 @@
 @use "../../style/tr2";
 @use "../../style/translateX";
 
-.button {
+.kyc-dao-web-sdk-submit-button {
 	overflow: hidden;
 
-	.first-arrow {
+	.kyc-dao-web-sdk-first-arrow {
 		position: absolute;
 		right: 3rem;
 		opacity: 0;
 		@include translateX.translateX(0);
-		@extend .tr2;
+		@extend .kyc-dao-web-sdk-tr2;
 	}
 
-	.second-arrow {
+	.kyc-dao-web-sdk-second-arrow {
 		position: absolute;
 		right: 1rem;
 		@include translateX.translateX(0);
-		@extend .tr2;
+		@extend .kyc-dao-web-sdk-tr2;
 	}
 
 	span,
@@ -25,12 +25,12 @@
 	}
 
 	&:hover {
-		.first-arrow {
+		.kyc-dao-web-sdk-first-arrow {
 			@include translateX.translateX(2rem);
 			opacity: 1;
 		}
 
-		.second-arrow {
+		.kyc-dao-web-sdk-second-arrow {
 			@include translateX.translateX(8rem);
 		}
 	}

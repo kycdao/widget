@@ -66,6 +66,8 @@ const CloseButton = styled.button<{ hidden?: boolean }>`
 	border-radius: 999rem;
 	font-size: 24px;
 	color: black;
+	box-sizing: content-box;
+	padding: 0;
 	${tr2};
 	${materialIcon};
 

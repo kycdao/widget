@@ -64,10 +64,10 @@ export const Select: FC<PropsWithChildren<InputProps>> = ({
 			<div
 				id={id}
 				className={clsx(
-					classes.select,
-					disabled && classes.disabled,
+					classes["kyc-dao-web-sdk-select"],
+					disabled && classes["kyc-dao-web-sdk-opener-disabled"],
 					className,
-					open && "open"
+					open && classes["kyc-dao-web-sdk-open"]
 				)}
 				placeholder={placeholder}
 				onClick={(e: MouseEvent) => setOpen(true)}>

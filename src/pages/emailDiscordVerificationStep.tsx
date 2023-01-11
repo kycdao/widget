@@ -230,6 +230,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 					onInputFocused={onInputFocused}
 					inputRef={inputRef}
 					disabled={disabled}
+					fullWidth
 					value={emailValue}
 					placeholder={"email"}
 					onChange={onEmailChange}

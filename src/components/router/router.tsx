@@ -108,7 +108,11 @@ export const Router: FC = () => {
 	}, [nextPage, prevPage])
 
 	const containerClasses = useMemo(
-		() => clsx(currentModal && "blurred", classes.routerContainer),
+		() =>
+			clsx(
+				currentModal && "blurred",
+				classes["kyc-dao-web-sdk-routerContainer"]
+			),
 		[currentModal]
 	)
 

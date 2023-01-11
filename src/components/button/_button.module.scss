@@ -1,6 +1,6 @@
 @use "../../style/tr2";
 
-.button {
+.kyc-dao-web-sdk-button {
 	height: var(--kyc-sdk-button-height);
 	display: inline-flex;
 	justify-content: space-between;
@@ -14,7 +14,7 @@
 	border-radius: var(--kyc-sdk-border-radius-light);
 	font-size: 12pt;
 	cursor: pointer;
-	@extend .tr2;
+	@extend .kyc-dao-web-sdk-tr2;
 
 	span {
 		font-family: var(--kyc-sdk-primary-font);
@@ -23,7 +23,7 @@
 		margin-left: 0;
 	}
 
-	&.full-width {
+	&.kyc-dao-web-sdk-full-width {
 		width: 100%;
 	}
 
@@ -38,7 +38,7 @@
 		}
 	}
 
-	&.black {
+	&.kyc-dao-web-sdk-black {
 		background: black;
 		border: 2px solid black;
 
@@ -110,7 +110,7 @@
 		}
 		 */
 
-	&.green {
+	&.kyc-dao-web-sdk-green {
 		background: var(--kyc-sdk-cyberpunk);
 
 		span,
@@ -146,7 +146,7 @@
 	}
 
 	/* GYURI : COPY STYLE */
-	&.underline {
+	&.kyc-dao-web-sdk-underline {
 		background: rgb(0, 0, 0, 0);
 		color: black;
 		position: relative;
@@ -161,7 +161,7 @@
 			background-color: var(--kyc-sdk-cybergreen);
 			position: absolute;
 			bottom: 6px;
-			@extend .tr2;
+			@extend .kyc-dao-web-sdk-tr2;
 		}
 
 		span {
@@ -176,7 +176,7 @@
 		}
 	}
 
-	&.centered {
+	&.kyc-dao-web-sdk-centered {
 		justify-content: center;
 		padding-left: 0;
 		padding-right: 0;

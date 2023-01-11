@@ -1,9 +1,9 @@
 @use "./modal.module";
 
-.mintingModal {
-	@extend .modal;
+.kyc-dao-web-sdk-mintingModal {
+	@extend .kyc-dao-web-sdk-modal;
 
-	.loading {
+	.kyc-dao-web-sdk-loading {
 		justify-content: center;
 		display: flex;
 		margin-bottom: 1em;

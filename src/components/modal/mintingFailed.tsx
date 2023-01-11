@@ -18,19 +18,19 @@ export const MintingFailedModal = () => {
 	}, [minting, subscriptionYears, imageId])
 
 	return (
-		<div className={modalClasses.modal}>
-			<div className={modalClasses.header}>
+		<div className={modalClasses["kyc-dao-web-sdk-modal"]}>
+			<div className={modalClasses["kyc-dao-web-sdk-header"]}>
 				<i className="material-icons">error</i>
 				<p>Minting failed</p>
 			</div>
 
-			<div className={modalClasses.body}>
+			<div className={modalClasses["kyc-dao-web-sdk-body"]}>
 				<p className={"policy"}>
 					Minting failed because of an error. Please try mint kycNFT again.
 				</p>
 			</div>
 
-			<div className={modalClasses["button-wrapper"]}>
+			<div className={modalClasses["kyc-dao-web-sdk-button-wrapper"]}>
 				<Button underline centered onClick={onRetry}>
 					<>
 						<i className="material-icons">refresh</i>

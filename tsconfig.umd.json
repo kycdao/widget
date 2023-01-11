@@ -18,6 +18,7 @@
 		"jsx": "react-jsx",
 		"removeComments": true,
 		"experimentalDecorators": true,
+		"emitDeclarationOnly": true,
 		"emitDecoratorMetadata": true,
 		"outDir": "dist/umd",
 		"module": "UMD",
@@ -30,8 +31,7 @@
 			"@Utils/*": ["utils/*"],
 			"@Style/*": ["style/*"],
 			"@Hooks/*": ["hooks/*"]
-		},
-		"declarationDir": "dist/umd",
+		}
 	},
 	"include": ["src"],
 	"exclude": [

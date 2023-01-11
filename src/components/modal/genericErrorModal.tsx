@@ -15,20 +15,23 @@ export const GenericErrorModal = () => {
 	}, [dispatch])
 
 	return (
-		<div className={modalClasses.modal}>
+		<div className={modalClasses["kyc-dao-web-sdk-modal"]}>
 			<div
-				className={modalClasses.header}
+				className={modalClasses["kyc-dao-web-sdk-header"]}
 				style={{ justifyContent: "flex-start" }}>
 				<i className="material-icons icon">error</i>
 				<p style={{ flex: 1 }}>{errorModalHeader}</p>
 				<button
-					className={clsx("material-icons", modalClasses["close-button"])}
+					className={clsx(
+						"material-icons",
+						modalClasses["kyc-dao-web-sdk-close-button"]
+					)}
 					onClick={onClose}>
 					close
 				</button>
 			</div>
 
-			<div className={modalClasses.body}>
+			<div className={modalClasses["kyc-dao-web-sdk-body"]}>
 				<p className={"policy"}>{errorModalBody}</p>
 			</div>
 		</div>

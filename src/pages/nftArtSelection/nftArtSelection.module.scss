@@ -1,14 +1,14 @@
 @use "../../style/tr2";
 
-.nft-image-wrapper {
-	.nft-image {
+.kyc-dao-web-sdk-nft-image-wrapper {
+	.kyc-dao-web-sdk-nft-image {
 		height: 150px;
 		width: 150px;
 		border: 2px solid transparent;
 		border-radius: 999rem;
 		box-shadow: 0 0 0 5px transparent;
 
-		@extend .tr2;
+		@extend .kyc-dao-web-sdk-tr2;
 
 		&:hover:not(.disabled) {
 			cursor: pointer;
@@ -16,20 +16,20 @@
 			border: 2px solid black;
 		}
 
-		&.selected {
+		&.kyc-dao-web-sdk-selected {
 			box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
 			border: 2px solid black;
 		}
 	}
 }
 
-.nft-button-wrapper {
+.kyc-dao-web-sdk-nft-button-wrapper {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.nft-image-wrapper {
+.kyc-dao-web-sdk-nft-image-wrapper {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1rem;

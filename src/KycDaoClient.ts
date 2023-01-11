@@ -114,6 +114,7 @@ kycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 					? "rgba(0, 0, 0, 0.7)"
 					: this.backdrop
 			)
+			this.parent.style.setProperty("z-index", "101")
 		}
 
 		const container = document.createElement("div")

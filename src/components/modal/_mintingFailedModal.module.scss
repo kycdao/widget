@@ -1,18 +1,18 @@
 @use "modal.module";
 
-.mintingFailedModal {
-	@extend .modal;
+.kyc-dao-web-sdk-mintingFailedModal {
+	@extend .kyc-dao-web-sdk-modal;
 
-	.header {
+	.kyc-dao-web-sdk-header {
 		.material-icons {
 			background: var(--kyc-sdk-red-35);
 		}
 
-		.first-arrow {
+		.kyc-dao-web-sdk-first-arrow {
 			background: var(--kyc-sdk-red-35);
 		}
 
-		.close-button {
+		.kyc-dao-web-sdk-close-button {
 			background: transparent;
 
 			&:hover {

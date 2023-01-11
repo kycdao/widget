@@ -1,4 +1,4 @@
-.modal {
+.kyc-dao-web-sdk-modal {
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	position: absolute;
 	bottom: 0em;
@@ -7,7 +7,7 @@
 	background: #fefefe;
 	border-radius: 4px;
 
-	.header {
+	.kyc-dao-web-sdk-header {
 		flex-direction: row;
 		display: flex;
 		margin: 1em;
@@ -23,15 +23,17 @@
 		}
 
 		p {
+			color: black;
 			margin-left: 1em;
 			font-family: var(--kyc-sdk-primary-font);
 		}
 	}
 
-	.body {
+	.kyc-dao-web-sdk-body {
 		margin: 1rem;
 
 		p {
+			color: black;
 			font-family: var(--kyc-sdk-primary-font);
 
 			b {
@@ -40,18 +42,18 @@
 		}
 	}
 
-	.close-button {
+	.kyc-dao-web-sdk-close-button {
 		cursor: pointer;
 	}
 
-	.button-wrapper {
+	.kyc-dao-web-sdk-button-wrapper {
 		padding: 0 1rem 1rem;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		width: 100%;
 
-		.kyc-sdk-button {
+		.kyc-dao-web-sdk-button {
 			padding: 0;
 		}
 	}

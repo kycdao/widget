@@ -117,7 +117,9 @@ export const Input: FC<InputProps> = ({
 	return (
 		<>
 			{showAutoComplete && autoCompleteData && (
-				<div ref={autocompleteRef} className={classes.autocomplete}>
+				<div
+					ref={autocompleteRef}
+					className={classes["kyc-dao-web-sdk-autocomplete"]}>
 					{autoCompleteData
 						.filter((v) =>
 							v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
@@ -132,8 +134,8 @@ export const Input: FC<InputProps> = ({
 										),
 									}}
 									className={clsx(
-										classes.option,
-										classes["full-width"],
+										classes["kyc-dao-web-sdk-option"],
+										classes["kyc-dao-web-sdk-full-width"],
 										i === 0 && "first"
 									)}
 									onClick={onAutocompleteHndlr(v)}
@@ -142,8 +144,8 @@ export const Input: FC<InputProps> = ({
 							) : (
 								<div
 									className={clsx(
-										classes.option,
-										classes["full-width"],
+										classes["kyc-dao-web-sdk-option"],
+										classes["kyc-dao-web-full-width"],
 										i === 0 && "first"
 									)}
 									onClick={onAutocompleteHndlr(v)}
@@ -160,10 +162,10 @@ export const Input: FC<InputProps> = ({
 				ref={inputRef}
 				id={id}
 				className={clsx(
-					classes.input,
-					disabled && classes.disabled,
+					classes["kyc-dao-web-sdk-input"],
+					disabled && classes["kyc-dao-web-sdk-disabled"],
 					className,
-					fullWidth && classes["full-width"]
+					fullWidth && classes["kyc-dao-web-sdk-full-width"]
 				)}
 				type={type || "text"}
 				placeholder={placeholder}
@@ -172,7 +174,10 @@ export const Input: FC<InputProps> = ({
 				value={value}
 			/>
 			<div
-				className={clsx(classes.clear, value === "" && classes.disabled)}
+				className={clsx(
+					classes["kyc-dao-web-sdk-clear"],
+					value === "" && classes["kyc-dao-web-sdk-disabled"]
+				)}
 				onClick={onClear}>
 				&times;
 			</div>

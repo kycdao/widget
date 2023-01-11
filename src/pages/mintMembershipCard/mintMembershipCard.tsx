@@ -155,9 +155,9 @@ export const MintStep: FC<PageProps> = ({
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive, onEnter }) => (
 			<>
-				<div className={classes["calculator-wrapper"]}>
+				<div className={classes["kyc-dao-web-sdk-calculator-wrapper"]}>
 					<p className="p">Membership period:</p>
-					<div className={classes.calculator}>
+					<div className={classes["kyc-dao-web-sdk-calculator"]}>
 						<div>
 							<Button
 								centered
@@ -165,7 +165,7 @@ export const MintStep: FC<PageProps> = ({
 								className={clsx(
 									"clean",
 									"square",
-									classes["calculator-button"]
+									classes["kyc-dao-web-sdk-calculator-button"]
 								)}
 								onClick={decrease}>
 								<ButtonIcon>remove</ButtonIcon>
@@ -177,13 +177,13 @@ export const MintStep: FC<PageProps> = ({
 								className={clsx(
 									"clean",
 									"square",
-									classes["calculator-button"]
+									classes["kyc-dao-web-sdk-calculator-button"]
 								)}
 								onClick={increase}>
 								<ButtonIcon>add</ButtonIcon>
 							</Button>
-							<div className={classes["sum"]}>
-								<span className={classes["price"]}>
+							<div className={classes["kyc-dao-web-sdk-sum"]}>
+								<span className={classes["kyc-dao-web-sdk-price"]}>
 									${5 * (yearCount || 0)}
 								</span>
 								{/*<span className="subscription"> / year</span>*/}
@@ -192,7 +192,7 @@ export const MintStep: FC<PageProps> = ({
 					</div>
 				</div>
 				{false && (
-					<div className={classes["value"]}>
+					<div className={classes["kyc-dao-web-sdk-value"]}>
 						<i className="material-icons">info</i>
 						<p>
 							<strong>5,6</strong> Matic

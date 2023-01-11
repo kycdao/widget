@@ -5,13 +5,17 @@ import { Loading } from "@Components/loading/loading"
 
 export const MintingModal = () => {
 	return (
-		<div className={clsx(modalClasses.modal, mintingModalClasses.mintingModal)}>
-			<div className={modalClasses.header}>
+		<div
+			className={clsx(
+				modalClasses["kyc-dao-web-sdk-modal"],
+				mintingModalClasses["kyc-dao-web-sdk-mintingModal"]
+			)}>
+			<div className={modalClasses["kyc-dao-web-sdk-header"]}>
 				<i className="material-icons">error</i>
 				<p>Mint authorization in progress</p>
 			</div>
 
-			<div className={modalClasses.body}>
+			<div className={modalClasses["kyc-dao-web-sdk-body"]}>
 				{/* TODO: KYC-697 && KYC-701  */}
 				<p className={"policy"}>
 					Your kycNFT is getting ready! Please open your wallet and wait for the
@@ -19,7 +23,9 @@ export const MintingModal = () => {
 				</p>
 			</div>
 			<Loading />
-			<h1 className={mintingModalClasses.loading}>Loading</h1>
+			<h1 className={mintingModalClasses["kyc-dao-web-sdk-loading"]}>
+				Loading
+			</h1>
 		</div>
 	)
 }

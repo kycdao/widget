@@ -2,7 +2,7 @@ import classes from "./logo.module.css"
 
 export function Logo(): JSX.Element {
 	return (
-		<span className={classes.logo}>
+		<span className={classes["kyc-dao-web-sdk-logo"]}>
 			<svg
 				width="16"
 				height="21"

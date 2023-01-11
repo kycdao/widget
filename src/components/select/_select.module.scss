@@ -1,4 +1,4 @@
-.select {
+.kyc-dao-web-sdk-select {
 	height: var(--kyc-sdk-button-height);
 	display: inline-flex;
 	justify-content: space-between;
@@ -40,7 +40,7 @@
 		font-family: var(--kyc-sdk-primary-font);
 	}
 
-	&.open {
+	&.kyc-dao-web-sdk-open {
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;
 	}
@@ -55,13 +55,13 @@
 		border-color: var(--kyc-sdk-normal-blue);
 	}
 
-	&.full-width {
+	&.kyc-dao-web-sdk-full-width {
 		display: flex;
 		width: 100%;
 	}
 }
 
-.disabled {
+.kyc-dao-web-sdk-opener-disabled {
 	position: relative;
 	z-index: 10;
 	border: 2px solid var(--kyc-sdk-green);
