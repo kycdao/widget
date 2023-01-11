@@ -8,6 +8,8 @@ import {
 	KycDaoClientOptions,
 } from "./KycDaoClientCommon"
 
+import "./KycDaoClient.scss"
+
 function kycDaoClient(
 	this: KycDaoClientInterface,
 	{
