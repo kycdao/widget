@@ -17,7 +17,7 @@ import { ModalRouter } from "@Components/modal/modalRouter"
 
 import { getNetworkType } from "./utils/getNetworkType"
 
-import "./style/index.scss"
+import "./style/app.scss"
 
 //set body to unscrollable temporarily
 
