@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.40",
+	"version": "0.3.0-rc.41",
 	"license": "unlicensed",
 	"main": "dist/umd/index.js",
 	"types": "dist",
