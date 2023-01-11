@@ -118,18 +118,6 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 						startPage = kycDao.kycDao.subscribed
 							? StepID.subscribedStartStep
 							: StepID.AgreementStep
-
-						dispatch({
-							type: DataActionTypes.SetErrorModalText,
-							payload: {
-								header: "An error happened",
-								body: `${""}`,
-							},
-						})
-						dispatch({
-							type: DataActionTypes.setModal,
-							payload: "emailVerification",
-						})
 					}
 
 					dispatch({
