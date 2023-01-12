@@ -7,14 +7,14 @@ import {
 } from "./KycDaoClientCommon"
 import { SdkConfiguration } from "@kycdao/kycdao-sdk"
 
-export type KycDaoWidgetConfig = {
-	parent: HTMLElement | string
+export interface KycDaoWidgetConfig {
 	config: SdkConfiguration
 	onFail?: (reason: string) => void
 	onSuccess?: (data?: string) => void
 }
 
-export const KycDaoWidget: FC<KycDaoWidgetConfig> = (config) => {
+export const KycDaoWidget: FC<KycDaoWidgetConfig> = (props) => {
+	const { config, onFail, onSuccess } = props
 	const parent = useRef<HTMLDivElement>(null)
 	const client = useRef<KycDaoClientInterface>()
 
@@ -25,7 +25,10 @@ export const KycDaoWidget: FC<KycDaoWidgetConfig> = (config) => {
 
 		if (parent.current) {
 			client.current = new ClientConstructor({
-				...config,
+				parent: parent.current,
+				onFail,
+				onSuccess,
+				config,
 				width: 400,
 				height: 650,
 				configFromUrl: false,
@@ -40,7 +43,7 @@ export const KycDaoWidget: FC<KycDaoWidgetConfig> = (config) => {
 		return () => {
 			client.current?.close()
 		}
-	}, [config])
+	}, [config, onFail, onSuccess])
 
 	return <div ref={parent} />
 }

@@ -1,6 +1,6 @@
 {
-	"name": "@kycdao/kycdao-web-sdk",
-	"version": "0.3.0-rc.41",
+	"name": "@kycdao/widget",
+	"version": "0.1.0-rc.1",
 	"license": "unlicensed",
 	"main": "dist/umd/index.js",
 	"types": "dist",
@@ -45,25 +45,25 @@
 			"import": "./dist/app.css",
 			"require": "./dist/app.css"
 		},
-		"./KycdaoClient.css": {
+		"./KycDaoClient.css": {
 			"style": "./dist/KycDaoClient.css",
 			"import": "./dist/KycDaoClient.css",
 			"require": "./dist/KycDaoClient.css"
 		},
-		"./KycdaoIframeClient.css": {
+		"./KycDaoIframeClient.css": {
 			"style": "./dist/KycDaoIframeClient.css",
 			"import": "./dist/KycDaoIframeClient.css",
 			"require": "./dist/KycDaoIframeClient.css"
 		},
-		"./KycdaoClient": {
-			"import": "./dist/esm/KycdaoClient.js",
-			"script": "./dist/web/KycdaoClient.js",
+		"./KycDaoClient": {
+			"import": "./dist/esm/KycDaoClient.js",
+			"script": "./dist/web/KycDaoClient.js",
 			"style": "./dist/KycDaoClient.css",
 			"require": "./dist/umd/client.js"
 		},
-		"./KycdaoIframeClient": {
-			"import": "./dist/esm/KycdaoIframeClient.js",
-			"script": "./dist/web/KycdaoIframeClient.js",
+		"./KycDaoIframeClient": {
+			"import": "./dist/esm/KycDaoIframeClient.js",
+			"script": "./dist/web/KycDaoIframeClient.js",
 			"style": "./dist/KycdaoIframeClient.css",
 			"require": "./dist/umd/KycdaoIframeClient.js"
 		},
