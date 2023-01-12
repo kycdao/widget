@@ -161,7 +161,7 @@
 			"last 1 safari version"
 		]
 	},
-	"packageManager": "yarn@4.0.0-rc.35",
+	"packageManager": "yarn@4.0.0-rc.34",
 	"lint-staged": {
 		"{*.ts,*.tsx,*.scss}": [
 			"prettier --write",
