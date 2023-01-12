@@ -88,6 +88,26 @@
 		"stream": "^0.0.2",
 		"styled-components": "^5.3.6"
 	},
+	"dependenciesMeta": {
+		"@toruslabs/eccrypto": {
+			"built": false
+		},
+		"bigint-buffer": {
+			"built": false
+		},
+		"bufferutil": {
+			"built": false
+		},
+		"keccak": {
+			"built": false
+		},
+		"secp256k1": {
+			"built": false
+		},
+		"utf-8-validate": {
+			"built": false
+		}
+	},
 	"peerDependencies": {
 		"react": "^18",
 		"react-dom": "^18"

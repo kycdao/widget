@@ -2457,6 +2457,19 @@ __metadata:
   peerDependencies:
     react: ^18
     react-dom: ^18
+  dependenciesMeta:
+    "@toruslabs/eccrypto":
+      built: false
+    bigint-buffer:
+      built: false
+    bufferutil:
+      built: false
+    keccak:
+      built: false
+    secp256k1:
+      built: false
+    utf-8-validate:
+      built: false
   languageName: unknown
   linkType: soft
 
