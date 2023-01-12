@@ -4,6 +4,37 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
 
+		<style>
+			.chainSelectorButton {
+				cursor: pointer;
+				padding: 1em;
+				border: solid black 2px;
+				border-radius: 10%;
+			}
+
+			.chainSelectorButton:hover {
+				background-color: grey;
+				color: white;
+			}
+
+			[type="checkbox"]:hover {
+				cursor: pointer;
+			}
+
+			label {
+				cursor: pointer;
+			}
+
+			.checkboxContaner {
+				padding: 1em;
+			}
+		</style>
+
+		<script
+			src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"
+			integrity="sha256-OfIB2zuUgSYcwWYMPC+YgPsJ70TB5f5dni/Z3rgYvRA="
+			crossorigin="anonymous"></script>
+
 		<link href="index.css" type="text/css" rel="stylesheet" />
 		<link href="KycDaoClient.css" type="text/css" rel="stylesheet" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,22 +45,105 @@
 		<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
 		<!--<link rel="manifest" href="%PUBLIC_URL%/asset-manifest.json" /> -->
 		<title>Widget Example App</title>
+		<div style="margin: 2em">
+			<h1 style="margin-bottom: 2em; text-align: center">Select your chain</h1>
+			<div style="display: flex; justify-content: space-evenly">
+				<button
+					class="chainSelectorButton"
+					onclick="selectorHndlr('PolygonMumbai')"
+					>Polygon</button
+				>
+				<button
+					class="chainSelectorButton"
+					onclick="selectorHndlr('CeloAlfajores')"
+					>Celo</button
+				>
+				<button
+					class="chainSelectorButton"
+					onclick="selectorHndlr('SolanaDevnet')"
+					>Solana</button
+				>
+				<button
+					class="chainSelectorButton"
+					onclick="selectorHndlr('NearTestnet')"
+					>Near</button
+				>
+				<button
+					class="chainSelectorButton"
+					onclick="selectorHndlr('EthereumGoerli')"
+					>Goerli</button
+				>
+
+				<div class="checkboxContaner" style="align-self: center">
+					<input
+						id="walletconnect"
+						type="checkbox"
+						onchange="(value) => walletConnectOn = value"
+						onclick="walletConnectOn = !walletConnectOn" />
+					<label for="walletconnect">WalletConnect</label>
+				</div>
+			</div>
+		</div>
 		<script>
-			window.onload = function () {
+			let walletConnectOn = false
+
+			const walletConnectEvmProvider = new WalletConnectProvider.default({
+				rpc: {
+					1: "https://rpc.ankr.com/eth",
+					5: "https://rpc.ankr.com/eth_goerli",
+					137: "https://rpc-mainnet.maticvigil.com/",
+					80001: "https://rpc-mumbai.maticvigil.com/",
+					44787: "https://alfajores-forno.celo-testnet.org",
+				},
+				chainId: 80001,
+				//   qrcodeModalOptions: {
+				//     desktopLinks: [
+				//       'ledger',
+				//       'zerion',
+				//     ],
+				//     mobileLinks: [
+				//       "metamask",
+				//     ],
+				//   }
+			})
+
+			function selectorHndlr(selectedChain) {
+				console.log({ selectedChain, walletConnectOn })
+
 				const client = new KycDaoClient({
 					parent: "#modalRoot",
 					modal: true,
 					backdrop: true,
 					config: {
 						demoMode: true,
-						enabledBlockchainNetworks: ["SolanaDevnet"],
+						enabledBlockchainNetworks: [selectedChain],
 						enabledVerificationTypes: ["KYC"],
-						evmProvider: window.ethereum,
+						evmProvider: walletConnectOn
+							? walletConnectEvmProvider
+							: window.ethereum,
 						baseUrl: "https://staging.kycdao.xyz",
 					},
 				})
 
 				client.open()
+			}
+
+			const autostart = false
+
+			onload = () => {
+				if (autostart) {
+					walletConnectOn = false
+
+					const chains = [
+						"PolygonMumbai",
+						"CeloAlfajores",
+						"SolanaDevnet",
+						"NearTestnet",
+						"EthereumGoerli",
+					]
+
+					selectorHndlr(chains[0])
+				}
 			}
 		</script>
 	</head>
