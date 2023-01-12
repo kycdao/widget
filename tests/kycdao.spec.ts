@@ -4,7 +4,7 @@ const WEBSDK_BASE_URL = process.env.WEBSDK_BASE_URL
 	? process.env.WEBSDK_BASE_URL
 	: "http://localhost:4002"
 
-test.describe("kycDAO WebSdk Tests", () => {
+test.describe("kycDAO Widget Tests", () => {
 	test.describe.serial("Test kyc verification flow", () => {
 		// This is needed to make the page persistent between the test in this sequence.
 		let page: Page

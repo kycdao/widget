@@ -13,17 +13,13 @@
 			content="Web site created using create-react-app" />
 		<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
 		<!--<link rel="manifest" href="%PUBLIC_URL%/asset-manifest.json" /> -->
-		<title>Sdk Example App</title>
+		<title>Widget Example App</title>
 		<script>
 			window.onload = function () {
 				const client = new KycDaoClient({
 					parent: "#modalRoot",
-					// configFromUrl: true,
 					modal: true,
 					backdrop: true,
-					config: {
-						evmProvider: "ethereum",
-					},
 					config: {
 						demoMode: true,
 						enabledBlockchainNetworks: ["SolanaDevnet"],
