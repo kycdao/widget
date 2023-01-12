@@ -2431,9 +2431,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kycdao/kycdao-web-sdk@workspace:.":
+"@kycdao/widget@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@kycdao/kycdao-web-sdk@workspace:."
+  resolution: "@kycdao/widget@workspace:."
   dependencies:
     "@babel/cli": "npm:^7.20.7"
     "@babel/core": "npm:7.20.12"
