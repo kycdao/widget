@@ -158,7 +158,7 @@ export const MintStep: FC<PageProps> = ({
 				<div className={classes["kyc-dao-web-sdk-calculator-wrapper"]}>
 					<p className="p">Membership period:</p>
 					<div className={classes["kyc-dao-web-sdk-calculator"]}>
-						<div>
+						<div className={classes["kyc-dao-web-sdk-calculator-body"]}>
 							<Button
 								centered
 								disabled={disabled || yearCount === 0}
@@ -170,7 +170,9 @@ export const MintStep: FC<PageProps> = ({
 								onClick={decrease}>
 								<ButtonIcon>remove</ButtonIcon>
 							</Button>
-							<div className={classes.yearCount}>{yearCount} year</div>
+							<div className={classes["kyc-dao-web-sdk-year-count"]}>
+								{yearCount} year
+							</div>
 							<Button
 								centered
 								disabled={disabled}

@@ -1,4 +1,6 @@
 .kyc-dao-web-sdk-calculator-wrapper {
+	align-items: center;
+
 	p {
 		font-family: var(--kyc-sdk-primary-font);
 	}
@@ -6,7 +8,7 @@
 	.kyc-dao-web-sdk-calculator {
 		display: flex;
 		flex-flow: column;
-		flex-direction: "column";
+		flex-direction: column;
 
 		& > div {
 			justify-content: space-evenly;
@@ -71,24 +73,27 @@
 			}
 		}
 
-		.sum {
+		.kyc-dao-web-sdk-sum {
 			display: flex;
 			align-items: center;
 			flex: 1;
 			justify-content: center;
 
-			.price {
+			.kyc-dao-web-sdk-price {
 				color: black;
 				font-weight: 800;
 				font-family: var(--kyc-sdk-primary-font);
 			}
 
-			.subscription {
+			.kyc-dao-web-sdk-subscription {
 				font-family: var(--kyc-sdk-primary-font);
 			}
 		}
 
-		.kyc-dao-web-sdk-yearCount {
+		.kyc-dao-web-sdk-year-count {
+			padding: 1rem;
+			width: 10rem;
+			text-align: center;
 			font-family: var(--kyc-sdk-primary-font);
 			color: black;
 			display: flex;
@@ -136,4 +141,9 @@
 	> strong {
 		color: black;
 	}
+}
+
+.kyc-dao-web-sdk-calculator-body {
+	align-items: center;
+	justify-content: center;
 }
