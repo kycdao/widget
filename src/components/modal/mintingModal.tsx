@@ -18,8 +18,8 @@ export const MintingModal = () => {
 			<div className={modalClasses["kyc-dao-web-sdk-body"]}>
 				{/* TODO: KYC-697 && KYC-701  */}
 				<p className={"policy"}>
-					Your kycNFT is getting ready! Please open your wallet and wait for the
-					dialog to confirm the minting transaction
+					Your kycNFT is getting ready! It may take up to a minute, please hold tight.
+					Once authorized, it’s your turn to mint.
 				</p>
 			</div>
 			<Loading />
