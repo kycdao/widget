@@ -15,9 +15,21 @@ import { TaxResidenceStep } from "@Pages/taxResidence"
 import { VerificationStep } from "@Pages/verificationStep"
 
 import { SubscribedStartStep } from "@Pages/subscribedStartStep"
-import clsx from "clsx"
 
-import classes from "./_router.module.css"
+import { H1 } from "@Style/index"
+import styled from "styled-components"
+
+const RouterContainer = styled.div<{ blurred: boolean }>`
+	display: flex;
+	flex-flow: column;
+	width: 100%;
+	position: absolute;
+	height: 100%;
+	top: 0;
+
+	filter: ${({ blurred }) => blurred && "brightness(50%)"}
+	filter: ${({ blurred }) => blurred && "#fefefe"}
+`
 
 const RoutedStep: FC<{
 	stepID: StepID
@@ -64,7 +76,7 @@ const RoutedStep: FC<{
 			return <SubscribedStartStep {...options} />
 		}
 		default: {
-			return <>Something went wrong</>
+			return <H1>Something went wrong</H1>
 		}
 	}
 }
@@ -107,17 +119,8 @@ export const Router: FC = () => {
 			: undefined
 	}, [nextPage, prevPage])
 
-	const containerClasses = useMemo(
-		() =>
-			clsx(
-				currentModal && "blurred",
-				classes["kyc-dao-web-sdk-routerContainer"]
-			),
-		[currentModal]
-	)
-
 	return (
-		<div className={containerClasses}>
+		<RouterContainer blurred={!!currentModal}>
 			{prevPage && (
 				<RoutedStep
 					stepID={prevPage}
@@ -141,6 +144,6 @@ export const Router: FC = () => {
 					style={stepStyle}
 				/>
 			)}
-		</div>
+		</RouterContainer>
 	)
 }

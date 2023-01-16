@@ -1,5 +1,5 @@
-@use "../../style/tr2";
-@use "../../style/translateX";
+@use "@Style/tr2";
+@use "@Style/translateX";
 
 .kyc-dao-web-sdk-submit-button {
 	overflow: hidden;
@@ -20,7 +20,7 @@
 	}
 
 	span,
-	.material-icons {
+	:global(.material-icons) {
 		padding-left: 1.5rem;
 	}
 

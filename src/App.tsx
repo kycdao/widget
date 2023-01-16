@@ -1,5 +1,5 @@
 import { KycDao, SdkConfiguration } from "@kycdao/kycdao-sdk"
-import { FC, useEffect, useMemo, useReducer, useState } from "react"
+import { FC, useEffect, useMemo, useReducer, useRef, useState } from "react"
 import { KycDaoContext, KycDaoState } from "@Components/kycDao.provider"
 import {
 	StepID,
@@ -10,7 +10,7 @@ import {
 	DataActionTypes,
 	HeaderButtons,
 } from "@Components/stateContext"
-import { LoadingCard } from "./pages/loading/loading"
+import { LoadingCard } from "@Pages/loading/loading"
 import { Header } from "@Components/header/header"
 import { Router } from "@Components/router/router"
 import { ModalRouter } from "@Components/modal/modalRouter"
@@ -40,6 +40,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 
 	const [data, dispatch] = useReducer(reducer, DefaultData)
 	const [kycDao, setKycDao] = useState<KycDaoState>()
+	const sdkInitCallHappened = useRef(false)
 
 	useEffect(() => {
 		if (iframeOptions && "virtualKeyboard" in navigator) {
@@ -48,9 +49,8 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	}, [iframeOptions])
 
 	useEffect(() => {
-		KycDao.initialize({
-			...config,
-		}).then((results) => {
+		sdkInitCallHappened.current = true
+		KycDao.initialize(config).then((results) => {
 			setKycDao({ ...results, width, height })
 		})
 	}, [config, width, height])
@@ -78,6 +78,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 		if (kycDao) {
 			;(async () => {
 				try {
+					// 2x indul ez a roossz
 					await kycDao.kycDao.connectWallet(
 						getNetworkType(config.enabledBlockchainNetworks[0])
 					)

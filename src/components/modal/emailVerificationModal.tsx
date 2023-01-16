@@ -5,6 +5,7 @@ import { DataActionTypes } from "../stateContext"
 import { StateContext } from "../stateContext/stateContext"
 
 import modalClasses from "./_modal.module.scss"
+import { P, Policy } from "@Style/index"
 
 export const EmailVerificationModal = () => {
 	const {
@@ -32,26 +33,26 @@ export const EmailVerificationModal = () => {
 		<div className={modalClasses["kyc-dao-web-sdk-modal"]}>
 			<div className={modalClasses["kyc-dao-web-sdk-header"]}>
 				<i className="material-icons icon">hourglass_bottom</i>
-				<p>Waiting your mail verification</p>
+				<P>Waiting your mail verification</P>
 			</div>
 
 			<div className={modalClasses["kyc-dao-web-sdk-body"]}>
-				<p className={"policy"}>
+				<Policy>
 					Please verify yourself through the <b>link</b> we have sent you to the
 					following address:
-				</p>
-				<p>{email}</p>
+				</Policy>
+				<P>{email}</P>
 			</div>
 
 			<div className={modalClasses["kyc-dao-web-sdk-button-wrapper"]}>
-				<Button underline centered onClick={onResend}>
+				<Button type="underline" centered onClick={onResend}>
 					<>
 						<i className="material-icons">refresh</i>
 						<span>Resend</span>
 					</>
 				</Button>
 
-				<Button underline centered onClick={onChangeEmail}>
+				<Button type="underline" centered onClick={onChangeEmail}>
 					<>
 						<i className="material-icons">refresh</i>
 						<span>change email</span>

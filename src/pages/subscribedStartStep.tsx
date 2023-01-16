@@ -11,10 +11,11 @@ import { Step, StepPart } from "@Components/step/step"
 import { SubmitButton } from "@Components/submitButton/submitButton"
 import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "./pageProps"
+import { H1, P } from "@Style/index"
 
 const Body = () => {
 	return (
-		<p>
+		<P>
 			<b>Welcome back trusted anon.</b>
 			<br />
 			<br />
@@ -23,15 +24,15 @@ const Body = () => {
 			<br />
 			<br />
 			Please go ahead and mint a free kycNFT.
-		</p>
+		</P>
 	)
 }
 
 const Header: StepPart = () => (
-	<h1 className="h1">
+	<H1>
 		<Logo />
 		Welcome back to kycDAO
-	</h1>
+	</H1>
 )
 
 const Footer: StepPart = ({ inactive, disabled, onEnter }) => (
@@ -87,7 +88,7 @@ export const SubscribedStartStep: FC<PageProps> = ({
 	}, [disabled, inactive, dispatch, onSubmit])
 
 	if (!kycDaoContext) {
-		return <>Something went seriously wrong!</>
+		return <H1>Something went seriously wrong!</H1>
 	}
 
 	return (

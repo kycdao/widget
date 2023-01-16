@@ -5,7 +5,7 @@ import {
 	StateContext,
 } from "@Components/stateContext"
 import styled from "styled-components"
-import { materialIcon, tr2 } from "../../style"
+import { materialIcon, tr2 } from "@Style/index"
 
 const StepHeader = styled.div<{ blurred: boolean }>`
 	display: flex;
@@ -43,12 +43,12 @@ const Button = styled.button<{ hidden?: boolean }>`
 			opacity: "0.3",
 		}}
 
-	&:hover:not([disabled]):not([hidden]) {
+	&:hover:enabled:not([hidden]) {
 		cursor: pointer;
 		background: var(--kyc-sdk-cybergreen-35);
 	}
 
-	&:active:not([disabled]):not([hidden]) {
+	&:active:enabled:not([hidden]) {
 		color: #09b678;
 		cursor: pointer;
 		background: var(--kyc-sdk-cybergreen-35);
@@ -76,12 +76,12 @@ const CloseButton = styled.button<{ hidden?: boolean }>`
 			visibility: "hidden",
 		}}
 
-	&:hover:not([disabled]):not([hidden]) {
+	&:hover:enabled:not([hidden]) {
 		background: var(--kyc-sdk-cybergreen-35);
 		cursor: pointer;
 	}
 
-	&:active:not([disabled]):not([hidden]) {
+	&:active:enabled:not([hidden]) {
 		color: var(--kyc-sdk-dark-green);
 		cursor: pointer;
 		background: var(--kyc-sdk-cybergreen-35);

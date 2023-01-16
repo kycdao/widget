@@ -14,11 +14,12 @@ import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "../pageProps"
 import { Logo } from "@Components/logo/logo"
 
-import classes from "./membershipCard.module.scss"
+import { H1, P, Policy } from "@Style/index"
+import styled from "styled-components"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<>
-		<div className="policy">
+		<Policy>
 			By starting verification you accept{" "}
 			<a
 				target="_blank"
@@ -33,7 +34,7 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 				href="https://kycdao.xyz/privacy-policy">
 				Terms &#38; Conditions.
 			</a>
-		</div>
+		</Policy>
 		<SubmitButton
 			black
 			fullWidth
@@ -46,41 +47,109 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	</>
 )
 
+const Ul = styled.ul`
+	padding: 1rem 0;
+	margin: 0 auto;
+	width: fit-content;
+`
+
+const Li = styled.li`
+	list-style: none;
+	display: flex;
+	margin-bottom: 2rem;
+	align-items: center;
+	position: relative;
+
+	&:after {
+		display: block;
+		content: "";
+		height: 100%;
+		width: 1px;
+		background-color: var(--kyc-sdk-cybergreen);
+		position: absolute;
+		top: 2rem;
+		left: 1rem;
+	}
+
+	&:last-child {
+		&:after {
+			display: none;
+		}
+	}
+
+	& > div {
+		margin-left: 1rem;
+		display: flex;
+		flex-flow: column;
+
+		${P},
+		b {
+			font-family: var(--kyc-sdk-primary-font);
+			font-weight: 400;
+			color: black;
+		}
+
+		b {
+			font-size: 12px;
+			color: black;
+		}
+	}
+`
+
+const Span = styled.span`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 2rem;
+	width: 2rem;
+	outline: 0.5rem solid var(--kyc-sdk-cybergreen-35);
+	border-radius: 999rem;
+	background: var(--kyc-sdk-cybergreen);
+	color: black;
+	font-weight: 800;
+`
+
+const ProcessContainer = styled.div`
+	display: flex;
+	height: 100%;
+	align-items: center;
+`
+
 const Body = () => {
 	return (
-		<div className={classes["kyc-dao-web-sdk-process"]}>
-			<ul>
-				<li>
-					<span>1</span>
+		<ProcessContainer>
+			<Ul>
+				<Li>
+					<Span>1</Span>
 					<div>
-						<p>Connect</p>
+						<P>Connect</P>
 						<b>Using your wallet</b>
 					</div>
-				</li>
-				<li>
-					<span>2</span>
+				</Li>
+				<Li>
+					<Span>2</Span>
 					<div>
-						<p>Verify</p>
+						<P>Verify</P>
 						<b>Log-in or Open a compliant account</b>
 					</div>
-				</li>
-				<li>
-					<span>3</span>
+				</Li>
+				<Li>
+					<Span>3</Span>
 					<div>
-						<p>Mint</p>
+						<P>Mint</P>
 						<b>kycNFT - $5</b>
 					</div>
-				</li>
-			</ul>
-		</div>
+				</Li>
+			</Ul>
+		</ProcessContainer>
 	)
 }
 
 const Header = () => (
-	<h1 className="h1">
+	<H1>
 		<Logo />
 		KycDAO Membership
-	</h1>
+	</H1>
 )
 
 export const KycDAOMembershipStep: FC<PageProps> = ({

@@ -17,27 +17,28 @@ import { Logo } from "@Components/logo/logo"
 import classes from "./_mintMembershipCard.module.scss"
 import styled from "styled-components"
 import clsx from "clsx"
+import { H1, P } from "@Style/index"
 
 const Body = () => {
 	return (
 		<>
-			<p className="p">
+			<P>
 				kycDao offers an annual membership to verified account holders to use
 				kycNFTs across the ecosystem.
-			</p>
-			<p className="p">
+			</P>
+			<P>
 				Set the initial length of your membership and mint kycNFTs for free on
 				all supported chains.
-			</p>
+			</P>
 		</>
 	)
 }
 
 const Header = () => (
-	<h1 className="h1">
+	<H1>
 		<Logo />
 		Mint membership
-	</h1>
+	</H1>
 )
 
 const unstyledButtonIcon = ({
@@ -156,14 +157,14 @@ export const MintStep: FC<PageProps> = ({
 		({ disabled, inactive, onEnter }) => (
 			<>
 				<div className={classes["kyc-dao-web-sdk-calculator-wrapper"]}>
-					<p className="p">Membership period:</p>
+					<P className="p">Membership period:</P>
 					<div className={classes["kyc-dao-web-sdk-calculator"]}>
 						<div className={classes["kyc-dao-web-sdk-calculator-body"]}>
 							<Button
 								centered
+								type="clean"
 								disabled={disabled || yearCount === 0}
 								className={clsx(
-									"clean",
 									"square",
 									classes["kyc-dao-web-sdk-calculator-button"]
 								)}
@@ -175,9 +176,9 @@ export const MintStep: FC<PageProps> = ({
 							</div>
 							<Button
 								centered
+								type="clean"
 								disabled={disabled}
 								className={clsx(
-									"clean",
 									"square",
 									classes["kyc-dao-web-sdk-calculator-button"]
 								)}
@@ -196,16 +197,16 @@ export const MintStep: FC<PageProps> = ({
 				{false && (
 					<div className={classes["kyc-dao-web-sdk-value"]}>
 						<i className="material-icons">info</i>
-						<p>
+						<P>
 							<strong>5,6</strong> Matic
-						</p>
-						<p>
+						</P>
+						<P>
 							- <strong>0.12</strong> Matic{" "}
-						</p>
-						<p>
+						</P>
+						<P>
 							{" "}
 							gas = <strong>-5.72</strong> Matic ($12.94USD)
-						</p>
+						</P>
 					</div>
 				)}
 				<SubmitButton
@@ -223,7 +224,7 @@ export const MintStep: FC<PageProps> = ({
 	)
 
 	if (!kycDao) {
-		return <>Error</>
+		return <H1>Error</H1>
 	}
 
 	return (

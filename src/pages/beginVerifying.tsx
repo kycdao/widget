@@ -3,6 +3,7 @@ import { StateContext, DataActionTypes, StepID } from "@Components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
+import { H1 } from "@Style/index"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const onError = useCallback((error: string) => {
@@ -103,7 +104,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	])
 
 	if (!kycDao) {
-		return <>Error</>
+		return <H1>Error</H1>
 	}
 
 	return <></>

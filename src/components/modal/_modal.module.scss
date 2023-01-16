@@ -13,7 +13,7 @@
 		margin: 1em;
 		align-items: center;
 
-		.material-icons {
+		:global(.material-icons) {
 			background: var(--kyc-sdk-cybergreen-35);
 			border-radius: 100%;
 			width: 1.5em;
@@ -26,6 +26,7 @@
 			color: black;
 			margin-left: 1em;
 			font-family: var(--kyc-sdk-primary-font);
+			margin-block: auto;
 		}
 	}
 

@@ -11,16 +11,17 @@ import { Step, StepPart } from "@Components/step/step"
 import { SubmitButton } from "@Components/submitButton/submitButton"
 import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "./pageProps"
+import { H1, P } from "@Style/index"
 
 const Header: StepPart = () => (
-	<h1>
+	<H1>
 		<Logo />
 		KycDAO
-	</h1>
+	</H1>
 )
 
 const Body = () => (
-	<p>
+	<P>
 		<b>The last proof you need in web3.</b>
 		<br />
 		<br />
@@ -35,7 +36,7 @@ const Body = () => (
 		<br />
 		<br />
 		We use soulbound NFTs to prove your compliant account. Strictly no PII!
-	</p>
+	</P>
 )
 
 const Footer: StepPart = ({ inactive, disabled, onEnter }) => (

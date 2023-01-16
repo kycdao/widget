@@ -1,8 +1,20 @@
-import classes from "./logo.module.css"
+import styled from "styled-components"
+
+const LogoContainer = styled.span`
+	background: var(--kyc-sdk-cybergreen);
+	display: inline-flex;
+	justify-content: center;
+	margin-right: 8px;
+	flex: 1;
+	padding: 8px 10px;
+	border-radius: 4px;
+	max-width: 18px;
+	box-sizing: content-box;
+`
 
 export function Logo(): JSX.Element {
 	return (
-		<span className={classes["kyc-dao-web-sdk-logo"]}>
+		<LogoContainer>
 			<svg
 				width="16"
 				height="21"
@@ -28,6 +40,6 @@ export function Logo(): JSX.Element {
 					fill="black"
 				/>
 			</svg>
-		</span>
+		</LogoContainer>
 	)
 }

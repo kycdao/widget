@@ -11,7 +11,7 @@ import {
 
 import classes from "./_select.module.scss"
 
-import { Option } from "./option"
+import styled from "styled-components"
 
 type InputProps = {
 	placeholder?: string
@@ -22,6 +22,21 @@ type InputProps = {
 	value?: string
 	values: { value: string; label: string }[]
 }
+
+export const Option = styled.div`
+	border: 1pt;
+	border-style: solid;
+	height: var(--kyc-sdk-button-height);
+	display: flex;
+	justify-content: space-between;
+	padding-left: 1.5em;
+	align-items: center;
+	position: relative;
+	box-shadow: 0 0 0 0 rgba(white, 0);
+	background: #ecf0fe;
+	color: black;
+	font-size: 11pt;
+`
 
 export const Select: FC<PropsWithChildren<InputProps>> = ({
 	disabled,

@@ -22,17 +22,16 @@ import { StepPart, Step } from "@Components/step/step"
 import { SubmitButton } from "@Components/submitButton/submitButton"
 import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "./pageProps"
+import { H1, P } from "@Style/index"
 
 export const Body = () => {
 	return (
 		<>
-			<h1 className="h1">
+			<H1>
 				<Logo />
 				Tax residence
-			</h1>
-			<p className="p">
-				Please select the country where you are currently a tax residence.
-			</p>
+			</H1>
+			<P>Please select the country where you are currently a tax residence.</P>
 		</>
 	)
 }
