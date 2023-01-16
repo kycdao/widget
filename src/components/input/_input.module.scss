@@ -1,93 +1,5 @@
 @use "@Style/tr2";
 
-.kyc-dao-web-sdk-input {
-	height: var(--kyc-sdk-button-height);
-	display: inline-flex;
-	justify-content: space-between;
-	box-sizing: border-box;
-	padding-left: 1.5em;
-	align-items: center;
-	margin: 1rem 0px;
-
-	position: relative;
-	box-shadow: 0 0 0 0 rgba(white, 0);
-	background: white;
-	color: black;
-	border-radius: var(--kyc-sdk-border-radius-light);
-	font-size: 12pt;
-	font-family: var(--kyc-sdk-primary-font);
-
-	border: 2px solid black;
-	//padding-right: 3em;
-
-	@extend .kyc-dao-web-sdk-tr2;
-	::placeholder {
-		color: black;
-		font-family: var(--kyc-sdk-primary-font);
-	}
-
-	::-webkit-input-placeholder {
-		color: black;
-		font-family: var(--kyc-sdk-primary-font);
-	}
-
-	:-ms-input-placeholder {
-		color: black;
-		font-family: var(--kyc-sdk-primary-font);
-	}
-
-	&.kyc-dao-web-sdk-full-width {
-		display: flex;
-		width: 100%;
-	}
-
-	&:hover {
-		background: white;
-		//background: $--kyc-sdk-normal-blue-15;
-		border: 2px solid var(--kyc-sdk-cybergreen);
-		box-shadow: 0 0 0 10px var(--kyc-sdk-cybergreen-35);
-		@extend .kyc-dao-web-sdk-tr2;
-	}
-
-	&:focus {
-		background: black;
-		border: 2px solid var(--kyc-sdk-cybergreen);
-		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
-		@extend .kyc-dao-web-sdk-tr2;
-
-		color: white;
-	}
-}
-
-.kyc-dao-web-sdk-clear {
-	position: absolute;
-	right: 5px;
-	bottom: 85px;
-	font-size: 24px;
-	display: flex;
-	color: black;
-	cursor: pointer;
-	border-radius: var(--kyc-sdk-border-radius-light);
-	background: transparent;
-	padding: 3px 9px;
-	line-height: 132%;
-
-	@extend .kyc-dao-web-sdk-tr2;
-
-	&:hover {
-		background: var(--kyc-sdk-cybergreen-35);
-	}
-
-	&:active {
-		background: black;
-		color: var(--kyc-sdk-cybergreen);
-	}
-
-	&.kyc-dao-web-sdk-disabled {
-		color: lightgrey;
-	}
-}
-
 .kyc-dao-web-sdk-option {
 	height: 2.5em;
 	cursor: pointer;
@@ -108,25 +20,6 @@
 	&:hover {
 		background: var(--kyc-sdk-cybergreen-35);
 		color: black;
-	}
-}
-
-// TODO Virtual keyboard and stuff
-.kyc-dao-web-sdk-autocomplete {
-	//width: 368px;
-	width: 100%;
-	max-height: 18vh;
-	height: auto;
-	overflow-y: auto;
-	bottom: 0;
-
-	.kyc-dao-web-sdk-option {
-		white-space: pre;
-
-		strong {
-			font-family: var(--kyc-sdk-primary-font);
-			font-weight: 800;
-		}
 	}
 }
 

@@ -1,4 +1,4 @@
-import clsx from "clsx"
+/*import clsx from "clsx"
 import {
 	FC,
 	MouseEvent,
@@ -36,6 +36,25 @@ export const Option = styled.div`
 	background: #ecf0fe;
 	color: black;
 	font-size: 11pt;
+`
+
+const SelectBody = styled.div`
+	height: var(--kyc-sdk-button-height);
+	display: inline-flex;
+	justify-content: space-between;
+	padding-left: 1.5em;
+	align-items: center;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	position: relative;
+	box-shadow: 0 0 0 0 rgba(white, 0);
+	background: #ecf0fe;
+	border-radius: var(--kyc-sdk-border-radius-light);
+	font-size: 12pt;
+	border-width: 2pt;
+	border-style: solid;
+	font-family: var(--kyc-sdk-primary-font);
+	color: black;
 `
 
 export const Select: FC<PropsWithChildren<InputProps>> = ({
@@ -76,10 +95,9 @@ export const Select: FC<PropsWithChildren<InputProps>> = ({
 
 	return (
 		<div ref={ref}>
-			<div
+			<SelectBody
 				id={id}
 				className={clsx(
-					classes["kyc-dao-web-sdk-select"],
 					disabled && classes["kyc-dao-web-sdk-opener-disabled"],
 					className,
 					open && classes["kyc-dao-web-sdk-open"]
@@ -87,16 +105,14 @@ export const Select: FC<PropsWithChildren<InputProps>> = ({
 				placeholder={placeholder}
 				onClick={(e: MouseEvent) => setOpen(true)}>
 				{values.find((v) => v.value === value)?.label}
-			</div>
+			</SelectBody>
 			{open &&
 				values.map(({ label, value }, i) => (
-					<Option
-						className={clsx(i === 0 && "first")}
-						onClick={onChangeEventHndlr(value)}
-						key={value}>
+					<Option onClick={onChangeEventHndlr(value)} key={value}>
 						{label}
 					</Option>
 				))}
 		</div>
 	)
 }
+*/

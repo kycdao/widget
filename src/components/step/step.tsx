@@ -100,7 +100,7 @@ const StepBody = styled.div`
 	box-sizing: border-box;
 	align-items: stretch;
 	width: 100%;
-	height: 75%;
+	height: 70%;
 	flex-flow: column;
 
 	p {

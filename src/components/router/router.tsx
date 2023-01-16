@@ -4,7 +4,7 @@ import { StepID, StateContext } from "@Components/stateContext"
 import { StepAnimation, MovingDirection } from "../step/step"
 import { AgreementStep } from "@Pages/agreementStep"
 import { BeginVerifyingStep } from "@Pages/beginVerifying"
-import { ChainSelection } from "@Pages/chainSelectionStep"
+// import { ChainSelection } from "@Pages/chainSelectionStep"
 import { EmailDiscordVerificationStep } from "@Pages/emailDiscordVerificationStep"
 import { FinalStep } from "@Pages/finalStep"
 import { LoadingCard } from "@Pages/loading/loading"
@@ -60,9 +60,9 @@ const RoutedStep: FC<{
 		case StepID.nftArtSelection: {
 			return <NftSelection {...options} />
 		}
-		case StepID.chainSelection: {
+		/* case StepID.chainSelection: {
 			return <ChainSelection {...options} />
-		}
+		}*/
 		case StepID.finalStep: {
 			return <FinalStep {...options} />
 		}

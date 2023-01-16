@@ -1,5 +1,4 @@
 import { tr2 } from "@Style/transitions"
-import clsx from "clsx"
 import { CSSProperties, FC } from "react"
 import styled from "styled-components"
 
@@ -27,7 +26,7 @@ const unstyledButton: FC<ButtonProps> = ({
 		<button
 			style={style}
 			disabled={disabled}
-			className={clsx(className)}
+			className={className}
 			onClick={inactive ? undefined : onClick}>
 			<span>{children}</span>
 		</button>

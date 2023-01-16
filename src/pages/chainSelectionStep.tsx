@@ -1,4 +1,4 @@
-import {
+/* import {
 	FC,
 	useCallback,
 	useContext,
@@ -204,4 +204,4 @@ export const ChainSelection: FC<PageProps> = ({
 			body={body}
 		/>
 	)
-}
+}*/

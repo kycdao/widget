@@ -87,6 +87,7 @@ const Li = styled.li`
 			font-family: var(--kyc-sdk-primary-font);
 			font-weight: 400;
 			color: black;
+			margin-bottom: 0;
 		}
 
 		b {

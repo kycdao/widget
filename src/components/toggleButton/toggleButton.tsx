@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from "react"
+/*import { CSSProperties, FC } from "react"
 import styled from "styled-components"
 
 export type ToggleButtonProps = {
@@ -65,3 +65,4 @@ export const ToggleButton: FC<ToggleButtonProps> = ({
 		</Button>
 	)
 }
+*/
