@@ -10,8 +10,16 @@ import {
 import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
 import { SubmitButton } from "@Components/submitButton/submitButton"
+import styled from "styled-components"
+import { H1 } from "@Style/index"
 
-const Header = () => <h1>Congrats!</h1>
+const Header = () => <H1>Congrats!</H1>
+
+export const NftButtonWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`
 
 export const FinalStep: FC<PageProps> = ({
 	className,
@@ -57,10 +65,10 @@ export const FinalStep: FC<PageProps> = ({
 	const body = useCallback<StepPart>(
 		(props) => (
 			<>
-				<h1 style={{ textAlign: "center" }}>
+				<H1 style={{ textAlign: "center" }}>
 					You have successfully minted your kycNFT on{" "}
 					{kycDao?.kycDao.connectedWallet?.blockchainNetwork}
-				</h1>
+				</H1>
 				<div style={{ textAlign: "center" }} className="final-texts">
 					{nftImageUrl ? (
 						<img alt="" src={nftImageUrl} width="300px" height="300px" />
@@ -84,17 +92,17 @@ export const FinalStep: FC<PageProps> = ({
 		({ disabled, inactive }) =>
 			chainExplorerUrl ? (
 				<>
-					<div className="nft-button-wrapper">
+					<NftButtonWrapper>
 						<Button
 							disabled={disabled}
 							inactive={inactive}
 							centered
 							fullWidth
-							underline
+							mode="underline"
 							onClick={onCheck}>
 							Check on chain
 						</Button>
-					</div>
+					</NftButtonWrapper>
 					<SubmitButton
 						black
 						fullWidth
@@ -110,7 +118,7 @@ export const FinalStep: FC<PageProps> = ({
 	)
 
 	if (!kycDao) {
-		return <>error</>
+		return <H1>An error happened!</H1>
 	}
 
 	return (

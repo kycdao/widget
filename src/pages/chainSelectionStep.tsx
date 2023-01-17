@@ -1,4 +1,4 @@
-import {
+/* import {
 	FC,
 	useCallback,
 	useContext,
@@ -19,10 +19,11 @@ import { SubmitButton } from "@Components/submitButton/submitButton"
 import { ToggleButton } from "@Components/toggleButton/toggleButton"
 import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "./pageProps"
+import { H1, H2 } from "@Style/index"
 
 type Chains = "Near" | "Ethereum" | "Solana"
 
-const Header = () => <h1 className="h1">Connect</h1>
+const Header = () => <H1>Connect</H1>
 
 export const ChainSelection: FC<PageProps> = ({
 	className,
@@ -163,17 +164,17 @@ export const ChainSelection: FC<PageProps> = ({
 	const body = useCallback<StepPart>(
 		() => (
 			<>
-				<h2 className="h2">
+				<H2>
 					Your amazing NFT image will be here, but first, please complete KYC
 					verification!
-				</h2>
-				<h2 className="h2">Select Network</h2>
+				</H2>
+				<H2>Select Network</H2>
 				{chains
 					.filter((chain) => chain.isAvailable)
 					.map(({ label, value }) => (
 						<ToggleButton
 							label={label}
-							toggle={value === connectedWallet}
+							toggled={value === connectedWallet}
 							key={value}
 							className="full-width blue"
 							onClick={onChange(value)}
@@ -203,4 +204,4 @@ export const ChainSelection: FC<PageProps> = ({
 			body={body}
 		/>
 	)
-}
+}*/

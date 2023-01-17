@@ -10,7 +10,7 @@ import { useSwipeable } from "react-swipeable"
 import { StateContext } from "@Components/stateContext/stateContext"
 import styled from "styled-components"
 import clsx from "clsx"
-import { h1 } from "@Style/index"
+import { H1 } from "@Style/index"
 
 export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
 
@@ -71,7 +71,7 @@ const StyledStep = styled.div`
 		width: 100%;
 		box-sizing: border-box;
 		color: black;
-		${h1}
+		${H1}
 	}
 
 	&.blurred {
@@ -100,7 +100,7 @@ const StepBody = styled.div`
 	box-sizing: border-box;
 	align-items: stretch;
 	width: 100%;
-	height: 75%;
+	height: 70%;
 	flex-flow: column;
 
 	p {
@@ -213,10 +213,10 @@ export const Step: FC<StepProps> = ({
 
 	if (!state) {
 		return (
-			<>
+			<H1>
 				Something went seriously wrong! Probably you did not provided the data!
 				Check your data provider!
-			</>
+			</H1>
 		)
 	}
 

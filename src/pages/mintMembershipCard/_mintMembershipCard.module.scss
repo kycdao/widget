@@ -83,10 +83,12 @@
 				color: black;
 				font-weight: 800;
 				font-family: var(--kyc-sdk-primary-font);
+				-webkit-font-smoothing: antialiased;
 			}
 
 			.kyc-dao-web-sdk-subscription {
 				font-family: var(--kyc-sdk-primary-font);
+				-webkit-font-smoothing: antialiased;
 			}
 		}
 
@@ -95,6 +97,7 @@
 			width: 10rem;
 			text-align: center;
 			font-family: var(--kyc-sdk-primary-font);
+			-webkit-font-smoothing: antialiased;
 			color: black;
 			display: flex;
 			align-items: center;

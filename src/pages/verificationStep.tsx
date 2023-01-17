@@ -11,6 +11,7 @@ import { StepPart, Step } from "@Components/step/step"
 import { SubmitButton } from "@Components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 import { Logo } from "@Components/logo/logo"
+import { H1, Li, P, Ul } from "@Style/index"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<SubmitButton
@@ -24,31 +25,31 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 )
 
 const Header = () => (
-	<h1 className="h1">
+	<H1>
 		<Logo />
 		Open account
-	</h1>
+	</H1>
 )
 
 const Body = () => {
 	return (
 		<>
-			<p className="p">
+			<P>
 				Our partners use 3rd party partners to collect information for
 				verification.
-			</p>
-			<p className="p">During the account opening you will be asked:</p>
-			<ul>
-				<li className="li">
-					<p>Government ID</p>
-				</li>
-				<li className="li">
-					<p>Selfie</p>
-				</li>
-				<li className="li">
-					<p>Tax residency</p>
-				</li>
-			</ul>
+			</P>
+			<P>During the account opening you will be asked:</P>
+			<Ul>
+				<Li>
+					<P>Government ID</P>
+				</Li>
+				<Li>
+					<P>Selfie</P>
+				</Li>
+				<Li>
+					<P>Tax residency</P>
+				</Li>
+			</Ul>
 		</>
 	)
 }

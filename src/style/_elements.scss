@@ -1,15 +1,9 @@
-@use "../components/button/button.module";
+@use "../components/button/button.module.scss";
 @use "../components/input/input.module";
-@use "../components/logo/logo.module.css";
 @use "../components/modal/mintingFailedModal.module";
 @use "../components/modal/mintingModal.module";
 @use "../components/modal/modal.module";
-@use "../components/router/_router.module.css";
-@use "../components/select/select.module";
+// @use "@Stylecomponents/select/select.module";
 @use "../components/submitButton/submitButton.module.scss";
 @use "../components/toggleButton/toggleButton.scss";
-@use "../components/loading/loading.module.scss";
-
-@use "../pages/membershipCard/membershipCard.module.scss";
 @use "../pages/mintMembershipCard/mintMembershipCard.module";
-@use "../pages/nftArtSelection/nftArtSelection.module.scss";

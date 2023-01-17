@@ -22,22 +22,23 @@ import { SubmitButton } from "@Components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
 import { Logo } from "@Components/logo/logo"
+import { H1, P } from "@Style/index"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
 const Header = () => (
-	<h1 className="h1">
+	<H1>
 		<Logo />
 		Email verification
-	</h1>
+	</H1>
 )
 
 const Body = () => (
-	<p className="p">
+	<P>
 		Verify your email via the magic link sent to you. <br /> <br />
 		kycDAO won’t know who you are, your account is with our partners. <br />
 		Yet, we need to establish a communication channel with members.
-	</p>
+	</P>
 )
 
 export const EmailDiscordVerificationStep: FC<PageProps> = ({

@@ -8,12 +8,13 @@
 	border-radius: 4px;
 
 	.kyc-dao-web-sdk-header {
+		box-sizing: border-box;
 		flex-direction: row;
 		display: flex;
 		margin: 1em;
 		align-items: center;
 
-		.material-icons {
+		:global(.material-icons) {
 			background: var(--kyc-sdk-cybergreen-35);
 			border-radius: 100%;
 			width: 1.5em;
@@ -26,11 +27,13 @@
 			color: black;
 			margin-left: 1em;
 			font-family: var(--kyc-sdk-primary-font);
+			margin-block: auto;
 		}
 	}
 
 	.kyc-dao-web-sdk-body {
 		margin: 1rem;
+		box-sizing: border-box;
 
 		p {
 			color: black;
@@ -43,11 +46,26 @@
 		}
 	}
 
-	.kyc-dao-web-sdk-close-button {
+	#kyc-dao-web-sdk-close-button {
 		cursor: pointer;
+		line-height: 100%;
+		width: 2rem;
+		height: 2rem;
+		border: none;
+		/* text-align: center; */
+		/* display: block; */
+		box-sizing: content-box;
+		padding: 0;
+
+		background: transparent;
+
+		&:hover {
+			background: var(--kyc-sdk-cybergreen-35);
+		}
 	}
 
 	.kyc-dao-web-sdk-button-wrapper {
+		box-sizing: border-box;
 		padding: 0 1rem 1rem;
 		display: flex;
 		justify-content: space-between;

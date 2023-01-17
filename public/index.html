@@ -28,6 +28,23 @@
 			.checkboxContaner {
 				padding: 1em;
 			}
+
+			.dualButton {
+				display: flex;
+				box-sizing: content-box;
+			}
+
+			.dualButton > .chainSelectorButton:nth-child(1) {
+				border-end-end-radius: 0;
+				border-start-end-radius: 0;
+				border-right-style: solid;
+			}
+
+			.dualButton > .chainSelectorButton:nth-child(2) {
+				border-start-start-radius: 0;
+				border-end-start-radius: 0;
+				border-left-style: none;
+			}
 		</style>
 
 		<script
@@ -47,46 +64,54 @@
 		<title>Widget Example App</title>
 		<div style="margin: 2em">
 			<h1 style="margin-bottom: 2em; text-align: center">Select your chain</h1>
-			<div style="display: flex; justify-content: space-evenly">
-				<button
-					class="chainSelectorButton"
-					onclick="selectorHndlr('PolygonMumbai')"
-					>Polygon Testnet (Mumbai)</button
-				>
-				<button
+			<div
+				style="
+					display: flex;
+					justify-content: space-evenly;
+					flex-wrap: wrap;
+					gap: 1em;
+				">
+				<div
 					class="chainSelectorButton"
 					onclick="selectorHndlr('CeloAlfajores')"
-					>Celo Testnet (Alfajores)</button
-				>
-				<button
+					>Celo Testnet (Alfajores)</div>
+				<div class="dualButton">
+					<div
+						class="chainSelectorButton"
+						onclick="selectorHndlr('PolygonMumbai', false)"
+						>Polygon Testnet (Mumbai)</div
+					>
+					<div
+						class="chainSelectorButton"
+						onclick="selectorHndlr('PolygonMumbai', true)"
+						>with WalletConnect</div
+					>
+				</div>
+				<div
 					class="chainSelectorButton"
-					onclick="selectorHndlr('SolanaDevnet')"
-					>Solana Devnet</button
+					onclick="selectorHndlr('SolanaDevnet', true)"
+					>Solana Devnet</div
 				>
-				<button
+				<div
 					class="chainSelectorButton"
-					onclick="selectorHndlr('NearTestnet')"
-					>NEAR Testnet</button
+					onclick="selectorHndlr('NearTestnet', false)"
+					>NEAR Testnet</div
 				>
-				<button
-					class="chainSelectorButton"
-					onclick="selectorHndlr('EthereumGoerli')"
-					>Ethereum Testnet (Goerli)</button
-				>
-
-				<div class="checkboxContaner" style="align-self: center">
-					<input
-						id="walletconnect"
-						type="checkbox"
-						onchange="(value) => walletConnectOn = value"
-						onclick="walletConnectOn = !walletConnectOn" />
-					<label for="walletconnect">enable WalletConnect</label>
+				<div class="dualButton">
+					<div
+						class="chainSelectorButton"
+						onclick="selectorHndlr('EthereumGoerli', false)"
+						>Ethereum Testnet (Goerli)</div
+					>
+					<div
+						class="chainSelectorButton"
+						onclick="selectorHndlr('EthereumGoerli', true)"
+						>with WalletConnect</div
+					>
 				</div>
 			</div>
 		</div>
 		<script>
-			let walletConnectOn = false
-
 			const walletConnectEvmProvider = new WalletConnectProvider.default({
 				rpc: {
 					1: "https://rpc.ankr.com/eth",
@@ -107,7 +132,7 @@
 				//   }
 			})
 
-			function selectorHndlr(selectedChain) {
+			function selectorHndlr(selectedChain, walletConnectOn) {
 				console.log({ selectedChain, walletConnectOn })
 
 				const client = new KycDaoClient({
@@ -128,7 +153,7 @@
 				client.open()
 			}
 
-			const autostart = false
+			const autostart = true
 
 			onload = () => {
 				if (autostart) {
@@ -142,7 +167,7 @@
 						"EthereumGoerli",
 					]
 
-					selectorHndlr(chains[0])
+					selectorHndlr(chains[0], walletConnectOn)
 				}
 			}
 		</script>

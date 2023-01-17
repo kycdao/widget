@@ -1,46 +1,26 @@
 @use "../../style/tr2";
 
 .kyc-dao-web-sdk-button {
-	height: var(--kyc-sdk-button-height);
-	display: inline-flex;
-	justify-content: space-between;
-	box-sizing: border-box;
-	align-items: center;
-
-	position: relative;
-	box-shadow: 0 0 0 0 rgba(white, 0);
-	background: #ecf0fe;
-	color: var(--kyc-sdk-dark-purple);
-	border-radius: var(--kyc-sdk-border-radius-light);
-	font-size: 12pt;
-	cursor: pointer;
-	@extend .kyc-dao-web-sdk-tr2;
-
-	span {
-		font-family: var(--kyc-sdk-primary-font);
-		font-weight: 400;
-		font-size: 16px;
-		margin-left: 0;
-	}
-
 	&.kyc-dao-web-sdk-full-width {
 		width: 100%;
 	}
 
-	&[disabled] {
-		background: var(--kyc-sdk-inactive) !important;
-		pointer-events: none !important;
+	&:disabled {
+		background: var(--kyc-sdk-inactive);
+		pointer-events: none;
 		border: 2px solid black;
 
 		span,
 		i {
-			color: black !important;
+			color: black;
 		}
 	}
 
 	&.kyc-dao-web-sdk-black {
-		background: black;
-		border: 2px solid black;
+		&:enabled {
+			background: black;
+			border: 2px solid black;
+		}
 
 		span,
 		i {
@@ -79,37 +59,6 @@
 		}
 	}
 
-	/*
-		&.blue {
-			background: $--kyc-sdk-normal-blue;
-	
-			span,
-			.material-icons {
-				font-weight: 400;
-				color: white;
-			}
-	
-			&:hover {
-				background: $--kyc-sdk-normal-blue;
-				box-shadow: 0 0 0 10px $--kyc-sdk-normal-blue-35;
-			}
-	
-			&:focus {
-				background: $--kyc-sdk-normal-blue;
-				box-shadow: 0 0 0 5px $--kyc-sdk-normal-blue-50;
-			}
-	
-			&:active {
-				box-shadow: 0 0 0 5px $--kyc-sdk-normal-blue-35;
-			}
-	
-			&:focus-visible {
-				outline: none;
-				border: none;
-			}
-		}
-		 */
-
 	&.kyc-dao-web-sdk-green {
 		background: var(--kyc-sdk-cyberpunk);
 
@@ -147,13 +96,16 @@
 
 	/* GYURI : COPY STYLE */
 	&.kyc-dao-web-sdk-underline {
-		background: rgb(0, 0, 0, 0);
-		color: black;
 		position: relative;
 		display: inline-flex;
 		width: max-content;
 
-		&:after {
+		&:enabled {
+			background: rgb(0, 0, 0, 0);
+			color: black;
+		}
+
+		&:after:not(:disabled) {
 			content: "";
 			display: inline-flex;
 			height: 2px;
@@ -164,9 +116,27 @@
 			@extend .kyc-dao-web-sdk-tr2;
 		}
 
+		&:after:disabled {
+			content: "";
+			display: inline-flex;
+			height: 2px;
+			width: 100%;
+			background-color: grey;
+			position: absolute;
+			bottom: 6px;
+		}
+
 		span {
 			display: flex;
 			align-items: center;
+		}
+
+		span:disabled {
+			color: grey;
+		}
+
+		i:disabled {
+			color: grey;
 		}
 
 		&:hover {
@@ -174,11 +144,20 @@
 				height: 8px;
 			}
 		}
+
+		&:disabled {
+			background-color: transparent;
+			border: none;
+			color: grey;
+		}
 	}
 
 	&.kyc-dao-web-sdk-centered {
 		justify-content: center;
 		padding-left: 0;
 		padding-right: 0;
+	}
+
+	:after:disabled {
 	}
 }

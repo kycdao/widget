@@ -3,6 +3,7 @@ import { DataActionTypes, StateContext } from "../stateContext"
 
 import modalClasses from "./_modal.module.scss"
 import clsx from "clsx"
+import { P, Policy } from "@Style/index"
 
 export const GenericErrorModal = () => {
 	const {
@@ -20,19 +21,17 @@ export const GenericErrorModal = () => {
 				className={modalClasses["kyc-dao-web-sdk-header"]}
 				style={{ justifyContent: "flex-start" }}>
 				<i className="material-icons icon">error</i>
-				<p style={{ flex: 1 }}>{errorModalHeader}</p>
+				<P style={{ flex: 1 }}>{errorModalHeader}</P>
 				<button
-					className={clsx(
-						"material-icons",
-						modalClasses["kyc-dao-web-sdk-close-button"]
-					)}
+					id={modalClasses["kyc-dao-web-sdk-close-button"]}
+					className={clsx("material-icons")}
 					onClick={onClose}>
 					close
 				</button>
 			</div>
 
 			<div className={modalClasses["kyc-dao-web-sdk-body"]}>
-				<p className={"policy"}>{errorModalBody}</p>
+				<Policy>{errorModalBody}</Policy>
 			</div>
 		</div>
 	)

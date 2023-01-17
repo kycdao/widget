@@ -14,20 +14,53 @@ import { useMinting } from "@Hooks/useMinting"
 import { PageProps } from "../pageProps"
 import { Logo } from "@Components/logo/logo"
 
-import classes from "./nftArtSelection.module.scss"
-import clsx from "clsx"
+import { NftButtonWrapper } from "@Pages/finalStep"
+import styled from "styled-components"
+import { tr2 } from "@Style/transitions"
+import { H1 } from "@Style/index"
 
 const Header = () => (
-	<h1 className="h1">
+	<H1>
 		<Logo />
 		Select your KYC NFT art
-	</h1>
+	</H1>
 )
 
 type Nft = {
 	id: string
 	url: string
 }
+
+const NftImageWrapper = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: space-around;
+	// align-content: center;
+	padding: 1em;
+	height: 100%;
+	overflow: scroll;
+`
+
+const NftImageContainer = styled.div<{ selected: boolean; disabled: boolean }>`
+	height: 150px;
+	width: 150px;
+	border: ${({ selected }) =>
+		selected ? "2px solid black" : "2px solid transparent"};
+	border-radius: 999rem;
+	box-shadow: ${({ selected }) =>
+		selected
+			? "0 0 0 5px var(--kyc-sdk-cybergreen-35)"
+			: "0 0 0 5px transparent"};
+
+	&:not(:disabled):hover {
+		cursor: pointer;
+		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
+		border: 2px solid black;
+	}
+
+	${tr2}
+`
 
 export const NftSelection: FC<PageProps> = ({
 	className,
@@ -144,24 +177,19 @@ export const NftSelection: FC<PageProps> = ({
 
 	const body = useCallback<StepPart>(
 		({ disabled }) => (
-			<>
-				<div className={classes["kyc-dao-web-sdk-nft-image-wrapper"]}>
-					{nftImages.map(({ id, url }) => {
-						return (
-							<div
-								className={clsx(
-									classes["kyc-dao-web-sdk-nft-image"],
-									disabled ? classes.disabled : null,
-									currentArt === id ? classes["kyc-dao-web-sdk-selected"] : null
-								)}
-								key={id}
-								onClick={onArtClick(id)}>
-								<img alt="Nft" src={url} />
-							</div>
-						)
-					})}
-				</div>
-			</>
+			<NftImageWrapper>
+				{nftImages.map(({ id, url }) => {
+					return (
+						<NftImageContainer
+							disabled={disabled}
+							selected={currentArt === id}
+							key={id}
+							onClick={onArtClick(id)}>
+							<img alt="Nft" src={url} />
+						</NftImageContainer>
+					)
+				})}
+			</NftImageWrapper>
 		),
 		[nftImages, onArtClick, currentArt]
 	)
@@ -170,20 +198,18 @@ export const NftSelection: FC<PageProps> = ({
 		({ disabled, inactive, onEnter }) => {
 			return (
 				<>
-					<div className={classes["kyc-dao-web-sdk-nft-button-wrapper"]}>
+					<NftButtonWrapper>
 						<Button
+							mode="underline"
 							inactive={inactive}
 							disabled={disabled}
 							fullWidth
-							underline
 							centered
 							onClick={onRegenerate}>
-							<>
-								<i className="material-icons">refresh</i>
-								<span>regenerate</span>
-							</>
+							<i className="material-icons">refresh</i>
+							<span>regenerate</span>
 						</Button>
-					</div>
+					</NftButtonWrapper>
 					<SubmitButton
 						black
 						fullWidth
@@ -200,7 +226,7 @@ export const NftSelection: FC<PageProps> = ({
 	)
 
 	if (!kycDao) {
-		return <>Error</>
+		return <H1>Error</H1>
 	}
 
 	return (

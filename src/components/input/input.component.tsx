@@ -1,3 +1,4 @@
+import { tr2 } from "@Style/transitions"
 import clsx from "clsx"
 import {
 	ChangeEventHandler,
@@ -10,6 +11,7 @@ import {
 	useRef,
 	useState,
 } from "react"
+import styled from "styled-components"
 
 import classes from "./_input.module.scss"
 
@@ -31,6 +33,172 @@ type InputProps = {
 	fullWidth?: boolean
 }
 
+const StyledInput = styled.input<{
+	disabled?: boolean
+	showAutoComplete: boolean
+}>`
+	height: var(--kyc-sdk-button-height);
+	display: inline-flex;
+	justify-content: space-between;
+	box-sizing: border-box;
+	padding-left: 1.5em;
+	align-items: center;
+	margin: 1rem 0px;
+	margin-bottom: 0;
+	border: 2px solid black;
+	outline: none;
+	${({ showAutoComplete }) =>
+		showAutoComplete
+			? `border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light); margin-top: 0; outline: none; 		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);`
+			: "border-radius: var(--kyc-sdk-border-radius-light);"}
+	position: relative;
+	box-shadow: 0 0 0 0 rgba(white, 0);
+	background: white;
+	color: black;
+	font-size: 12pt;
+	font-family: var(--kyc-sdk-primary-font);
+	width: 100%;
+
+	::placeholder {
+		color: white;
+		font-family: var(--kyc-sdk-primary-font);
+	}
+
+	::-webkit-input-placeholder {
+		color: black;
+		font-family: var(--kyc-sdk-primary-font);
+	}
+
+	:-ms-input-placeholder {
+		color: black;
+		font-family: var(--kyc-sdk-primary-font);
+	}
+
+	&:hover {
+		border: 2px solid var(--kyc-sdk-cybergreen);
+		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
+		${({ showAutoComplete }) =>
+			showAutoComplete &&
+			"border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
+		background: white;
+	}
+
+	&:focus {
+		border: 2px solid var(--kyc-sdk-cybergreen);
+		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
+		${({ showAutoComplete }) =>
+			showAutoComplete &&
+			"border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
+		color: white;
+		background: black;
+	}
+
+	&:active {
+		border: 2px solid var(--kyc-sdk-cybergreen);
+		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
+		${({ showAutoComplete }) =>
+			showAutoComplete &&
+			"border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
+		color: white;
+		background: black;
+	}
+`
+
+const Clear = styled.div<{ active: boolean }>`
+	position: absolute;
+	right: 5px;
+	bottom: 82px;
+	font-size: 24px;
+	display: flex;
+	color: var(--kyc-sdk-cybergreen);
+	cursor: pointer;
+	border-radius: var(--kyc-sdk-border-radius-full);
+	background: transparent;
+	padding: 3px 1px;
+	width: 1.5em;
+	height: 1.5em;
+	justify-content: center;
+    align-items: center;
+}
+
+	color: ${({ active }) =>
+		active
+			? `var(--kyc-sdk-cybergreen);
+		 	@extend ${tr2};`
+			: `black;`}
+
+	&:hover:not([disabled]) {
+		@extend ${tr2};
+		background: var(--kyc-sdk-cybergreen-35);
+	}
+
+	&[disabled] {
+		color: lightgrey;
+		cursor: default;
+	}
+`
+
+const Option = styled.div`
+	height: 2.5em;
+	cursor: pointer;
+	line-height: 2.5em;
+	padding-left: 1.5em;
+	border-bottom: 1px solid var(--kyc-sdk-normal-blue-15);
+	font-family: var(--kyc-sdk-primary-font);
+	font-weight: 400;
+	color: black;
+	justify-content: left;
+	white-space: pre;
+	display: flex;
+	width: 100%;
+
+	strong {
+		font-family: var(--kyc-sdk-primary-font);
+		font-weight: 800;
+		justify-content: center;
+	}
+
+	&:hover {
+		background: var(--kyc-sdk-cybergreen-35);
+		color: black;
+	}
+`
+
+const Autocomplete = styled.div`
+	width: 100%;
+	max-height: 40vh;
+	height: auto;
+	overflow-y: auto;
+	overflow-x: hidden;
+
+	@media only screen and (min-width: 992px) {
+		max-height: 40vh;
+	}
+
+	border: 2px solid black;
+	border-bottom: 0;
+	border-radius: var(--kyc-sdk-border-radius-light);
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	outline: none;
+	box-sizing: border-box;
+`
+
+const Container = styled.div<{
+	disabled?: boolean
+	showAutoComplete: boolean
+	active: boolean
+}>`
+	margin-bottom: 1em;
+	box-sizing: border-box;
+	@extend ${tr2};
+	box-sizing: content-box;
+
+	&:has(${StyledInput}:hover) > ${Clear} {
+		color: var(--kyc-sdk-cybergreen);
+	}
+`
+
 export const Input: FC<InputProps> = ({
 	disabled,
 	placeholder,
@@ -44,19 +212,27 @@ export const Input: FC<InputProps> = ({
 	onInputBlurred,
 	onInputFocused,
 	type,
-	fullWidth = true,
 }) => {
-	const [showAutoComplete, setShowAutoComplete] = useState(false)
+	const [showAutoComplete, setShowAutoComplete] = useState(
+		!!autoFocus && !!autoCompleteData
+	)
 	const autocompleteRef = useRef<HTMLDivElement>(null)
+	const [focused, setFocused] = useState(!!autoFocus)
 
 	const onChangeEventHndlr: ChangeEventHandler<HTMLInputElement> = useCallback(
 		({ target: { value } }) => {
 			if (onChange) {
 				onChange(value)
 			}
-			setShowAutoComplete(true)
+			if (autoCompleteData) {
+				setShowAutoComplete(
+					autoCompleteData.filter((v) =>
+						v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
+					).length > 0
+				)
+			}
 		},
-		[onChange]
+		[onChange, autoCompleteData]
 	)
 
 	useEffect(() => {
@@ -76,8 +252,12 @@ export const Input: FC<InputProps> = ({
 
 	useEffect(() => {
 		const hndlr = () => {
-			if (!showAutoComplete) {
-				setShowAutoComplete(true)
+			if (!showAutoComplete && autoCompleteData) {
+				setShowAutoComplete(
+					autoCompleteData.filter((v) =>
+						v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
+					).length > 0
+				)
 			}
 		}
 
@@ -88,7 +268,7 @@ export const Input: FC<InputProps> = ({
 		return () => {
 			current?.addEventListener("focus", hndlr)
 		}
-	}, [showAutoComplete, inputRef])
+	}, [showAutoComplete, inputRef, autoCompleteData, value])
 
 	const onAutocompleteHndlr = useCallback(
 		(value: string) => () => {
@@ -104,7 +284,8 @@ export const Input: FC<InputProps> = ({
 		if (onChange && value) {
 			onChange("")
 		}
-	}, [onChange, value])
+		inputRef.current?.focus()
+	}, [onChange, value, inputRef])
 
 	useEffect(() => {
 		if (!disabled && autoFocus) {
@@ -114,73 +295,84 @@ export const Input: FC<InputProps> = ({
 		}
 	}, [disabled, autoFocus, inputRef])
 
+	const onBlur = useCallback(() => {
+		if (onInputBlurred) {
+			onInputBlurred()
+		}
+
+		setFocused(false)
+	}, [onInputBlurred])
+
+	const onFocus = useCallback(() => {
+		if (onInputFocused) {
+			onInputFocused()
+		}
+
+		setFocused(true)
+	}, [onInputFocused])
+
 	return (
-		<>
+		<Container active={focused} showAutoComplete={showAutoComplete}>
 			{showAutoComplete && autoCompleteData && (
-				<div
-					ref={autocompleteRef}
-					className={classes["kyc-dao-web-sdk-autocomplete"]}>
-					{autoCompleteData
-						.filter((v) =>
-							v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
-						)
-						.map((v, i) => {
-							return value !== "" ? (
-								<div
-									dangerouslySetInnerHTML={{
-										__html: v.replace(
-											new RegExp(`(${value.replace(specialRegex, "")})`, "ig"),
-											"<strong>$1</strong>"
-										),
-									}}
-									className={clsx(
-										classes["kyc-dao-web-sdk-option"],
-										classes["kyc-dao-web-sdk-full-width"],
-										i === 0 && "first"
-									)}
-									onClick={onAutocompleteHndlr(v)}
-									key={v}
-								/>
-							) : (
-								<div
-									className={clsx(
-										classes["kyc-dao-web-sdk-option"],
-										classes["kyc-dao-web-full-width"],
-										i === 0 && "first"
-									)}
-									onClick={onAutocompleteHndlr(v)}
-									key={v}>
-									{v}
-								</div>
+				<div>
+					<Autocomplete ref={autocompleteRef}>
+						{autoCompleteData
+							.filter((v) =>
+								v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
 							)
-						})}
+							.map((v, i) => {
+								return value !== "" ? (
+									<Option
+										dangerouslySetInnerHTML={{
+											__html: v.replace(
+												new RegExp(
+													`(${value.replace(specialRegex, "")})`,
+													"ig"
+												),
+												"<strong>$1</strong>"
+											),
+										}}
+										className={clsx(
+											classes["kyc-dao-web-sdk-full-width"],
+											i === 0 && "first"
+										)}
+										onClick={onAutocompleteHndlr(v)}
+										key={v}
+									/>
+								) : (
+									<Option
+										className={clsx(
+											classes["kyc-dao-web-sdk-option"],
+											classes["kyc-dao-web-full-width"],
+											i === 0 && "first"
+										)}
+										onClick={onAutocompleteHndlr(v)}
+										key={v}>
+										{v}
+									</Option>
+								)
+							})}
+					</Autocomplete>
 				</div>
 			)}
-			<input
-				onBlur={onInputBlurred}
-				onFocus={onInputFocused}
+			<StyledInput
+				showAutoComplete={showAutoComplete}
+				onBlur={onBlur}
+				onFocus={onFocus}
 				ref={inputRef}
 				id={id}
-				className={clsx(
-					classes["kyc-dao-web-sdk-input"],
-					disabled && classes["kyc-dao-web-sdk-disabled"],
-					className,
-					fullWidth && classes["kyc-dao-web-sdk-full-width"]
-				)}
+				className={className}
 				type={type || "text"}
 				placeholder={placeholder}
 				onChange={onChangeEventHndlr}
 				disabled={disabled}
 				value={value}
 			/>
-			<div
-				className={clsx(
-					classes["kyc-dao-web-sdk-clear"],
-					value === "" && classes["kyc-dao-web-sdk-disabled"]
-				)}
-				onClick={onClear}>
-				&times;
-			</div>
-		</>
+			{value.length > 0 && (
+				<Clear active={focused} className="material-icons" onClick={onClear}>
+					close
+				</Clear>
+			)}
+		</Container>
 	)
 }

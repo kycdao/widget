@@ -17,7 +17,7 @@ const H1 = styled.h1`
 const Body = () => {
 	return (
 		<>
-			<H1 className={"h1"}>Loading</H1>
+			<H1>Loading</H1>
 			<Loading />
 		</>
 	)

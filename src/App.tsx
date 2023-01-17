@@ -1,5 +1,5 @@
 import { KycDao, SdkConfiguration } from "@kycdao/kycdao-sdk"
-import { FC, useEffect, useMemo, useReducer, useState } from "react"
+import { FC, useEffect, useMemo, useReducer, useRef, useState } from "react"
 import { KycDaoContext, KycDaoState } from "@Components/kycDao.provider"
 import {
 	StepID,
@@ -10,7 +10,7 @@ import {
 	DataActionTypes,
 	HeaderButtons,
 } from "@Components/stateContext"
-import { LoadingCard } from "./pages/loading/loading"
+import { LoadingCard } from "@Pages/loading/loading"
 import { Header } from "@Components/header/header"
 import { Router } from "@Components/router/router"
 import { ModalRouter } from "@Components/modal/modalRouter"
@@ -18,6 +18,7 @@ import { ModalRouter } from "@Components/modal/modalRouter"
 import { getNetworkType } from "./utils/getNetworkType"
 
 import "./style/app.scss"
+import styled from "styled-components"
 
 //set body to unscrollable temporarily
 
@@ -28,6 +29,57 @@ export type KycDaoModalProps = {
 	iframeOptions?: { messageTargetOrigin: string }
 	isModal: boolean
 }
+
+const AppContainer = styled.div`
+	--kyc-sdk-primary-font: "neue-machina";
+	--kyc-sdk-cybergreen: #00ffb3;
+	--kyc-sdk-cybergreen-35: rgba(0, 255, 177, 0.35);
+	--kyc-sdk-cybergreen-50: rgba(0, 255, 177, 0.5);
+	--darken-green: #0af292;
+
+	--kyc-sdk-normal-blue: #3a4be9;
+	--kyc-sdk-dark-blue: #181f60;
+	--kyc-sdk-dark-purple: #21114a;
+	--kyc-sdk-green: #03f682;
+	--kyc-sdk-green-darken: #0bcb77;
+	--kyc-sdk-dark-green: #09b678;
+	--kyc-sdk-cyberpunk: #72f9d1;
+	--kyc-sdk-red: #ff4646;
+	--kyc-sdk-red-darken: #d51f4f;
+
+	--kyc-sdk-border: rgba(24, 31, 96, 0.05);
+	--steps-padding: 2rem;
+	--kyc-sdk-border-radius-full: 999rem;
+	--kyc-sdk-border-radius-light: 5px;
+	--kyc-sdk-inactive: #d7d9df;
+
+	--kyc-sdk-button-height: 3rem;
+	--kyc-sdk-header-height: 64px;
+	--kyc-sdk-unit: 4.166666666666667vw;
+	--kyc-sdk-connect-button-width: 19rem;
+
+	--kyc-sdk-normal-blue-75: rgba(58, 75, 233, 0.75);
+	--kyc-sdk-normal-blue-50: rgba(58, 75, 233, 0.5);
+	--kyc-sdk-normal-blue-35: rgba(58, 75, 233, 0.35);
+	--kyc-sdk-normal-blue-15: rgba(58, 75, 233, 0.15);
+
+	--kyc-sdk-dark-blue-35: rgba(24, 31, 96, 0.35);
+	--kyc-sdk-dark-blue-50: rgba(24, 31, 96, 0.5);
+	--kyc-sdk-dark-blue-75: rgba(24, 31, 96, 0.75);
+
+	--kyc-sdk-green-35: rgba(3, 246, 13, 0.35);
+	--kyc-sdk-green-50: rgba(3, 246, 13, 0.5);
+	--kyc-sdk-green-75: rgba(3, 246, 13, 0.75);
+
+	--kyc-sdk-cyberpunk-15: rgba(144, 249, 209, 0.15);
+	--kyc-sdk-cyberpunk-35: rgba(144, 249, 209, 0.35);
+	--kyc-sdk-cyberpunk-50: rgba(144, 249, 209, 0.5);
+
+	--kyc-sdk-red-35: rgba(255, 70, 70, 0.35);
+
+	--light-font: gilroyLight;
+	--display-font: gilroyBold;
+`
 
 export const KycDaoModal: FC<KycDaoModalProps> = ({
 	height = 650,
@@ -40,6 +92,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 
 	const [data, dispatch] = useReducer(reducer, DefaultData)
 	const [kycDao, setKycDao] = useState<KycDaoState>()
+	const sdkInitCallHappened = useRef(false)
 
 	useEffect(() => {
 		if (iframeOptions && "virtualKeyboard" in navigator) {
@@ -48,9 +101,8 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	}, [iframeOptions])
 
 	useEffect(() => {
-		KycDao.initialize({
-			...config,
-		}).then((results) => {
+		sdkInitCallHappened.current = true
+		KycDao.initialize(config).then((results) => {
 			setKycDao({ ...results, width, height })
 		})
 	}, [config, width, height])
@@ -78,6 +130,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 		if (kycDao) {
 			;(async () => {
 				try {
+					// 2x indul ez a roossz
 					await kycDao.kycDao.connectWallet(
 						getNetworkType(config.enabledBlockchainNetworks[0])
 					)
@@ -146,7 +199,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 					})
 					dispatch({
 						type: DataActionTypes.setModal,
-						payload: "genericError",
+						payload: "minting",
 					})
 					console.error(err)
 				}
@@ -163,11 +216,11 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	return (
 		<KycDaoContext.Provider value={kycDao}>
 			<StateContext.Provider value={contextData}>
-				<div>
+				<AppContainer>
 					<Header />
 					<Router />
 					<ModalRouter />
-				</div>
+				</AppContainer>
 			</StateContext.Provider>
 		</KycDaoContext.Provider>
 	)

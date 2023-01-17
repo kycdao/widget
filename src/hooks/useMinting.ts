@@ -23,7 +23,7 @@ export const useMinting = () => {
 			})
 
 			try {
-				const chainExplorerUrl = await kycDao.kycDao.startMinting({
+				const result = await kycDao.kycDao.startMinting({
 					disclaimerAccepted: termsAccepted || kycDao.kycDao.subscribed,
 					verificationType: VerificationTypes.KYC,
 					imageId,
@@ -37,10 +37,10 @@ export const useMinting = () => {
 					type: DataActionTypes.changePage,
 					payload: { prev: currentPage, current: StepID.finalStep },
 				})
-				if (chainExplorerUrl) {
+				if (result) {
 					dispatch({
 						type: DataActionTypes.setChainExplorerUrl,
-						payload: chainExplorerUrl,
+						payload: result.transactionUrl,
 					})
 				}
 			} catch (e: unknown) {
