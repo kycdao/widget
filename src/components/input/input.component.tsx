@@ -192,6 +192,7 @@ const Container = styled.div<{
 	margin-bottom: 1em;
 	box-sizing: border-box;
 	@extend ${tr2};
+	box-sizing: content-box;
 
 	&:has(${StyledInput}:hover) > ${Clear} {
 		color: var(--kyc-sdk-cybergreen);
