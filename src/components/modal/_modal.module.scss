@@ -46,8 +46,22 @@
 		}
 	}
 
-	.kyc-dao-web-sdk-close-button {
+	#kyc-dao-web-sdk-close-button {
 		cursor: pointer;
+		line-height: 100%;
+		width: 2rem;
+		height: 2rem;
+		border: none;
+		/* text-align: center; */
+		/* display: block; */
+		box-sizing: content-box;
+		padding: 0;
+
+		background: transparent;
+
+		&:hover {
+			background: var(--kyc-sdk-cybergreen-35);
+		}
 	}
 
 	.kyc-dao-web-sdk-button-wrapper {

@@ -199,7 +199,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 					})
 					dispatch({
 						type: DataActionTypes.setModal,
-						payload: "genericError",
+						payload: "minting",
 					})
 					console.error(err)
 				}

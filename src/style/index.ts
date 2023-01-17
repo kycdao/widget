@@ -65,6 +65,8 @@ export const Policy = styled(P)`
 	a {
 		font-size: 12px;
 		-webkit-font-smoothing: antialiased;
+		color: var(--kyc-sdk-normal-blue);
+		text-decoration: underline;
 	}
 
 	-webkit-font-smoothing: antialiased;

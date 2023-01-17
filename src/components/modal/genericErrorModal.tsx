@@ -23,10 +23,8 @@ export const GenericErrorModal = () => {
 				<i className="material-icons icon">error</i>
 				<P style={{ flex: 1 }}>{errorModalHeader}</P>
 				<button
-					className={clsx(
-						"material-icons",
-						modalClasses["kyc-dao-web-sdk-close-button"]
-					)}
+					id={modalClasses["kyc-dao-web-sdk-close-button"]}
+					className={clsx("material-icons")}
 					onClick={onClose}>
 					close
 				</button>
