@@ -9,7 +9,6 @@ import {
 } from "react"
 
 import classes from "./submitButton.module.scss"
-import buttonClasses from "../button/_button.module.scss"
 import { Button } from "@Components/button/button"
 
 export type ButtonProps = {
