@@ -49,7 +49,7 @@ const StyledInput = styled.input<{
 	outline: none;
 	${({ showAutoComplete }) =>
 		showAutoComplete
-			? `border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light); margin-top: 0; outline: none;`
+			? `border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light); margin-top: 0; outline: none; 		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);`
 			: "border-radius: var(--kyc-sdk-border-radius-light);"}
 	position: relative;
 	box-shadow: 0 0 0 0 rgba(white, 0);
@@ -76,29 +76,29 @@ const StyledInput = styled.input<{
 
 	&:hover {
 		border: 2px solid var(--kyc-sdk-cybergreen);
+		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
 		${({ showAutoComplete }) =>
-			!showAutoComplete
-				? `box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);`
-				: "border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
+			showAutoComplete &&
+			"border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
 		background: white;
 	}
 
 	&:focus {
 		border: 2px solid var(--kyc-sdk-cybergreen);
+		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
 		${({ showAutoComplete }) =>
-			!showAutoComplete
-				? `box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);`
-				: "border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
+			showAutoComplete &&
+			"border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
 		color: white;
 		background: black;
 	}
 
 	&:active {
 		border: 2px solid var(--kyc-sdk-cybergreen);
+		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
 		${({ showAutoComplete }) =>
-			!showAutoComplete
-				? `box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);`
-				: "border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
+			showAutoComplete &&
+			"border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
 		color: white;
 		background: black;
 	}
@@ -107,15 +107,19 @@ const StyledInput = styled.input<{
 const Clear = styled.div<{ active: boolean }>`
 	position: absolute;
 	right: 5px;
-	bottom: 85px;
+	bottom: 82px;
 	font-size: 24px;
 	display: flex;
 	color: var(--kyc-sdk-cybergreen);
 	cursor: pointer;
 	border-radius: var(--kyc-sdk-border-radius-full);
 	background: transparent;
-	padding: 3px 9px;
-	line-height: 132%;
+	padding: 3px 1px;
+	width: 1.5em;
+	height: 1.5em;
+	justify-content: center;
+    align-items: center;
+}
 
 	color: ${({ active }) =>
 		active
@@ -162,22 +166,22 @@ const Option = styled.div`
 
 const Autocomplete = styled.div`
 	width: 100%;
-	max-height: 25vh;
+	max-height: 40vh;
 	height: auto;
 	overflow-y: auto;
 	overflow-x: hidden;
 
 	@media only screen and (min-width: 992px) {
-		max-height: 20vh;
+		max-height: 40vh;
 	}
 
-	border: 2px solid var(--kyc-sdk-cybergreen);
+	border: 2px solid black;
 	border-bottom: 0;
 	border-radius: var(--kyc-sdk-border-radius-light);
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 	outline: none;
-	border: none;
+	box-sizing: border-box;
 `
 
 const Container = styled.div<{
@@ -187,20 +191,11 @@ const Container = styled.div<{
 }>`
 	margin-bottom: 1em;
 	box-sizing: border-box;
-	${({ showAutoComplete }) =>
-		showAutoComplete &&
-		`
-		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
-		border-radius: var(--kyc-sdk-border-radius-light);
-	`}
-
 	@extend ${tr2};
 
 	&:has(${StyledInput}:hover) > ${Clear} {
 		color: var(--kyc-sdk-cybergreen);
 	}
-
-	${({ active }) => active && `color: var(--kyc-sdk-cybergreen);`}
 `
 
 export const Input: FC<InputProps> = ({
@@ -318,41 +313,46 @@ export const Input: FC<InputProps> = ({
 	return (
 		<Container active={focused} showAutoComplete={showAutoComplete}>
 			{showAutoComplete && autoCompleteData && (
-				<Autocomplete ref={autocompleteRef}>
-					{autoCompleteData
-						.filter((v) =>
-							v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
-						)
-						.map((v, i) => {
-							return value !== "" ? (
-								<Option
-									dangerouslySetInnerHTML={{
-										__html: v.replace(
-											new RegExp(`(${value.replace(specialRegex, "")})`, "ig"),
-											"<strong>$1</strong>"
-										),
-									}}
-									className={clsx(
-										classes["kyc-dao-web-sdk-full-width"],
-										i === 0 && "first"
-									)}
-									onClick={onAutocompleteHndlr(v)}
-									key={v}
-								/>
-							) : (
-								<Option
-									className={clsx(
-										classes["kyc-dao-web-sdk-option"],
-										classes["kyc-dao-web-full-width"],
-										i === 0 && "first"
-									)}
-									onClick={onAutocompleteHndlr(v)}
-									key={v}>
-									{v}
-								</Option>
+				<div>
+					<Autocomplete ref={autocompleteRef}>
+						{autoCompleteData
+							.filter((v) =>
+								v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
 							)
-						})}
-				</Autocomplete>
+							.map((v, i) => {
+								return value !== "" ? (
+									<Option
+										dangerouslySetInnerHTML={{
+											__html: v.replace(
+												new RegExp(
+													`(${value.replace(specialRegex, "")})`,
+													"ig"
+												),
+												"<strong>$1</strong>"
+											),
+										}}
+										className={clsx(
+											classes["kyc-dao-web-sdk-full-width"],
+											i === 0 && "first"
+										)}
+										onClick={onAutocompleteHndlr(v)}
+										key={v}
+									/>
+								) : (
+									<Option
+										className={clsx(
+											classes["kyc-dao-web-sdk-option"],
+											classes["kyc-dao-web-full-width"],
+											i === 0 && "first"
+										)}
+										onClick={onAutocompleteHndlr(v)}
+										key={v}>
+										{v}
+									</Option>
+								)
+							})}
+					</Autocomplete>
+				</div>
 			)}
 			<StyledInput
 				showAutoComplete={showAutoComplete}

@@ -33,10 +33,7 @@ playwright-report
 .idea
 
 # dynamically created styles in the public, we build them everytime
-public/app.css*
-public/app.css
-public/client.css.*
-public/client.css
-public/iframeClient.css.*
-public/iframeClient.css
-public/*.css
+/public/app.css*
+/public/KycDaoClient.css*
+/public/KycDaoIframeClient.css*
+/public/widget.css*
