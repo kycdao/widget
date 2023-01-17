@@ -28,7 +28,7 @@ jobs:
         with:
           path: |
             .yarn
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ hashFiles('./yarn.lock') }}
 
       - run: |
           yarn set version $( grep -Po  'packageManager": "yarn@\K[^"]+' package.json )
@@ -40,7 +40,7 @@ jobs:
         with:
           path: |
             .yarn
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ hashFiles('./yarn.lock') }}
 
       - run: yarn build
 
