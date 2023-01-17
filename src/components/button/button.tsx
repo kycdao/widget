@@ -74,7 +74,7 @@ export const Button = styled(unstyledInput)<ButtonProps>`
 					color: white;
 				}
 		
-				:hover {
+				&:hover {
 					background: var(--kyc-sdk-cybergreen);
 					box-shadow: 0 0 0 0px var(--kyc-sdk-cybergreen-35);
 		
@@ -84,7 +84,7 @@ export const Button = styled(unstyledInput)<ButtonProps>`
 					}
 				}
 		
-				:focus {
+				&:focus {
 					background: var(--kyc-sdk-cybergreen);
 					box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
 		
@@ -94,12 +94,12 @@ export const Button = styled(unstyledInput)<ButtonProps>`
 					}
 				}
 		
-				:active {
+				&:active {
 					background: var(--darken-green);
 					box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
 				}
 		
-				:focus-visible {
+				&:focus-visible {
 					outline: none;
 					border: none;
 				}`
@@ -114,7 +114,7 @@ export const Button = styled(unstyledInput)<ButtonProps>`
 					color: white;
 				}
 		
-				:hover {
+				&:hover {
 					background: var(--kyc-sdk-cyberpunk);
 					box-shadow: 0 0 0 10px var(--kyc-sdk-normal-blue-35);
 		
@@ -124,16 +124,16 @@ export const Button = styled(unstyledInput)<ButtonProps>`
 					}
 				}
 		
-				:focus {
+				&:focus {
 					background: var(--kyc-sdk-cyberpunk);
 					box-shadow: 0 0 0 5px var(--kyc-sdk-cyberpunk-35);
 				}
 		
-				:active {
+				&:active {
 					box-shadow: 0 0 0 5px var(--kyc-sdk-dark-blue-35);
 				}
 		
-				:focus-visible {
+				&:focus-visible {
 					outline: none;
 					border: none;
 				}
@@ -147,12 +147,12 @@ export const Button = styled(unstyledInput)<ButtonProps>`
 				width: max-content;
 				border: none;
 
-				:enabled {
+				&:enabled {
 					background: rgb(0, 0, 0, 0);
 					color: black;
 				}
 
-				:enabled:after {
+				&:enabled:after {
 					content: "";
 					display: inline-flex;
 					height: 2px;
@@ -163,7 +163,7 @@ export const Button = styled(unstyledInput)<ButtonProps>`
 					@extend ${tr2};
 				}
 
-				:disabled:after {
+				&:disabled:after {
 					content: "";
 					display: inline-flex;
 					height: 2px;
@@ -186,13 +186,13 @@ export const Button = styled(unstyledInput)<ButtonProps>`
 					color: grey;
 				}
 
-				:hover {
+				&:hover {
 					:after {
 						height: 8px;
 					}
 				}
 
-				:disabled {
+				&:disabled {
 					background-color: transparent;
 					border: none;
 					color: grey;

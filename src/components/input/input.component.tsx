@@ -45,16 +45,19 @@ const StyledInput = styled.input<{
 	align-items: center;
 	margin: 1rem 0px;
 	margin-bottom: 0;
-	${({ showAutoComplete }) => showAutoComplete && "margin-top: 0;"}
+	border: 2px solid black;
+	outline: none;
+	${({ showAutoComplete }) =>
+		showAutoComplete
+			? `border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light); margin-top: 0; outline: none;`
+			: "border-radius: var(--kyc-sdk-border-radius-light);"}
 	position: relative;
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	background: white;
 	color: black;
-	border-radius: var(--kyc-sdk-border-radius-light);
 	font-size: 12pt;
 	font-family: var(--kyc-sdk-primary-font);
 	width: 100%;
-	border: 2px solid black;
 
 	::placeholder {
 		color: white;
@@ -72,31 +75,30 @@ const StyledInput = styled.input<{
 	}
 
 	&:hover {
+		border: 2px solid var(--kyc-sdk-cybergreen);
 		${({ showAutoComplete }) =>
-			showAutoComplete
-				? `
-			    border-top-left-radius: 0;
-				border-top-right-radius: 0;
-				`
-				: `
-			border: 2px solid var(--kyc-sdk-cybergreen);
-			box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
-		`}
+			!showAutoComplete
+				? `box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);`
+				: "border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
 		background: white;
 	}
 
 	&:focus {
-		${({ showAutoComplete }) =>
-			showAutoComplete
-				? `
-			    border-top-left-radius: 0;
-				border-top-right-radius: 0;
-				`
-				: `
-			border: 2px solid var(--kyc-sdk-cybergreen);
-			box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
-		`}
 		border: 2px solid var(--kyc-sdk-cybergreen);
+		${({ showAutoComplete }) =>
+			!showAutoComplete
+				? `box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);`
+				: "border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
+		color: white;
+		background: black;
+	}
+
+	&:active {
+		border: 2px solid var(--kyc-sdk-cybergreen);
+		${({ showAutoComplete }) =>
+			!showAutoComplete
+				? `box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);`
+				: "border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
 		color: white;
 		background: black;
 	}
@@ -169,10 +171,13 @@ const Autocomplete = styled.div`
 		max-height: 20vh;
 	}
 
-	border: 1px solid var(--kyc-sdk-normal-blue-15);
+	border: 2px solid var(--kyc-sdk-cybergreen);
+	border-bottom: 0;
 	border-radius: var(--kyc-sdk-border-radius-light);
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
+	outline: none;
+	border: none;
 `
 
 const Container = styled.div<{
@@ -191,7 +196,7 @@ const Container = styled.div<{
 
 	@extend ${tr2};
 
-	:has(${StyledInput}:hover) > ${Clear} {
+	&:has(${StyledInput}:hover) > ${Clear} {
 		color: var(--kyc-sdk-cybergreen);
 	}
 
@@ -212,7 +217,9 @@ export const Input: FC<InputProps> = ({
 	onInputFocused,
 	type,
 }) => {
-	const [showAutoComplete, setShowAutoComplete] = useState(!!autoFocus)
+	const [showAutoComplete, setShowAutoComplete] = useState(
+		!!autoFocus && !!autoCompleteData
+	)
 	const autocompleteRef = useRef<HTMLDivElement>(null)
 	const [focused, setFocused] = useState(!!autoFocus)
 
@@ -222,7 +229,11 @@ export const Input: FC<InputProps> = ({
 				onChange(value)
 			}
 			if (autoCompleteData) {
-				setShowAutoComplete(true)
+				setShowAutoComplete(
+					autoCompleteData.filter((v) =>
+						v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
+					).length > 0
+				)
 			}
 		},
 		[onChange, autoCompleteData]
@@ -246,7 +257,11 @@ export const Input: FC<InputProps> = ({
 	useEffect(() => {
 		const hndlr = () => {
 			if (!showAutoComplete && autoCompleteData) {
-				setShowAutoComplete(true)
+				setShowAutoComplete(
+					autoCompleteData.filter((v) =>
+						v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
+					).length > 0
+				)
 			}
 		}
 
@@ -257,7 +272,7 @@ export const Input: FC<InputProps> = ({
 		return () => {
 			current?.addEventListener("focus", hndlr)
 		}
-	}, [showAutoComplete, inputRef, autoCompleteData])
+	}, [showAutoComplete, inputRef, autoCompleteData, value])
 
 	const onAutocompleteHndlr = useCallback(
 		(value: string) => () => {
