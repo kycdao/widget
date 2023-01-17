@@ -157,12 +157,12 @@ export const MintStep: FC<PageProps> = ({
 		({ disabled, inactive, onEnter }) => (
 			<>
 				<div className={classes["kyc-dao-web-sdk-calculator-wrapper"]}>
-					<P className="p">Membership period:</P>
+					<P>Membership period:</P>
 					<div className={classes["kyc-dao-web-sdk-calculator"]}>
 						<div className={classes["kyc-dao-web-sdk-calculator-body"]}>
 							<Button
 								centered
-								type="clean"
+								mode="clean"
 								disabled={disabled || yearCount === 0}
 								className={clsx(
 									"square",
@@ -176,7 +176,7 @@ export const MintStep: FC<PageProps> = ({
 							</div>
 							<Button
 								centered
-								type="clean"
+								mode="clean"
 								disabled={disabled}
 								className={clsx(
 									"square",

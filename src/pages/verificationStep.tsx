@@ -11,7 +11,7 @@ import { StepPart, Step } from "@Components/step/step"
 import { SubmitButton } from "@Components/submitButton/submitButton"
 import { PageProps } from "./pageProps"
 import { Logo } from "@Components/logo/logo"
-import { H1, P } from "@Style/index"
+import { H1, Li, P, Ul } from "@Style/index"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<SubmitButton
@@ -39,17 +39,17 @@ const Body = () => {
 				verification.
 			</P>
 			<P>During the account opening you will be asked:</P>
-			<ul>
-				<li className="li">
+			<Ul>
+				<Li>
 					<P>Government ID</P>
-				</li>
-				<li className="li">
+				</Li>
+				<Li>
 					<P>Selfie</P>
-				</li>
-				<li className="li">
+				</Li>
+				<Li>
 					<P>Tax residency</P>
-				</li>
-			</ul>
+				</Li>
+			</Ul>
 		</>
 	)
 }

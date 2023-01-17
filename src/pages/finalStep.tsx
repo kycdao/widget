@@ -98,7 +98,7 @@ export const FinalStep: FC<PageProps> = ({
 							inactive={inactive}
 							centered
 							fullWidth
-							type="underline"
+							mode="underline"
 							onClick={onCheck}>
 							Check on chain
 						</Button>

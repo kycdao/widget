@@ -32,7 +32,7 @@ export const MintingFailedModal = () => {
 			</div>
 
 			<div className={modalClasses["kyc-dao-web-sdk-button-wrapper"]}>
-				<Button type="underline" centered onClick={onRetry}>
+				<Button mode="underline" centered onClick={onRetry}>
 					<i className="material-icons">refresh</i>
 					<span>Retry</span>
 				</Button>

@@ -14,7 +14,7 @@ import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "../pageProps"
 import { Logo } from "@Components/logo/logo"
 
-import { H1, P, Policy } from "@Style/index"
+import { H1, P, Policy, Ul } from "@Style/index"
 import styled from "styled-components"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
@@ -47,12 +47,6 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	</>
 )
 
-const Ul = styled.ul`
-	padding: 1rem 0;
-	margin: 0 auto;
-	width: fit-content;
-`
-
 const Li = styled.li`
 	list-style: none;
 	display: flex;
@@ -75,6 +69,11 @@ const Li = styled.li`
 		&:after {
 			display: none;
 		}
+	}
+
+	& > span {
+		font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+			Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	}
 
 	& > div {
@@ -116,10 +115,14 @@ const ProcessContainer = styled.div`
 	align-items: center;
 `
 
+const ChartUl = styled(Ul)`
+	margin: 0 auto;
+`
+
 const Body = () => {
 	return (
 		<ProcessContainer>
-			<Ul>
+			<ChartUl>
 				<Li>
 					<Span>1</Span>
 					<div>
@@ -141,7 +144,7 @@ const Body = () => {
 						<b>kycNFT - $5</b>
 					</div>
 				</Li>
-			</Ul>
+			</ChartUl>
 		</ProcessContainer>
 	)
 }

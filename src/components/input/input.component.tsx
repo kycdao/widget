@@ -57,7 +57,7 @@ const StyledInput = styled.input<{
 	border: 2px solid black;
 
 	::placeholder {
-		color: black;
+		color: white;
 		font-family: var(--kyc-sdk-primary-font);
 	}
 
@@ -96,6 +96,7 @@ const StyledInput = styled.input<{
 			border: 2px solid var(--kyc-sdk-cybergreen);
 			box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
 		`}
+		border: 2px solid var(--kyc-sdk-cybergreen);
 		color: white;
 		background: black;
 	}
@@ -194,7 +195,7 @@ const Container = styled.div<{
 		color: var(--kyc-sdk-cybergreen);
 	}
 
-	${({ active }) => active && "color: var(--kyc-sdk-cybergreen);"}
+	${({ active }) => active && `color: var(--kyc-sdk-cybergreen);`}
 `
 
 export const Input: FC<InputProps> = ({

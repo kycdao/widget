@@ -8,6 +8,7 @@
 	border-radius: 4px;
 
 	.kyc-dao-web-sdk-header {
+		box-sizing: border-box;
 		flex-direction: row;
 		display: flex;
 		margin: 1em;
@@ -32,6 +33,7 @@
 
 	.kyc-dao-web-sdk-body {
 		margin: 1rem;
+		box-sizing: border-box;
 
 		p {
 			color: black;
@@ -49,6 +51,7 @@
 	}
 
 	.kyc-dao-web-sdk-button-wrapper {
+		box-sizing: border-box;
 		padding: 0 1rem 1rem;
 		display: flex;
 		justify-content: space-between;

@@ -10,6 +10,7 @@ import {
 
 import classes from "./submitButton.module.scss"
 import buttonClasses from "../button/_button.module.scss"
+import { Button } from "@Components/button/button"
 
 export type ButtonProps = {
 	onClick?: () => void
@@ -52,18 +53,17 @@ export const SubmitButton: FC<ButtonProps> = ({
 	}, [label])
 
 	return (
-		<button
+		<Button
+			mode="black"
 			style={style}
 			disabled={disabled}
 			ref={ref}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
+			fullWidth
 			className={clsx(
 				classes["kyc-dao-web-sdk-submit-button"],
-				buttonClasses["kyc-dao-web-sdk-button"],
-				className,
-				fullWidth && buttonClasses["kyc-dao-web-sdk-full-width"],
-				black && buttonClasses["kyc-dao-web-sdk-black"]
+				className
 				// disabled ? buttonClasses[disabled] : null
 			)}
 			onClick={inactive ? undefined : onClick}>
@@ -82,6 +82,6 @@ export const SubmitButton: FC<ButtonProps> = ({
 				)}>
 				arrow_forward
 			</i>
-		</button>
+		</Button>
 	)
 }

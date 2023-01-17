@@ -45,18 +45,14 @@ export const EmailVerificationModal = () => {
 			</div>
 
 			<div className={modalClasses["kyc-dao-web-sdk-button-wrapper"]}>
-				<Button type="underline" centered onClick={onResend}>
-					<>
-						<i className="material-icons">refresh</i>
-						<span>Resend</span>
-					</>
+				<Button mode="underline" centered onClick={onResend}>
+					<i className="material-icons">refresh</i>
+					<span>Resend</span>
 				</Button>
 
-				<Button type="underline" centered onClick={onChangeEmail}>
-					<>
-						<i className="material-icons">refresh</i>
-						<span>change email</span>
-					</>
+				<Button mode="underline" centered onClick={onChangeEmail}>
+					<i className="material-icons">refresh</i>
+					<span>change email</span>
 				</Button>
 			</div>
 		</div>

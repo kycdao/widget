@@ -1,5 +1,5 @@
 import { tr2 } from "@Style/transitions"
-import { CSSProperties, FC } from "react"
+import { ButtonHTMLAttributes, CSSProperties, forwardRef } from "react"
 import styled from "styled-components"
 
 export type ButtonProps = {
@@ -11,29 +11,20 @@ export type ButtonProps = {
 	inactive?: boolean
 	fullWidth?: boolean
 	centered?: boolean
-	type: "black" | "green" | "underline" | "clean"
-}
+	mode: "black" | "green" | "underline" | "clean"
+} & ButtonHTMLAttributes<HTMLButtonElement>
 
-const unstyledButton: FC<ButtonProps> = ({
-	style,
-	disabled = false,
-	onClick,
-	className,
-	inactive,
-	children,
-}) => {
-	return (
-		<button
-			style={style}
-			disabled={disabled}
-			className={className}
-			onClick={inactive ? undefined : onClick}>
-			<span>{children}</span>
+const unstyledInput = forwardRef<HTMLButtonElement, ButtonProps>(
+	({ children, inactive, onClick, ...rest }, ref) => (
+		<button ref={ref} {...rest} onClick={inactive ? undefined : onClick}>
+			{children}
 		</button>
 	)
-}
+)
 
-export const Button = styled(unstyledButton)<ButtonProps>`
+unstyledInput.displayName = "KycDaoButton"
+
+export const Button = styled(unstyledInput)<ButtonProps>`
 	height: var(--kyc-sdk-button-height);
 	display: inline-flex;
 	justify-content: space-between;
@@ -69,8 +60,8 @@ export const Button = styled(unstyledButton)<ButtonProps>`
 		}
 	}
 
-	${({ type }) => {
-		switch (type) {
+	${({ mode }) => {
+		switch (mode) {
 			case "black":
 				return `:enabled {
 					background: black;
@@ -114,95 +105,111 @@ export const Button = styled(unstyledButton)<ButtonProps>`
 				}`
 
 			case "green":
-				return `background: var(--kyc-sdk-cyberpunk);
+				return `
+				background: var(--kyc-sdk-cyberpunk);
 
-			span,
-			i {
-				font-weight: 400;
-				color: white;
-			}
-	
-			:hover {
-				background: var(--kyc-sdk-cyberpunk);
-				box-shadow: 0 0 0 10px var(--kyc-sdk-normal-blue-35);
-	
-				span {
+				span,
+				i {
 					font-weight: 400;
-					color: var(--kyc-sdk-dark-blue);
-					//margin-left: 0.5em;
+					color: white;
 				}
-			}
-	
-			:focus {
-				background: var(--kyc-sdk-cyberpunk);
-				box-shadow: 0 0 0 5px var(--kyc-sdk-cyberpunk-35);
-			}
-	
-			:active {
-				box-shadow: 0 0 0 5px var(--kyc-sdk-dark-blue-35);
-			}
-	
-			:focus-visible {
-				outline: none;
-				border: none;
-			}`
+		
+				:hover {
+					background: var(--kyc-sdk-cyberpunk);
+					box-shadow: 0 0 0 10px var(--kyc-sdk-normal-blue-35);
+		
+					span {
+						font-weight: 400;
+						color: var(--kyc-sdk-dark-blue);
+					}
+				}
+		
+				:focus {
+					background: var(--kyc-sdk-cyberpunk);
+					box-shadow: 0 0 0 5px var(--kyc-sdk-cyberpunk-35);
+				}
+		
+				:active {
+					box-shadow: 0 0 0 5px var(--kyc-sdk-dark-blue-35);
+				}
+		
+				:focus-visible {
+					outline: none;
+					border: none;
+				}
+			`
 
 			case "underline":
-				return `color: red;
+				return `
+				color: red;
 				position: relative;
-		display: inline-flex;
-		width: max-content;
+				display: inline-flex;
+				width: max-content;
+				border: none;
 
-		:enabled {
-			background: rgb(0, 0, 0, 0);
-			color: black;
-		}
+				:enabled {
+					background: rgb(0, 0, 0, 0);
+					color: black;
+				}
 
-		:enabled:after {
-			content: "";
-			display: inline-flex;
-			height: 2px;
-			width: 100%;
-			background-color: var(--kyc-sdk-cybergreen);
-			position: absolute;
-			bottom: 6px;
-			@extend ${tr2};
-		}
+				:enabled:after {
+					content: "";
+					display: inline-flex;
+					height: 2px;
+					width: 100%;
+					background-color: var(--kyc-sdk-cybergreen);
+					position: absolute;
+					bottom: 6px;
+					@extend ${tr2};
+				}
 
-		:disabled:after {
-			content: "";
-			display: inline-flex;
-			height: 2px;
-			width: 100%;
-			background-color: grey;
-			position: absolute;
-			bottom: 6px;
-		}
+				:disabled:after {
+					content: "";
+					display: inline-flex;
+					height: 2px;
+					width: 100%;
+					background-color: grey;
+					position: absolute;
+					bottom: 6px;
+				}
 
-		span {
-			display: flex;
-			align-items: center;
-		}
+				span {
+					display: flex;
+					align-items: center;
+				}
 
-		span:disabled {
-			color: grey;
-		}
+				span:disabled {
+					color: grey;
+				}
 
-		i:disabled {
-			color: grey;
-		}
+				i:disabled {
+					color: grey;
+				}
 
-		:hover {
-			:after {
-				height: 8px;
-			}
-		}
+				:hover {
+					:after {
+						height: 8px;
+					}
+				}
 
-		:disabled {
-			background-color: transparent;
-			border: none;
-			color: grey;
-		}`
+				:disabled {
+					background-color: transparent;
+					border: none;
+					color: grey;
+				}`
+			case "clean":
+				return `
+					color: white;
+					&:hover {
+						background: var(--kyc-sdk-cybergreen);
+						box-shadow: 0 0 0 0px var(--kyc-sdk-cybergreen-35);
+			
+						span,
+						i {
+							color: black;
+						}
+					}
+				`
 		}
 	}}
 

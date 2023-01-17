@@ -200,7 +200,7 @@ export const NftSelection: FC<PageProps> = ({
 				<>
 					<NftButtonWrapper>
 						<Button
-							type="underline"
+							mode="underline"
 							inactive={inactive}
 							disabled={disabled}
 							fullWidth
