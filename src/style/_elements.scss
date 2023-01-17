@@ -1,14 +1,9 @@
-@use "@Style/components/button/button.module";
-@use "@Style/components/input/input.module";
-@use "@Style/components/logo/logo.module.css";
-@use "@Style/components/modal/mintingFailedModal.module";
-@use "@Style/components/modal/mintingModal.module";
-@use "@Style/components/modal/modal.module";
-@use "@Style/components/router/_router.module.css";
+@use "../components/button/button.module.scss";
+@use "../components/input/input.module";
+@use "../components/modal/mintingFailedModal.module";
+@use "../components/modal/mintingModal.module";
+@use "../components/modal/modal.module";
 // @use "@Stylecomponents/select/select.module";
-@use "@Style/components/submitButton/submitButton.module.scss";
-@use "@Style/components/toggleButton/toggleButton.scss";
-@use "@Style/components/loading/loading.module.scss";
-
-@use "@Style/pages/membershipCard/membershipCard.module.scss";
-@use "@Style/pages/mintMembershipCard/mintMembershipCard.module";
+@use "../components/submitButton/submitButton.module.scss";
+@use "../components/toggleButton/toggleButton.scss";
+@use "../pages/mintMembershipCard/mintMembershipCard.module";
