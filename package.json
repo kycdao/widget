@@ -1,7 +1,7 @@
 {
 	"name": "@kycdao/widget",
 	"version": "0.3.0-rc.45",
-	"license": "unlicensed",
+	"license": "UNLICENSED",
 	"main": "dist/umd/index.js",
 	"types": "dist",
 	"scripts": {
@@ -186,6 +186,7 @@
 			"last 1 safari version"
 		]
 	},
+	"packageManager": "yarn@4.0.0-rc.34",
 	"lint-staged": {
 		"{*.ts,*.tsx,*.scss}": [
 			"prettier --write",
