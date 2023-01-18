@@ -4,18 +4,15 @@ import { StepID, StateContext } from "@Components/stateContext"
 import { StepAnimation, MovingDirection } from "../step/step"
 import { AgreementStep } from "@Pages/agreementStep"
 import { BeginVerifyingStep } from "@Pages/beginVerifying"
-// import { ChainSelection } from "@Pages/chainSelectionStep"
 import { EmailDiscordVerificationStep } from "@Pages/emailDiscordVerificationStep"
 import { FinalStep } from "@Pages/finalStep"
-import { LoadingCard } from "@Pages/loading/loading"
-import { KycDAOMembershipStep } from "@Pages/membershipCard/membershipCard"
-import { MintStep } from "@Pages/mintMembershipCard/mintMembershipCard"
-import { NftSelection } from "@Pages/nftArtSelection/nftArtSelection"
+import { LoadingCard } from "@Pages/loading"
+import { KycDAOMembershipStep } from "@Pages/membershipCard"
+import { MintStep } from "@Pages/mintMembershipCard"
+import { NftSelection } from "@Pages/nftArtSelection"
 import { TaxResidenceStep } from "@Pages/taxResidence"
 import { VerificationStep } from "@Pages/verificationStep"
-
 import { SubscribedStartStep } from "@Pages/subscribedStartStep"
-
 import { H1 } from "@Style/index"
 import styled from "styled-components"
 
@@ -27,8 +24,8 @@ const RouterContainer = styled.div<{ blurred: boolean }>`
 	height: 100%;
 	top: 0;
 
-	filter: ${({ blurred }) => blurred && "brightness(50%)"}
-	filter: ${({ blurred }) => blurred && "#fefefe"}
+	filter: ${({ blurred }) => blurred && "brightness(50%)"};
+	// filter: ${({ blurred }) => blurred && "#fefefe"};
 `
 
 const RoutedStep: FC<{

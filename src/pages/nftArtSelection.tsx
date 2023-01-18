@@ -11,7 +11,7 @@ import {
 import { StepPart, Step } from "@Components/step/step"
 import { useKycDao } from "@Hooks/useKycDao"
 import { useMinting } from "@Hooks/useMinting"
-import { PageProps } from "../pageProps"
+import { PageProps } from "./pageProps"
 import { Logo } from "@Components/logo/logo"
 
 import { NftButtonWrapper } from "@Pages/finalStep"

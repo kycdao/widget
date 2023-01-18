@@ -3,9 +3,14 @@ import { useKycDao } from "@Hooks/useKycDao"
 import { Button } from "../button/button"
 import { DataActionTypes } from "../stateContext"
 import { StateContext } from "../stateContext/stateContext"
-
-import modalClasses from "./_modal.module.scss"
 import { P, Policy } from "@Style/index"
+import {
+	HeaderIcon,
+	ModalBody,
+	ModalButtonWrapper,
+	ModalContainer,
+	ModalHeader,
+} from "./common"
 
 export const EmailVerificationModal = () => {
 	const {
@@ -30,21 +35,25 @@ export const EmailVerificationModal = () => {
 	}, [dispatch])
 
 	return (
-		<div className={modalClasses["kyc-dao-web-sdk-modal"]}>
-			<div className={modalClasses["kyc-dao-web-sdk-header"]}>
-				<i className="material-icons icon">hourglass_bottom</i>
+		<ModalContainer>
+			<ModalHeader>
+				<HeaderIcon
+					background="var(--kyc-sdk-cybergreen-35)"
+					className="material-icons">
+					hourglass_bottom
+				</HeaderIcon>
 				<P>Waiting your mail verification</P>
-			</div>
+			</ModalHeader>
 
-			<div className={modalClasses["kyc-dao-web-sdk-body"]}>
+			<ModalBody>
 				<Policy>
 					Please verify yourself through the <b>link</b> we have sent you to the
 					following address:
 				</Policy>
 				<P>{email}</P>
-			</div>
+			</ModalBody>
 
-			<div className={modalClasses["kyc-dao-web-sdk-button-wrapper"]}>
+			<ModalButtonWrapper>
 				<Button mode="underline" centered onClick={onResend}>
 					<i className="material-icons">refresh</i>
 					<span>Resend</span>
@@ -54,7 +63,7 @@ export const EmailVerificationModal = () => {
 					<i className="material-icons">refresh</i>
 					<span>change email</span>
 				</Button>
-			</div>
-		</div>
+			</ModalButtonWrapper>
+		</ModalContainer>
 	)
 }

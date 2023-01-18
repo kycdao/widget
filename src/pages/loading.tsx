@@ -5,7 +5,7 @@ import {
 	StateContext,
 } from "@Components/stateContext"
 import { Step } from "@Components/step/step"
-import { PageProps } from "../pageProps"
+import { PageProps } from "./pageProps"
 
 import { Loading } from "@Components/loading/loading"
 import styled from "styled-components"

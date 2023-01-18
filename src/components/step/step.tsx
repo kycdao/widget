@@ -15,10 +15,7 @@ import { H1 } from "@Style/index"
 export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
 
 export type StepAnimation = { from: MovingDirection; to: MovingDirection }
-
 export type StepState = "inTransition" | "transitionDone"
-
-// const windowHeight = window.visualViewport?.height
 
 export type StepPart = FC<{
 	disabled: boolean
@@ -75,7 +72,6 @@ const StyledStep = styled.div`
 	}
 
 	&.blurred {
-		filter: brightness(50%);
 		background: #fefefe;
 	}
 
@@ -231,7 +227,7 @@ export const Step: FC<StepProps> = ({
 			style={{
 				paddingBottom: marginBottom,
 			}}>
-			{header ? (
+			{header && (
 				<StepHead>
 					{header({
 						disabled,
@@ -243,8 +239,8 @@ export const Step: FC<StepProps> = ({
 						onInputFocused,
 					})}
 				</StepHead>
-			) : null}
-			{body ? (
+			)}
+			{body && (
 				<StepBody>
 					{body({
 						disabled,
@@ -256,8 +252,8 @@ export const Step: FC<StepProps> = ({
 						onInputFocused,
 					})}
 				</StepBody>
-			) : null}
-			{footer ? (
+			)}
+			{footer && (
 				<StepFooter>
 					{footer({
 						disabled,
@@ -269,7 +265,7 @@ export const Step: FC<StepProps> = ({
 						onInputFocused,
 					})}
 				</StepFooter>
-			) : null}
+			)}
 		</StyledStep>
 	)
 }

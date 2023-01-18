@@ -32,6 +32,8 @@ export type KycDaoClientInterface = {
 	getParentElement: () => HTMLElement
 	originalBodyHeight: string
 	originalBodyOverflow: string
+	originalParentBackground: string
+	originalParentZIndex: string
 }
 
 export type KycDaoClientOptions = {

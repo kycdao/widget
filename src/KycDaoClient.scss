@@ -4,8 +4,13 @@
 	height: 100%;
 	background-color: #fefefe;
 	position: absolute;
-	inset: 0;
 	overflow: hidden;
+}
+
+.KycDaoModalRoot {
+	width: 100%;
+	position: absolute;
+	inset: 0;
 }
 
 @media only screen and (min-width: 992px) {
@@ -14,13 +19,23 @@
 		height: var(--height);
 		margin: auto;
 		border-radius: 12px;
+		overflow: hidden;
+		inset: 0;
+	}
+
+	.KycDaoModalRoot {
+		position: sticky;
+		overflow: hidden;
+		height: 100vh;
 	}
 }
 
-.KycDaoModalRoot {
-	background: var(--backdrop, auto);
-	position: absolute;
-	// height: 100%;
-	width: 100%;
-	inset: 0;
+@media only screen and (max-width: 992px) {
+	body:has(.KycDaoModalRoot) {
+		overflow: hidden;
+	}
+}
+
+body:has(.KycDaoModalRoot) {
+	background: var(--kyc-dao-backdrop, auto);
 }

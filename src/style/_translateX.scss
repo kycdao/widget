@@ -1,7 +1,0 @@
-@mixin translateX($translateX) {
-	-ms-transform: translateX($translateX);
-	/* IE 9 */
-	-webkit-transform: translateX($translateX);
-	/* Safari */
-	transform: translateX($translateX);
-}

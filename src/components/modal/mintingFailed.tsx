@@ -2,9 +2,14 @@ import { StateContext } from "@Components/stateContext"
 import { useCallback, useContext } from "react"
 import { useMinting } from "@Hooks/useMinting"
 import { Button } from "../button/button"
-
-import modalClasses from "./_modal.module.scss"
 import { P, Policy } from "@Style/index"
+import {
+	HeaderIcon,
+	ModalBody,
+	ModalButtonWrapper,
+	ModalContainer,
+	ModalHeader,
+} from "./common"
 
 export const MintingFailedModal = () => {
 	const minting = useMinting()
@@ -19,24 +24,26 @@ export const MintingFailedModal = () => {
 	}, [minting, subscriptionYears, imageId])
 
 	return (
-		<div className={modalClasses["kyc-dao-web-sdk-modal"]}>
-			<div className={modalClasses["kyc-dao-web-sdk-header"]}>
-				<i className="material-icons">error</i>
+		<ModalContainer>
+			<ModalHeader>
+				<HeaderIcon background="red" className="material-icons">
+					error
+				</HeaderIcon>
 				<P>Minting failed</P>
-			</div>
+			</ModalHeader>
 
-			<div className={modalClasses["kyc-dao-web-sdk-body"]}>
+			<ModalBody>
 				<Policy>
 					Minting failed because of an error. Please try mint kycNFT again.
 				</Policy>
-			</div>
+			</ModalBody>
 
-			<div className={modalClasses["kyc-dao-web-sdk-button-wrapper"]}>
+			<ModalButtonWrapper>
 				<Button mode="underline" centered onClick={onRetry}>
 					<i className="material-icons">refresh</i>
 					<span>Retry</span>
 				</Button>
-			</div>
-		</div>
+			</ModalButtonWrapper>
+		</ModalContainer>
 	)
 }

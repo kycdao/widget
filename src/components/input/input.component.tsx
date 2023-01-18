@@ -1,5 +1,4 @@
 import { tr2 } from "@Style/transitions"
-import clsx from "clsx"
 import {
 	ChangeEventHandler,
 	createRef,
@@ -12,8 +11,6 @@ import {
 	useState,
 } from "react"
 import styled from "styled-components"
-
-import classes from "./_input.module.scss"
 
 const specialRegex = /[!$(){}[\]:;<+?\\>]/g
 
@@ -37,6 +34,7 @@ const StyledInput = styled.input<{
 	disabled?: boolean
 	showAutoComplete: boolean
 }>`
+	position: relative;
 	height: var(--kyc-sdk-button-height);
 	display: inline-flex;
 	justify-content: space-between;
@@ -49,9 +47,8 @@ const StyledInput = styled.input<{
 	outline: none;
 	${({ showAutoComplete }) =>
 		showAutoComplete
-			? `border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light); margin-top: 0; outline: none; 		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);`
+			? `border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light); margin-top: 0; outline: none; box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);`
 			: "border-radius: var(--kyc-sdk-border-radius-light);"}
-	position: relative;
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	background: white;
 	color: black;
@@ -106,29 +103,24 @@ const StyledInput = styled.input<{
 
 const Clear = styled.div<{ active: boolean }>`
 	position: absolute;
-	right: 5px;
-	bottom: 82px;
-	font-size: 24px;
+	right: 1em;
+	font-size: 2em;
 	display: flex;
+	margin-top: 1em;
+	bottom: 0.75rem;
+	line-height: 2em;
 	color: var(--kyc-sdk-cybergreen);
 	cursor: pointer;
 	border-radius: var(--kyc-sdk-border-radius-full);
 	background: transparent;
-	padding: 3px 1px;
-	width: 1.5em;
-	height: 1.5em;
 	justify-content: center;
-    align-items: center;
-}
+	align-items: center;
 
 	color: ${({ active }) =>
-		active
-			? `var(--kyc-sdk-cybergreen);
-		 	@extend ${tr2};`
-			: `black;`}
+		active ? `var(--kyc-sdk-cybergreen); ${tr2}` : "black"};
 
 	&:hover:not([disabled]) {
-		@extend ${tr2};
+		${tr2};
 		background: var(--kyc-sdk-cybergreen-35);
 	}
 
@@ -193,6 +185,7 @@ const Container = styled.div<{
 	box-sizing: border-box;
 	@extend ${tr2};
 	box-sizing: content-box;
+	position: relative;
 
 	&:has(${StyledInput}:hover) > ${Clear} {
 		color: var(--kyc-sdk-cybergreen);
@@ -332,22 +325,11 @@ export const Input: FC<InputProps> = ({
 												"<strong>$1</strong>"
 											),
 										}}
-										className={clsx(
-											classes["kyc-dao-web-sdk-full-width"],
-											i === 0 && "first"
-										)}
 										onClick={onAutocompleteHndlr(v)}
 										key={v}
 									/>
 								) : (
-									<Option
-										className={clsx(
-											classes["kyc-dao-web-sdk-option"],
-											classes["kyc-dao-web-full-width"],
-											i === 0 && "first"
-										)}
-										onClick={onAutocompleteHndlr(v)}
-										key={v}>
+									<Option onClick={onAutocompleteHndlr(v)} key={v}>
 										{v}
 									</Option>
 								)

@@ -41,7 +41,7 @@ export const H2 = styled.h2`
 	-webkit-font-smoothing: antialiased;
 `
 
-export const H3 = styled.h2`
+export const H3 = styled.h3`
 	font-family: "neue-machina";
 	color: black;
 	margin-bottom: 1em;
@@ -82,4 +82,8 @@ export const Ul = styled.ul`
 	padding: 1rem 0;
 	width: fit-content;
 	-webkit-font-smoothing: antialiased;
+`
+
+export const translateX = (x: number | string) => `
+	transform: translateX(${x});
 `

@@ -16,7 +16,7 @@ const StepHeader = styled.div<{ blurred: boolean }>`
 	position: relative;
 	z-index: 10;
 	filter: ${({ blurred }) => (blurred ? "brightness(50%)" : "unset")};
-	background: ${({ blurred }) => (blurred ? "#fefefe" : "unset")};
+	background: #fefefe;
 `
 
 const ButtonWrapper = styled.div`

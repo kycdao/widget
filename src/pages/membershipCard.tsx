@@ -11,7 +11,7 @@ import {
 import { StepPart, Step } from "@Components/step/step"
 import { SubmitButton } from "@Components/submitButton/submitButton"
 import { useKycDao } from "@Hooks/useKycDao"
-import { PageProps } from "../pageProps"
+import { PageProps } from "./pageProps"
 import { Logo } from "@Components/logo/logo"
 
 import { H1, P, Policy, Ul } from "@Style/index"

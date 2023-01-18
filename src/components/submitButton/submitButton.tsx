@@ -1,4 +1,3 @@
-import clsx from "clsx"
 import {
 	CSSProperties,
 	FC,
@@ -8,8 +7,10 @@ import {
 	useState,
 } from "react"
 
-import classes from "./submitButton.module.scss"
 import { Button } from "@Components/button/button"
+import styled from "styled-components"
+import { tr2 } from "@Style/transitions"
+import { translateX } from "@Style/index"
 
 export type ButtonProps = {
 	onClick?: () => void
@@ -23,7 +24,22 @@ export type ButtonProps = {
 	black?: boolean
 }
 
-export const SubmitButton: FC<ButtonProps> = ({
+const FirstArrow = styled.i`
+	position: absolute;
+	right: 3rem;
+	opacity: 0;
+	${translateX(0)};
+	${tr2};
+`
+
+const SecondArrow = styled.i`
+	position: absolute;
+	right: 1rem;
+	${translateX(0)};
+	${tr2};
+`
+
+const UnstyledSubmitButton: FC<ButtonProps> = ({
 	style,
 	disabled = false,
 	onClick,
@@ -31,8 +47,7 @@ export const SubmitButton: FC<ButtonProps> = ({
 	autoFocus,
 	inactive = false,
 	label,
-	black = false,
-	fullWidth = false,
+	fullWidth = true,
 }) => {
 	const ref = useRef<HTMLButtonElement>(null)
 	const [innerHtml, setInnerHtml] = useState(label ? label : "Submit")
@@ -59,28 +74,32 @@ export const SubmitButton: FC<ButtonProps> = ({
 			ref={ref}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
-			fullWidth
-			className={clsx(
-				classes["kyc-dao-web-sdk-submit-button"],
-				className
-				// disabled ? buttonClasses[disabled] : null
-			)}
+			fullWidth={fullWidth}
+			className={className}
 			onClick={inactive ? undefined : onClick}>
-			<i
-				className={clsx(
-					"material-icons",
-					classes["kyc-dao-web-sdk-first-arrow"]
-				)}>
-				arrow_forward
-			</i>
 			<span>{innerHtml}</span>
-			<i
-				className={clsx(
-					"material-icons",
-					classes["kyc-dao-web-sdk-second-arrow"]
-				)}>
-				arrow_forward
-			</i>
+			<FirstArrow className="material-icons">arrow_forward</FirstArrow>
+			<SecondArrow className="material-icons">arrow_forward</SecondArrow>
 		</Button>
 	)
 }
+
+export const SubmitButton = styled(UnstyledSubmitButton)`
+	overflow: hidden;
+
+	span,
+	.material-icons {
+		padding-left: 1.5rem;
+	}
+
+	:hover {
+		${FirstArrow} {
+			${translateX("2rem")};
+			opacity: 1;
+		}
+
+		${SecondArrow} {
+			${translateX("8rem")};
+		}
+	}
+`

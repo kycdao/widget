@@ -10,13 +10,11 @@ import {
 } from "@Components/stateContext"
 import { StepPart, Step } from "@Components/step/step"
 import { SubmitButton } from "@Components/submitButton/submitButton"
-import { PageProps } from "../pageProps"
+import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
 import { useMinting } from "@Hooks/useMinting"
 import { Logo } from "@Components/logo/logo"
-import classes from "./_mintMembershipCard.module.scss"
 import styled from "styled-components"
-import clsx from "clsx"
 import { H1, P } from "@Style/index"
 
 const Body = () => {
@@ -49,6 +47,146 @@ const unstyledButtonIcon = ({
 
 const ButtonIcon = styled(unstyledButtonIcon)`
 	line-height: 2em;
+`
+
+const CalculatorWrapper = styled.div`
+	align-items: center;
+
+	p {
+		font-family: var(--kyc-sdk-primary-font);
+	}
+`
+
+const Calculator = styled.div`
+	display: flex;
+	flex-flow: column;
+	flex-direction: column;
+
+	& > div {
+		justify-content: space-evenly;
+		flex-direction: row;
+		display: flex;
+		margin-bottom: 1em;
+	}
+`
+
+const CalculatorButton = styled(Button)`
+	margin-block: auto;
+	line-height: 2em;
+	justify-content: center;
+	padding-left: 0;
+	padding-right: 0;
+	width: 3em;
+	height: 3em;
+
+	//background: rgb(0, 0, 0, 0);
+	background: black;
+	border: 2px black solid;
+
+	span {
+		color: white;
+
+		i {
+			vertical-align: middle;
+		}
+	}
+
+	&:hover {
+		box-shadow: 0 0 0 0px var(--kyc-sdk-cybergreen-35);
+		background: var(--kyc-sdk-cybergreen);
+
+		span {
+			color: black;
+		}
+
+		&:focus {
+			span {
+				color: black;
+			}
+		}
+	}
+
+	&:focus {
+		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
+
+		span {
+			color: white;
+		}
+	}
+
+	&:active {
+		background: var(--kyc-sdk-cybergreen);
+		border: 2px solid var(--kyc-sdk-cybergreen);
+		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
+	}
+
+	&:focus-visible {
+		outline: none;
+		border: none;
+	}
+`
+
+const CalculatorBody = styled.div`
+	align-items: center;
+	justify-content: center;
+`
+
+const Sum = styled.div`
+	display: flex;
+	align-items: center;
+	flex: 1;
+	justify-content: center;
+`
+
+const Price = styled.span`
+	color: black;
+	font-weight: 800;
+	font-family: var(--kyc-sdk-primary-font);
+	-webkit-font-smoothing: antialiased;
+`
+
+const Value = styled.div`
+	color: black;
+	font-size: 12px;
+	display: flex;
+	margin-bottom: 1em;
+	font-family: var(--kyc-sdk-primary-font);
+
+	padding: 0.5rem;
+	background: var(--kyc-sdk-cybergreen-35);
+	border-radius: 4px;
+	align-items: center;
+
+	i {
+		margin-left: -2px;
+		margin-right: 2px;
+	}
+
+	p {
+		display: flex;
+		font-size: 12px;
+		padding-right: 3px;
+
+		> strong {
+			padding-right: 3px;
+			color: black;
+			font-weight: 800;
+		}
+	}
+`
+
+const YearCount = styled.div`
+	padding: 1rem;
+	width: 10rem;
+	text-align: center;
+	font-family: var(--kyc-sdk-primary-font);
+	-webkit-font-smoothing: antialiased;
+	color: black;
+	display: flex;
+	align-items: center;
+	margin-block: auto;
+	flex: 1;
+	justify-content: center;
 `
 
 export const MintStep: FC<PageProps> = ({
@@ -156,46 +294,36 @@ export const MintStep: FC<PageProps> = ({
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive, onEnter }) => (
 			<>
-				<div className={classes["kyc-dao-web-sdk-calculator-wrapper"]}>
+				<CalculatorWrapper>
 					<P>Membership period:</P>
-					<div className={classes["kyc-dao-web-sdk-calculator"]}>
-						<div className={classes["kyc-dao-web-sdk-calculator-body"]}>
-							<Button
+					<Calculator>
+						<CalculatorBody>
+							<CalculatorButton
 								centered
 								mode="clean"
 								disabled={disabled || yearCount === 0}
-								className={clsx(
-									"square",
-									classes["kyc-dao-web-sdk-calculator-button"]
-								)}
+								className="square"
 								onClick={decrease}>
 								<ButtonIcon>remove</ButtonIcon>
-							</Button>
-							<div className={classes["kyc-dao-web-sdk-year-count"]}>
-								{yearCount} year
-							</div>
-							<Button
+							</CalculatorButton>
+							<YearCount>{yearCount} year</YearCount>
+							<CalculatorButton
 								centered
 								mode="clean"
 								disabled={disabled}
-								className={clsx(
-									"square",
-									classes["kyc-dao-web-sdk-calculator-button"]
-								)}
+								className="square"
 								onClick={increase}>
 								<ButtonIcon>add</ButtonIcon>
-							</Button>
-							<div className={classes["kyc-dao-web-sdk-sum"]}>
-								<span className={classes["kyc-dao-web-sdk-price"]}>
-									${5 * (yearCount || 0)}
-								</span>
+							</CalculatorButton>
+							<Sum>
+								<Price>${5 * (yearCount || 0)}</Price>
 								{/*<span className="subscription"> / year</span>*/}
-							</div>
-						</div>
-					</div>
-				</div>
+							</Sum>
+						</CalculatorBody>
+					</Calculator>
+				</CalculatorWrapper>
 				{false && (
-					<div className={classes["kyc-dao-web-sdk-value"]}>
+					<Value>
 						<i className="material-icons">info</i>
 						<P>
 							<strong>5,6</strong> Matic
@@ -207,7 +335,7 @@ export const MintStep: FC<PageProps> = ({
 							{" "}
 							gas = <strong>-5.72</strong> Matic ($12.94USD)
 						</P>
-					</div>
+					</Value>
 				)}
 				<SubmitButton
 					black
