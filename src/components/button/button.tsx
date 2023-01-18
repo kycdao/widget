@@ -14,7 +14,7 @@ export type ButtonProps = {
 	mode: "black" | "green" | "underline" | "clean"
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-const unstyledInput = forwardRef<HTMLButtonElement, ButtonProps>(
+const unstyledButton = forwardRef<HTMLButtonElement, ButtonProps>(
 	({ children, inactive, onClick, ...rest }, ref) => (
 		<button ref={ref} {...rest} onClick={inactive ? undefined : onClick}>
 			{children}
@@ -22,9 +22,9 @@ const unstyledInput = forwardRef<HTMLButtonElement, ButtonProps>(
 	)
 )
 
-unstyledInput.displayName = "KycDaoButton"
+unstyledButton.displayName = "KycDaoButton"
 
-export const Button = styled(unstyledInput)<ButtonProps>`
+export const Button = styled(unstyledButton)<ButtonProps>`
 	height: var(--kyc-sdk-button-height);
 	display: inline-flex;
 	justify-content: space-between;
