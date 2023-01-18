@@ -9,28 +9,19 @@ export type PlaceholderProps = {
 	showSize?: boolean
 }
 
-const unstyledPlaceholder: FC<PlaceholderProps> = ({
+const unstyledPlaceholder = ({
 	height,
-	width,
 	onClick,
-	style,
-	showSize = false,
-}) => {
-	return (
-		<div
-			onClick={onClick}
-			style={{
-				width,
-				height,
-				cursor: onClick ? "pointer" : "default",
-				...style,
-			}}>
-			{showSize ? `${width}&times;${height}` : ""}
-		</div>
-	)
-}
+	showSize,
+	width,
+}: PlaceholderProps) => <div>{showSize ? `${width}&times;${height}` : ""}</div>
 
-export const Placeholder = styled(unstyledPlaceholder)`
+export const Placeholder = styled(unstyledPlaceholder)<{
+	height: string
+	width: string
+	onClick?: () => void
+	showSize?: boolean
+}>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -39,4 +30,7 @@ export const Placeholder = styled(unstyledPlaceholder)`
 	user-select: none;
 	font-family: sans-serif;
 	font-size: 3vw;
+	width: ${({ width }) => width};
+	height: ${({ height }) => height};
+	cursor: ${({ onClick }) => (onClick ? "pointer" : "default")};
 `

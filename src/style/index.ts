@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components"
+import styled, { css, StyledComponent } from "styled-components"
 
 export * from "./transitions"
 
@@ -14,7 +14,7 @@ export const materialIcon = css`
 	white-space: nowrap;
 	word-wrap: normal;
 	direction: ltr;
-	-webkit-font-feature-settings: "liga";
+	font-feature-settings: "liga";
 	-webkit-font-smoothing: antialiased;
 `
 
@@ -86,4 +86,8 @@ export const Ul = styled.ul`
 
 export const translateX = (x: number | string) => `
 	transform: translateX(${x});
+`
+
+export const CenteredH1 = styled(H1)`
+	text-align: "center";
 `

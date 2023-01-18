@@ -25,21 +25,6 @@
 		font-family: var(--kyc-sdk-primary-font);
 	}
 
-	::-webkit-input-placeholder {
-		color: var(--kyc-sdk-dark-purple);
-		font-family: var(--kyc-sdk-primary-font);
-	}
-
-	:-ms-input-placeholder {
-		color: var(--kyc-sdk-dark-purple);
-		font-family: var(--kyc-sdk-primary-font);
-	}
-
-	::-ms-input-placeholder {
-		color: var(--kyc-sdk-dark-purple);
-		font-family: var(--kyc-sdk-primary-font);
-	}
-
 	&.kyc-dao-web-sdk-open {
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;

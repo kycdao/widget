@@ -61,16 +61,6 @@ const StyledInput = styled.input<{
 		font-family: var(--kyc-sdk-primary-font);
 	}
 
-	::-webkit-input-placeholder {
-		color: black;
-		font-family: var(--kyc-sdk-primary-font);
-	}
-
-	:-ms-input-placeholder {
-		color: black;
-		font-family: var(--kyc-sdk-primary-font);
-	}
-
 	&:hover {
 		border: 2px solid var(--kyc-sdk-cybergreen);
 		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);

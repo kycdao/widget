@@ -88,7 +88,7 @@ const CloseButton = styled.button<{ hidden?: boolean }>`
 	}
 `
 
-export const Header: FC<{ style?: CSSProperties }> = ({ style }) => {
+export const Header: FC = () => {
 	const {
 		data: { closeButtonState, nextButtonState, prevButtonState, currentModal },
 		dispatch,
@@ -116,7 +116,7 @@ export const Header: FC<{ style?: CSSProperties }> = ({ style }) => {
 	}, [dispatch])
 
 	return (
-		<StepHeader style={style} blurred={!!currentModal}>
+		<StepHeader blurred={!!currentModal}>
 			<ButtonWrapper>
 				<Button
 					disabled={prevButtonState === "disabled" || !!currentModal}

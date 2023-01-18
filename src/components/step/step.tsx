@@ -45,7 +45,8 @@ type StepProps = {
 const isPhantom = !!navigator.userAgent.match("Phantom")
 // const isIphone = !!navigator.userAgent.match("iPhone")
 
-const StyledStep = styled.div`
+const StyledStep = styled.div<{ paddingBottom: string }>`
+	${({ paddingBottom }) => `paddingBottom: ${paddingBottom};`}
 	display: flex;
 	width: 100%;
 	box-sizing: border-box;
@@ -220,13 +221,11 @@ export const Step: FC<StepProps> = ({
 
 	return (
 		<StyledStep
+			paddingBottom={marginBottom}
 			{...(!inactive && !disabled && transitionNotDone ? swipeHandlers : {})}
 			className={clsx(className, animatedClass, {
 				blurred: state.data.currentModal,
-			})}
-			style={{
-				paddingBottom: marginBottom,
-			}}>
+			})}>
 			{header && (
 				<StepHead>
 					{header({

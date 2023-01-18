@@ -11,7 +11,7 @@ import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
 import { SubmitButton } from "@Components/submitButton/submitButton"
 import styled from "styled-components"
-import { H1 } from "@Style/index"
+import { CenteredH1, H1 } from "@Style/index"
 
 const Header = () => <H1>Congrats!</H1>
 
@@ -19,6 +19,10 @@ export const NftButtonWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+`
+
+const NftImageContainer = styled.div`
+	text-align: "center";
 `
 
 export const FinalStep: FC<PageProps> = ({
@@ -65,17 +69,17 @@ export const FinalStep: FC<PageProps> = ({
 	const body = useCallback<StepPart>(
 		(props) => (
 			<>
-				<H1 style={{ textAlign: "center" }}>
+				<CenteredH1>
 					You have successfully minted your kycNFT on{" "}
 					{kycDao?.kycDao.connectedWallet?.blockchainNetwork}
-				</H1>
-				<div style={{ textAlign: "center" }}>
+				</CenteredH1>
+				<NftImageContainer>
 					{nftImageUrl ? (
 						<img alt="" src={nftImageUrl} width="300px" height="300px" />
 					) : (
 						<Placeholder width="300px" height="300px" />
 					)}
-				</div>
+				</NftImageContainer>
 			</>
 		),
 		[kycDao, nftImageUrl]

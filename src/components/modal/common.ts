@@ -16,6 +16,7 @@ export const ModalHeader = styled.div`
 	display: flex;
 	margin: 1em;
 	align-items: center;
+	justify-content: space-between;
 
 	p {
 		color: black;
@@ -79,4 +80,9 @@ export const ModalButtonWrapper = styled.div`
 	.kyc-dao-web-sdk-button {
 		padding: 0;
 	}
+`
+
+export const HeadlineWrapper = styled.div`
+	flex-direction: row;
+	display: flex;
 `

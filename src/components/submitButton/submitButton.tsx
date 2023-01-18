@@ -40,7 +40,6 @@ const SecondArrow = styled.i`
 `
 
 const UnstyledSubmitButton: FC<ButtonProps> = ({
-	style,
 	disabled = false,
 	onClick,
 	className,
@@ -69,7 +68,6 @@ const UnstyledSubmitButton: FC<ButtonProps> = ({
 	return (
 		<Button
 			mode="black"
-			style={style}
 			disabled={disabled}
 			ref={ref}
 			onMouseEnter={onMouseEnter}

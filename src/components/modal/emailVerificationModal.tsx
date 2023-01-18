@@ -6,6 +6,7 @@ import { StateContext } from "../stateContext/stateContext"
 import { P, Policy } from "@Style/index"
 import {
 	HeaderIcon,
+	HeadlineWrapper,
 	ModalBody,
 	ModalButtonWrapper,
 	ModalContainer,
@@ -37,12 +38,14 @@ export const EmailVerificationModal = () => {
 	return (
 		<ModalContainer>
 			<ModalHeader>
-				<HeaderIcon
-					background="var(--kyc-sdk-cybergreen-35)"
-					className="material-icons">
-					hourglass_bottom
-				</HeaderIcon>
-				<P>Waiting your mail verification</P>
+				<HeadlineWrapper>
+					<HeaderIcon
+						background="var(--kyc-sdk-cybergreen-35)"
+						className="material-icons">
+						hourglass_bottom
+					</HeaderIcon>
+					<P>Waiting your mail verification</P>
+				</HeadlineWrapper>
 			</ModalHeader>
 
 			<ModalBody>

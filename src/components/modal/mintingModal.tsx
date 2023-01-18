@@ -1,6 +1,12 @@
 import { Loading } from "@Components/loading/loading"
 import { H1, P, Policy } from "@Style/index"
-import { HeaderIcon, ModalBody, ModalContainer, ModalHeader } from "./common"
+import {
+	HeaderIcon,
+	HeadlineWrapper,
+	ModalBody,
+	ModalContainer,
+	ModalHeader,
+} from "./common"
 import styled from "styled-components"
 
 const MintingModalLoading = styled(H1)`
@@ -13,10 +19,14 @@ export const MintingModal = () => {
 	return (
 		<ModalContainer>
 			<ModalHeader>
-				<HeaderIcon background="green" className="material-icons">
-					error
-				</HeaderIcon>
-				<P>Mint authorization in progress</P>
+				<HeadlineWrapper>
+					<HeaderIcon
+						background="var(--kyc-sdk-cybergreen-35)"
+						className="material-icons">
+						error
+					</HeaderIcon>
+					<P>Mint authorization in progress</P>
+				</HeadlineWrapper>
 			</ModalHeader>
 
 			<ModalBody>

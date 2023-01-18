@@ -7,6 +7,7 @@ import {
 	StepID,
 	HeaderButtons,
 	OnPrev,
+	OnNext,
 } from "@Components/stateContext"
 import { StepPart, Step } from "@Components/step/step"
 import { useKycDao } from "@Hooks/useKycDao"
@@ -79,9 +80,14 @@ export const NftSelection: FC<PageProps> = ({
 		(id: string) => () => {
 			if (!disabled) {
 				setCurrentArt(id)
+
+				dispatch({
+					payload: { button: HeaderButtons.next, state: "enabled" },
+					type: DataActionTypes.SetHeaderButtonState,
+				})
 			}
 		},
-		[disabled]
+		[disabled, dispatch]
 	)
 
 	useEffect(() => {
@@ -141,6 +147,16 @@ export const NftSelection: FC<PageProps> = ({
 		}
 	}, [disabled, inactive, onPrev])
 
+	useEffect(() => {
+		if (!disabled && !inactive) {
+			const next = OnNext.subscribe(onSubmit)
+
+			return () => {
+				next.unsubscribe()
+			}
+		}
+	}, [disabled, inactive, onSubmit])
+
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
 			dispatch({
@@ -159,6 +175,11 @@ export const NftSelection: FC<PageProps> = ({
 			const images = [] as Nft[]
 			setCurrentArt(undefined)
 
+			dispatch({
+				payload: { button: HeaderButtons.next, state: "hidden" },
+				type: DataActionTypes.SetHeaderButtonState,
+			})
+
 			Object.entries(options).forEach(([, url]) => {
 				const splitUrl = url.split("/")
 
@@ -173,7 +194,7 @@ export const NftSelection: FC<PageProps> = ({
 				}
 			})
 		})
-	}, [kycDao?.kycDao])
+	}, [kycDao?.kycDao, dispatch])
 
 	const body = useCallback<StepPart>(
 		({ disabled }) => (

@@ -28,7 +28,7 @@ const RouterContainer = styled.div<{ blurred: boolean }>`
 	// filter: ${({ blurred }) => blurred && "#fefefe"};
 `
 
-const RoutedStep: FC<{
+const unstyledRoutedStep: FC<{
 	stepID: StepID
 	animation?: StepAnimation
 	disabled?: boolean
@@ -100,7 +100,10 @@ const nextAnimation = {
 	to: "moving-in" as MovingDirection,
 }
 
-const stepStyle = { width: "100%", height: "100%" }
+const RoutedStep = styled(unstyledRoutedStep)`
+	width: "100%";
+	height: "100%";
+`
 
 export const Router: FC = () => {
 	const {
@@ -123,7 +126,6 @@ export const Router: FC = () => {
 					stepID={prevPage}
 					animation={currentModal ? undefined : prevAnimation}
 					inactive={true}
-					style={stepStyle}
 				/>
 			)}
 			<RoutedStep
@@ -131,14 +133,12 @@ export const Router: FC = () => {
 				animation={currentModal ? undefined : currentAnimation}
 				inactive={!!currentModal}
 				disabled={!!currentModal}
-				style={stepStyle}
 			/>
 			{nextPage && (
 				<RoutedStep
 					stepID={nextPage}
 					animation={currentModal ? undefined : nextAnimation}
 					inactive={true}
-					style={stepStyle}
 				/>
 			)}
 		</RouterContainer>

@@ -5,6 +5,7 @@ import { Button } from "../button/button"
 import { P, Policy } from "@Style/index"
 import {
 	HeaderIcon,
+	HeadlineWrapper,
 	ModalBody,
 	ModalButtonWrapper,
 	ModalContainer,
@@ -26,10 +27,14 @@ export const MintingFailedModal = () => {
 	return (
 		<ModalContainer>
 			<ModalHeader>
-				<HeaderIcon background="red" className="material-icons">
-					error
-				</HeaderIcon>
-				<P>Minting failed</P>
+				<HeadlineWrapper>
+					<HeaderIcon
+						background="var(--kyc-sdk-red)"
+						className="material-icons">
+						error
+					</HeaderIcon>
+					<P>Minting failed</P>
+				</HeadlineWrapper>
 			</ModalHeader>
 
 			<ModalBody>

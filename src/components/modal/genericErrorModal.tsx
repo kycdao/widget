@@ -5,6 +5,7 @@ import { P, Policy } from "@Style/index"
 import {
 	CloseButton,
 	HeaderIcon,
+	HeadlineWrapper,
 	ModalBody,
 	ModalContainer,
 	ModalHeader,
@@ -22,11 +23,15 @@ export const GenericErrorModal = () => {
 
 	return (
 		<ModalContainer>
-			<ModalHeader style={{ justifyContent: "flex-start" }}>
-				<HeaderIcon background="var(--kyc-sdk-red)" className="material-icons">
-					error
-				</HeaderIcon>
-				<P style={{ flex: 1 }}>{errorModalHeader}</P>
+			<ModalHeader>
+				<HeadlineWrapper>
+					<HeaderIcon
+						background="var(--kyc-sdk-red)"
+						className="material-icons">
+						error
+					</HeaderIcon>
+					<P>{errorModalHeader}</P>
+				</HeadlineWrapper>
 				<CloseButton className={"material-icons"} onClick={onClose}>
 					close
 				</CloseButton>
