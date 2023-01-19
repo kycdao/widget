@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useCallback, useContext } from "react"
+import { FC, useCallback, useContext } from "react"
 import {
 	DataActionTypes,
 	HeaderButtons,

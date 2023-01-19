@@ -16,7 +16,7 @@ import { PageProps } from "./pageProps"
 import { Logo } from "@Components/logo/logo"
 
 import { NftButtonWrapper } from "@Pages/finalStep"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { tr2 } from "@Style/transitions"
 import { H1 } from "@Style/index"
 
@@ -46,13 +46,13 @@ const NftImageWrapper = styled.div`
 const NftImageContainer = styled.div<{ selected: boolean; disabled: boolean }>`
 	height: 150px;
 	width: 150px;
-	border: ${({ selected }) =>
-		selected ? "2px solid black" : "2px solid transparent"};
 	border-radius: 999rem;
-	box-shadow: ${({ selected }) =>
-		selected
-			? "0 0 0 5px var(--kyc-sdk-cybergreen-35)"
-			: "0 0 0 5px transparent"};
+
+	${({ selected }) => css`
+		border: 2px solid ${selected ? "black" : "transparent"};
+		box-shadow: 0 0 0 5px
+			${selected ? "var(--kyc-sdk-cybergreen-35)" : "transparent"};
+	`}
 
 	&:not(:disabled):hover {
 		cursor: pointer;

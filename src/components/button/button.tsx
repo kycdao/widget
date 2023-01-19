@@ -1,6 +1,6 @@
 import { tr2 } from "@Style/transitions"
 import { ButtonHTMLAttributes, CSSProperties, forwardRef } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export type ButtonProps = {
 	onClick?: () => void
@@ -15,7 +15,7 @@ export type ButtonProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 const unstyledButton = forwardRef<HTMLButtonElement, ButtonProps>(
-	({ children, inactive, onClick, ...rest }, ref) => (
+	({ children, inactive, fullWidth, onClick, ...rest }, ref) => (
 		<button ref={ref} {...rest} onClick={inactive ? undefined : onClick}>
 			{children}
 		</button>
@@ -40,7 +40,11 @@ export const Button = styled(unstyledButton)<ButtonProps>`
 	cursor: pointer;
 	@extend ${tr2};
 
-	${({ fullWidth }) => fullWidth && "width: 100%;"}
+	${({ fullWidth }) =>
+		fullWidth &&
+		css`
+			width: 100%;
+		`}
 
 	span {
 		font-family: var(--kyc-sdk-primary-font);
@@ -63,7 +67,8 @@ export const Button = styled(unstyledButton)<ButtonProps>`
 	${({ mode }) => {
 		switch (mode) {
 			case "black":
-				return `:enabled {
+				return css`
+				:enabled {
 					background: black;
 					border: 2px solid black;
 				}
@@ -98,112 +103,104 @@ export const Button = styled(unstyledButton)<ButtonProps>`
 					background: var(--darken-green);
 					box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
 				}
-		
-				&:focus-visible {
-					outline: none;
-					border: none;
 				}`
 
 			case "green":
-				return `
-				background: var(--kyc-sdk-cyberpunk);
+				return css`
+					background: var(--kyc-sdk-cyberpunk);
 
-				span,
-				i {
-					font-weight: 400;
-					color: white;
-				}
-		
-				&:hover {
-					background: var(--kyc-sdk-cyberpunk);
-					box-shadow: 0 0 0 10px var(--kyc-sdk-normal-blue-35);
-		
-					span {
+					span,
+					i {
 						font-weight: 400;
-						color: var(--kyc-sdk-dark-blue);
+						color: white;
 					}
-				}
-		
-				&:focus {
-					background: var(--kyc-sdk-cyberpunk);
-					box-shadow: 0 0 0 5px var(--kyc-sdk-cyberpunk-35);
-				}
-		
-				&:active {
-					box-shadow: 0 0 0 5px var(--kyc-sdk-dark-blue-35);
-				}
-		
-				&:focus-visible {
-					outline: none;
-					border: none;
-				}
-			`
+
+					&:hover {
+						background: var(--kyc-sdk-cyberpunk);
+						box-shadow: 0 0 0 10px var(--kyc-sdk-normal-blue-35);
+
+						span {
+							font-weight: 400;
+							color: var(--kyc-sdk-dark-blue);
+						}
+					}
+
+					&:focus {
+						background: var(--kyc-sdk-cyberpunk);
+						box-shadow: 0 0 0 5px var(--kyc-sdk-cyberpunk-35);
+					}
+
+					&:active {
+						box-shadow: 0 0 0 5px var(--kyc-sdk-dark-blue-35);
+					}
+				`
 
 			case "underline":
-				return `
-				color: red;
-				position: relative;
-				display: inline-flex;
-				width: max-content;
-				border: none;
-
-				&:enabled {
-					background: rgb(0, 0, 0, 0);
-					color: black;
-				}
-
-				&:enabled:after {
-					content: "";
+				return css`
+					color: red;
+					position: relative;
 					display: inline-flex;
-					height: 2px;
-					width: 100%;
-					background-color: var(--kyc-sdk-cybergreen);
-					position: absolute;
-					bottom: 6px;
-					@extend ${tr2};
-				}
-
-				&:disabled:after {
-					content: "";
-					display: inline-flex;
-					height: 2px;
-					width: 100%;
-					background-color: grey;
-					position: absolute;
-					bottom: 6px;
-				}
-
-				span {
-					display: flex;
-					align-items: center;
-				}
-
-				span:disabled {
-					color: grey;
-				}
-
-				i:disabled {
-					color: grey;
-				}
-
-				&:hover {
-					:after {
-						height: 8px;
-					}
-				}
-
-				&:disabled {
-					background-color: transparent;
+					width: max-content;
 					border: none;
-					color: grey;
-				}`
+
+					&:enabled {
+						background: rgb(0, 0, 0, 0);
+						color: black;
+					}
+
+					&:enabled:after {
+						content: "";
+						display: inline-flex;
+						height: 2px;
+						width: 100%;
+						background-color: var(--kyc-sdk-cybergreen);
+						position: absolute;
+						bottom: 6px;
+						@extend ${tr2};
+					}
+
+					&:disabled:after {
+						content: "";
+						display: inline-flex;
+						height: 2px;
+						width: 100%;
+						background-color: grey;
+						position: absolute;
+						bottom: 6px;
+					}
+
+					span {
+						display: flex;
+						align-items: center;
+					}
+
+					span:disabled {
+						color: grey;
+					}
+
+					i:disabled {
+						color: grey;
+					}
+
+					&:hover {
+						:after {
+							height: 8px;
+						}
+					}
+
+					&:disabled {
+						background-color: transparent;
+						border: none;
+						color: grey;
+					}
+				`
 			case "clean":
-				return `
+				return css`
 					color: white;
 					&:hover {
 						background: var(--kyc-sdk-cybergreen);
 						box-shadow: 0 0 0 0px var(--kyc-sdk-cybergreen-35);
-			
+
 						span,
 						i {
 							color: black;
@@ -215,9 +212,9 @@ export const Button = styled(unstyledButton)<ButtonProps>`
 
 	${({ centered }) =>
 		centered &&
-		`
-		justify-content: center;
-		padding-left: 0;
-		padding-right: 0;
-	`}
+		css`
+			justify-content: center;
+			padding-left: 0;
+			padding-right: 0;
+		`}
 `

@@ -10,7 +10,7 @@ import {
 	useRef,
 	useState,
 } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 const specialRegex = /[!$(){}[\]:;<+?\\>]/g
 
@@ -47,8 +47,15 @@ const StyledInput = styled.input<{
 	outline: none;
 	${({ showAutoComplete }) =>
 		showAutoComplete
-			? `border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light); margin-top: 0; outline: none; box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);`
-			: "border-radius: var(--kyc-sdk-border-radius-light);"}
+			? css`
+					border-radius: 0 0 var(--kyc-sdk-border-radius-light)
+						var(--kyc-sdk-border-radius-light);
+					margin-top: 0;
+					box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
+			  `
+			: css`
+					border-radius: var(--kyc-sdk-border-radius-light);
+			  `}
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	background: white;
 	color: black;
@@ -66,7 +73,10 @@ const StyledInput = styled.input<{
 		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
 		${({ showAutoComplete }) =>
 			showAutoComplete &&
-			"border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
+			css`
+				border-radius: 0 0 var(--kyc-sdk-border-radius-light)
+					var(--kyc-sdk-border-radius-light);
+			`}
 		background: white;
 	}
 
@@ -75,7 +85,10 @@ const StyledInput = styled.input<{
 		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
 		${({ showAutoComplete }) =>
 			showAutoComplete &&
-			"border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
+			css`
+				border-radius: 0 0 var(--kyc-sdk-border-radius-light)
+					var(--kyc-sdk-border-radius-light);
+			`}
 		color: white;
 		background: black;
 	}
@@ -85,7 +98,10 @@ const StyledInput = styled.input<{
 		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
 		${({ showAutoComplete }) =>
 			showAutoComplete &&
-			"border-radius: 0 0 var(--kyc-sdk-border-radius-light) var(--kyc-sdk-border-radius-light);"}
+			css`
+				border-radius: 0 0 var(--kyc-sdk-border-radius-light)
+					var(--kyc-sdk-border-radius-light);
+			`}
 		color: white;
 		background: black;
 	}
@@ -93,11 +109,11 @@ const StyledInput = styled.input<{
 
 const Clear = styled.div<{ active: boolean }>`
 	position: absolute;
-	right: 1em;
+	right: 0.25em;
+	padding: 0.25em;
 	font-size: 2em;
 	display: flex;
-	margin-top: 1em;
-	bottom: 0.75rem;
+	bottom: 0.25em;
 	line-height: 2em;
 	color: var(--kyc-sdk-cybergreen);
 	cursor: pointer;
@@ -267,6 +283,7 @@ export const Input: FC<InputProps> = ({
 		if (onChange && value) {
 			onChange("")
 		}
+
 		inputRef.current?.focus()
 	}, [onChange, value, inputRef])
 

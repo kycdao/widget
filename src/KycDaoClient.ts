@@ -8,7 +8,53 @@ import {
 	KycDaoClientOptions,
 } from "./KycDaoClientCommon"
 
-import "./KycDaoClient.scss"
+// basically the KycDaoClient.css
+const styles = `
+	.KycDaoModalRoot {
+		width: 100%;
+		position: absolute;
+		inset: 0;
+		background: var(--kyc-dao-backdrop);
+	}
+
+	.KycDaoModalFrame {
+		box-shadow: 0px 1px 174px rgba(59, 31, 69, 0.2);
+		width: 100%;
+		height: 100%;
+		background-color: #fefefe;
+		position: absolute;
+		overflow: hidden;
+	}
+	@media only screen and (max-width: 992px) {
+		body:has(.KycDaoModalRoot) {
+			overflow: hidden;
+		}
+	}
+
+	@media only screen and (min-width: 992px) {
+		.KycDaoModalFrame {
+			width: var(--width);
+			height: var(--height);
+			margin: auto;
+			border-radius: 12px;
+			overflow: hidden;
+			inset: 0;
+		}
+
+		.KycDaoModalRoot {
+			position: fixed;
+			overflow: hidden;
+			height: 100vh;
+		}
+	}
+`.replace(/\t|\n*/gm, "")
+
+console.log(styles)
+
+const styleNode = document.createElement("style")
+styleNode.innerText = styles
+
+document.head.appendChild(styleNode)
 
 function kycDaoClient(
 	this: KycDaoClientInterface,
@@ -111,10 +157,8 @@ kycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 
 		if (this.backdrop && this.isModal) {
 			this.originalParentZIndex = this.parent.style.getPropertyValue("z-index")
-			this.originalParentBackground =
-				this.parent.style.getPropertyValue("--kyc-dao-backdrop")
 
-			window.document.body.style.setProperty(
+			this.parent.style.setProperty(
 				"--kyc-dao-backdrop",
 				typeof this.backdrop === "boolean"
 					? "rgba(0, 0, 0, 0.7)"
@@ -150,9 +194,9 @@ kycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 			})
 		}
 
-		this.originalBodyHeight = document.body.style.height
+		//this.originalBodyHeight = document.body.style.height
 
-		document.body.style.setProperty("height", "100%")
+		// document.body.style.setProperty("height", "100%")
 	}
 }
 
@@ -165,7 +209,7 @@ kycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
 			parentNode.style.setProperty("z-index", this.originalParentZIndex)
 
 			if (this.backdrop) {
-				document.body.style.setProperty("--kyc-dao-backdrop", null)
+				parentNode.style.setProperty("--kyc-dao-backdrop", null)
 			}
 		}
 
@@ -174,7 +218,7 @@ kycDaoClient.prototype.close = function (this: KycDaoClientInterface) {
 		}
 		window.removeEventListener("message", this.messageHndlr)
 		this.isOpen = false
-		document.body.style.setProperty("height", this.originalBodyHeight)
+		// document.body.style.setProperty("height", this.originalBodyHeight)
 	}
 }
 

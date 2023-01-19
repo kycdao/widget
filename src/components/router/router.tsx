@@ -28,7 +28,7 @@ const RouterContainer = styled.div<{ blurred: boolean }>`
 	// filter: ${({ blurred }) => blurred && "#fefefe"};
 `
 
-const unstyledRoutedStep: FC<{
+const RoutedStep: FC<{
 	stepID: StepID
 	animation?: StepAnimation
 	disabled?: boolean
@@ -99,11 +99,6 @@ const nextAnimation = {
 	from: "moving-center" as MovingDirection,
 	to: "moving-in" as MovingDirection,
 }
-
-const RoutedStep = styled(unstyledRoutedStep)`
-	width: "100%";
-	height: "100%";
-`
 
 export const Router: FC = () => {
 	const {

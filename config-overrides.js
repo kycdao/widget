@@ -77,11 +77,11 @@ module.exports = function override(config, env) {
 		1
 	)
 
-	config.plugins.push(
+	/*config.plugins.push(
 		new MiniCssExtractPlugin({
 			filename: "[name].css",
 		})
-	)
+	)*/
 
 	config.plugins.push(
 		new HtmlWebpackPlugin(

@@ -4,7 +4,54 @@ import {
 	KycDaoClientOptions,
 } from "./KycDaoClientCommon"
 
-import "./KycDaoIframeClient.scss"
+// basically the KycDaoClient.css
+const styles = `
+.KycDaoModalIFrame {
+	box-shadow: 0px 1px 174px rgba(59, 31, 69, 0.2);
+	width: 100%;
+	height: 100%;
+	background-color: #fefefe;
+	position: absolute;
+	overflow: hidden;
+	border: 0px;
+	border-width: 0;
+}
+
+.KycDaoIframeModalRoot {
+	width: 100%;
+	position: absolute;
+	inset: 0;
+	background: var(--kyc-dao-backdrop);
+}
+
+@media only screen and (max-width: 992px) { 
+	body:has(.KycDaoIframeModalRoot) {
+		overflow: hidden;
+	}
+}
+
+@media only screen and (min-width: 992px) {
+	.KycDaoModalIFrame {
+		width: var(--width);
+		height: var(--height);
+		margin: auto;
+		border-radius: 12px;
+		overflow: hidden;
+		inset: 0;
+	}
+
+	.KycDaoIframeModalRoot {
+		position: fixed;
+		overflow: hidden;
+		height: 100vh;
+	}
+}
+`.replace(/\t|\n*/gm, "")
+
+const styleNode = document.createElement("style")
+styleNode.innerText = styles
+
+document.head.appendChild(styleNode)
 
 export function kycDaoIframeClient(
 	this: KycDaoClientInterface,
@@ -109,7 +156,7 @@ kycDaoIframeClient.prototype.open = function (this: KycDaoClientInterface) {
 
 		this.parent = this.getParentElement() || document.body
 		if (this.isModal) {
-			this.parent.classList.add("KycDaoModalRoot")
+			this.parent.classList.add("KycDaoIframeModalRoot")
 		}
 
 		if (this.backdrop && this.isModal) {
@@ -124,7 +171,7 @@ kycDaoIframeClient.prototype.open = function (this: KycDaoClientInterface) {
 		this.modal = document.createElement("div")
 
 		if (this.isModal) {
-			this.modal.classList.add("KycDaoModal")
+			this.modal.classList.add("KycDaoIframeModalRoot")
 			this.modal.style.setProperty("--width", this.width)
 			this.modal.style.setProperty("--height", this.height)
 		}
@@ -164,7 +211,7 @@ kycDaoIframeClient.prototype.close = function (this: KycDaoClientInterface) {
 			const parentNode = this.getParentElement()
 
 			if (this.isModal) {
-				parentNode.classList.remove("KycDaoModalRoot")
+				parentNode.classList.remove("KycDaoIframeModalRoot")
 			}
 
 			if (parentNode) {

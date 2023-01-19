@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from "react"
+import { CSSProperties } from "react"
 import styled from "styled-components"
 
 export type PlaceholderProps = {

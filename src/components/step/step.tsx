@@ -8,7 +8,7 @@ import {
 } from "react"
 import { useSwipeable } from "react-swipeable"
 import { StateContext } from "@Components/stateContext/stateContext"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import clsx from "clsx"
 import { H1 } from "@Style/index"
 
@@ -46,7 +46,10 @@ const isPhantom = !!navigator.userAgent.match("Phantom")
 // const isIphone = !!navigator.userAgent.match("iPhone")
 
 const StyledStep = styled.div<{ paddingBottom: string }>`
-	${({ paddingBottom }) => `paddingBottom: ${paddingBottom};`}
+	${({ paddingBottom }) =>
+		css`
+			padding-bottom: ${paddingBottom};
+		`}
 	display: flex;
 	width: 100%;
 	box-sizing: border-box;

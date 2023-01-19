@@ -18,19 +18,7 @@
 				}
 			}
 		],
-		"@babel/plugin-transform-typescript",
-		[
-			"@dr.pogodin/react-css-modules",
-			{
-				"generateScopedName": "kyc-dao-web-sdk-[name]",
-				"replaceImport": true,
-				"filetypes": {
-					".scss": {
-						"syntax": "postcss-scss"
-					}
-				}
-			}
-		]
+		"@babel/plugin-transform-typescript"
 	],
 	"targets": "> 0.25%, not dead"
 }

@@ -1,4 +1,4 @@
-import styled, { css, StyledComponent } from "styled-components"
+import styled, { css } from "styled-components"
 
 export * from "./transitions"
 
@@ -84,7 +84,7 @@ export const Ul = styled.ul`
 	-webkit-font-smoothing: antialiased;
 `
 
-export const translateX = (x: number | string) => `
+export const translateX = (x: number | string) => css`
 	transform: translateX(${x});
 `
 
