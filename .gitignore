@@ -29,7 +29,6 @@ yarn-error.log*
 test-results
 playwright-report
 
-.vscode
 .idea
 
 # dynamically created styles in the public, we build them everytime
