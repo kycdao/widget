@@ -190,7 +190,7 @@
 	},
 	"packageManager": "yarn@4.0.0-rc.34",
 	"lint-staged": {
-		"{*.ts,*.tsx,*.scss}": [
+		"*.{ts,tsx,scss}": [
 			"prettier --write",
 			"eslint"
 		],
