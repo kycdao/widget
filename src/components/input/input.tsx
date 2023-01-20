@@ -170,7 +170,7 @@ const Autocomplete = styled.div`
 	overflow-x: hidden;
 
 	@media only screen and (min-width: 992px) {
-		max-height: 40vh;
+		max-height: 35vh;
 	}
 
 	border: 2px solid black;
