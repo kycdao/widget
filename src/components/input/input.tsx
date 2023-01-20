@@ -91,6 +91,11 @@ const StyledInput = styled.input<{
 			`}
 		color: white;
 		background: black;
+
+		::placeholder {
+			color: white;
+			font-family: var(--kyc-sdk-primary-font);
+		}
 	}
 
 	&:active {
@@ -104,6 +109,11 @@ const StyledInput = styled.input<{
 			`}
 		color: white;
 		background: black;
+
+		::placeholder {
+			color: white;
+			font-family: var(--kyc-sdk-primary-font);
+		}
 	}
 `
 
