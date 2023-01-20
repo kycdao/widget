@@ -1,4 +1,4 @@
-import { tr2 } from "@Style/transitions"
+import { tr2 } from "@Components/typography"
 import { ButtonHTMLAttributes, CSSProperties, forwardRef } from "react"
 import styled, { css } from "styled-components"
 

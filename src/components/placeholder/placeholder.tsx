@@ -28,7 +28,6 @@ export const Placeholder = styled(unstyledPlaceholder)<{
 	background: grey;
 	color: white;
 	user-select: none;
-	font-family: sans-serif;
 	font-size: 3vw;
 	width: ${({ width }) => width};
 	height: ${({ height }) => height};

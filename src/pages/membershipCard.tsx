@@ -1,21 +1,27 @@
 import { FC, useContext, useCallback, useEffect } from "react"
 import { getNetworkType } from "@Utils/getNetworkType"
+
+import { useKycDao } from "@Hooks/useKycDao"
+import { PageProps } from "@Pages/pageProps"
+
+import styled from "styled-components"
 import {
+	B,
 	DataActionTypes,
+	H1,
 	HeaderButtons,
+	Logo,
 	OnNext,
 	OnPrev,
+	P,
+	Policy,
 	StateContext,
+	Step,
 	StepID,
-} from "@Components/stateContext"
-import { StepPart, Step } from "@Components/step/step"
-import { SubmitButton } from "@Components/submitButton/submitButton"
-import { useKycDao } from "@Hooks/useKycDao"
-import { PageProps } from "./pageProps"
-import { Logo } from "@Components/logo/logo"
-
-import { H1, P, Policy, Ul } from "@Style/index"
-import styled from "styled-components"
+	StepPart,
+	SubmitButton,
+	Ul,
+} from "@Components/index"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<>
@@ -127,21 +133,21 @@ const Body = () => {
 					<Span>1</Span>
 					<div>
 						<P>Connect</P>
-						<b>Using your wallet</b>
+						<B>Using your wallet</B>
 					</div>
 				</Li>
 				<Li>
 					<Span>2</Span>
 					<div>
 						<P>Verify</P>
-						<b>Log-in or Open a compliant account</b>
+						<B>Log-in or Open a compliant account</B>
 					</div>
 				</Li>
 				<Li>
 					<Span>3</Span>
 					<div>
 						<P>Mint</P>
-						<b>kycNFT - $5</b>
+						<B>kycNFT - $5</B>
 					</div>
 				</Li>
 			</ChartUl>

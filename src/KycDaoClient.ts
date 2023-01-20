@@ -49,8 +49,6 @@ const styles = `
 	}
 `.replace(/\t|\n*/gm, "")
 
-console.log(styles)
-
 const styleNode = document.createElement("style")
 styleNode.innerText = styles
 

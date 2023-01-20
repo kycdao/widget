@@ -1,23 +1,23 @@
 import { KycDao, SdkConfiguration } from "@kycdao/kycdao-sdk"
 import { FC, useEffect, useMemo, useReducer, useRef, useState } from "react"
-import { KycDaoContext, KycDaoState } from "@Components/kycDao.provider"
-import {
-	StepID,
-	reducer,
-	StateContext,
-	DefaultData,
-	OnClose,
-	DataActionTypes,
-	HeaderButtons,
-} from "@Components/stateContext"
-import { LoadingCard } from "@Pages/loading"
-import { Header } from "@Components/header/header"
-import { Router } from "@Components/router/router"
-import { ModalRouter } from "@Components/modal/modalRouter"
 
 import { getNetworkType } from "./utils/getNetworkType"
 
 import { AppContainer } from "./AppContainer"
+import {
+	DataActionTypes,
+	DefaultData,
+	Header,
+	HeaderButtons,
+	KycDaoContext,
+	KycDaoState,
+	ModalRouter,
+	OnClose,
+	reducer,
+	StateContext,
+	StepID,
+} from "@Components/index"
+import { LoadingCard, Router } from "@Pages/index"
 
 export type KycDaoModalProps = {
 	width?: number | string

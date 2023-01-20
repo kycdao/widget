@@ -1,24 +1,27 @@
-import { SubmitButton } from "@Components/submitButton/submitButton"
 import { useContext, useState, useCallback, FC, useEffect } from "react"
-import { Button } from "@Components/button/button"
-import {
-	StateContext,
-	DataActionTypes,
-	StepID,
-	HeaderButtons,
-	OnPrev,
-	OnNext,
-} from "@Components/stateContext"
-import { StepPart, Step } from "@Components/step/step"
+
 import { useKycDao } from "@Hooks/useKycDao"
 import { useMinting } from "@Hooks/useMinting"
 import { PageProps } from "./pageProps"
-import { Logo } from "@Components/logo/logo"
 
-import { NftButtonWrapper } from "@Pages/finalStep"
 import styled, { css } from "styled-components"
-import { tr2 } from "@Style/transitions"
-import { H1 } from "@Style/index"
+import {
+	Button,
+	DataActionTypes,
+	H1,
+	HeaderButtons,
+	Logo,
+	OnNext,
+	OnPrev,
+	StateContext,
+	Step,
+	StepID,
+	StepPart,
+	SubmitButton,
+	tr2,
+} from "@Components/index"
+
+import { NftButtonWrapper } from "./finalStep"
 
 const Header = () => (
 	<H1>

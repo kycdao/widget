@@ -1,30 +1,31 @@
-import { Logo } from "@Components/logo/logo"
-import { FC, useCallback, useContext, useEffect } from "react"
 import {
 	DataActionTypes,
+	H1,
+	H3,
 	HeaderButtons,
+	Logo,
 	OnNext,
+	P,
 	StateContext,
+	Step,
 	StepID,
-} from "@Components/stateContext"
-import { Step, StepPart } from "@Components/step/step"
-import { SubmitButton } from "@Components/submitButton/submitButton"
+	StepPart,
+	SubmitButton,
+} from "@Components/index"
 import { useKycDao } from "@Hooks/useKycDao"
+import { FC, useContext, useCallback, useEffect } from "react"
 import { PageProps } from "./pageProps"
-import { H1, P } from "@Style/index"
 
 const Body = () => {
 	return (
-		<P>
-			<b>Welcome back trusted anon.</b>
-			<br />
-			<br />
-			You are already a member, but a smart contract requires a kycNFT on this
-			chain.
-			<br />
-			<br />
-			Please go ahead and mint a free kycNFT.
-		</P>
+		<>
+			<H3>Welcome back trusted anon.</H3>
+			<P>
+				You are already a member, but a smart contract requires a kycNFT on this
+				chain.
+			</P>
+			<P>Please go ahead and mint a free kycNFT.</P>
+		</>
 	)
 }
 

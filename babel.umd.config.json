@@ -13,7 +13,6 @@
 					"@Pages": "./src/pages",
 					"@App": "./src/app",
 					"@Utils": "./src/utils",
-					"@Style": "./src/style",
 					"@Hooks": "./src/hooks"
 				}
 			}

@@ -1,6 +1,12 @@
 import styled, { css } from "styled-components"
 
-export * from "./transitions"
+export const transition = css`
+	transition-property: all;
+`
+export const tr2 = css`
+	${transition};
+	transition-duration: 0.2s;
+`
 
 export const materialIcon = css`
 	font-family: "Material Icons";
@@ -19,42 +25,37 @@ export const materialIcon = css`
 `
 
 export const typoBase = css`
-	margin-bottom: 1em;
-	font-size: 1.6rem;
 	color: black;
+	line-height: 100%;
+	-webkit-font-smoothing: antialiased;
+	font-family: "neue-machina";
 `
 
 export const H1 = styled.h1`
+	${typoBase}
 	margin-bottom: 1em;
 	font-size: 1.6rem;
-	color: black;
 	margin-top: 0;
-	font-family: "neue-machina";
-	-webkit-font-smoothing: antialiased;
 `
 
 export const H2 = styled.h2`
-	font-family: "neue-machina";
-	color: black;
+	${typoBase}
 	margin-bottom: 1em;
-	color: black;
-	-webkit-font-smoothing: antialiased;
 `
 
 export const H3 = styled.h3`
-	font-family: "neue-machina";
+	${typoBase}
 	color: black;
+	font-size: 12pt;
 	margin-bottom: 1em;
-	color: black;
-	-webkit-font-smoothing: antialiased;
 `
 
 export const P = styled.p`
 	font-size: 12pt;
+	${typoBase}
 	color: black;
 	margin-bottom: 1em;
 	margin-top: 0;
-	-webkit-font-smoothing: antialiased;
 `
 
 export const Policy = styled(P)`
@@ -63,8 +64,8 @@ export const Policy = styled(P)`
 	font-size: 12px;
 
 	a {
+		${typoBase}
 		font-size: 12px;
-		-webkit-font-smoothing: antialiased;
 		color: var(--kyc-sdk-normal-blue);
 		text-decoration: underline;
 	}
@@ -73,15 +74,27 @@ export const Policy = styled(P)`
 `
 
 export const Li = styled.li`
+	${typoBase}
 	margin-left: 2em;
 	font-size: 12pt;
-	-webkit-font-smoothing: antialiased;
+
+	${P} {
+		margin-bottom: 1em;
+		${typoBase}
+	}
+`
+
+export const B = styled.b`
+	font-size: 12pt;
+	${typoBase}
+	margin-bottom: 1em;
+	margin-top: 0;
 `
 
 export const Ul = styled.ul`
 	padding: 1rem 0;
 	width: fit-content;
-	-webkit-font-smoothing: antialiased;
+	list-style: disc;
 `
 
 export const translateX = (x: number | string) => css`

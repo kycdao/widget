@@ -1,11 +1,11 @@
-import { FC, useCallback, useContext } from "react"
 import {
 	DataActionTypes,
 	HeaderButtons,
 	StateContext,
 } from "@Components/stateContext"
+import { materialIcon, tr2 } from "@Components/typography"
+import { FC, useCallback, useContext } from "react"
 import styled from "styled-components"
-import { materialIcon, tr2 } from "@Style/index"
 
 const StepHeader = styled.div<{ blurred: boolean }>`
 	display: flex;

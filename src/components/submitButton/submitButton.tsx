@@ -1,3 +1,5 @@
+import { Button } from "@Components/button/button"
+import { tr2, translateX } from "@Components/typography"
 import {
 	CSSProperties,
 	FC,
@@ -7,12 +9,9 @@ import {
 	useState,
 } from "react"
 
-import { Button } from "@Components/button/button"
 import styled from "styled-components"
-import { tr2 } from "@Style/transitions"
-import { translateX } from "@Style/index"
 
-export type ButtonProps = {
+export type SubmitButtonProps = {
 	onClick?: () => void
 	className?: string
 	label?: string
@@ -39,7 +38,7 @@ const SecondArrow = styled.i`
 	${tr2};
 `
 
-const UnstyledSubmitButton: FC<ButtonProps> = ({
+const UnstyledSubmitButton: FC<SubmitButtonProps> = ({
 	disabled = false,
 	onClick,
 	className,

@@ -1,17 +1,21 @@
-import { useContext, useCallback, FC, useEffect } from "react"
 import {
-	StateContext,
-	StepID,
 	DataActionTypes,
+	H1,
 	HeaderButtons,
-	OnPrev,
+	Li,
+	Logo,
 	OnNext,
-} from "@Components/stateContext"
-import { StepPart, Step } from "@Components/step/step"
-import { SubmitButton } from "@Components/submitButton/submitButton"
+	OnPrev,
+	P,
+	StateContext,
+	Step,
+	StepID,
+	StepPart,
+	SubmitButton,
+	Ul,
+} from "@Components/index"
+import { FC, useContext, useCallback, useEffect } from "react"
 import { PageProps } from "./pageProps"
-import { Logo } from "@Components/logo/logo"
-import { H1, Li, P, Ul } from "@Style/index"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<SubmitButton

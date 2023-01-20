@@ -1,4 +1,4 @@
-import { StepAnimation } from "../components/step/step"
+import { StepAnimation } from "@Components/step/step"
 
 export type PageProps = {
 	className?: string

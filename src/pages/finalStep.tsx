@@ -1,17 +1,20 @@
 import { useContext, useCallback, useState, useEffect, FC } from "react"
-import { Step, StepPart } from "@Components/step/step"
-import { Button } from "@Components/button/button"
-import { Placeholder } from "@Components/placeholder/placeholder"
-import {
-	DataActionTypes,
-	HeaderButtons,
-	StateContext,
-} from "@Components/stateContext"
+
 import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
-import { SubmitButton } from "@Components/submitButton/submitButton"
 import styled from "styled-components"
-import { CenteredH1, H1 } from "@Style/index"
+import {
+	Button,
+	CenteredH1,
+	DataActionTypes,
+	H1,
+	HeaderButtons,
+	Placeholder,
+	StateContext,
+	Step,
+	StepPart,
+	SubmitButton,
+} from "@Components/index"
 
 const Header = () => <H1>Congrats!</H1>
 

@@ -8,21 +8,24 @@ import {
 	useLayoutEffect,
 	useRef,
 } from "react"
-import { Input } from "@Components/input/input.component"
-import {
-	StateContext,
-	StepID,
-	DataActionTypes,
-	HeaderButtons,
-	OnNext,
-	OnPrev,
-} from "@Components/stateContext"
-import { StepPart, Step } from "@Components/step/step"
-import { SubmitButton } from "@Components/submitButton/submitButton"
+
 import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
-import { Logo } from "@Components/logo/logo"
-import { H1, P } from "@Style/index"
+import {
+	DataActionTypes,
+	H1,
+	HeaderButtons,
+	Input,
+	Logo,
+	OnNext,
+	OnPrev,
+	P,
+	StateContext,
+	Step,
+	StepID,
+	StepPart,
+	SubmitButton,
+} from "@Components/index"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 

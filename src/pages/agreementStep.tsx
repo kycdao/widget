@@ -1,17 +1,20 @@
-import { Logo } from "@Components/logo/logo"
 import { FC, useCallback, useContext, useEffect } from "react"
-import {
-	DataActionTypes,
-	HeaderButtons,
-	OnNext,
-	StateContext,
-	StepID,
-} from "@Components/stateContext"
-import { Step, StepPart } from "@Components/step/step"
-import { SubmitButton } from "@Components/submitButton/submitButton"
 import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "./pageProps"
-import { H1, P } from "@Style/index"
+import {
+	DataActionTypes,
+	H1,
+	H3,
+	HeaderButtons,
+	Logo,
+	OnNext,
+	P,
+	StateContext,
+	Step,
+	StepID,
+	StepPart,
+	SubmitButton,
+} from "@Components/index"
 
 const Header: StepPart = () => (
 	<H1>
@@ -21,22 +24,20 @@ const Header: StepPart = () => (
 )
 
 const Body = () => (
-	<P>
-		<b>The last proof you need in web3.</b>
-		<br />
-		<br />
-		kycDAO is a web3 native reusable compliance framework.
-		<br />
-		<br />
-		CEXs/Ramps already know your wallet address; kycDAO makes it composable.
-		<br />
-		<br />
-		Our proofs allow smart contracts and services to interacting with trusted
-		wallets.
-		<br />
-		<br />
-		We use soulbound NFTs to prove your compliant account. Strictly no PII!
-	</P>
+	<>
+		<H3>The last proof you need in web3.</H3>
+		<P>kycDAO is a web3 native reusable compliance framework.</P>
+		<P>
+			CEXs/Ramps already know your wallet address; kycDAO makes it composable.
+		</P>
+		<P>
+			Our proofs allow smart contracts and services to interacting with trusted
+			wallets.
+		</P>
+		<P>
+			We use soulbound NFTs to prove your compliant account. Strictly no PII!
+		</P>
+	</>
 )
 
 const Footer: StepPart = ({ inactive, disabled, onEnter }) => (

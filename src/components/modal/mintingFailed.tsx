@@ -1,8 +1,5 @@
-import { StateContext } from "@Components/stateContext"
 import { useCallback, useContext } from "react"
 import { useMinting } from "@Hooks/useMinting"
-import { Button } from "../button/button"
-import { P, Policy } from "@Style/index"
 import {
 	HeaderIcon,
 	HeadlineWrapper,
@@ -11,6 +8,9 @@ import {
 	ModalContainer,
 	ModalHeader,
 } from "./common"
+import { StateContext } from "@Components/stateContext"
+import { P, Policy } from "@Components/typography"
+import { Button } from "@Components/button/button"
 
 export const MintingFailedModal = () => {
 	const minting = useMinting()

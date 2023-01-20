@@ -1,14 +1,15 @@
 import { FC, useCallback, useContext } from "react"
+
+import { PageProps } from "./pageProps"
+
+import styled from "styled-components"
 import {
 	DataActionTypes,
 	HeaderButtons,
+	Loading,
 	StateContext,
-} from "@Components/stateContext"
-import { Step } from "@Components/step/step"
-import { PageProps } from "./pageProps"
-
-import { Loading } from "@Components/loading/loading"
-import styled from "styled-components"
+	Step,
+} from "@Components/index"
 
 const H1 = styled.h1`
 	justify-content: center;

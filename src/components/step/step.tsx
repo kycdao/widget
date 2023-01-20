@@ -7,10 +7,10 @@ import {
 	useState,
 } from "react"
 import { useSwipeable } from "react-swipeable"
-import { StateContext } from "@Components/stateContext/stateContext"
 import styled, { css } from "styled-components"
 import clsx from "clsx"
-import { H1 } from "@Style/index"
+import { H1 } from "@Components/typography"
+import { StateContext } from "@Components/stateContext"
 
 export type MovingDirection = "moving-out" | "moving-in" | "moving-center"
 

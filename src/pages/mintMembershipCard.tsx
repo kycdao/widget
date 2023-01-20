@@ -1,21 +1,25 @@
 import { useContext, useCallback, FC, useEffect, useState } from "react"
-import { Button } from "@Components/button/button"
-import {
-	DataActionTypes,
-	HeaderButtons,
-	OnNext,
-	OnPrev,
-	StateContext,
-	StepID,
-} from "@Components/stateContext"
-import { StepPart, Step } from "@Components/step/step"
-import { SubmitButton } from "@Components/submitButton/submitButton"
+
 import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
 import { useMinting } from "@Hooks/useMinting"
-import { Logo } from "@Components/logo/logo"
+
 import styled from "styled-components"
-import { H1, P } from "@Style/index"
+import {
+	Button,
+	DataActionTypes,
+	H1,
+	HeaderButtons,
+	Logo,
+	OnNext,
+	OnPrev,
+	P,
+	StateContext,
+	Step,
+	StepID,
+	StepPart,
+	SubmitButton,
+} from "@Components/index"
 
 const Body = () => {
 	return (

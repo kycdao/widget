@@ -1,5 +1,3 @@
-import { Loading } from "@Components/loading/loading"
-import { H1, P, Policy } from "@Style/index"
 import {
 	HeaderIcon,
 	HeadlineWrapper,
@@ -8,6 +6,8 @@ import {
 	ModalHeader,
 } from "./common"
 import styled from "styled-components"
+import { H1, P, Policy } from "@Components/typography"
+import { Loading } from "@Components/loading/loading"
 
 const MintingModalLoading = styled(H1)`
 	justify-content: center;

@@ -1,30 +1,33 @@
 import { Countries } from "@kycdao/kycdao-sdk"
-import { Logo } from "@Components/logo/logo"
-import {
-	useState,
-	useContext,
-	useCallback,
-	useMemo,
-	useEffect,
-	FC,
-	useRef,
-} from "react"
-import { Input } from "@Components/input/input.component"
-import {
-	StateContext,
-	StepID,
-	DataActionTypes,
-	HeaderButtons,
-	OnNext,
-	OnPrev,
-} from "@Components/stateContext"
-import { StepPart, Step } from "@Components/step/step"
-import { SubmitButton } from "@Components/submitButton/submitButton"
+
 import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "./pageProps"
-import { H1, P } from "@Style/index"
+import {
+	DataActionTypes,
+	H1,
+	HeaderButtons,
+	Input,
+	Logo,
+	OnNext,
+	OnPrev,
+	P,
+	StateContext,
+	Step,
+	StepID,
+	StepPart,
+	SubmitButton,
+} from "@Components/index"
+import {
+	FC,
+	useState,
+	useContext,
+	useMemo,
+	useRef,
+	useEffect,
+	useCallback,
+} from "react"
 
-export const Body = () => {
+const Body = () => {
 	return (
 		<>
 			<H1>

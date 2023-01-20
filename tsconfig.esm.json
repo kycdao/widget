@@ -30,7 +30,6 @@
 			"@Pages/*": ["pages/*"],
 			"@App/*": ["app/*"],
 			"@Utils/*": ["utils/*"],
-			"@Style/*": ["style/*"],
 			"@Hooks/*": ["hooks/*"]
 		}
 	},

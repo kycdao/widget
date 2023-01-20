@@ -1,6 +1,7 @@
+import { DataActionTypes, StateContext, StepID } from "@Components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { useContext } from "react"
-import { DataActionTypes, StateContext, StepID } from "@Components/stateContext"
+
 import { useKycDao } from "./useKycDao"
 
 export const useMinting = () => {

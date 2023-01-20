@@ -1,9 +1,5 @@
 import { useCallback, useContext } from "react"
 import { useKycDao } from "@Hooks/useKycDao"
-import { Button } from "../button/button"
-import { DataActionTypes } from "../stateContext"
-import { StateContext } from "../stateContext/stateContext"
-import { P, Policy } from "@Style/index"
 import {
 	HeaderIcon,
 	HeadlineWrapper,
@@ -12,6 +8,9 @@ import {
 	ModalContainer,
 	ModalHeader,
 } from "./common"
+import { DataActionTypes, StateContext } from "@Components/stateContext"
+import { B, P, Policy } from "@Components/typography"
+import { Button } from "@Components/button/button"
 
 export const EmailVerificationModal = () => {
 	const {
@@ -50,7 +49,7 @@ export const EmailVerificationModal = () => {
 
 			<ModalBody>
 				<Policy>
-					Please verify yourself through the <b>link</b> we have sent you to the
+					Please verify yourself through the <B>link</B> we have sent you to the
 					following address:
 				</Policy>
 				<P>{email}</P>

@@ -1,7 +1,6 @@
+import { P, Policy } from "@Components/typography"
 import { useCallback, useContext } from "react"
 import { DataActionTypes, StateContext } from "../stateContext"
-
-import { P, Policy } from "@Style/index"
 import {
 	CloseButton,
 	HeaderIcon,

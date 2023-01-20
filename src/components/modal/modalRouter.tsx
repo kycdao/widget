@@ -1,5 +1,5 @@
+import { StateContext } from "@Components/stateContext"
 import { FC, useContext } from "react"
-import { StateContext } from "../stateContext/stateContext"
 import { EmailVerificationModal } from "./emailVerificationModal"
 import { GenericErrorModal } from "./genericErrorModal"
 import { MintingFailedModal } from "./mintingFailed"

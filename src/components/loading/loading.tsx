@@ -1,4 +1,4 @@
-import { tr2 } from "@Style/transitions"
+import { tr2 } from "@Components/typography"
 import styled, { keyframes } from "styled-components"
 
 const moveInSteps = keyframes`
