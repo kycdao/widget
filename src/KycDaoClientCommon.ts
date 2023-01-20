@@ -40,7 +40,7 @@ export type KycDaoClientOptions = {
 	modal?: boolean
 	width?: number | string
 	height?: number | string
-	parent: HTMLElement | string
+	parent?: HTMLElement | string
 	config: SdkConfiguration
 	configFromUrl?: boolean
 	backdrop?: boolean

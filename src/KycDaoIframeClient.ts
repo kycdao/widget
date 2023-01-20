@@ -28,6 +28,9 @@ const styles = `
 	body:has(.KycDaoIframeModalRoot) {
 		overflow: hidden;
 	}
+	.KycDaoIframeModalRoot {
+		position: fixed;
+	}
 }
 
 @media only screen and (min-width: 992px) {

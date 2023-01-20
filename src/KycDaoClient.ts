@@ -25,9 +25,13 @@ const styles = `
 		position: absolute;
 		overflow: hidden;
 	}
+
 	@media only screen and (max-width: 992px) {
 		body:has(.KycDaoModalRoot) {
 			overflow: hidden;
+		}
+		.KycDaoModalRoot {
+			position: fixed;
 		}
 	}
 
