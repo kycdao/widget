@@ -305,7 +305,7 @@ export const MintStep: FC<PageProps> = ({
 							<CalculatorButton
 								centered
 								mode="clean"
-								disabled={disabled || yearCount === 0}
+								disabled={disabled || yearCount === null}
 								className="square"
 								onClick={decrease}>
 								<ButtonIcon>remove</ButtonIcon>

@@ -64,7 +64,7 @@ const StyledInput = styled.input<{
 	width: 100%;
 
 	::placeholder {
-		color: white;
+		color: black;
 		font-family: var(--kyc-sdk-primary-font);
 	}
 

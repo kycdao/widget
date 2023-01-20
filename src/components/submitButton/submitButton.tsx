@@ -15,6 +15,7 @@ export type SubmitButtonProps = {
 	onClick?: () => void
 	className?: string
 	label?: string
+	label2?: string
 	disabled?: boolean
 	style?: CSSProperties
 	autoFocus?: boolean
@@ -45,6 +46,7 @@ const UnstyledSubmitButton: FC<SubmitButtonProps> = ({
 	autoFocus,
 	inactive = false,
 	label,
+	label2,
 	fullWidth = true,
 }) => {
 	const ref = useRef<HTMLButtonElement>(null)
@@ -57,8 +59,8 @@ const UnstyledSubmitButton: FC<SubmitButtonProps> = ({
 	}, [disabled, autoFocus, inactive])
 
 	const onMouseEnter = useCallback(() => {
-		setInnerHtml(label ? label : "Next")
-	}, [label])
+		setInnerHtml(label2 ? label2 : "Next")
+	}, [label2])
 
 	const onMouseLeave = useCallback(() => {
 		setInnerHtml(label ? label : "Submit")
