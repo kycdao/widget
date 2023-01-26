@@ -30,14 +30,14 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 			<a
 				target="_blank"
 				rel="noreferrer"
-				href="https://kycdao.xyz/terms-and-conditions">
+				href="https://kycdao.xyz/privacy-policy">
 				Privacy Policy
 			</a>{" "}
 			and{" "}
 			<a
 				target="_blank"
 				rel="noreferrer"
-				href="https://kycdao.xyz/privacy-policy">
+				href="https://kycdao.xyz/terms-and-conditions">
 				Terms &#38; Conditions.
 			</a>
 		</Policy>
