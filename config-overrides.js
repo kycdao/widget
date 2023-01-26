@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const WebpackManifestPlugin =
 	require("webpack-manifest-plugin").WebpackManifestPlugin
+const { SubresourceIntegrityPlugin } = require("webpack-subresource-integrity")
 
 module.exports = function override(config, env) {
 	const fallback = {
@@ -15,15 +16,16 @@ module.exports = function override(config, env) {
 	const outDir = "./build"
 	config.target = "web"
 	config.entry = {
-		"KycDaoClient": "./src/KycDaoClient.ts",
-		"KycDaoIframeClient": "./src/KycDaoIframeClient.ts",
+		KycDaoClient: "./src/KycDaoClient.ts",
+		KycDaoIframeClient: "./src/KycDaoIframeClient.ts",
 		// "index": "./src/index.js",
-		"app": "./src/App.tsx",
-		"widget": "./src/widget.tsx",
+		app: "./src/App.tsx",
+		widget: "./src/widget.tsx",
 	}
 	config.output = {
 		filename: "[name].js",
 		library: "kycDaoWebSdk",
+		crossOriginLoading: "anonymous",
 	}
 
 	config.output.path = path.resolve(outDir)
@@ -53,9 +55,11 @@ module.exports = function override(config, env) {
 
 	if (env === "production") {
 		if (process.env.NODE_ENV !== "development") {
-			config.plugins.push(new NpmDtsPlugin({
-				tsc: "--declarationDir build"
-			}))
+			config.plugins.push(
+				new NpmDtsPlugin({
+					tsc: "--declarationDir build",
+				})
+			)
 		}
 	}
 
@@ -83,6 +87,9 @@ module.exports = function override(config, env) {
 	)*/
 
 	config.plugins.push(
+		new SubresourceIntegrityPlugin({
+			enabled: env === "production",
+		}),
 		new HtmlWebpackPlugin(
 			Object.assign(
 				{},
