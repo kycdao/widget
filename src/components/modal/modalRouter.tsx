@@ -1,5 +1,6 @@
 import { StateContext } from "@Components/stateContext"
 import { FC, useContext } from "react"
+import { ModalBackdrop } from "./common"
 import { EmailVerificationModal } from "./emailVerificationModal"
 import { GenericErrorModal } from "./genericErrorModal"
 import { MintingFailedModal } from "./mintingFailed"
@@ -12,19 +13,35 @@ export const ModalRouter: FC = () => {
 
 	switch (currentModal) {
 		case "emailVerification": {
-			return <EmailVerificationModal />
+			return (
+				<ModalBackdrop>
+					<EmailVerificationModal />
+				</ModalBackdrop>
+			)
 		}
 
 		case "minting": {
-			return <MintingModal />
+			return (
+				<ModalBackdrop>
+					<MintingModal />
+				</ModalBackdrop>
+			)
 		}
 
 		case "mintingFailed": {
-			return <MintingFailedModal />
+			return (
+				<ModalBackdrop>
+					<MintingFailedModal />
+				</ModalBackdrop>
+			)
 		}
 
 		case "genericError": {
-			return <GenericErrorModal />
+			return (
+				<ModalBackdrop>
+					<GenericErrorModal />
+				</ModalBackdrop>
+			)
 		}
 
 		default:

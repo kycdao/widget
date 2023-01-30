@@ -133,7 +133,7 @@ const Clear = styled.div<{ active: boolean }>`
 	align-items: center;
 
 	color: ${({ active }) =>
-		active ? `var(--kyc-sdk-cybergreen); ${tr2}` : "black"};
+		active ? `var(--kyc-sdk-cybergreen); ${tr2};` : "black"};
 
 	&:hover:not([disabled]) {
 		${tr2};

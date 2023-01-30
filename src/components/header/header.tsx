@@ -7,7 +7,7 @@ import { materialIcon, tr2 } from "@Components/typography"
 import { FC, useCallback, useContext } from "react"
 import styled from "styled-components"
 
-const StepHeader = styled.div<{ blurred: boolean }>`
+const StepHeader = styled.div`
 	display: flex;
 	flex-flow: row;
 	align-items: center;
@@ -15,7 +15,6 @@ const StepHeader = styled.div<{ blurred: boolean }>`
 	padding: 1rem;
 	position: relative;
 	z-index: 10;
-	filter: ${({ blurred }) => (blurred ? "brightness(50%)" : "unset")};
 	background: #fefefe;
 `
 
@@ -116,7 +115,7 @@ export const Header: FC = () => {
 	}, [dispatch])
 
 	return (
-		<StepHeader blurred={!!currentModal}>
+		<StepHeader>
 			<ButtonWrapper>
 				<Button
 					disabled={prevButtonState === "disabled" || !!currentModal}

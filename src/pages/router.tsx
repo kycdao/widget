@@ -17,16 +17,13 @@ import { SubscribedStartStep } from "./subscribedStartStep"
 import { TaxResidenceStep } from "./taxResidence"
 import { VerificationStep } from "./verificationStep"
 
-const RouterContainer = styled.div<{ blurred: boolean }>`
+const RouterContainer = styled.div`
 	display: flex;
 	flex-flow: column;
 	width: 100%;
 	position: absolute;
 	height: 100%;
 	top: 0;
-
-	filter: ${({ blurred }) => blurred && "brightness(50%)"};
-	// filter: ${({ blurred }) => blurred && "#fefefe"};
 `
 
 const RoutedStep: FC<{
@@ -116,7 +113,7 @@ export const Router: FC = () => {
 	}, [nextPage, prevPage])
 
 	return (
-		<RouterContainer blurred={!!currentModal}>
+		<RouterContainer>
 			{prevPage && (
 				<RoutedStep
 					stepID={prevPage}

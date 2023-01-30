@@ -75,10 +75,6 @@ const StyledStep = styled.div<{ paddingBottom: string }>`
 		${H1}
 	}
 
-	&.blurred {
-		background: #fefefe;
-	}
-
 	&.moving-center {
 		right: 0;
 	}
@@ -226,9 +222,7 @@ export const Step: FC<StepProps> = ({
 		<StyledStep
 			paddingBottom={marginBottom}
 			{...(!inactive && !disabled && transitionNotDone ? swipeHandlers : {})}
-			className={clsx(className, animatedClass, {
-				blurred: state.data.currentModal,
-			})}>
+			className={clsx(className, animatedClass)}>
 			{header && (
 				<StepHead>
 					{header({

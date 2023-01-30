@@ -46,7 +46,7 @@ const NftImageWrapper = styled.div`
 	overflow: scroll;
 `
 
-const NftImageContainer = styled.div<{ selected: boolean; disabled: boolean }>`
+const NftImageContainer = styled.div<{ selected: boolean }>`
 	height: 150px;
 	width: 150px;
 	border-radius: 999rem;
@@ -57,7 +57,7 @@ const NftImageContainer = styled.div<{ selected: boolean; disabled: boolean }>`
 			${selected ? "var(--kyc-sdk-cybergreen-35)" : "transparent"};
 	`}
 
-	&:not(:disabled):hover {
+	&:hover {
 		cursor: pointer;
 		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
 		border: 2px solid black;
@@ -205,7 +205,6 @@ export const NftSelection: FC<PageProps> = ({
 				{nftImages.map(({ id, url }) => {
 					return (
 						<NftImageContainer
-							disabled={disabled}
 							selected={currentArt === id}
 							key={id}
 							onClick={onArtClick(id)}>

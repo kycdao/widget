@@ -160,15 +160,15 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	}
 
 	return (
-		<KycDaoContext.Provider value={kycDao}>
-			<StateContext.Provider value={contextData}>
-				<AppContainer>
+		<AppContainer>
+			<KycDaoContext.Provider value={kycDao}>
+				<StateContext.Provider value={contextData}>
 					<Header />
 					<Router />
 					<ModalRouter />
-				</AppContainer>
-			</StateContext.Provider>
-		</KycDaoContext.Provider>
+				</StateContext.Provider>
+			</KycDaoContext.Provider>
+		</AppContainer>
 	)
 }
 

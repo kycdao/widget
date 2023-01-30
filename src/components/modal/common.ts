@@ -1,5 +1,14 @@
 import styled from "styled-components"
 
+export const ModalBackdrop = styled.div`
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	inset: 0;
+	backdrop-filter: brightness(50%);
+	z-index: 10;
+`
+
 export const ModalContainer = styled.div`
 	box-shadow: 0 0 0 0 rgba(white, 0);
 	position: absolute;
