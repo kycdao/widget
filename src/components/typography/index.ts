@@ -9,7 +9,7 @@ export const tr2 = css`
 `
 
 export const materialIcon = css`
-	font-family: "Material Icons";
+	font-family: Material Icons;
 	font-weight: normal;
 	font-style: normal;
 	font-size: 24px;
@@ -20,7 +20,7 @@ export const materialIcon = css`
 	white-space: nowrap;
 	word-wrap: normal;
 	direction: ltr;
-	font-feature-settings: "liga";
+	font-feature-settings: liga;
 	-webkit-font-smoothing: antialiased;
 `
 
@@ -28,7 +28,7 @@ export const typoBase = css`
 	color: black;
 	line-height: 100%;
 	-webkit-font-smoothing: antialiased;
-	font-family: "neue-machina";
+	font-family: neue-machina;
 `
 
 export const H1 = styled.h1`
@@ -102,5 +102,5 @@ export const translateX = (x: number | string) => css`
 `
 
 export const CenteredH1 = styled(H1)`
-	text-align: "center";
+	text-align: center;
 `

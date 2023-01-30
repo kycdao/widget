@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const AppContainer = styled.div`
-	--kyc-sdk-primary-font: "neue-machina";
+	--kyc-sdk-primary-font: neue-machina;
 	--kyc-sdk-cybergreen: #00ffb3;
 	--kyc-sdk-cybergreen-35: rgba(0, 255, 177, 0.35);
 	--kyc-sdk-cybergreen-50: rgba(0, 255, 177, 0.5);
@@ -51,7 +51,7 @@ export const AppContainer = styled.div`
 	--display-font: gilroyBold;
 
 	@font-face {
-		font-family: "neue-machina";
+		font-family: neue-machina;
 		font-style: normal;
 		font-weight: 400;
 		src: local("neue-machina"),
@@ -227,7 +227,7 @@ export const AppContainer = styled.div`
 
 	/* fallback */
 	@font-face {
-		font-family: "Material Icons";
+		font-family: Material Icons;
 		font-style: normal;
 		font-weight: 400;
 		src: url(https://fonts.gstatic.com/s/materialicons/v139/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
@@ -236,7 +236,7 @@ export const AppContainer = styled.div`
 	}
 
 	.material-icons {
-		font-family: "Material Icons";
+		font-family: Material Icons;
 		font-weight: normal;
 		font-style: normal;
 		font-size: 24px;
@@ -246,7 +246,7 @@ export const AppContainer = styled.div`
 		white-space: nowrap;
 		word-wrap: normal;
 		direction: ltr;
-		font-feature-settings: "liga";
+		font-feature-settings: liga;
 		-webkit-font-smoothing: antialiased;
 	}
 `

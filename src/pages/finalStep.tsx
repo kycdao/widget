@@ -25,7 +25,7 @@ export const NftButtonWrapper = styled.div`
 `
 
 const NftImageContainer = styled.div`
-	text-align: "center";
+	text-align: center;
 `
 
 export const FinalStep: FC<PageProps> = ({
@@ -57,7 +57,7 @@ export const FinalStep: FC<PageProps> = ({
 		}
 	}, [disabled, dispatch])
 
-	const [nftImageUrl, setNftImageUrl] = useState("")
+	const [nftImageUrl, setNftImageUrl] = useState<string | undefined>("")
 
 	const onCheck = useCallback(() => {
 		window.open(chainExplorerUrl, "_blank")
@@ -65,7 +65,7 @@ export const FinalStep: FC<PageProps> = ({
 
 	useEffect(() => {
 		if (kycDao) {
-			setNftImageUrl(kycDao.kycDao.getNftImageUrl())
+			setNftImageUrl(kycDao.mintingResult?.imageUrl)
 		}
 	}, [messageTargetOrigin, kycDao])
 
