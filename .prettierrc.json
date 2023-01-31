@@ -2,8 +2,9 @@
 	"semi": false,
 	"useTabs": true,
 	"arrowParens": "always",
-	"htmlWhitespaceSensitivity": "strict",
+	"htmlWhitespaceSensitivity": "ignore",
 	"bracketSameLine": true,
 	"trailingComma": "es5",
-	"printWidth": 80
+	"printWidth": 80,
+	"bracketSpacing": true
 }

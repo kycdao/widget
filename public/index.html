@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -60,56 +60,6 @@
 		<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
 		<!--<link rel="manifest" href="%PUBLIC_URL%/asset-manifest.json" /> -->
 		<title>Widget Example App</title>
-		<div style="margin: 2em">
-			<h1 style="margin-bottom: 2em; text-align: center">Select your chain</h1>
-			<div
-				style="
-					display: flex;
-					justify-content: space-evenly;
-					flex-wrap: wrap;
-					gap: 1em;
-				">
-				<div
-					class="chainSelectorButton"
-					onclick="selectorHndlr('CeloAlfajores', true)"
-					>Celo Testnet (Alfajores)</div
-				>
-				<div class="dualButton">
-					<div
-						class="chainSelectorButton"
-						onclick="selectorHndlr('PolygonMumbai', false)"
-						>Polygon Testnet (Mumbai)</div
-					>
-					<div
-						class="chainSelectorButton"
-						onclick="selectorHndlr('PolygonMumbai', true)"
-						>with WalletConnect</div
-					>
-				</div>
-				<div
-					class="chainSelectorButton"
-					onclick="selectorHndlr('SolanaDevnet', true)"
-					>Solana Devnet</div
-				>
-				<div
-					class="chainSelectorButton"
-					onclick="selectorHndlr('NearTestnet', false)"
-					>NEAR Testnet</div
-				>
-				<div class="dualButton">
-					<div
-						class="chainSelectorButton"
-						onclick="selectorHndlr('EthereumGoerli', false)"
-						>Ethereum Testnet (Goerli)</div
-					>
-					<div
-						class="chainSelectorButton"
-						onclick="selectorHndlr('EthereumGoerli', true)"
-						>with WalletConnect</div
-					>
-				</div>
-			</div>
-		</div>
 		<script>
 			const walletConnectEvmProvider = new WalletConnectProvider.default({
 				rpc: {
@@ -172,9 +122,121 @@
 		</script>
 	</head>
 
-	<body>
+	<body style="height: 100vh">
 		<noscript>You need to enable JavaScript to run this app.</noscript>
 		<div id="modalRoot"></div>
-		<div style="height: 500vh"></div>
+		<div
+			style="
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				margin-inline: 1em;
+			">
+			<div style="margin: 2em; display: flex; flex-direction: row">
+				<div style="flex-direction: row">
+					<h1 style="margin-bottom: 2em; text-align: center">
+						Select your chain
+					</h1>
+					<div
+						style="
+							display: flex;
+							justify-content: space-around;
+							flex-wrap: wrap;
+							gap: 1em;
+						">
+						<div
+							class="chainSelectorButton"
+							onclick="selectorHndlr('CeloAlfajores', true)">
+							Celo Testnet (Alfajores)
+						</div>
+						<div class="dualButton">
+							<div
+								class="chainSelectorButton"
+								onclick="selectorHndlr('PolygonMumbai', false)">
+								Polygon Testnet (Mumbai)
+							</div>
+							<div
+								class="chainSelectorButton"
+								onclick="selectorHndlr('PolygonMumbai', true)">
+								with WalletConnect
+							</div>
+						</div>
+						<div
+							class="chainSelectorButton"
+							onclick="selectorHndlr('SolanaDevnet', true)">
+							Solana Devnet
+						</div>
+						<div
+							class="chainSelectorButton"
+							onclick="selectorHndlr('NearTestnet', false)">
+							NEAR Testnet
+						</div>
+						<div class="dualButton">
+							<div
+								class="chainSelectorButton"
+								onclick="selectorHndlr('EthereumGoerli', false)">
+								Ethereum Testnet (Goerli)
+							</div>
+							<div
+								class="chainSelectorButton"
+								onclick="selectorHndlr('EthereumGoerli', true)">
+								with WalletConnect
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="margin-bottom: 2em; display: flex; flex-direction: col">
+				<div style="flex: 1">
+					<h3 style="margin-bottom: 2em; text-align: start">
+						FAUCESTS for testing:
+					</h3>
+					<p>
+						<strong>Alfajores</strong>
+						faucet:
+						<a href=" https://celo.org/developers/faucet" target="_blank">
+							https://celo.org/developers/faucet
+						</a>
+					</p>
+					<p>
+						<strong>Mumbai</strong>
+						Faucet1:
+						<a href="https://faucet.polygon.technology" target="_blank">
+							https://faucet.polygon.technology
+						</a>
+					</p>
+					<p>
+						<strong>Mumbai</strong>
+						Faucet2:
+						<a href="https://mumbaifaucet.com" target="_blank">
+							https://mumbaifaucet.com
+						</a>
+					</p>
+					<p>
+						<strong>Goerli</strong>
+						faucet list:
+						<a href="https://faucetlink.to/goerli" target="_blank">
+							https://faucetlink.to/goerli
+						</a>
+					</p>
+					<p>
+						<strong>Near:</strong>
+						Test wallet has testnet tokens.
+					</p>
+					<br />
+					<p>
+						<strong>FYI:</strong>
+						<br />
+						<strong>NEAR:</strong>
+						Due to the native browser-based wallet, the widget has to be
+						reopened using the same “NEAR Testnet” button when a redirect
+						happens. We are working hard. This is a known issue in the community
+						near the community, and the fix is coming soon.
+					</p>
+				</div>
+				<div style="flex: 1"></div>
+			</div>
+		</div>
 	</body>
 </html>

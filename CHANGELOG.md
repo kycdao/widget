@@ -9,10 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Faucets list on the testpage
+
 ### Changed
+
+- Update kycdao-sdk
+- Update persona
 
 ### Fixed
 
 - Modal backdrop is not disabling elements
 - Use minting result as the nft image
-- Update kycdao-sdk
