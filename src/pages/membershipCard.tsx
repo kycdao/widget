@@ -4,6 +4,8 @@ import { getNetworkType } from "@Utils/getNetworkType"
 import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "@Pages/pageProps"
 
+import { StatusError } from "@kycdao/kycdao-sdk"
+
 import styled from "styled-components"
 import {
 	B,
@@ -210,12 +212,10 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 					// TODO: nicer error handling for unsupported network https://kycdao.atlassian.net/browse/KYC-505
 					let errorMsg =
 						"Connecting to your wallet failed, because of an error. Please try again."
-					if (e instanceof Error) {
-						if (e.message.includes("Connected EVM network is not enabled")) {
-							errorMsg = `Please switch your wallet to ${kycDaoContext.kycDao.sdkStatus.availableBlockchainNetworks[0]}`
-						} else {
-							errorMsg = `${errorMsg} (${e.message})`
-						}
+					if (e instanceof StatusError && e.errorCode === "NetworkNotEnabled") {
+						errorMsg = `Please switch your wallet to ${kycDaoContext.kycDao.sdkStatus.availableBlockchainNetworks[0]}`
+					} else if (e instanceof Error) {
+						errorMsg = `${errorMsg} (${e.message})`
 					}
 
 					dispatch({
