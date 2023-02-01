@@ -110,12 +110,12 @@ export const NftSelection: FC<PageProps> = ({
 		})
 	}, [kycDao])
 
-	const onSubmit = useCallback(() => {
+	const onSubmit = useCallback(async () => {
 		if (currentArt) {
 			dispatch({ type: DataActionTypes.nftImageChange, payload: currentArt })
 
 			if (kycDao?.kycDao.subscribed) {
-				startMinting(currentArt)
+				await startMinting(currentArt)
 			} else {
 				dispatch({
 					type: DataActionTypes.changePage,
@@ -200,7 +200,7 @@ export const NftSelection: FC<PageProps> = ({
 	}, [kycDao?.kycDao, dispatch])
 
 	const body = useCallback<StepPart>(
-		({ disabled }) => (
+		() => (
 			<NftImageWrapper>
 				{nftImages.map(({ id, url }) => {
 					return (

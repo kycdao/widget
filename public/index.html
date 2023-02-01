@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%">
+<html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -44,6 +44,56 @@
 				border-start-start-radius: 0;
 				border-end-start-radius: 0;
 				border-left-style: none;
+			}
+
+			#faucetContainer {
+				margin-bottom: 2em;
+				display: flex;
+				flex-direction: col;
+				flex: 1;
+			}
+
+			#buttonContainer {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				margin-inline: 1em;
+				height: 100vh;
+				position: relative;
+				box-sizing: border-box;
+			}
+
+			#buttonsContainer {
+				display: flex;
+				justify-content: space-around;
+				flex-wrap: wrap;
+				gap: 1em;
+			}
+
+			.flexRow {
+				display: flex;
+				flex-direction: row;
+			}
+
+			.flexCol {
+				display: flex;
+				flex-direction: row;
+			}
+
+			.centered {
+				text-align: center;
+				margin-bottom: 2em;
+			}
+
+			.flex-1 {
+				flex: 1;
+			}
+
+			body {
+				min-height: 100vh;
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
 			}
 		</style>
 
@@ -122,36 +172,25 @@
 		</script>
 	</head>
 
-	<body
-		style="min-height: 100vh; margin: 0; padding: 0; box-sizing: border-box">
+	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
 		<div id="modalRoot"></div>
-		<div
-			style="
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-				margin-inline: 1em;
-				height: 100vh;
-				position: relative;
-				box-sizing: border-box;
-			">
-			<div style="display: flex; flex-direction: row">
-				<div style="flex-direction: row">
-					<h1 style="margin-bottom: 2em; text-align: center">
-						Select your chain
-					</h1>
-					<div
-						style="
-							display: flex;
-							justify-content: space-around;
-							flex-wrap: wrap;
-							gap: 1em;
-						">
-						<div
-							class="chainSelectorButton"
-							onclick="selectorHndlr('CeloAlfajores', true)">
-							Celo Testnet (Alfajores)
+		<div id="buttonContainer">
+			<div id="flexCol">
+				<h1 class="centered">Select your chain</h1>
+				<div id="flexRow">
+					<div id="buttonsContainer">
+						<div class="dualButton">
+							<div
+								class="chainSelectorButton"
+								onclick="selectorHndlr('CeloAlfajores', false)">
+								Celo Testnet (Alfajores)
+							</div>
+							<div
+								class="chainSelectorButton"
+								onclick="selectorHndlr('PolygonMumbai', true)">
+								with WalletConnect
+							</div>
 						</div>
 						<div class="dualButton">
 							<div
@@ -190,16 +229,10 @@
 					</div>
 				</div>
 			</div>
-			<div style="padding-bottom: 1em">
-				<div
-					style="
-						margin-bottom: 2em;
-						display: flex;
-						flex-direction: col;
-						flex: 1;
-					">
-					<div style="flex: 1">
-						<strong>FAUCESTS for testing:</strong>
+			<div>
+				<div id="faucetContainer">
+					<div class="flex-1">
+						<strong>FAUCETS for testing:</strong>
 						<div>
 							<strong>Alfajores</strong>
 							faucet:
@@ -245,7 +278,7 @@
 					</div>
 					<div style="flex: 1"></div>
 				</div>
-				<div style="text-align: center">
+				<div class="centered">
 					If you have any questions, ask us on
 					<a target="_blank" href="https://discord.kycDAO.xyz">
 						discord.kycDAO.xyz

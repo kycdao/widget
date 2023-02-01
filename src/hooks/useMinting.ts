@@ -30,6 +30,14 @@ export const useMinting = () => {
 					imageId,
 					subscriptionYears,
 				})
+				if (result) {
+					dispatch({
+						type: DataActionTypes.setChainExplorerUrl,
+						payload: result.transactionUrl,
+					})
+				} else {
+					throw Error("Something went wrong")
+				}
 				dispatch({
 					type: DataActionTypes.setModal,
 					payload: null,
@@ -38,12 +46,6 @@ export const useMinting = () => {
 					type: DataActionTypes.changePage,
 					payload: { prev: currentPage, current: StepID.finalStep },
 				})
-				if (result) {
-					dispatch({
-						type: DataActionTypes.setChainExplorerUrl,
-						payload: result.transactionUrl,
-					})
-				}
 			} catch (e: unknown) {
 				if (typeof e === "object" && !(e instanceof Error)) {
 					console.error(JSON.stringify(e))
