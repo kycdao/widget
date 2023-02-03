@@ -82,6 +82,13 @@ export const reducer = (
 					onPrevSubject.next()
 					return data
 			}
+		case DataActionTypes.grantNameAndAddressChange:
+			return { ...data, grantFlow: { ...data.grantFlow, ...payload } }
+		case DataActionTypes.grantSocialSecurityNumberChange:
+			return {
+				...data,
+				grantFlow: { ...data.grantFlow, socialSecurityNumber: payload },
+			}
 	}
 }
 
@@ -104,6 +111,7 @@ export const DefaultData = {
 	isEmailConfirmed: false,
 	messageTargetOrigin: "",
 	isModal: false,
+	grantFlow: {},
 } as Data
 
 export const StateContext = createContext<{

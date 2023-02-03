@@ -1,12 +1,12 @@
 import { Countries } from "@kycdao/kycdao-sdk"
 
-import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "./pageProps"
 import {
 	DataActionTypes,
 	H1,
 	HeaderButtons,
 	Input,
+	KycDaoContext,
 	Logo,
 	OnNext,
 	OnPrev,
@@ -26,6 +26,7 @@ import {
 	useEffect,
 	useCallback,
 } from "react"
+import useChangePage from "@Hooks/useChangePage"
 
 const Body = () => {
 	return (
@@ -56,7 +57,8 @@ export const TaxResidenceStep: FC<PageProps> = ({
 	)
 	const taxResidence = useRef(taxResidency)
 	const inputValue = useRef(null)
-	const kycDao = useKycDao()
+	const redirect = useChangePage()
+	const kycDaoContext = useContext(KycDaoContext)
 
 	useEffect(() => {
 		if (taxResidency) {
@@ -84,51 +86,36 @@ export const TaxResidenceStep: FC<PageProps> = ({
 	}, [inactive, disabled, dispatch, taxResidency])
 
 	const onSubmit = useCallback(async () => {
-		if (!disabled && !submitDisabled && !inactive) {
-			dispatch({
-				type: DataActionTypes.taxResidenceChange,
-				payload: taxResidence.current,
-			})
-
-			try {
-				const verificationStatus =
-					await kycDao?.kycDao.checkVerificationStatus()
-				if (verificationStatus?.KYC) {
-					dispatch({
-						type: DataActionTypes.changePage,
-						payload: {
-							current: StepID.nftArtSelection,
-							prev: StepID.taxResidenceStep,
-						},
-					})
-				} else {
-					dispatch({
-						type: DataActionTypes.changePage,
-						payload: {
-							current: StepID.beginVerificationStep,
-							prev: StepID.taxResidenceStep,
-						},
-					})
-				}
-			} catch (err) {
-				console.error(err)
-			}
+		if (disabled || inactive || submitDisabled) {
+			return
 		}
-	}, [taxResidence, submitDisabled, inactive, dispatch, disabled, kycDao])
 
-	const onPrev = useCallback(() => {
-		dispatch({
-			payload: {
-				current: StepID.emailDiscordVerificationStep,
-				next: StepID.taxResidenceStep,
-			},
-			type: DataActionTypes.changePage,
-		})
 		dispatch({
 			payload: taxResidence.current,
 			type: DataActionTypes.taxResidenceChange,
 		})
-	}, [dispatch])
+
+		if (kycDaoContext?.grantFlowEnabled) {
+			// todo: check country is US
+			await redirect(StepID.grantNameAndAddressStep, StepID.taxResidenceStep)
+		} else {
+			await redirect(StepID.beginVerificationStep, StepID.taxResidenceStep)
+		}
+	}, [
+		disabled,
+		inactive,
+		submitDisabled,
+		kycDaoContext?.grantFlowEnabled,
+		redirect,
+	])
+
+	const onPrev = useCallback(async () => {
+		await redirect(StepID.emailDiscordVerificationStep, StepID.taxResidenceStep)
+		dispatch({
+			payload: taxResidence.current,
+			type: DataActionTypes.taxResidenceChange,
+		})
+	}, [dispatch, redirect])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

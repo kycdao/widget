@@ -1,7 +1,7 @@
 import { KycDao, SdkConfiguration } from "@kycdao/kycdao-sdk"
 import { FC, useEffect, useMemo, useReducer, useRef, useState } from "react"
 
-import { getNetworkType } from "./utils/getNetworkType"
+import { getNetworkType } from "@Utils/getNetworkType"
 
 import { AppContainer } from "./AppContainer"
 import {
@@ -25,6 +25,7 @@ export type KycDaoModalProps = {
 	config: SdkConfiguration
 	iframeOptions?: { messageTargetOrigin: string }
 	isModal: boolean
+	grantFlowEnabled?: boolean
 }
 
 export const KycDaoModal: FC<KycDaoModalProps> = ({
@@ -33,6 +34,7 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	config,
 	iframeOptions,
 	isModal,
+	grantFlowEnabled = false,
 }) => {
 	DefaultData.isModal = isModal
 
@@ -49,9 +51,14 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	useEffect(() => {
 		sdkInitCallHappened.current = true
 		KycDao.initialize(config).then((results) => {
-			setKycDao({ ...results, width, height })
+			setKycDao({
+				...results,
+				width,
+				height,
+				grantFlowEnabled,
+			})
 		})
-	}, [config, width, height])
+	}, [config, width, height, grantFlowEnabled])
 
 	useEffect(() => {
 		if (isModal) {

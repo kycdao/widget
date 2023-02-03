@@ -23,11 +23,179 @@ type InputProps = {
 	value?: string
 	autoCompleteData?: string[]
 	autoFocus?: boolean
-	inputRef: RefObject<HTMLInputElement>
+	inputRef?: RefObject<HTMLInputElement>
 	onInputBlurred?: () => void
 	onInputFocused?: () => void
 	type?: HTMLInputTypeAttribute
 	fullWidth?: boolean
+}
+
+export const Input: FC<InputProps> = ({
+	disabled,
+	placeholder,
+	onChange,
+	id,
+	className,
+	value = "",
+	autoCompleteData,
+	autoFocus,
+	inputRef = createRef(),
+	onInputBlurred,
+	onInputFocused,
+	type,
+}) => {
+	const [showAutoComplete, setShowAutoComplete] = useState(
+		!!autoFocus && !!autoCompleteData
+	)
+	const autocompleteRef = useRef<HTMLDivElement>(null)
+	const [focused, setFocused] = useState(!!autoFocus)
+
+	const onChangeEventHndlr: ChangeEventHandler<HTMLInputElement> = useCallback(
+		({ target: { value } }) => {
+			if (onChange) {
+				onChange(value)
+			}
+			if (autoCompleteData) {
+				setShowAutoComplete(
+					autoCompleteData.filter((v) =>
+						v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
+					).length > 0
+				)
+			}
+		},
+		[onChange, autoCompleteData]
+	)
+
+	useEffect(() => {
+		const closeEventHndlr = ({ target }: MouseEvent) => {
+			if (
+				autocompleteRef.current &&
+				!autocompleteRef.current.contains(target as Node)
+			) {
+				setShowAutoComplete(false)
+			}
+		}
+
+		document.addEventListener("mousedown", closeEventHndlr)
+
+		return () => document.removeEventListener("mousedown", closeEventHndlr)
+	}, [autocompleteRef])
+
+	useEffect(() => {
+		const hndlr = () => {
+			if (!showAutoComplete && autoCompleteData) {
+				setShowAutoComplete(
+					autoCompleteData.filter((v) =>
+						v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
+					).length > 0
+				)
+			}
+		}
+
+		const { current } = inputRef
+
+		current?.addEventListener("focus", hndlr)
+
+		return () => {
+			current?.addEventListener("focus", hndlr)
+		}
+	}, [showAutoComplete, inputRef, autoCompleteData, value])
+
+	const onAutocompleteHndlr = useCallback(
+		(value: string) => () => {
+			if (onChange) {
+				onChange(value)
+			}
+			setShowAutoComplete(false)
+		},
+		[onChange]
+	)
+
+	const onClear = useCallback(() => {
+		if (onChange && value) {
+			onChange("")
+		}
+
+		inputRef.current?.focus()
+	}, [onChange, value, inputRef])
+
+	useEffect(() => {
+		if (!disabled && autoFocus) {
+			inputRef.current?.focus({ preventScroll: true })
+		} else if (disabled && autoFocus) {
+			inputRef.current?.blur()
+		}
+	}, [disabled, autoFocus, inputRef])
+
+	const onBlur = useCallback(() => {
+		if (onInputBlurred) {
+			onInputBlurred()
+		}
+
+		setFocused(false)
+	}, [onInputBlurred])
+
+	const onFocus = useCallback(() => {
+		if (onInputFocused) {
+			onInputFocused()
+		}
+
+		setFocused(true)
+	}, [onInputFocused])
+
+	return (
+		<Container active={focused} showAutoComplete={showAutoComplete}>
+			{showAutoComplete && autoCompleteData && (
+				<div>
+					<Autocomplete ref={autocompleteRef}>
+						{autoCompleteData
+							.filter((v) =>
+								v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
+							)
+							.map((v, i) => {
+								return value !== "" ? (
+									<Option
+										dangerouslySetInnerHTML={{
+											__html: v.replace(
+												new RegExp(
+													`(${value.replace(specialRegex, "")})`,
+													"ig"
+												),
+												"<strong>$1</strong>"
+											),
+										}}
+										onClick={onAutocompleteHndlr(v)}
+										key={v}
+									/>
+								) : (
+									<Option onClick={onAutocompleteHndlr(v)} key={v}>
+										{v}
+									</Option>
+								)
+							})}
+					</Autocomplete>
+				</div>
+			)}
+			<StyledInput
+				showAutoComplete={showAutoComplete}
+				onBlur={onBlur}
+				onFocus={onFocus}
+				ref={inputRef}
+				id={id}
+				className={className}
+				type={type || "text"}
+				placeholder={placeholder}
+				onChange={onChangeEventHndlr}
+				disabled={disabled}
+				value={value}
+			/>
+			{value.length > 0 && (
+				<Clear active={focused} className="material-icons" onClick={onClear}>
+					close
+				</Clear>
+			)}
+		</Container>
+	)
 }
 
 const StyledInput = styled.input<{
@@ -198,7 +366,6 @@ const Container = styled.div<{
 	active: boolean
 }>`
 	margin-bottom: 1em;
-	box-sizing: border-box;
 	@extend ${tr2};
 	box-sizing: content-box;
 	position: relative;
@@ -207,171 +374,3 @@ const Container = styled.div<{
 		color: var(--kyc-sdk-cybergreen);
 	}
 `
-
-export const Input: FC<InputProps> = ({
-	disabled,
-	placeholder,
-	onChange,
-	id,
-	className,
-	value = "",
-	autoCompleteData,
-	autoFocus,
-	inputRef = createRef(),
-	onInputBlurred,
-	onInputFocused,
-	type,
-}) => {
-	const [showAutoComplete, setShowAutoComplete] = useState(
-		!!autoFocus && !!autoCompleteData
-	)
-	const autocompleteRef = useRef<HTMLDivElement>(null)
-	const [focused, setFocused] = useState(!!autoFocus)
-
-	const onChangeEventHndlr: ChangeEventHandler<HTMLInputElement> = useCallback(
-		({ target: { value } }) => {
-			if (onChange) {
-				onChange(value)
-			}
-			if (autoCompleteData) {
-				setShowAutoComplete(
-					autoCompleteData.filter((v) =>
-						v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
-					).length > 0
-				)
-			}
-		},
-		[onChange, autoCompleteData]
-	)
-
-	useEffect(() => {
-		const closeEventHndlr = ({ target }: MouseEvent) => {
-			if (
-				autocompleteRef.current &&
-				!autocompleteRef.current.contains(target as Node)
-			) {
-				setShowAutoComplete(false)
-			}
-		}
-
-		document.addEventListener("mousedown", closeEventHndlr)
-
-		return () => document.removeEventListener("mousedown", closeEventHndlr)
-	}, [autocompleteRef])
-
-	useEffect(() => {
-		const hndlr = () => {
-			if (!showAutoComplete && autoCompleteData) {
-				setShowAutoComplete(
-					autoCompleteData.filter((v) =>
-						v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
-					).length > 0
-				)
-			}
-		}
-
-		const { current } = inputRef
-
-		current?.addEventListener("focus", hndlr)
-
-		return () => {
-			current?.addEventListener("focus", hndlr)
-		}
-	}, [showAutoComplete, inputRef, autoCompleteData, value])
-
-	const onAutocompleteHndlr = useCallback(
-		(value: string) => () => {
-			if (onChange) {
-				onChange(value)
-			}
-			setShowAutoComplete(false)
-		},
-		[onChange]
-	)
-
-	const onClear = useCallback(() => {
-		if (onChange && value) {
-			onChange("")
-		}
-
-		inputRef.current?.focus()
-	}, [onChange, value, inputRef])
-
-	useEffect(() => {
-		if (!disabled && autoFocus) {
-			inputRef.current?.focus({ preventScroll: true })
-		} else if (disabled && autoFocus) {
-			inputRef.current?.blur()
-		}
-	}, [disabled, autoFocus, inputRef])
-
-	const onBlur = useCallback(() => {
-		if (onInputBlurred) {
-			onInputBlurred()
-		}
-
-		setFocused(false)
-	}, [onInputBlurred])
-
-	const onFocus = useCallback(() => {
-		if (onInputFocused) {
-			onInputFocused()
-		}
-
-		setFocused(true)
-	}, [onInputFocused])
-
-	return (
-		<Container active={focused} showAutoComplete={showAutoComplete}>
-			{showAutoComplete && autoCompleteData && (
-				<div>
-					<Autocomplete ref={autocompleteRef}>
-						{autoCompleteData
-							.filter((v) =>
-								v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
-							)
-							.map((v, i) => {
-								return value !== "" ? (
-									<Option
-										dangerouslySetInnerHTML={{
-											__html: v.replace(
-												new RegExp(
-													`(${value.replace(specialRegex, "")})`,
-													"ig"
-												),
-												"<strong>$1</strong>"
-											),
-										}}
-										onClick={onAutocompleteHndlr(v)}
-										key={v}
-									/>
-								) : (
-									<Option onClick={onAutocompleteHndlr(v)} key={v}>
-										{v}
-									</Option>
-								)
-							})}
-					</Autocomplete>
-				</div>
-			)}
-			<StyledInput
-				showAutoComplete={showAutoComplete}
-				onBlur={onBlur}
-				onFocus={onFocus}
-				ref={inputRef}
-				id={id}
-				className={className}
-				type={type || "text"}
-				placeholder={placeholder}
-				onChange={onChangeEventHndlr}
-				disabled={disabled}
-				value={value}
-			/>
-			{value.length > 0 && (
-				<Clear active={focused} className="material-icons" onClick={onClear}>
-					close
-				</Clear>
-			)}
-		</Container>
-	)
-}
