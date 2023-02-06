@@ -26,6 +26,7 @@ import {
 	StepPart,
 	SubmitButton,
 } from "@Components/index"
+import useChangePage from "@Hooks/useChangePage"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
@@ -54,7 +55,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 		data: { email, currentModal, isEmailConfirmed },
 		dispatch,
 	} = useContext(StateContext)
-
+	const redirect = useChangePage()
 	const kycDao = useKycDao()
 
 	const [buttonAutofocus, setButtonAutoFocus] = useState(false)
@@ -133,13 +134,12 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 									type: DataActionTypes.setEmailConfirmed,
 									payload: true,
 								})
-								dispatch({
-									type: DataActionTypes.changePage,
-									payload: {
-										current: StepID.taxResidenceStep,
-										prev: StepID.emailDiscordVerificationStep,
-									},
-								})
+
+								redirect(
+									StepID.taxResidenceStep,
+									StepID.emailDiscordVerificationStep
+								)
+
 								dispatch({
 									type: DataActionTypes.setModal,
 									payload: null,
@@ -183,28 +183,19 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 					}
 				}
 			} else {
-				dispatch({
-					type: DataActionTypes.changePage,
-					payload: {
-						current: StepID.taxResidenceStep,
-						prev: StepID.emailDiscordVerificationStep,
-					},
-				})
+				redirect(StepID.taxResidenceStep, StepID.emailDiscordVerificationStep)
 			}
 		}
-	}, [disableSubmit, dispatch, emailValue, kycDao, isEmailConfirmed])
+	}, [disableSubmit, kycDao, isEmailConfirmed, dispatch, emailValue, redirect])
 
 	const onPrev = useCallback(() => {
 		clearInterval(confirmationInterval.current)
-
-		dispatch({
-			payload: {
-				current: StepID.verificationStep,
-				next: StepID.emailDiscordVerificationStep,
-			},
-			type: DataActionTypes.changePage,
-		})
-	}, [dispatch])
+		redirect(
+			StepID.verificationStep,
+			StepID.emailDiscordVerificationStep,
+			"prev"
+		)
+	}, [redirect])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

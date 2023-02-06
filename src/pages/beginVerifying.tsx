@@ -3,7 +3,8 @@ import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { useKycDao } from "@Hooks/useKycDao"
 
 import { PageProps } from "./pageProps"
-import { DataActionTypes, H1, StateContext, StepID } from "@Components/index"
+import { H1, KycDaoContext, StateContext, StepID } from "@Components/index"
+import useChangePage from "@Hooks/useChangePage"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const onError = useCallback((error: string) => {
@@ -24,40 +25,37 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	} = useContext(StateContext)
 	const kycDao = useKycDao()
 	const verifyingModalOpen = useRef(false)
+	const redirect = useChangePage()
+	const kycDaoContext = useContext(KycDaoContext)
 
 	const onComplete = useCallback(async () => {
-		dispatch({
-			type: DataActionTypes.changePage,
-			payload: { current: StepID.nftArtSelection },
-		})
+		await redirect(StepID.nftArtSelection)
 		verifyingModalOpen.current = false
-	}, [dispatch])
+	}, [redirect])
 
-	const onCancel = useCallback(() => {
-		dispatch({
-			payload: { current: StepID.taxResidenceStep, next: StepID.loading },
-			type: DataActionTypes.changePage,
-		})
+	const onCancel = useCallback(async () => {
+		if (kycDaoContext?.grantFlowEnabled) {
+			await redirect(
+				StepID.grantSocialSecurityNumberStep,
+				StepID.loading,
+				"prev"
+			)
+		} else {
+			await redirect(StepID.taxResidenceStep, StepID.loading, "prev")
+		}
 		verifyingModalOpen.current = false
-	}, [dispatch])
+	}, [kycDaoContext?.grantFlowEnabled, redirect])
 
 	useEffect(() => {
-		if (
-			inactive ||
-			disabled ||
-			!kycDao ||
-			verifyingModalOpen.current === true
-		) {
+		if (inactive || disabled || !kycDao || verifyingModalOpen.current) {
 			return
 		}
 
-		dispatch({
-			type: DataActionTypes.changePage,
-			payload: {
-				current: StepID.loading,
-				prev: StepID.taxResidenceStep,
-			},
-		})
+		if (kycDaoContext?.grantFlowEnabled) {
+			redirect(StepID.loading, StepID.grantSocialSecurityNumberStep)
+		} else {
+			redirect(StepID.loading, StepID.taxResidenceStep)
+		}
 
 		verifyingModalOpen.current = true
 		;(async () => {
@@ -101,6 +99,8 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 		taxResidency,
 		termsAccepted,
 		isEmailConfirmed,
+		kycDaoContext?.grantFlowEnabled,
+		redirect,
 	])
 
 	if (!kycDao) {

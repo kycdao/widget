@@ -16,6 +16,7 @@ import {
 } from "@Components/index"
 import { FC, useContext, useCallback, useEffect } from "react"
 import { PageProps } from "./pageProps"
+import useChangePage from "@Hooks/useChangePage"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<SubmitButton
@@ -65,16 +66,15 @@ export const VerificationStep: FC<PageProps> = ({
 	inactive = false,
 }) => {
 	const { dispatch } = useContext(StateContext)
+	const redirect = useChangePage()
 
 	const onSubmit = useCallback(() => {
-		dispatch({
-			type: DataActionTypes.changePage,
-			payload: {
-				current: StepID.emailDiscordVerificationStep,
-				prev: StepID.verificationStep,
-			},
-		})
-	}, [dispatch])
+		redirect(StepID.emailDiscordVerificationStep, StepID.verificationStep)
+	}, [redirect])
+
+	const onPrev = useCallback(() => {
+		redirect(StepID.kycDAOMembershipStep, StepID.verificationStep, "prev")
+	}, [redirect])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
@@ -82,16 +82,6 @@ export const VerificationStep: FC<PageProps> = ({
 			return next.unsubscribe.bind(next)
 		}
 	}, [disabled, inactive, onSubmit])
-
-	const onPrev = useCallback(() => {
-		dispatch({
-			payload: {
-				current: StepID.kycDAOMembershipStep,
-				next: StepID.verificationStep,
-			},
-			type: DataActionTypes.changePage,
-		})
-	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

@@ -28,6 +28,8 @@ export enum DataActionTypes {
 	setChainExplorerUrl,
 	setMessageTargetOrigin,
 	setModalMode,
+	grantNameAndAddressChange,
+	grantSocialSecurityNumberChange,
 }
 
 export enum StepID {
@@ -44,6 +46,8 @@ export enum StepID {
 	loading,
 	mintStep,
 	subscribedStartStep,
+	grantNameAndAddressStep,
+	grantSocialSecurityNumberStep,
 }
 
 export type Data = {
@@ -69,6 +73,11 @@ export type Data = {
 	errorModalBody?: string
 	chainExplorerUrl?: string
 	isModal: boolean
+	grantFlow: {
+		name?: string
+		address?: string
+		socialSecurityNumber?: string
+	}
 }
 
 export type HeaderButtonState = "enabled" | "disabled" | "hidden"
@@ -158,9 +167,18 @@ export type SetModalMode = {
 	payload: boolean
 }
 
+export type GrantNameAndAddressChange = {
+	type: DataActionTypes.grantNameAndAddressChange
+	payload: { name?: string; address?: string }
+}
+
+export type GrantSocialSecurityNumberChange = {
+	type: DataActionTypes.grantSocialSecurityNumberChange
+	payload: Data["grantFlow"]["socialSecurityNumber"]
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
-	| SetHeaderButtonStateAction
 	| SetHeaderButtonStateAction
 	| SetVerifyingModalOpen
 	| TermsAcceptedChangeAction
@@ -176,6 +194,8 @@ export type DataChangeActions =
 	| SetChainExplorerUrl
 	| SetMessageTargetOrigin
 	| SetModalMode
+	| GrantNameAndAddressChange
+	| GrantSocialSecurityNumberChange
 
 export type ModalType =
 	| "emailVerification"

@@ -9,6 +9,8 @@ import { AgreementStep } from "./agreementStep"
 import { BeginVerifyingStep } from "./beginVerifying"
 import { EmailDiscordVerificationStep } from "./emailDiscordVerificationStep"
 import { FinalStep } from "./finalStep"
+import { GrantNameAndAddress } from "./grantNameAndAddress"
+import { GrantSocialSecurityNumber } from "./grantSocialSecurityNumber"
 import { LoadingCard } from "./loading"
 import { KycDAOMembershipStep } from "./membershipCard"
 import { MintStep } from "./mintMembershipCard"
@@ -48,6 +50,12 @@ const RoutedStep: FC<{
 		}
 		case StepID.taxResidenceStep: {
 			return <TaxResidenceStep {...options} />
+		}
+		case StepID.grantNameAndAddressStep: {
+			return <GrantNameAndAddress {...options} />
+		}
+		case StepID.grantSocialSecurityNumberStep: {
+			return <GrantSocialSecurityNumber {...options} />
 		}
 		case StepID.beginVerificationStep: {
 			return <BeginVerifyingStep {...options} />
