@@ -15,6 +15,7 @@ import {
 	StepPart,
 	SubmitButton,
 } from "@Components/index"
+import useChangePage from "@Hooks/useChangePage"
 
 const Header: StepPart = () => (
 	<H1>
@@ -59,18 +60,13 @@ export const AgreementStep: FC<PageProps> = ({
 	inactive = false,
 }) => {
 	const { dispatch } = useContext(StateContext)
+	const redirect = useChangePage()
 
 	const kycDaoContext = useKycDao()
 
 	const onSubmit = useCallback(() => {
-		dispatch({
-			type: DataActionTypes.changePage,
-			payload: {
-				current: StepID.kycDAOMembershipStep,
-				prev: StepID.AgreementStep,
-			},
-		})
-	}, [dispatch])
+		redirect(StepID.kycDAOMembershipStep, StepID.AgreementStep)
+	}, [redirect])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
