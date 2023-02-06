@@ -81,6 +81,8 @@ export const reducer = (
 				case HeaderButtons.prev:
 					onPrevSubject.next()
 					return data
+				default:
+					return data
 			}
 		case DataActionTypes.grantNameAndAddressChange:
 			return { ...data, grantFlow: { ...data.grantFlow, ...payload } }
