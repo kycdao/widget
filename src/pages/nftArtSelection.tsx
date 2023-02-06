@@ -38,10 +38,7 @@ type Nft = {
 const NftImageWrapper = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	gap: 1rem;
 	justify-content: space-around;
-	// align-content: center;
-	padding: 1em;
 	height: 100%;
 	overflow: scroll;
 `
@@ -50,6 +47,7 @@ const NftImageContainer = styled.div<{ selected: boolean }>`
 	height: 150px;
 	width: 150px;
 	border-radius: 999rem;
+	padding: 0.5em;
 
 	${({ selected }) => css`
 		border: 2px solid ${selected ? "black" : "transparent"};
@@ -64,6 +62,11 @@ const NftImageContainer = styled.div<{ selected: boolean }>`
 	}
 
 	${tr2}
+`
+
+const NftImage = styled.img`
+	height: 150px;
+	width: 150px;
 `
 
 export const NftSelection: FC<PageProps> = ({
@@ -104,7 +107,7 @@ export const NftSelection: FC<PageProps> = ({
 					const id = splitUrl[splitUrl.length - 1]
 
 					images.push({ url: url + "?timestamp=" + Date.now().toString(), id })
-					setNftImages(images)
+					setNftImages(images.slice(0, 4))
 				}
 			})
 		})
@@ -193,7 +196,7 @@ export const NftSelection: FC<PageProps> = ({
 						url: url + "?timestamp=" + Date.now(),
 						id,
 					})
-					setNftImages(images)
+					setNftImages(images.slice(0, 4))
 				}
 			})
 		})
@@ -208,7 +211,7 @@ export const NftSelection: FC<PageProps> = ({
 							selected={currentArt === id}
 							key={id}
 							onClick={onArtClick(id)}>
-							<img alt="Nft" src={url} />
+							<NftImage alt="Nft" src={url} />
 						</NftImageContainer>
 					)
 				})}
