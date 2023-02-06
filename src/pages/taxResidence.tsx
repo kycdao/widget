@@ -111,7 +111,11 @@ export const TaxResidenceStep: FC<PageProps> = ({
 	])
 
 	const onPrev = useCallback(async () => {
-		await redirect(StepID.emailDiscordVerificationStep, StepID.taxResidenceStep)
+		await redirect(
+			StepID.emailDiscordVerificationStep,
+			StepID.taxResidenceStep,
+			"prev"
+		)
 		dispatch({
 			payload: taxResidence.current,
 			type: DataActionTypes.taxResidenceChange,

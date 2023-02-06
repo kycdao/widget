@@ -85,7 +85,11 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 	}, [disabled, inactive, isStepValid, redirect])
 
 	const onPrev = useCallback(async () => {
-		await redirect(StepID.taxResidenceStep, StepID.grantNameAndAddressStep)
+		await redirect(
+			StepID.taxResidenceStep,
+			StepID.grantNameAndAddressStep,
+			"prev"
+		)
 	}, [redirect])
 
 	useEffect(() => {

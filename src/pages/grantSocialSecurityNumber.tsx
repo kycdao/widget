@@ -86,7 +86,8 @@ export const GrantSocialSecurityNumber: FC<PageProps> = ({
 	const onPrev = useCallback(async () => {
 		await redirect(
 			StepID.grantNameAndAddressStep,
-			StepID.grantSocialSecurityNumberStep
+			StepID.grantSocialSecurityNumberStep,
+			"prev"
 		)
 	}, [redirect])
 
