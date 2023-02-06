@@ -89,7 +89,6 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 	}, [redirect])
 
 	useEffect(() => {
-		setHasInteracted(true)
 		dispatch({
 			type: DataActionTypes.grantNameAndAddressChange,
 			payload: {
@@ -121,7 +120,10 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 					value={name}
 					placeholder="Name"
 					fullWidth
-					onChange={(value) => setName(value)}
+					onChange={(value) => {
+						setName(value)
+						setHasInteracted(true)
+					}}
 					style={{ marginBottom: "0" }}
 					autoFocus={!isStepValid && !hasInteracted && !inactive}
 				/>
@@ -130,7 +132,10 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 					value={address}
 					placeholder="Address"
 					fullWidth
-					onChange={(value) => setAddress(value)}
+					onChange={(value) => {
+						setAddress(value)
+						setHasInteracted(true)
+					}}
 				/>
 				<SubmitButton
 					black

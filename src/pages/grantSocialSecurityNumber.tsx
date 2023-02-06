@@ -91,7 +91,6 @@ export const GrantSocialSecurityNumber: FC<PageProps> = ({
 	}, [redirect])
 
 	useEffect(() => {
-		setHasInteracted(true)
 		dispatch({
 			type: DataActionTypes.grantSocialSecurityNumberChange,
 			payload: socialSecurityNumber,
@@ -121,7 +120,10 @@ export const GrantSocialSecurityNumber: FC<PageProps> = ({
 					placeholder="Social Security Number"
 					autoFocus={!isStepValid && !hasInteracted && !inactive}
 					fullWidth
-					onChange={(value) => setSocialSecurityNumber(value)}
+					onChange={(value) => {
+						setSocialSecurityNumber(value)
+						setHasInteracted(true)
+					}}
 				/>
 				<SubmitButton
 					black
