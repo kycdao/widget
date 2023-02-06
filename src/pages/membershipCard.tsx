@@ -224,7 +224,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 				}
 			}
 		}
-	}, [dispatch, kycDaoContext])
+	}, [dispatch, kycDaoContext, redirect])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
