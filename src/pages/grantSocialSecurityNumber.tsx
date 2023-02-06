@@ -47,11 +47,14 @@ export const GrantSocialSecurityNumber: FC<PageProps> = ({
 		data: { grantFlow },
 	} = useContext(StateContext)
 	const redirect = useChangePage()
-	const [socialSecurityNumber, setSocialSecurityNumber] = useState<string>()
+	const [socialSecurityNumber, setSocialSecurityNumber] = useState<
+		string | undefined
+	>(grantFlow.socialSecurityNumber)
 	const isStepValid = useMemo(
 		() => !!socialSecurityNumber,
 		[socialSecurityNumber]
 	)
+	const [hasInteracted, setHasInteracted] = useState(false)
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
@@ -88,6 +91,7 @@ export const GrantSocialSecurityNumber: FC<PageProps> = ({
 	}, [redirect])
 
 	useEffect(() => {
+		setHasInteracted(true)
 		dispatch({
 			type: DataActionTypes.grantSocialSecurityNumberChange,
 			payload: socialSecurityNumber,
@@ -115,7 +119,7 @@ export const GrantSocialSecurityNumber: FC<PageProps> = ({
 					disabled={disabled}
 					value={socialSecurityNumber}
 					placeholder="Social Security Number"
-					autoFocus={!isStepValid && !inactive}
+					autoFocus={!isStepValid && !hasInteracted && !inactive}
 					fullWidth
 					onChange={(value) => setSocialSecurityNumber(value)}
 				/>
@@ -123,12 +127,13 @@ export const GrantSocialSecurityNumber: FC<PageProps> = ({
 					black
 					fullWidth
 					inactive={inactive}
+					autoFocus={isStepValid && !hasInteracted && !inactive}
 					disabled={disabled || !isStepValid}
 					onClick={onEnter}
 				/>
 			</>
 		),
-		[socialSecurityNumber, isStepValid, setSocialSecurityNumber]
+		[socialSecurityNumber, isStepValid, hasInteracted]
 	)
 
 	return (

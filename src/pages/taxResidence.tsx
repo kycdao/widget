@@ -105,6 +105,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 		disabled,
 		inactive,
 		submitDisabled,
+		dispatch,
 		kycDaoContext?.grantFlowEnabled,
 		redirect,
 	])

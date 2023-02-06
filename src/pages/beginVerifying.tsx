@@ -3,12 +3,7 @@ import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { useKycDao } from "@Hooks/useKycDao"
 
 import { PageProps } from "./pageProps"
-import {
-	H1,
-	KycDaoContext,
-	StateContext,
-	StepID,
-} from "@Components/index"
+import { H1, KycDaoContext, StateContext, StepID } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
@@ -100,6 +95,8 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 		taxResidency,
 		termsAccepted,
 		isEmailConfirmed,
+		kycDaoContext?.grantFlowEnabled,
+		redirect,
 	])
 
 	if (!kycDao) {

@@ -4,7 +4,6 @@ import {
 	H1,
 	HeaderButtons,
 	Input,
-	KycDaoContext,
 	Logo,
 	OnNext,
 	OnPrev,
@@ -48,9 +47,13 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 		data: { grantFlow },
 	} = useContext(StateContext)
 	const redirect = useChangePage()
-	const [name, setName] = useState<string>()
-	const [address, setAddress] = useState<string>()
-	const isStepValid = useMemo(() => name && address, [name, address])
+	const [name, setName] = useState<string | undefined>(grantFlow.name)
+	const [address, setAddress] = useState<string | undefined>(grantFlow.address)
+	const isStepValid: boolean = useMemo(
+		() => !!name && !!address,
+		[name, address]
+	)
+	const [hasInteracted, setHasInteracted] = useState(false)
 
 	const onTransitionDone = useCallback(() => {
 		if (disabled || inactive) {
@@ -86,6 +89,7 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 	}, [redirect])
 
 	useEffect(() => {
+		setHasInteracted(true)
 		dispatch({
 			type: DataActionTypes.grantNameAndAddressChange,
 			payload: {
@@ -119,10 +123,9 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 					fullWidth
 					onChange={(value) => setName(value)}
 					style={{ marginBottom: "0" }}
+					autoFocus={!isStepValid && !hasInteracted && !inactive}
 				/>
 				<Input
-					onInputBlurred={onInputBlurred}
-					onInputFocused={onInputFocused}
 					disabled={disabled}
 					value={address}
 					placeholder="Address"
@@ -135,10 +138,11 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 					inactive={inactive}
 					disabled={disabled || !isStepValid}
 					onClick={onEnter}
+					autoFocus={isStepValid && !hasInteracted && !inactive}
 				/>
 			</>
 		),
-		[address, isStepValid, name]
+		[address, hasInteracted, isStepValid, name]
 	)
 
 	return (
