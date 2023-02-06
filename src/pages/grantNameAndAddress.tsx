@@ -118,6 +118,7 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 					placeholder="Name"
 					fullWidth
 					onChange={(value) => setName(value)}
+					style={{ marginBottom: "0" }}
 				/>
 				<Input
 					onInputBlurred={onInputBlurred}

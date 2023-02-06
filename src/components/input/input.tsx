@@ -28,6 +28,7 @@ type InputProps = {
 	onInputFocused?: () => void
 	type?: HTMLInputTypeAttribute
 	fullWidth?: boolean
+	style?: React.CSSProperties
 }
 
 export const Input: FC<InputProps> = ({
@@ -43,6 +44,7 @@ export const Input: FC<InputProps> = ({
 	onInputBlurred,
 	onInputFocused,
 	type,
+	style,
 }) => {
 	const [showAutoComplete, setShowAutoComplete] = useState(
 		!!autoFocus && !!autoCompleteData
@@ -144,7 +146,10 @@ export const Input: FC<InputProps> = ({
 	}, [onInputFocused])
 
 	return (
-		<Container active={focused} showAutoComplete={showAutoComplete}>
+		<Container
+			active={focused}
+			showAutoComplete={showAutoComplete}
+			style={style}>
 			{showAutoComplete && autoCompleteData && (
 				<div>
 					<Autocomplete ref={autocompleteRef}>
