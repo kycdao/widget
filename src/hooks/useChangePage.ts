@@ -9,7 +9,11 @@ const useChangePage = () => {
 	const kycDao = useKycDao()
 
 	return useCallback(
-		async (nextPage: StepID, currentPage?: StepID, direction: Direction = 'next') => {
+		async (
+			nextPage: StepID,
+			currentPage?: StepID,
+			direction: Direction = "next"
+		) => {
 			try {
 				const verificationStatus =
 					await kycDao?.kycDao.checkVerificationStatus()

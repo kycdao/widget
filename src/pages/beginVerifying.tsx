@@ -35,9 +35,13 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 
 	const onCancel = useCallback(async () => {
 		if (kycDaoContext?.grantFlowEnabled) {
-			await redirect(StepID.grantSocialSecurityNumberStep, StepID.loading, 'prev')
+			await redirect(
+				StepID.grantSocialSecurityNumberStep,
+				StepID.loading,
+				"prev"
+			)
 		} else {
-			await redirect(StepID.taxResidenceStep, StepID.loading, 'prev')
+			await redirect(StepID.taxResidenceStep, StepID.loading, "prev")
 		}
 		verifyingModalOpen.current = false
 	}, [kycDaoContext?.grantFlowEnabled, redirect])
