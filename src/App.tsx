@@ -1,5 +1,5 @@
 import { KycDao, SdkConfiguration } from "@kycdao/kycdao-sdk"
-import { FC, useEffect, useMemo, useReducer, useRef, useState } from "react"
+import { FC, StrictMode, useEffect, useMemo, useReducer, useState } from "react"
 
 import { getNetworkType } from "@Utils/getNetworkType"
 
@@ -40,7 +40,6 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 
 	const [data, dispatch] = useReducer(reducer, DefaultData)
 	const [kycDao, setKycDao] = useState<KycDaoState>()
-	const sdkInitCallHappened = useRef(false)
 
 	useEffect(() => {
 		if (iframeOptions && "virtualKeyboard" in navigator) {
@@ -49,7 +48,6 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	}, [iframeOptions])
 
 	useEffect(() => {
-		sdkInitCallHappened.current = true
 		KycDao.initialize(config).then((results) => {
 			setKycDao({
 				...results,
@@ -169,15 +167,17 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 	}
 
 	return (
-		<AppContainer>
-			<KycDaoContext.Provider value={kycDao}>
-				<StateContext.Provider value={contextData}>
-					<Header />
-					<Router />
-					<ModalRouter />
-				</StateContext.Provider>
-			</KycDaoContext.Provider>
-		</AppContainer>
+		<StrictMode>
+			<AppContainer>
+				<KycDaoContext.Provider value={kycDao}>
+					<StateContext.Provider value={contextData}>
+						<Header />
+						<Router />
+						<ModalRouter />
+					</StateContext.Provider>
+				</KycDaoContext.Provider>
+			</AppContainer>
+		</StrictMode>
 	)
 }
 

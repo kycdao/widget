@@ -67,16 +67,14 @@ export function BootstrapKycDaoModal({
 	)
 
 	root.render(
-		<StrictMode>
-			<ErrorBoundary FallbackComponent={ErrorPage}>
-				<KycDaoModal
-					isModal={isModal}
-					config={config}
-					height={height}
-					width={width}
-				/>
-			</ErrorBoundary>
-		</StrictMode>
+		<ErrorBoundary FallbackComponent={ErrorPage}>
+			<KycDaoModal
+				isModal={isModal}
+				config={config}
+				height={height}
+				width={width}
+			/>
+		</ErrorBoundary>
 	)
 }
 
