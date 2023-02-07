@@ -71,6 +71,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 		}
 	}, [email])
 
+	// We can rework this, input has autofocus now
 	const inputRef = useRef<HTMLInputElement>(null)
 
 	const onTransitionDone = useCallback(() => {

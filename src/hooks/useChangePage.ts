@@ -8,17 +8,13 @@ const useChangePage = () => {
 
 	return useCallback(
 		(nextPage: StepID, currentPage?: StepID, direction: Direction = "next") => {
-			try {
-				dispatch({
-					type: DataActionTypes.changePage,
-					payload: {
-						current: nextPage,
-						[direction === "next" ? "prev" : "next"]: currentPage,
-					},
-				})
-			} catch (e) {
-				console.error(e)
-			}
+			dispatch({
+				type: DataActionTypes.changePage,
+				payload: {
+					current: nextPage,
+					[direction === "next" ? "prev" : "next"]: currentPage,
+				},
+			})
 		},
 		[dispatch]
 	)

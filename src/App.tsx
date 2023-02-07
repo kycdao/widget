@@ -121,7 +121,9 @@ export const KycDaoModal: FC<KycDaoModalProps> = ({
 								}
 						}
 					} else {
-						startPage = kycDao.kycDao.subscribed
+						const { subscribed } = kycDao.kycDao
+
+						startPage = subscribed
 							? StepID.subscribedStartStep
 							: StepID.AgreementStep
 					}
