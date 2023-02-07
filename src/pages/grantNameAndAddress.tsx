@@ -73,23 +73,19 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 		})
 	}, [inactive, disabled, dispatch, grantFlow])
 
-	const onSubmit = useCallback(async () => {
+	const onSubmit = useCallback(() => {
 		if (disabled || inactive || !isStepValid) {
 			return
 		}
 
-		await redirect(
+		redirect(
 			StepID.grantSocialSecurityNumberStep,
 			StepID.grantNameAndAddressStep
 		)
 	}, [disabled, inactive, isStepValid, redirect])
 
-	const onPrev = useCallback(async () => {
-		await redirect(
-			StepID.taxResidenceStep,
-			StepID.grantNameAndAddressStep,
-			"prev"
-		)
+	const onPrev = useCallback(() => {
+		redirect(StepID.taxResidenceStep, StepID.grantNameAndAddressStep, "prev")
 	}, [redirect])
 
 	useEffect(() => {

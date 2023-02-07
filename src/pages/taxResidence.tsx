@@ -85,7 +85,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 		}
 	}, [inactive, disabled, dispatch, taxResidency])
 
-	const onSubmit = useCallback(async () => {
+	const onSubmit = useCallback(() => {
 		if (disabled || inactive || submitDisabled) {
 			return
 		}
@@ -97,9 +97,9 @@ export const TaxResidenceStep: FC<PageProps> = ({
 
 		if (kycDaoContext?.grantFlowEnabled) {
 			// todo: check country is US
-			await redirect(StepID.grantNameAndAddressStep, StepID.taxResidenceStep)
+			redirect(StepID.grantNameAndAddressStep, StepID.taxResidenceStep)
 		} else {
-			await redirect(StepID.beginVerificationStep, StepID.taxResidenceStep)
+			redirect(StepID.beginVerificationStep, StepID.taxResidenceStep)
 		}
 	}, [
 		disabled,
@@ -110,8 +110,8 @@ export const TaxResidenceStep: FC<PageProps> = ({
 		redirect,
 	])
 
-	const onPrev = useCallback(async () => {
-		await redirect(
+	const onPrev = useCallback(() => {
+		redirect(
 			StepID.emailDiscordVerificationStep,
 			StepID.taxResidenceStep,
 			"prev"

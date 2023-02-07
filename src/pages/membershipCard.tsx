@@ -196,7 +196,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 				try {
 					await kycDaoContext.kycDao.connectWallet(network)
 					await kycDaoContext.kycDao.registerOrLogin()
-					await redirect(StepID.verificationStep, StepID.kycDAOMembershipStep)
+					redirect(StepID.verificationStep, StepID.kycDAOMembershipStep)
 					dispatch({ type: DataActionTypes.termsAcceptedChange, payload: true })
 				} catch (e) {
 					// TODO: nicer error handling for unsupported network https://kycdao.atlassian.net/browse/KYC-505

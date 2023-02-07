@@ -28,20 +28,16 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const redirect = useChangePage()
 	const kycDaoContext = useContext(KycDaoContext)
 
-	const onComplete = useCallback(async () => {
-		await redirect(StepID.nftArtSelection)
+	const onComplete = useCallback(() => {
+		redirect(StepID.nftArtSelection)
 		verifyingModalOpen.current = false
 	}, [redirect])
 
-	const onCancel = useCallback(async () => {
+	const onCancel = useCallback(() => {
 		if (kycDaoContext?.grantFlowEnabled) {
-			await redirect(
-				StepID.grantSocialSecurityNumberStep,
-				StepID.loading,
-				"prev"
-			)
+			redirect(StepID.grantSocialSecurityNumberStep, StepID.loading, "prev")
 		} else {
-			await redirect(StepID.taxResidenceStep, StepID.loading, "prev")
+			redirect(StepID.taxResidenceStep, StepID.loading, "prev")
 		}
 		verifyingModalOpen.current = false
 	}, [kycDaoContext?.grantFlowEnabled, redirect])
