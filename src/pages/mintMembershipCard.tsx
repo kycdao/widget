@@ -299,7 +299,6 @@ export const MintStep: FC<PageProps> = ({
 					<Calculator>
 						<CalculatorBody>
 							<CalculatorButton
-								centered
 								mode="clean"
 								disabled={disabled || yearCount === null}
 								className="square"
@@ -308,7 +307,6 @@ export const MintStep: FC<PageProps> = ({
 							</CalculatorButton>
 							<YearCount>{yearCount} year</YearCount>
 							<CalculatorButton
-								centered
 								mode="clean"
 								disabled={disabled}
 								className="square"

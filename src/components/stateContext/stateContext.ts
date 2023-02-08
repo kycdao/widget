@@ -114,6 +114,9 @@ export const DefaultData = {
 	messageTargetOrigin: "",
 	isModal: false,
 	grantFlow: {},
+	width: 650,
+	height: 400,
+	grantFlowEnabled: false,
 } as Data
 
 export const StateContext = createContext<{

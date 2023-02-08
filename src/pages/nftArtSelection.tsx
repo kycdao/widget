@@ -75,10 +75,13 @@ export const NftSelection: FC<PageProps> = ({
 	disabled = false,
 	inactive = false,
 }) => {
-	const { dispatch } = useContext(StateContext)
+	const {
+		dispatch,
+		data: { imageId },
+	} = useContext(StateContext)
 	const kycDao = useKycDao()
 	const startMinting = useMinting()
-	const [currentArt, setCurrentArt] = useState<string>()
+	const [currentArt, setCurrentArt] = useState<string | undefined>(imageId)
 
 	const [nftImages, setNftImages] = useState<Nft[]>([])
 
@@ -170,11 +173,14 @@ export const NftSelection: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 			dispatch({
-				payload: { button: HeaderButtons.next, state: "hidden" },
+				payload: {
+					button: HeaderButtons.next,
+					state: currentArt ? "enabled" : "hidden",
+				},
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 		}
-	}, [disabled, inactive, dispatch])
+	}, [disabled, inactive, dispatch, currentArt])
 
 	const onRegenerate = useCallback(() => {
 		kycDao?.kycDao.regenerateNftImageOptions().then((options) => {
@@ -230,7 +236,6 @@ export const NftSelection: FC<PageProps> = ({
 							inactive={inactive}
 							disabled={disabled}
 							fullWidth
-							centered
 							onClick={onRegenerate}>
 							<i className="material-icons">refresh</i>
 							<span>regenerate</span>

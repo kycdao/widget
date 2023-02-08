@@ -48,9 +48,11 @@ export enum StepID {
 	subscribedStartStep,
 	grantNameAndAddressStep,
 	grantSocialSecurityNumberStep,
+	fatalError,
 }
 
 export type Data = {
+	resetKey?: number
 	imageId?: string
 	chain?: string
 	email: string
@@ -73,6 +75,7 @@ export type Data = {
 	errorModalBody?: string
 	chainExplorerUrl?: string
 	isModal: boolean
+	grantFlowEnabled: boolean
 	grantFlow: {
 		name?: string
 		address?: string
