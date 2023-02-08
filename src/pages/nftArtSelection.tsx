@@ -137,7 +137,7 @@ export const NftSelection: FC<PageProps> = ({
 			payload: {
 				current: kycDao?.kycDao.subscribed
 					? StepID.subscribedStartStep
-					: StepID.taxResidenceStep,
+					: StepID.AgreementStep,
 				next: StepID.nftArtSelection,
 			},
 		})

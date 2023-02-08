@@ -16,6 +16,7 @@ import {
 	SubmitButton,
 } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
+import { useVerified } from "@Hooks/useVerified"
 
 const Header: StepPart = () => (
 	<H1>
@@ -60,13 +61,22 @@ export const AgreementStep: FC<PageProps> = ({
 	inactive = false,
 }) => {
 	const { dispatch } = useContext(StateContext)
+	const checkVerification = useVerified()
 	const redirect = useChangePage()
 
 	const kycDaoContext = useKycDao()
 
-	const onSubmit = useCallback(() => {
-		redirect(StepID.kycDAOMembershipStep, StepID.AgreementStep)
-	}, [redirect])
+	const onSubmit = useCallback(async () => {
+		try {
+			if (await checkVerification()) {
+				redirect(StepID.nftArtSelection, StepID.AgreementStep)
+			} else {
+				redirect(StepID.kycDAOMembershipStep, StepID.AgreementStep)
+			}
+		} catch (e) {
+			console.error(e)
+		}
+	}, [redirect, checkVerification])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
