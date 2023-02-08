@@ -16,13 +16,15 @@ import {
 } from "@Components/index"
 import React, {
 	FC,
-	useState,
+	useCallback,
 	useContext,
 	useEffect,
-	useCallback,
 	useMemo,
+	useState,
 } from "react"
 import useChangePage from "@Hooks/useChangePage"
+import { hexEncodeString } from "@kycdao/kycdao-sdk/dist/blockchains/evm/utils"
+import { useKycDao } from "@Hooks/useKycDao"
 
 const Body: React.FC = () => {
 	return (
@@ -36,6 +38,8 @@ const Body: React.FC = () => {
 	)
 }
 
+let isSigning = false
+
 export const GrantNameAndAddress: FC<PageProps> = ({
 	className,
 	animation,
@@ -47,6 +51,7 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 		data: { grantFlow },
 	} = useContext(StateContext)
 	const redirect = useChangePage()
+	const kycDao = useKycDao()
 	const [name, setName] = useState<string | undefined>(grantFlow.name)
 	const [address, setAddress] = useState<string | undefined>(grantFlow.address)
 	const isStepValid: boolean = useMemo(
@@ -54,6 +59,41 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 		[name, address]
 	)
 	const [hasInteracted, setHasInteracted] = useState(false)
+	const [hasSigned, setHasSigned] = useState(false)
+
+	const sign = useCallback(() => {
+		if (isSigning) return
+
+		isSigning = true
+		window.ethereum
+			.request<string>({
+				method: "personal_sign",
+				params: [
+					hexEncodeString(
+						"Grant officers will be able to decrypt and view your data. kycDAO does not have access to this data.",
+						{ addPrefix: true }
+					),
+					kycDao?.kycDao.connectedWallet?.address,
+				],
+			})
+			.then(() => {
+				setHasSigned(true)
+			})
+			.catch(() => {
+				redirect(
+					StepID.taxResidenceStep,
+					StepID.grantNameAndAddressStep,
+					"prev"
+				)
+			})
+			.finally(() => {
+				isSigning = false
+			})
+	}, [kycDao?.kycDao.connectedWallet?.address])
+
+	useEffect(() => {
+		sign()
+	}, [])
 
 	const onTransitionDone = useCallback(() => {
 		if (disabled || inactive) {
@@ -141,13 +181,13 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 					black
 					fullWidth
 					inactive={inactive}
-					disabled={disabled || !isStepValid}
+					disabled={disabled || !isStepValid || !hasSigned}
 					onClick={onEnter}
 					autoFocus={isStepValid && !hasInteracted && !inactive}
 				/>
 			</>
 		),
-		[address, hasInteracted, isStepValid, name]
+		[address, hasInteracted, hasSigned, isStepValid, name]
 	)
 
 	return (
