@@ -89,11 +89,11 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 			.finally(() => {
 				isSigning = false
 			})
-	}, [kycDao?.kycDao.connectedWallet?.address])
+	}, [kycDao?.kycDao.connectedWallet?.address, redirect])
 
 	useEffect(() => {
 		sign()
-	}, [])
+	}, [sign])
 
 	const onTransitionDone = useCallback(() => {
 		if (disabled || inactive) {
