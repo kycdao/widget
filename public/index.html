@@ -147,6 +147,9 @@
 							: window.ethereum,
 						baseUrl: "https://staging.kycdao.xyz",
 					},
+					onReady: (sdkInstance) => {
+						console.log("🥁 🥁 🥁 The sdk instance is:", sdkInstance)
+					},
 				})
 
 				client.open()

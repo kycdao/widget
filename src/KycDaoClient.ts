@@ -71,6 +71,7 @@ function kycDaoClient(
 		configFromUrl = false,
 		backdrop = true,
 		modal = true,
+		onReady,
 	}: KycDaoClientOptions
 ) {
 	this.config = config
@@ -93,6 +94,24 @@ function kycDaoClient(
 	this.getParentElement = this.getParentElement.bind(this)
 
 	this.configFromUrl = configFromUrl
+	this.onReady = onReady
+
+	this.container = document.createElement("div")
+
+	if (this.configFromUrl) {
+		BootstrapIframeKycDaoModal({
+			parent: this.container,
+		})
+	} else {
+		BootstrapKycDaoModal({
+			config: this.config,
+			height: this.height,
+			parent: this.container,
+			width: this.width,
+			isModal: this.isModal,
+			onReady: this.onReady,
+		})
+	}
 }
 
 kycDaoClient.prototype.messageHndlr = function (
@@ -169,32 +188,16 @@ kycDaoClient.prototype.open = function (this: KycDaoClientInterface) {
 			this.parent.style.setProperty("z-index", "101")
 		}
 
-		const container = document.createElement("div")
-
 		if (this.isModal) {
-			container.classList.add("KycDaoModalFrame")
+			this.container.classList.add("KycDaoModalFrame")
 		}
 
-		this.modal.appendChild(container)
+		this.modal.appendChild(this.container)
 
 		this.parent.appendChild(this.modal)
 		this.isOpen = true
 
 		window.addEventListener("message", this.messageHndlr)
-
-		if (this.configFromUrl) {
-			BootstrapIframeKycDaoModal({
-				parent: container,
-			})
-		} else {
-			BootstrapKycDaoModal({
-				config: this.config,
-				height: this.height,
-				parent: container,
-				width: this.width,
-				isModal: this.isModal,
-			})
-		}
 
 		//this.originalBodyHeight = document.body.style.height
 

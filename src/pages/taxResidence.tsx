@@ -6,7 +6,6 @@ import {
 	H1,
 	HeaderButtons,
 	Input,
-	KycDaoContext,
 	Logo,
 	OnNext,
 	OnPrev,
@@ -49,7 +48,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 	const [value, setValue] = useState<string>()
 	const {
 		dispatch,
-		data: { taxResidency },
+		data: { taxResidency, grantFlowEnabled },
 	} = useContext(StateContext)
 	const submitDisabled = useMemo(
 		() => !Countries.find((c) => c.name === value),
@@ -58,7 +57,6 @@ export const TaxResidenceStep: FC<PageProps> = ({
 	const taxResidence = useRef(taxResidency)
 	const inputValue = useRef(null)
 	const redirect = useChangePage()
-	const kycDaoContext = useContext(KycDaoContext)
 
 	useEffect(() => {
 		if (taxResidency) {
@@ -95,20 +93,13 @@ export const TaxResidenceStep: FC<PageProps> = ({
 			type: DataActionTypes.taxResidenceChange,
 		})
 
-		if (kycDaoContext?.grantFlowEnabled) {
+		if (grantFlowEnabled) {
 			// todo: check country is US
 			redirect(StepID.grantNameAndAddressStep, StepID.taxResidenceStep)
 		} else {
 			redirect(StepID.beginVerificationStep, StepID.taxResidenceStep)
 		}
-	}, [
-		disabled,
-		inactive,
-		submitDisabled,
-		dispatch,
-		kycDaoContext?.grantFlowEnabled,
-		redirect,
-	])
+	}, [disabled, inactive, submitDisabled, dispatch, grantFlowEnabled, redirect])
 
 	const onPrev = useCallback(() => {
 		redirect(

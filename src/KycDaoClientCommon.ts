@@ -1,4 +1,8 @@
-import { BlockchainNetwork, SdkConfiguration } from "@kycdao/kycdao-sdk"
+import {
+	BlockchainNetwork,
+	SdkConfiguration,
+	KycDaoInitializationResult,
+} from "@kycdao/kycdao-sdk"
 import {
 	KycDaoEnvironment,
 	VerificationType,
@@ -34,6 +38,8 @@ export type KycDaoClientInterface = {
 	originalBodyOverflow: string
 	originalParentBackground: string
 	originalParentZIndex: string
+	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
+	container: HTMLDivElement
 }
 
 export type KycDaoClientOptions = {
@@ -47,6 +53,7 @@ export type KycDaoClientOptions = {
 	iframeOptions?: IframeOptions
 	onFail?: (reason: string) => void
 	onSuccess?: (data?: string) => void
+	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
 }
 
 export type IframeOptions = {

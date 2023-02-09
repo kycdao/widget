@@ -5,16 +5,19 @@ import {
 	KycDaoClientInterface,
 	KycDaoClientOptions,
 } from "./KycDaoClientCommon"
-import { SdkConfiguration } from "@kycdao/kycdao-sdk"
+import {
+	KycDaoInitializationResult,
+	SdkConfiguration,
+} from "@kycdao/kycdao-sdk"
 
 export interface KycDaoWidgetConfig {
 	config: SdkConfiguration
 	onFail?: (reason: string) => void
 	onSuccess?: (data?: string) => void
+	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
 }
 
 export const KycDaoWidget: FC<KycDaoWidgetConfig> = (props) => {
-	const { config, onFail, onSuccess } = props
 	const parent = useRef<HTMLDivElement>(null)
 	const client = useRef<KycDaoClientInterface>()
 
@@ -25,10 +28,8 @@ export const KycDaoWidget: FC<KycDaoWidgetConfig> = (props) => {
 
 		if (parent.current) {
 			client.current = new ClientConstructor({
+				...props,
 				parent: parent.current,
-				onFail,
-				onSuccess,
-				config,
 				width: 400,
 				height: 650,
 				configFromUrl: false,
@@ -43,7 +44,7 @@ export const KycDaoWidget: FC<KycDaoWidgetConfig> = (props) => {
 		return () => {
 			client.current?.close()
 		}
-	}, [config, onFail, onSuccess])
+	}, [props])
 
 	return <div ref={parent} />
 }

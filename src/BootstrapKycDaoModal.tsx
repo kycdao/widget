@@ -1,7 +1,9 @@
-import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import KycDaoModal from "./App"
-import { SdkConfiguration } from "@kycdao/kycdao-sdk"
+import {
+	KycDaoInitializationResult,
+	SdkConfiguration,
+} from "@kycdao/kycdao-sdk"
 import { ErrorBoundary } from "react-error-boundary"
 import buffer from "buffer"
 import {
@@ -47,16 +49,14 @@ export type UrlParams = {
 
 export function BootstrapKycDaoModal({
 	parent,
-	height = 650,
-	width = 400,
-	config,
-	isModal,
+	...props
 }: {
 	width: number | string
 	height: number | string
 	parent: HTMLElement | string
 	config: SdkConfiguration
 	isModal: boolean
+	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
 }) {
 	// TODO: add sanity checking https://kycdao.atlassian.net/browse/KYC-591
 
@@ -68,12 +68,7 @@ export function BootstrapKycDaoModal({
 
 	root.render(
 		<ErrorBoundary FallbackComponent={ErrorPage}>
-			<KycDaoModal
-				isModal={isModal}
-				config={config}
-				height={height}
-				width={width}
-			/>
+			<KycDaoModal {...props} />
 		</ErrorBoundary>
 	)
 }
@@ -143,26 +138,24 @@ export function BootstrapIframeKycDaoModal({
 	} = urlParams
 
 	root.render(
-		<StrictMode>
-			<ErrorBoundary FallbackComponent={ErrorPage}>
-				<KycDaoModal
-					config={{
-						baseUrl,
-						enabledVerificationTypes,
-						apiKey,
-						demoMode,
-						enabledBlockchainNetworks,
-						environment,
-						evmProvider: evmProvider ? EvmProviders[evmProvider] : undefined,
-					}}
-					iframeOptions={{
-						messageTargetOrigin,
-					}}
-					height={height}
-					width={width}
-					isModal
-				/>
-			</ErrorBoundary>
-		</StrictMode>
+		<ErrorBoundary FallbackComponent={ErrorPage}>
+			<KycDaoModal
+				config={{
+					baseUrl,
+					enabledVerificationTypes,
+					apiKey,
+					demoMode,
+					enabledBlockchainNetworks,
+					environment,
+					evmProvider: evmProvider ? EvmProviders[evmProvider] : undefined,
+				}}
+				iframeOptions={{
+					messageTargetOrigin,
+				}}
+				height={height}
+				width={width}
+				isModal
+			/>
+		</ErrorBoundary>
 	)
 }

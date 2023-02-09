@@ -56,12 +56,12 @@ export const EmailVerificationModal = () => {
 			</ModalBody>
 
 			<ModalButtonWrapper>
-				<Button mode="underline" centered onClick={onResend}>
+				<Button mode="underline" onClick={onResend}>
 					<i className="material-icons">refresh</i>
 					<span>Resend</span>
 				</Button>
 
-				<Button mode="underline" centered onClick={onChangeEmail}>
+				<Button mode="underline" onClick={onChangeEmail}>
 					<i className="material-icons">refresh</i>
 					<span>change email</span>
 				</Button>

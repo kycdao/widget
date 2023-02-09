@@ -1,7 +1,7 @@
-import { KycDaoState } from "@Components/kycDao.provider"
+import { KycDaoInitializationResult } from "@kycdao/kycdao-sdk"
 import { useKycDao } from "./useKycDao"
 
-export async function getVerified(kycDaoState: KycDaoState) {
+export async function getVerified(kycDaoState: KycDaoInitializationResult) {
 	return Object.entries(
 		await kycDaoState.kycDao.checkVerificationStatus()
 	).reduce(

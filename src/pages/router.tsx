@@ -1,6 +1,5 @@
 import { StateContext, StepID } from "@Components/stateContext"
 import { StepAnimation, MovingDirection } from "@Components/step/step"
-import { H1 } from "@Components/typography"
 
 import { CSSProperties, FC, useContext, useMemo } from "react"
 
@@ -8,6 +7,7 @@ import styled from "styled-components"
 import { AgreementStep } from "./agreementStep"
 import { BeginVerifyingStep } from "./beginVerifying"
 import { EmailDiscordVerificationStep } from "./emailDiscordVerificationStep"
+import { FatalErrorStep } from "./fatalErrorStep"
 import { FinalStep } from "./finalStep"
 import { GrantNameAndAddress } from "./grantNameAndAddress"
 import { GrantSocialSecurityNumber } from "./grantSocialSecurityNumber"
@@ -63,9 +63,6 @@ const RoutedStep: FC<{
 		case StepID.nftArtSelection: {
 			return <NftSelection {...options} />
 		}
-		/* case StepID.chainSelection: {
-			return <ChainSelection {...options} />
-		}*/
 		case StepID.finalStep: {
 			return <FinalStep {...options} />
 		}
@@ -78,9 +75,9 @@ const RoutedStep: FC<{
 		case StepID.subscribedStartStep: {
 			return <SubscribedStartStep {...options} />
 		}
-		default: {
-			return <H1>Something went wrong</H1>
-		}
+		case StepID.fatalError:
+		default:
+			return <FatalErrorStep {...options} />
 	}
 }
 

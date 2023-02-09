@@ -10,10 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Celo with metamask on the testpage
+- Fatal error page & restart button
+- Grant flow
 
 ### Changed
 
 ### Fixed
+
+NFT selection page related issues
 
 - If the user cancels a transaction, it still navigates to the success page, just to show an empty page
 

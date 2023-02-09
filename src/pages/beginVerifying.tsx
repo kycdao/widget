@@ -3,7 +3,7 @@ import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { useKycDao } from "@Hooks/useKycDao"
 
 import { PageProps } from "./pageProps"
-import { H1, KycDaoContext, StateContext, StepID } from "@Components/index"
+import { H1, StateContext, StepID } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
@@ -21,12 +21,12 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 			taxResidency,
 			messageTargetOrigin,
 			isEmailConfirmed,
+			grantFlowEnabled,
 		},
 	} = useContext(StateContext)
 	const kycDao = useKycDao()
 	const verifyingModalOpen = useRef(false)
 	const redirect = useChangePage()
-	const kycDaoContext = useContext(KycDaoContext)
 
 	const onComplete = useCallback(() => {
 		redirect(StepID.nftArtSelection)
@@ -34,20 +34,20 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	}, [redirect])
 
 	const onCancel = useCallback(() => {
-		if (kycDaoContext?.grantFlowEnabled) {
+		if (grantFlowEnabled) {
 			redirect(StepID.grantSocialSecurityNumberStep, StepID.loading, "prev")
 		} else {
 			redirect(StepID.taxResidenceStep, StepID.loading, "prev")
 		}
 		verifyingModalOpen.current = false
-	}, [kycDaoContext?.grantFlowEnabled, redirect])
+	}, [grantFlowEnabled, redirect])
 
 	useEffect(() => {
 		if (inactive || disabled || !kycDao || verifyingModalOpen.current) {
 			return
 		}
 
-		if (kycDaoContext?.grantFlowEnabled) {
+		if (grantFlowEnabled) {
 			redirect(StepID.loading, StepID.grantSocialSecurityNumberStep)
 		} else {
 			redirect(StepID.loading, StepID.taxResidenceStep)
@@ -95,7 +95,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 		taxResidency,
 		termsAccepted,
 		isEmailConfirmed,
-		kycDaoContext?.grantFlowEnabled,
+		grantFlowEnabled,
 		redirect,
 	])
 

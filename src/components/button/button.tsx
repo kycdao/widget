@@ -209,12 +209,4 @@ export const Button = styled(unstyledButton)<ButtonProps>`
 				`
 		}
 	}}
-
-	${({ centered }) =>
-		centered &&
-		css`
-			justify-content: center;
-			padding-left: 0;
-			padding-right: 0;
-		`}
 `

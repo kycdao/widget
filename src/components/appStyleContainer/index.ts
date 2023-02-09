@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const AppContainer = styled.div`
+export const AppStyleContainer = styled.div`
 	--kyc-sdk-primary-font: neue-machina;
 	--kyc-sdk-cybergreen: #00ffb3;
 	--kyc-sdk-cybergreen-35: rgba(0, 255, 177, 0.35);
