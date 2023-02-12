@@ -67,7 +67,7 @@ export const FinalStep: FC<PageProps> = ({
 		if (kycDao) {
 			setNftImageUrl(kycDao.mintingResult?.imageUrl)
 		}
-	}, [messageTargetOrigin, kycDao])
+	}, [kycDao])
 
 	const body = useCallback<StepPart>(
 		(props) => (
@@ -96,9 +96,9 @@ export const FinalStep: FC<PageProps> = ({
 	}, [messageTargetOrigin, chainExplorerUrl])
 
 	const footer = useCallback<StepPart>(
-		({ disabled, inactive }) =>
-			chainExplorerUrl ? (
-				<>
+		({ disabled, inactive }) => (
+			<>
+				{chainExplorerUrl && (
 					<NftButtonWrapper>
 						<Button
 							disabled={disabled}
@@ -110,17 +110,19 @@ export const FinalStep: FC<PageProps> = ({
 							Check on chain
 						</Button>
 					</NftButtonWrapper>
-					<SubmitButton
-						black
-						fullWidth
-						autoFocus={!inactive && !disabled}
-						disabled={disabled}
-						onClick={onFinish}
-						inactive={inactive}
-						label={"Finish"}
-					/>
-				</>
-			) : null,
+				)}
+				<SubmitButton
+					black
+					fullWidth
+					autoFocus={!inactive && !disabled}
+					disabled={disabled}
+					onClick={onFinish}
+					inactive={inactive}
+					label={"Finish"}
+					label2={"Finish"}
+				/>
+			</>
+		),
 		[onCheck, chainExplorerUrl, onFinish]
 	)
 

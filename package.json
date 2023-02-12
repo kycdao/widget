@@ -59,7 +59,7 @@
 		"./dist/": "./dist/"
 	},
 	"dependencies": {
-		"@kycdao/kycdao-sdk": "^0.6.0",
+		"@kycdao/kycdao-sdk": "^0.6.1",
 		"buffer": "^6.0.3",
 		"clsx": "^1.2.1",
 		"near-api-js": "0.44.2",
@@ -109,7 +109,7 @@
 		"@testing-library/user-event": "^14.4.3",
 		"@types/jest": "^29.4.0",
 		"@types/node": "^18.13.0",
-		"@types/react": "^18.0.27",
+		"@types/react": "^18.0.28",
 		"@types/react-dom": "^18.0.10",
 		"@types/styled-components": "^5.1.26",
 		"@typescript-eslint/eslint-plugin": "^5.51.0",
@@ -120,7 +120,7 @@
 		"concurrently": "^7.6.0",
 		"create-react-app": "^5.0.1",
 		"cross-env": "^7.0.3",
-		"eslint": "^8.33.0",
+		"eslint": "^8.34.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^8.6.0",
 		"eslint-plugin-import": "^2.27.5",

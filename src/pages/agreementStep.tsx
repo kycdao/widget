@@ -69,6 +69,8 @@ export const AgreementStep: FC<PageProps> = ({
 	const onSubmit = useCallback(async () => {
 		try {
 			if (await checkVerification()) {
+				// If verified, then definitely accepted the terms
+				dispatch({ payload: true, type: DataActionTypes.termsAcceptedChange })
 				redirect(StepID.nftArtSelection, StepID.AgreementStep)
 			} else {
 				redirect(StepID.kycDAOMembershipStep, StepID.AgreementStep)
@@ -76,7 +78,7 @@ export const AgreementStep: FC<PageProps> = ({
 		} catch (e) {
 			console.error(e)
 		}
-	}, [redirect, checkVerification])
+	}, [redirect, checkVerification, dispatch])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
