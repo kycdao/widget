@@ -5,13 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.4.4] - yyyy-mm-dd
+## [0.4.4] - 2023-02-13
 
 ### Fixed
 
 - If a user is verified, then it set the agrement to be accepted
+- Various other fixes & improvements
 
-## [0.4.3] - yyyy-mm-dd
+## [0.4.3] - 2023-01-29
 
 ### Added
 
