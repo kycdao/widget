@@ -111,6 +111,8 @@
 		<!--<link rel="manifest" href="%PUBLIC_URL%/asset-manifest.json" /> -->
 		<title>Widget Example App</title>
 		<script>
+			let sdkInstance
+
 			const walletConnectEvmProvider = new WalletConnectProvider.default({
 				rpc: {
 					1: "https://rpc.ankr.com/eth",
@@ -149,6 +151,25 @@
 					},
 					onReady: (sdkInstance) => {
 						console.log("🥁 🥁 🥁 The sdk instance is:", sdkInstance)
+						sdkInstance = sdkInstance
+
+						let nftCheckInterval
+
+						function writeNFT() {
+							if (sdkInstance.kycDao.connectedWallet) {
+								sdkInstance.kycDao
+									.hasValidNft("KYC")
+									.then((value) => {
+										console.log(
+											`This wallet ${value ? "has" : "has not"} a valid nft.`
+										)
+									})
+									.catch(console.error)
+								clearInterval(nftCheckInterval)
+							}
+						}
+
+						nftCheckInterval = setInterval(writeNFT, 1000)
 					},
 				})
 
