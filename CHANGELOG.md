@@ -7,22 +7,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.4.4] - 2023-02-13
 
+### Added
+
+- Fatal error page & restart button
+- Grant flow
+
 ### Fixed
 
 - If a user is verified, then it set the agrement to be accepted
 - Various other fixes & improvements
+
+### Changed
+
+- On the final page, the finish remains finish
 
 ## [0.4.3] - 2023-01-29
 
 ### Added
 
 - Celo with metamask on the testpage
-- Fatal error page & restart button
-- Grant flow
-
-### Changed
-
-- On the final page, the finish remains finish
 
 ### Fixed
 
