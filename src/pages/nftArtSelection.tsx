@@ -48,6 +48,7 @@ const NftImageContainer = styled.div<{ selected: boolean }>`
 	width: 150px;
 	border-radius: 999rem;
 	padding: 0.5em;
+	box-sizing: content-box;
 
 	${({ selected }) => css`
 		border: 2px solid ${selected ? "black" : "transparent"};
