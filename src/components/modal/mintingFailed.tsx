@@ -15,7 +15,7 @@ import { Button } from "@Components/button/button"
 export const MintingFailedModal = () => {
 	const minting = useMinting()
 	const {
-		data: { subscriptionYears, imageId },
+		data: { subscriptionYears, imageId, errorModalBody },
 	} = useContext(StateContext)
 
 	const onRetry = useCallback(() => {
@@ -41,6 +41,7 @@ export const MintingFailedModal = () => {
 				<Policy>
 					Minting failed because of an error. Please try mint kycNFT again.
 				</Policy>
+				{errorModalBody && <Policy>{errorModalBody}</Policy>}
 			</ModalBody>
 
 			<ModalButtonWrapper>

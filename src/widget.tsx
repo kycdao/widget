@@ -12,7 +12,7 @@ import {
 
 export interface KycDaoWidgetConfig {
 	config: SdkConfiguration
-	onFail?: (reason: string) => void
+	onFail?: (reason?: string) => void
 	onSuccess?: (data?: string) => void
 	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
 }

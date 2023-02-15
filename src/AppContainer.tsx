@@ -5,6 +5,7 @@ import {
 	SdkConfiguration,
 } from "@kycdao/kycdao-sdk"
 import { getNetworkType } from "@Utils/getNetworkType"
+import { KycDaoClientMessageBody } from "KycDaoClientCommon"
 import {
 	useMemo,
 	useEffect,
@@ -74,6 +75,22 @@ const AppContainerRender: ForwardRefRenderFunction<
 						payload: isModal,
 					})
 
+					if (
+						kycDao.kycDao.connectedWallet?.blockchain === "Near" &&
+						(await kycDao.kycDao.hasValidNft("KYC")) /* ||
+							(await kycDao.kycDao.hasValidNft("AccreditedInvestor"))*/
+					) {
+						window.parent.postMessage(
+							{
+								type: "kycDaoSuccess",
+								data: "Already has an nft on near.",
+							} as KycDaoClientMessageBody,
+							data.messageTargetOrigin
+						)
+
+						return
+					}
+
 					let startPage
 					if (kycDao.redirectEvent) {
 						switch (kycDao.redirectEvent) {
@@ -140,7 +157,13 @@ const AppContainerRender: ForwardRefRenderFunction<
 				}
 			})()
 		}
-	}, [kycDao, iframeOptions, isModal, config.enabledBlockchainNetworks])
+	}, [
+		kycDao,
+		iframeOptions,
+		isModal,
+		config.enabledBlockchainNetworks,
+		data.messageTargetOrigin,
+	])
 
 	useEffect(() => {
 		KycDao.initialize(config)
@@ -164,12 +187,15 @@ const AppContainerRender: ForwardRefRenderFunction<
 			const close = OnClose.subscribe(() => {
 				if (data.currentPage === StepID.finalStep) {
 					window.parent.postMessage(
-						{ type: "kycDaoSuccess", data: data.chainExplorerUrl },
+						{
+							type: "kycDaoSuccess",
+							data: data.chainExplorerUrl,
+						} as KycDaoClientMessageBody,
 						data.messageTargetOrigin
 					)
 				} else {
 					window.parent.postMessage(
-						{ type: "kycDaoCloseModal" },
+						{ type: "kycDaoCloseModal" } as KycDaoClientMessageBody,
 						data.messageTargetOrigin
 					)
 				}
