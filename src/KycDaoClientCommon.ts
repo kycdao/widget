@@ -27,7 +27,7 @@ export type KycDaoClientInterface = {
 	isSuccessful: boolean
 	configFromUrl?: boolean
 	backdrop: boolean
-	onFail?: (reason: string) => void
+	onFail?: (reason?: string) => void
 	onSuccess?: (data?: string) => void
 	open: () => void
 	close: () => void
@@ -51,7 +51,7 @@ export type KycDaoClientOptions = {
 	configFromUrl?: boolean
 	backdrop?: boolean
 	iframeOptions?: IframeOptions
-	onFail?: (reason: string) => void
+	onFail?: (reason?: string) => void
 	onSuccess?: (data?: string) => void
 	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
 }
@@ -88,7 +88,12 @@ export type KycDaoClientIFrameUrlParameters = {
 	messageTargetOrigin: string
 } & SdkConfiguration
 
+export type KycDaoClientMessageBody = {
+	data?: string
+	type: KycDaoClientMessages
+}
+
 export type KycDaoClientMessage = {
 	origin: string
-	data: { data: string; type: KycDaoClientMessages }
+	data: KycDaoClientMessageBody
 }

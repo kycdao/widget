@@ -5,6 +5,7 @@ import {
 	SdkConfiguration,
 } from "@kycdao/kycdao-sdk"
 import { getNetworkType } from "@Utils/getNetworkType"
+import { KycDaoClientMessageBody } from "KycDaoClientCommon"
 import {
 	useMemo,
 	useEffect,
@@ -64,6 +65,14 @@ const AppContainerRender: ForwardRefRenderFunction<
 		if (kycDao) {
 			;(async () => {
 				try {
+					const messageTargetOrigin =
+						iframeOptions?.messageTargetOrigin || window.location.origin
+
+					dispatch({
+						payload: messageTargetOrigin,
+						type: DataActionTypes.setMessageTargetOrigin,
+					})
+
 					await kycDao.kycDao.connectWallet(
 						getNetworkType(config.enabledBlockchainNetworks[0])
 					)
@@ -73,6 +82,22 @@ const AppContainerRender: ForwardRefRenderFunction<
 						type: DataActionTypes.setModalMode,
 						payload: isModal,
 					})
+
+					if (
+						kycDao.kycDao.connectedWallet?.blockchain === "Near" &&
+						(await kycDao.kycDao.hasValidNft("KYC")) /* ||
+							(await kycDao.kycDao.hasValidNft("AccreditedInvestor"))*/
+					) {
+						window.parent.postMessage(
+							{
+								type: "kycDaoSuccess",
+								data: "Already has an nft on near.",
+							} as KycDaoClientMessageBody,
+							messageTargetOrigin
+						)
+
+						return
+					}
 
 					let startPage
 					if (kycDao.redirectEvent) {
@@ -113,11 +138,6 @@ const AppContainerRender: ForwardRefRenderFunction<
 						type: DataActionTypes.changePage,
 					})
 
-					dispatch({
-						payload:
-							iframeOptions?.messageTargetOrigin || window.location.origin,
-						type: DataActionTypes.setMessageTargetOrigin,
-					})
 					if (!isModal) {
 						dispatch({
 							type: DataActionTypes.SetHeaderButtonState,
@@ -164,12 +184,15 @@ const AppContainerRender: ForwardRefRenderFunction<
 			const close = OnClose.subscribe(() => {
 				if (data.currentPage === StepID.finalStep) {
 					window.parent.postMessage(
-						{ type: "kycDaoSuccess", data: data.chainExplorerUrl },
+						{
+							type: "kycDaoSuccess",
+							data: data.chainExplorerUrl,
+						} as KycDaoClientMessageBody,
 						data.messageTargetOrigin
 					)
 				} else {
 					window.parent.postMessage(
-						{ type: "kycDaoCloseModal" },
+						{ type: "kycDaoCloseModal" } as KycDaoClientMessageBody,
 						data.messageTargetOrigin
 					)
 				}
