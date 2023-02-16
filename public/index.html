@@ -10,11 +10,14 @@
 				padding: 1em;
 				border: solid black 2px;
 				border-radius: 10%;
+				background: black;
+				color: white;
+				border-radius: 5px;
 			}
 
 			.chainSelectorButton:hover {
-				background-color: grey;
-				color: white;
+				background-color: #00ffb3;
+				color: black;
 			}
 
 			[type="checkbox"]:hover {
@@ -171,6 +174,11 @@
 
 						nftCheckInterval = setInterval(writeNFT, 1000)
 					},
+					onSuccess: (data) => {
+						if ((data = "Already has an nft on near.")) {
+							alert("Already has an nft on near.")
+						}
+					},
 				})
 
 				client.open()
@@ -307,6 +315,7 @@
 					<a target="_blank" href="https://discord.kycDAO.xyz">
 						discord.kycDAO.xyz
 					</a>
+					<p>v<%= htmlWebpackPlugin.options.packageVersion %></p>
 				</div>
 			</div>
 		</div>

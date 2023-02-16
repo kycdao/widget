@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [0.4.5] - 2023-02-XX
+
+### Added
+
+- The returning flow doesn't trigger anymore on NEAR
+
+### Fixed
+
+- A messageTargetOrigin related error
+- An NFT selection page visual bug related to an NFT image padding
+### Changed
+
+
 ## [0.4.4] - 2023-02-13
 
 ### Added

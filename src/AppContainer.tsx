@@ -65,6 +65,14 @@ const AppContainerRender: ForwardRefRenderFunction<
 		if (kycDao) {
 			;(async () => {
 				try {
+					const messageTargetOrigin =
+						iframeOptions?.messageTargetOrigin || window.location.origin
+
+					dispatch({
+						payload: messageTargetOrigin,
+						type: DataActionTypes.setMessageTargetOrigin,
+					})
+
 					await kycDao.kycDao.connectWallet(
 						getNetworkType(config.enabledBlockchainNetworks[0])
 					)
@@ -85,7 +93,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 								type: "kycDaoSuccess",
 								data: "Already has an nft on near.",
 							} as KycDaoClientMessageBody,
-							data.messageTargetOrigin
+							messageTargetOrigin
 						)
 
 						return
@@ -130,11 +138,6 @@ const AppContainerRender: ForwardRefRenderFunction<
 						type: DataActionTypes.changePage,
 					})
 
-					dispatch({
-						payload:
-							iframeOptions?.messageTargetOrigin || window.location.origin,
-						type: DataActionTypes.setMessageTargetOrigin,
-					})
 					if (!isModal) {
 						dispatch({
 							type: DataActionTypes.SetHeaderButtonState,
@@ -157,13 +160,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 				}
 			})()
 		}
-	}, [
-		kycDao,
-		iframeOptions,
-		isModal,
-		config.enabledBlockchainNetworks,
-		data.messageTargetOrigin,
-	])
+	}, [kycDao, iframeOptions, isModal, config.enabledBlockchainNetworks])
 
 	useEffect(() => {
 		KycDao.initialize(config)

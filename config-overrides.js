@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const WebpackManifestPlugin =
 	require("webpack-manifest-plugin").WebpackManifestPlugin
 const { SubresourceIntegrityPlugin } = require("webpack-subresource-integrity")
+const { version } = require("./package.json")
 
 module.exports = function override(config, env) {
 	const fallback = {
@@ -80,6 +81,11 @@ module.exports = function override(config, env) {
 		1
 	)
 
+	config.plugins.splice(
+		config.plugins.findIndex((plugin) => plugin instanceof HtmlWebpackPlugin),
+		1
+	)
+
 	/*config.plugins.push(
 		new MiniCssExtractPlugin({
 			filename: "[name].css",
@@ -96,24 +102,47 @@ module.exports = function override(config, env) {
 				{
 					inject: true,
 					template: "public/iframe.html",
+					filename: "iframe.html",
 				},
-				env === "production"
-					? {
-							minify: {
-								removeComments: true,
-								collapseWhitespace: true,
-								removeRedundantAttributes: true,
-								useShortDoctype: true,
-								removeEmptyAttributes: true,
-								removeStyleLinkTypeAttributes: true,
-								keepClosingSlash: true,
-								minifyJS: true,
-								minifyCSS: true,
-								minifyURLs: true,
-							},
-					  }
-					: undefined,
-				{ filename: "iframe.html" }
+				env === "production" && {
+					minify: {
+						removeComments: true,
+						collapseWhitespace: true,
+						removeRedundantAttributes: true,
+						useShortDoctype: true,
+						removeEmptyAttributes: true,
+						removeStyleLinkTypeAttributes: true,
+						keepClosingSlash: true,
+						minifyJS: true,
+						minifyCSS: true,
+						minifyURLs: true,
+					},
+				}
+			)
+		),
+		new HtmlWebpackPlugin(
+			Object.assign(
+				{},
+				{
+					packageVersion: version,
+					inject: true,
+					template: "public/index.html",
+					filename: "index.html",
+				},
+				env === "production" && {
+					minify: {
+						removeComments: true,
+						collapseWhitespace: true,
+						removeRedundantAttributes: true,
+						useShortDoctype: true,
+						removeEmptyAttributes: true,
+						removeStyleLinkTypeAttributes: true,
+						keepClosingSlash: true,
+						minifyJS: true,
+						minifyCSS: true,
+						minifyURLs: true,
+					},
+				}
 			)
 		)
 	)
