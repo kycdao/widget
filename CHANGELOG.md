@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - The returning flow doesn't trigger anymore on NEAR
+- Version footer for the test page
+- Version message
 
 ### Fixed
 

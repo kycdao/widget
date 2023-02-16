@@ -30,6 +30,7 @@ export enum DataActionTypes {
 	setModalMode,
 	grantNameAndAddressChange,
 	grantSocialSecurityNumberChange,
+	setNftImageUrl,
 }
 
 export enum StepID {

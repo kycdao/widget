@@ -17,7 +17,17 @@
 				}
 			}
 		],
-		"@babel/plugin-transform-typescript"
+		"@babel/plugin-transform-typescript",
+		[
+			"transform-inline-environment-variables",
+			{
+				"include": [
+					"npm_package_version",
+					"npm_package_name",
+					"REACT_APP_GIT_HASH"
+				]
+			}
+		]
 	],
 	"targets": "> 0.25%, not dead"
 }

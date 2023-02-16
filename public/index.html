@@ -315,7 +315,13 @@
 					<a target="_blank" href="https://discord.kycDAO.xyz">
 						discord.kycDAO.xyz
 					</a>
-					<p>v<%= htmlWebpackPlugin.options.packageVersion %></p>
+					<p>
+						<a href="https://github.com/kycdao/widget" target="_blank">
+							<%= htmlWebpackPlugin.options.packageName %>
+						</a>
+						v<%= htmlWebpackPlugin.options.packageVersion %>+<%=
+						htmlWebpackPlugin.options.hash %>
+					</p>
 				</div>
 			</div>
 		</div>

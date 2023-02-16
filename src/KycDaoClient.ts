@@ -112,6 +112,10 @@ function kycDaoClient(
 			onReady: this.onReady,
 		})
 	}
+
+	console.log(
+		`Thank you for using ${process.env.npm_package_name} version ${process.env.npm_package_version}+${process.env.REACT_APP_GIT_HASH}`
+	)
 }
 
 kycDaoClient.prototype.messageHndlr = function (
