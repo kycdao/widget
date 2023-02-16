@@ -31,9 +31,15 @@ export const useMinting = () => {
 					subscriptionYears,
 				})
 				if (result) {
+					const { imageUrl, transactionUrl } = result
+
 					dispatch({
 						type: DataActionTypes.setChainExplorerUrl,
-						payload: result.transactionUrl,
+						payload: transactionUrl,
+					})
+					dispatch({
+						type: DataActionTypes.setNftImageUrl,
+						payload: imageUrl,
 					})
 				} else {
 					throw Error("Something went wrong")

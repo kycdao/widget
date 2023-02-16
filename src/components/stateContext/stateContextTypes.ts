@@ -53,6 +53,7 @@ export enum StepID {
 }
 
 export type Data = {
+	nftImageUrl?: string
 	resetKey?: number
 	imageId?: string
 	chain?: string
@@ -171,6 +172,11 @@ export type SetModalMode = {
 	payload: boolean
 }
 
+export type SetNftImageUrl = {
+	type: DataActionTypes.setNftImageUrl
+	payload: string
+}
+
 export type GrantNameAndAddressChange = {
 	type: DataActionTypes.grantNameAndAddressChange
 	payload: { name?: string; address?: string }
@@ -200,6 +206,7 @@ export type DataChangeActions =
 	| SetModalMode
 	| GrantNameAndAddressChange
 	| GrantSocialSecurityNumberChange
+	| SetNftImageUrl
 
 export type ModalType =
 	| "emailVerification"

@@ -51,6 +51,8 @@ export const reducer = (
 		}
 		case DataActionTypes.taxResidenceChange:
 			return { ...data, taxResidency: payload }
+		case DataActionTypes.setNftImageUrl:
+			return { ...data, nftImageUrl: payload }
 		case DataActionTypes.termsAcceptedChange:
 			return { ...data, termsAccepted: payload }
 		case DataActionTypes.setVerifyingModalOpen:

@@ -93,10 +93,10 @@ module.exports = function override(config, env) {
 
 	config.plugins.push(
 		new webpack.DefinePlugin({
-			"process.env.$npm_package_name": JSON.stringify(
+			"process.env.npm_package_name": JSON.stringify(
 				process.env.npm_package_name
 			),
-			"process.env.$npm_package_version": JSON.stringify(
+			"process.env.npm_package_version": JSON.stringify(
 				process.env.npm_package_version
 			),
 			"process.env.REACT_APP_GIT_HASH": JSON.stringify(
