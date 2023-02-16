@@ -171,6 +171,7 @@
 	},
 	"resolutions": {
 		"nth-check ": "^2.0.1",
-		"tar": "^4.4.18"
+		"tar": "^4.4.18",
+		"@svgr/webpack": "^6.5.1"
 	}
 }
