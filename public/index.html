@@ -175,7 +175,7 @@
 						nftCheckInterval = setInterval(writeNFT, 1000)
 					},
 					onSuccess: (data) => {
-						if ((data = "Already has an nft on near.")) {
+						if (data === "Already has an nft on near.") {
 							alert("Already has an nft on near.")
 						}
 					},
