@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - A messageTargetOrigin related error
 - An NFT selection page visual bug related to an NFT image padding
+- Security issues in dependencies
 ### Changed
 
 
