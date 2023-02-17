@@ -52,6 +52,10 @@ export const useMinting = () => {
 					type: DataActionTypes.changePage,
 					payload: { prev: currentPage, current: StepID.finalStep },
 				})
+				dispatch({
+					type: DataActionTypes.SetProcessSucess,
+					payload: true,
+				})
 			} catch (e: unknown) {
 				if (typeof e === "object" && !(e instanceof Error)) {
 					console.error(JSON.stringify(e))

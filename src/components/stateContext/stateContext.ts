@@ -21,6 +21,15 @@ export const reducer = (
 	{ payload, type }: DataChangeActions
 ): Data => {
 	switch (type) {
+		case DataActionTypes.SetAlreadyHaveAnNftOnThisChain: {
+			return { ...data, alreadyHaveAnNftOnThisChain: payload }
+		}
+		case DataActionTypes.SetProcessSucess: {
+			return { ...data, isProcessSuccess: payload }
+		}
+		case DataActionTypes.SetReturnUserFlow: {
+			return { ...data, returningUserFlow: payload }
+		}
 		case DataActionTypes.setModalMode:
 			return { ...data, isModal: payload }
 		case DataActionTypes.setMessageTargetOrigin:
@@ -97,6 +106,8 @@ export const reducer = (
 }
 
 export const DefaultData = {
+	returningUserFlow: false,
+	isProcessSuccess: false,
 	closeButtonState: "enabled",
 	currentPage: StepID.loading,
 	email: "",
@@ -119,6 +130,7 @@ export const DefaultData = {
 	width: 650,
 	height: 400,
 	grantFlowEnabled: false,
+	alreadyHaveAnNftOnThisChain: false,
 } as Data
 
 export const StateContext = createContext<{

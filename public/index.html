@@ -71,6 +71,7 @@
 				justify-content: space-around;
 				flex-wrap: wrap;
 				gap: 1em;
+				padding-bottom: 1em;
 			}
 
 			.flexRow {
@@ -175,8 +176,12 @@
 						nftCheckInterval = setInterval(writeNFT, 1000)
 					},
 					onSuccess: (data) => {
-						if (data === "Already has an nft on near.") {
-							alert("Already has an nft on near.")
+						if (data) {
+							const i = /Already has an nft on (.*)\./g.exec(data)
+
+							if (i.length > 0) {
+								console.log(`Already has an nft on ${i[1]}.`)
+							}
 						}
 					},
 				})

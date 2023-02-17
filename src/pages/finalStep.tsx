@@ -15,8 +15,7 @@ import {
 	StepPart,
 	SubmitButton,
 } from "@Components/index"
-
-const Header = () => <H1>Congrats!</H1>
+import { KycDaoClientMessageBody } from "KycDaoClientCommon"
 
 export const NftButtonWrapper = styled.div`
 	display: flex;
@@ -37,8 +36,19 @@ export const FinalStep: FC<PageProps> = ({
 	const kycDao = useKycDao()
 	const {
 		dispatch,
-		data: { messageTargetOrigin, chainExplorerUrl, nftImageUrl },
+		data: {
+			messageTargetOrigin,
+			chainExplorerUrl,
+			nftImageUrl,
+			returningUserFlow,
+			alreadyHaveAnNftOnThisChain,
+		},
 	} = useContext(StateContext)
+
+	const header = useCallback(
+		() => (returningUserFlow ? <></> : <H1>Congrats!</H1>),
+		[returningUserFlow]
+	)
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled) {
@@ -75,8 +85,10 @@ export const FinalStep: FC<PageProps> = ({
 		(props) => (
 			<>
 				<CenteredH1>
-					You have successfully minted your kycNFT on{" "}
-					{kycDao?.kycDao.connectedWallet?.blockchainNetwork}
+					{returningUserFlow
+						? "You already have a "
+						: "You have successfully minted your "}
+					kycNFT on {kycDao?.kycDao.connectedWallet?.blockchainNetwork}
 				</CenteredH1>
 				<NftImageContainer>
 					{displayedNftImageUrl ? (
@@ -92,15 +104,33 @@ export const FinalStep: FC<PageProps> = ({
 				</NftImageContainer>
 			</>
 		),
-		[kycDao, displayedNftImageUrl]
+		[kycDao, displayedNftImageUrl, returningUserFlow]
 	)
 
-	const onFinish = useCallback(() => {
-		window.parent.postMessage(
-			{ type: "kycDaoSuccess", data: chainExplorerUrl },
-			messageTargetOrigin
-		)
-	}, [messageTargetOrigin, chainExplorerUrl])
+	const onFinish = useCallback(async () => {
+		if (alreadyHaveAnNftOnThisChain) {
+			window.parent.postMessage(
+				{
+					type: "kycDaoSuccess",
+					data: `Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`,
+				} as KycDaoClientMessageBody,
+				messageTargetOrigin
+			)
+		} else {
+			window.parent.postMessage(
+				{
+					type: "kycDaoSuccess",
+					data: chainExplorerUrl,
+				} as KycDaoClientMessageBody,
+				messageTargetOrigin
+			)
+		}
+	}, [
+		messageTargetOrigin,
+		chainExplorerUrl,
+		alreadyHaveAnNftOnThisChain,
+		kycDao?.kycDao.connectedWallet?.blockchainNetwork,
+	])
 
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive }) => (
@@ -143,7 +173,7 @@ export const FinalStep: FC<PageProps> = ({
 			disabled={disabled}
 			animation={animation}
 			className={className}
-			header={Header}
+			header={header}
 			body={body}
 			footer={footer}
 		/>

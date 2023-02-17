@@ -31,6 +31,9 @@ export enum DataActionTypes {
 	grantNameAndAddressChange,
 	grantSocialSecurityNumberChange,
 	setNftImageUrl,
+	SetReturnUserFlow,
+	SetProcessSucess,
+	SetAlreadyHaveAnNftOnThisChain,
 }
 
 export enum StepID {
@@ -83,6 +86,9 @@ export type Data = {
 		address?: string
 		socialSecurityNumber?: string
 	}
+	returningUserFlow: boolean
+	isProcessSuccess: boolean
+	alreadyHaveAnNftOnThisChain: boolean
 }
 
 export type HeaderButtonState = "enabled" | "disabled" | "hidden"
@@ -187,6 +193,21 @@ export type GrantSocialSecurityNumberChange = {
 	payload: Data["grantFlow"]["socialSecurityNumber"]
 }
 
+export type SetReturnUserFlowChange = {
+	type: DataActionTypes.SetReturnUserFlow
+	payload: boolean
+}
+
+export type SetProcessSucess = {
+	type: DataActionTypes.SetProcessSucess
+	payload: boolean
+}
+
+export type SetAlreadyHaveAnNftOnThisChain = {
+	type: DataActionTypes.SetAlreadyHaveAnNftOnThisChain
+	payload: boolean
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -207,6 +228,9 @@ export type DataChangeActions =
 	| GrantNameAndAddressChange
 	| GrantSocialSecurityNumberChange
 	| SetNftImageUrl
+	| SetReturnUserFlowChange
+	| SetProcessSucess
+	| SetAlreadyHaveAnNftOnThisChain
 
 export type ModalType =
 	| "emailVerification"

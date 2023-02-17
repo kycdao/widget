@@ -84,17 +84,31 @@ const AppContainerRender: ForwardRefRenderFunction<
 					})
 
 					if (
-						kycDao.kycDao.connectedWallet?.blockchain === "Near" &&
-						(await kycDao.kycDao.hasValidNft("KYC")) /* ||
+						await kycDao.kycDao.hasValidNft("KYC") /* ||
 							(await kycDao.kycDao.hasValidNft("AccreditedInvestor"))*/
 					) {
-						window.parent.postMessage(
-							{
-								type: "kycDaoSuccess",
-								data: "Already has an nft on near.",
-							} as KycDaoClientMessageBody,
-							messageTargetOrigin
-						)
+						dispatch({
+							payload: {
+								current: StepID.finalStep,
+								prev: StepID.loading,
+							},
+							type: DataActionTypes.changePage,
+						})
+
+						dispatch({
+							payload: true,
+							type: DataActionTypes.SetReturnUserFlow,
+						})
+
+						dispatch({
+							payload: true,
+							type: DataActionTypes.SetProcessSucess,
+						})
+
+						dispatch({
+							payload: true,
+							type: DataActionTypes.SetAlreadyHaveAnNftOnThisChain,
+						})
 
 						return
 					}
@@ -182,11 +196,13 @@ const AppContainerRender: ForwardRefRenderFunction<
 	useEffect(() => {
 		if (isModal) {
 			const close = OnClose.subscribe(() => {
-				if (data.currentPage === StepID.finalStep) {
+				if (data.isProcessSuccess) {
 					window.parent.postMessage(
 						{
 							type: "kycDaoSuccess",
-							data: data.chainExplorerUrl,
+							data: data.alreadyHaveAnNftOnThisChain
+								? `Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`
+								: data.chainExplorerUrl,
 						} as KycDaoClientMessageBody,
 						data.messageTargetOrigin
 					)
@@ -199,7 +215,14 @@ const AppContainerRender: ForwardRefRenderFunction<
 			})
 			return close.unsubscribe.bind(close)
 		}
-	}, [data, isModal])
+	}, [
+		data.chainExplorerUrl,
+		data.isProcessSuccess,
+		data.messageTargetOrigin,
+		isModal,
+		kycDao?.kycDao.connectedWallet?.blockchainNetwork,
+		data.alreadyHaveAnNftOnThisChain,
+	])
 
 	if (!kycDao) {
 		return (

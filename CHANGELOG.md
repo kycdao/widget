@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.4.6] - 2023-02-XX
 
+### Added
+- If the user has an nft on the currrent chain, they go to the final step instantly
+
 ### Fixed
 - Font size related issue on taxresidence selector & minting
 
@@ -24,8 +27,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - An NFT selection page visual bug related to an NFT image padding
 - Security issues in dependencies
 - Freshly minted nft does not shown in some cases
-### Changed
-
 
 ## [0.4.4] - 2023-02-13
 
