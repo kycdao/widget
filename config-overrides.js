@@ -6,7 +6,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const WebpackManifestPlugin =
 	require("webpack-manifest-plugin").WebpackManifestPlugin
 const { SubresourceIntegrityPlugin } = require("webpack-subresource-integrity")
-const { version } = require("./package.json")
 
 module.exports = function override(config, env) {
 	const fallback = {
@@ -93,6 +92,17 @@ module.exports = function override(config, env) {
 	)*/
 
 	config.plugins.push(
+		new webpack.DefinePlugin({
+			"process.env.npm_package_name": JSON.stringify(
+				process.env.npm_package_name
+			),
+			"process.env.npm_package_version": JSON.stringify(
+				process.env.npm_package_version
+			),
+			"process.env.REACT_APP_GIT_HASH": JSON.stringify(
+				process.env.REACT_APP_GIT_HASH
+			),
+		}),
 		new SubresourceIntegrityPlugin({
 			enabled: env === "production",
 		}),
@@ -124,7 +134,9 @@ module.exports = function override(config, env) {
 			Object.assign(
 				{},
 				{
-					packageVersion: version,
+					hash: process.env.REACT_APP_GIT_HASH,
+					packageVersion: process.env.npm_package_version,
+					packageName: process.env.npm_package_name,
 					inject: true,
 					template: "public/index.html",
 					filename: "index.html",

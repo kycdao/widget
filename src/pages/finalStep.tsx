@@ -37,7 +37,7 @@ export const FinalStep: FC<PageProps> = ({
 	const kycDao = useKycDao()
 	const {
 		dispatch,
-		data: { messageTargetOrigin, chainExplorerUrl },
+		data: { messageTargetOrigin, chainExplorerUrl, nftImageUrl },
 	} = useContext(StateContext)
 
 	const onTransitionDone = useCallback(() => {
@@ -57,7 +57,9 @@ export const FinalStep: FC<PageProps> = ({
 		}
 	}, [disabled, dispatch])
 
-	const [nftImageUrl, setNftImageUrl] = useState<string | undefined>("")
+	const [displayedNftImageUrl, setDisplayedNftImageUrl] = useState<
+		string | undefined
+	>("")
 
 	const onCheck = useCallback(() => {
 		window.open(chainExplorerUrl, "_blank")
@@ -65,9 +67,9 @@ export const FinalStep: FC<PageProps> = ({
 
 	useEffect(() => {
 		if (kycDao) {
-			setNftImageUrl(kycDao.mintingResult?.imageUrl)
+			setDisplayedNftImageUrl(kycDao.mintingResult?.imageUrl || nftImageUrl)
 		}
-	}, [kycDao])
+	}, [kycDao, nftImageUrl])
 
 	const body = useCallback<StepPart>(
 		(props) => (
@@ -77,15 +79,20 @@ export const FinalStep: FC<PageProps> = ({
 					{kycDao?.kycDao.connectedWallet?.blockchainNetwork}
 				</CenteredH1>
 				<NftImageContainer>
-					{nftImageUrl ? (
-						<img alt="" src={nftImageUrl} width="300px" height="300px" />
+					{displayedNftImageUrl ? (
+						<img
+							alt=""
+							src={displayedNftImageUrl}
+							width="300px"
+							height="300px"
+						/>
 					) : (
 						<Placeholder width="300px" height="300px" />
 					)}
 				</NftImageContainer>
 			</>
 		),
-		[kycDao, nftImageUrl]
+		[kycDao, displayedNftImageUrl]
 	)
 
 	const onFinish = useCallback(() => {

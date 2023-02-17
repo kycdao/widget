@@ -2334,9 +2334,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kycdao/kycdao-sdk@npm:^0.6.1":
-  version: 0.6.2
-  resolution: "@kycdao/kycdao-sdk@npm:0.6.2"
+"@kycdao/kycdao-sdk@npm:^0.6.3":
+  version: 0.6.3
+  resolution: "@kycdao/kycdao-sdk@npm:0.6.3"
   dependencies:
     "@solana/wallet-adapter-base": "npm:^0.9.18"
     "@solana/wallet-adapter-wallets": "npm:^0.19.3"
@@ -2349,7 +2349,7 @@ __metadata:
     react: ^18.1.0
     react-dom: ^18.1.0
     styled-components: ^5.3.5
-  checksum: 6011e170c7aed7346487577d2aee479101b9c63d0b275c122d049c46928a4a394c4881ccc24864ef6b51186d8a21fbbda0d28c9b3831696636bb824b966656a2
+  checksum: 184e52a7f397b410f41c5402234324ce056bad0e03a5e8d524fd660619bde01e8aa506b4237b5c72fb48510536d56ed1e80d674ec71d9dc4394d2915d4e00e5e
   languageName: node
   linkType: hard
 
@@ -2364,7 +2364,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.20.2"
     "@babel/preset-react": "npm:^7.18.6"
     "@babel/preset-typescript": "npm:^7.18.6"
-    "@kycdao/kycdao-sdk": "npm:^0.6.1"
+    "@kycdao/kycdao-sdk": "npm:^0.6.3"
     "@playwright/test": "npm:^1.30.0"
     "@testing-library/jest-dom": "npm:^5.16.5"
     "@testing-library/react": "npm:^13.4.0"
@@ -2372,11 +2372,12 @@ __metadata:
     "@types/jest": "npm:^29.4.0"
     "@types/node": "npm:^18.13.0"
     "@types/react": "npm:^18.0.28"
-    "@types/react-dom": "npm:^18.0.10"
+    "@types/react-dom": "npm:^18.0.11"
     "@types/styled-components": "npm:^5.1.26"
-    "@typescript-eslint/eslint-plugin": "npm:^5.51.0"
-    "@typescript-eslint/parser": "npm:^5.51.0"
+    "@typescript-eslint/eslint-plugin": "npm:^5.52.0"
+    "@typescript-eslint/parser": "npm:^5.52.0"
     babel-plugin-module-resolver: "npm:^5.0.0"
+    babel-plugin-transform-inline-environment-variables: "npm:^0.4.4"
     babel-plugin-transform-remove-imports: "npm:1.7.0"
     babel-preset-es2015: "npm:^6.24.1"
     buffer: "npm:^6.0.3"
@@ -2395,7 +2396,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-rxjs: "npm:^5.0.2"
     husky: "npm:^8.0.3"
-    lint-staged: "npm:^13.1.1"
+    lint-staged: "npm:^13.1.2"
     near-api-js: "npm:0.44.2"
     npm-dts-webpack-plugin: "npm:^1.3.12"
     persona: "npm:^4.7.2"
@@ -4361,7 +4362,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.0.10":
+"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.0.11":
   version: 18.0.11
   resolution: "@types/react-dom@npm:18.0.11"
   dependencies:
@@ -4532,7 +4533,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.5.0, @typescript-eslint/eslint-plugin@npm:^5.51.0":
+"@typescript-eslint/eslint-plugin@npm:^5.5.0, @typescript-eslint/eslint-plugin@npm:^5.52.0":
   version: 5.52.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.52.0"
   dependencies:
@@ -4567,7 +4568,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.5.0, @typescript-eslint/parser@npm:^5.51.0":
+"@typescript-eslint/parser@npm:^5.5.0, @typescript-eslint/parser@npm:^5.52.0":
   version: 5.52.0
   resolution: "@typescript-eslint/parser@npm:5.52.0"
   dependencies:
@@ -6218,6 +6219,13 @@ __metadata:
     babel-runtime: "npm:^6.22.0"
     regexpu-core: "npm:^2.0.0"
   checksum: 595b56da7e8d81a3a82b9058a1d77bc7ed19c181ea94c286a69d88d4b1792cb7076dfb9504b66834259a23959863c6b9340006d195337b3e3e15c86e8f9ac82f
+  languageName: node
+  linkType: hard
+
+"babel-plugin-transform-inline-environment-variables@npm:^0.4.4":
+  version: 0.4.4
+  resolution: "babel-plugin-transform-inline-environment-variables@npm:0.4.4"
+  checksum: 1136a5f0bcfc7f187efe4e663819b84c0f056ccac62a944c712ed87ffa0015dd789a45a6fae9978afaaf78aabdc28afb30236f4b9f274dd5157d5cbee1ca7469
   languageName: node
   linkType: hard
 
@@ -12357,7 +12365,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^13.1.1":
+"lint-staged@npm:^13.1.2":
   version: 13.1.2
   resolution: "lint-staged@npm:13.1.2"
   dependencies:
