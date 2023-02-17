@@ -322,6 +322,7 @@ const Clear = styled.div<{ active: boolean }>`
 const Option = styled.div`
 	height: 2.5em;
 	cursor: pointer;
+	font-size: 12pt;
 	line-height: 2.5em;
 	padding-left: 1.5em;
 	border-bottom: 1px solid var(--kyc-sdk-normal-blue-15);

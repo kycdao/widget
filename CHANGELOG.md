@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.4.6] - 2023-02-XX
 
+### Fixed
+- Font size related issue on taxresidence selector & minting
+
 ## [0.4.5] - 2023-02-17
 
 ### Added

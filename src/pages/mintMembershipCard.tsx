@@ -145,6 +145,7 @@ const Sum = styled.div`
 
 const Price = styled.span`
 	color: black;
+	font-size: 12pt;
 	font-weight: 800;
 	font-family: var(--kyc-sdk-primary-font);
 	-webkit-font-smoothing: antialiased;
@@ -182,6 +183,7 @@ const Value = styled.div`
 
 const YearCount = styled.div`
 	padding: 1rem;
+	font-size: 12pt;
 	width: 10rem;
 	text-align: center;
 	font-family: var(--kyc-sdk-primary-font);
