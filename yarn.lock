@@ -7013,9 +7013,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001426, caniuse-lite@npm:^1.0.30001449":
-  version: 1.0.30001453
-  resolution: "caniuse-lite@npm:1.0.30001453"
-  checksum: 650b1f3cb89782240efd2b3be710c2645c71743fbb2b6ce9c09db627729a8ddf3e710c5804835ebe8f9bdffdf8918e8ee8defa9b58f57b89eec65f7e4ea33cca
+  version: 1.0.30001456
+  resolution: "caniuse-lite@npm:1.0.30001456"
+  checksum: 5ae63db4c868c2e80fcdb026adcef229c3beafee691c33ca1ebc5d100f554166f055d8bbb1a32d35633e916dbc3838a456273379f5f482df155b21af341e7bb5
   languageName: node
   linkType: hard
 
@@ -8509,9 +8509,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.284":
-  version: 1.4.299
-  resolution: "electron-to-chromium@npm:1.4.299"
-  checksum: 5ec34ac1d60bdef82554b18f612f95b95554fc487521523d684eb47fda4a1232f768ef42459223fad04be29d007e69c07e3bc7018ed83f5a82699ff9277b5d2f
+  version: 1.4.301
+  resolution: "electron-to-chromium@npm:1.4.301"
+  checksum: 7217ab4f291f8519de6db467ff68f85a02b55dfa84ec7cabdfc1d06a58fe3a52262d2feae2ff636063bea250df7b6c0651e8060fb232222444e1927eba91b2b5
   languageName: node
   linkType: hard
 
@@ -9291,11 +9291,11 @@ __metadata:
   linkType: hard
 
 "esquery@npm:^1.4.0":
-  version: 1.4.1
-  resolution: "esquery@npm:1.4.1"
+  version: 1.4.2
+  resolution: "esquery@npm:1.4.2"
   dependencies:
     estraverse: "npm:^5.1.0"
-  checksum: 29b231899162a77b51f5255f30b7da1655e846e9a681a013a5902abca65d2a8ca1bb14983ef3c9dafde8b997ef2528236c1de410d5dac690816b4a79eef92ff4
+  checksum: f4f0c6b1c5e2a733ba5a501a3d7847ba56db99cb8b4d76f2a9c57fbf6d282b3e5f7c15ff7178771cc47a863b92a5648ff1b4977b4e9b8d8c36ff9fcb652ebb60
   languageName: node
   linkType: hard
 
@@ -12597,9 +12597,9 @@ __metadata:
   linkType: hard
 
 "lru-cache@npm:^7.7.1":
-  version: 7.15.0
-  resolution: "lru-cache@npm:7.15.0"
-  checksum: 22dcbb1c42905e0444fd1ab19d20d8a13648b0b0c344ecb9e72b31351c814dbff49bc416b166416f022f91c657294d7260bdd19419fe0d82c87d0d7588419baf
+  version: 7.16.0
+  resolution: "lru-cache@npm:7.16.0"
+  checksum: 689e5cc5ea7629947019cc0bcd0a21af1123570a5b28e719fe6f0f728deeae7b3b0c8668fff1d1872bb0dcdb2a8e6fd520959cdae82c0fa5e8eecebbe1b2cee6
   languageName: node
   linkType: hard
 
@@ -15568,8 +15568,8 @@ __metadata:
   linkType: hard
 
 "regexpu-core@npm:^5.2.1":
-  version: 5.3.0
-  resolution: "regexpu-core@npm:5.3.0"
+  version: 5.3.1
+  resolution: "regexpu-core@npm:5.3.1"
   dependencies:
     "@babel/regjsgen": "npm:^0.8.0"
     regenerate: "npm:^1.4.2"
@@ -15577,7 +15577,7 @@ __metadata:
     regjsparser: "npm:^0.9.1"
     unicode-match-property-ecmascript: "npm:^2.0.0"
     unicode-match-property-value-ecmascript: "npm:^2.1.0"
-  checksum: c48c26d18c5aeb49f6893e302998429eb5d3e0b05bd057dcd6d2c0ee392ea736666720ed044bd801d4d7e6d722c755907841ed23b99e05677af833ebed40f60d
+  checksum: 17b65af4a10718f48bc982444643491cb4666bebc3b564c3d2f1933cdbe56faaeedfdcf84debf1f3b3f579d22f3e5065b79b0c8614db56456933eab69942d00a
   languageName: node
   linkType: hard
 
@@ -17102,8 +17102,8 @@ __metadata:
   linkType: hard
 
 "tailwindcss@npm:^3.0.2":
-  version: 3.2.6
-  resolution: "tailwindcss@npm:3.2.6"
+  version: 3.2.7
+  resolution: "tailwindcss@npm:3.2.7"
   dependencies:
     arg: "npm:^5.0.2"
     chokidar: "npm:^3.5.3"
@@ -17133,7 +17133,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 80f8d7ed9839bb5c88f3ea7dafca900e1e26e5d99e664a362b737cd8e07d0c000776bbd60942016c8187467c55cefb79655e6895bf5b4f98a6ba16ad381dd227
+  checksum: 03f22a641944a6c31df4b344d39913c28a30a846e5ea2256e22eff799fd7dab2d73286ab82aecb6a9a0914c0ce2477cf180cc415dbf136120a66061f6f4a8b08
   languageName: node
   linkType: hard
 
@@ -17234,8 +17234,8 @@ __metadata:
   linkType: hard
 
 "terser@npm:^5.0.0, terser@npm:^5.10.0, terser@npm:^5.14.1":
-  version: 5.16.3
-  resolution: "terser@npm:5.16.3"
+  version: 5.16.4
+  resolution: "terser@npm:5.16.4"
   dependencies:
     "@jridgewell/source-map": "npm:^0.3.2"
     acorn: "npm:^8.5.0"
@@ -17243,7 +17243,7 @@ __metadata:
     source-map-support: "npm:~0.5.20"
   bin:
     terser: bin/terser
-  checksum: c2b3d3d083d0fa4974d3e8460d94e1e58ace839fb186b134621e31d3bc0499eccae48a259ec5d34432ec6450f4a8db1208a39206a1cf47f5ddb114a95da1abc9
+  checksum: 29f06da1e92bbee0478082c923b4cae1d0dc0971fc3d62268a41227b576aec93a4a6f4428502a70ac107f23df883744191ad13f614895ae98b349d0e576f1672
   languageName: node
   linkType: hard
 
@@ -18720,8 +18720,8 @@ __metadata:
   linkType: hard
 
 "yargs@npm:^17.0.0, yargs@npm:^17.3.1":
-  version: 17.6.2
-  resolution: "yargs@npm:17.6.2"
+  version: 17.7.0
+  resolution: "yargs@npm:17.7.0"
   dependencies:
     cliui: "npm:^8.0.1"
     escalade: "npm:^3.1.1"
@@ -18730,7 +18730,7 @@ __metadata:
     string-width: "npm:^4.2.3"
     y18n: "npm:^5.0.5"
     yargs-parser: "npm:^21.1.1"
-  checksum: 31c667c5c38d1738ac4ecb6f5228eb94f53d0555db4e4091bd55bc7864d96f3e58e1b8126e1b19bfa056f4f1aeb7643723c3a8309267df36e30afb91e796a3fc
+  checksum: 8e5a9e99d54c435987ec61d1347d6040c3b0883a82c706634ec1d99aceac98777ff0727c0fc3322af60c4001ca79cf97f0a95f952b122931ea707b0053693d16
   languageName: node
   linkType: hard
 

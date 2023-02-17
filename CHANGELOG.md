@@ -5,8 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.4.6] - 2023-02-XX
 
-## [0.4.5] - 2023-02-XX
+## [0.4.5] - 2023-02-17
 
 ### Added
 
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - A messageTargetOrigin related error
 - An NFT selection page visual bug related to an NFT image padding
 - Security issues in dependencies
+- Freshly minted nft does not shown in some cases
 ### Changed
 
 
