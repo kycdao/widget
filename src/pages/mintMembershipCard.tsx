@@ -1,4 +1,4 @@
-import { useContext, useCallback, FC, useEffect, useState } from "react"
+import { FC, useCallback, useContext, useEffect, useState } from "react"
 
 import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
@@ -151,6 +151,12 @@ const Price = styled.span`
 	-webkit-font-smoothing: antialiased;
 `
 
+const PriceWithStrikethrough = styled(Price)`
+	text-decoration: line-through;
+	font-weight: 500;
+	margin-left: 0.5rem;
+`
+
 const Value = styled.div`
 	color: black;
 	font-size: 12px;
@@ -196,6 +202,22 @@ const YearCount = styled.div`
 	justify-content: center;
 `
 
+const calculateMembershipCost = (years: number): number => {
+	// If the user buys for 1 year, the price is 0.
+	if (years === 1) {
+		return 0
+	}
+
+	// A membership costs $5 per year, but the first year is free.
+	const costPerYear = 5
+	const freeYear = 1
+	const remainingYears = years - freeYear
+
+	return costPerYear * remainingYears
+}
+
+const calculateOriginalMembershipCost = (years: number): number => years * 5
+
 export const MintStep: FC<PageProps> = ({
 	className,
 	animation,
@@ -209,7 +231,7 @@ export const MintStep: FC<PageProps> = ({
 	const kycDao = useKycDao()
 	const redirect = useChangePage()
 
-	const [yearCount, setYearCount] = useState<number | null>(null)
+	const [yearCount, setYearCount] = useState<number>(1)
 
 	const minting = useMinting()
 
@@ -268,7 +290,7 @@ export const MintStep: FC<PageProps> = ({
 				if (prevValue > 1) {
 					return --prevValue
 				}
-				return null
+				return 1
 			}
 
 			return prevValue
@@ -316,7 +338,10 @@ export const MintStep: FC<PageProps> = ({
 								<ButtonIcon>add</ButtonIcon>
 							</CalculatorButton>
 							<Sum>
-								<Price>${5 * (yearCount || 0)}</Price>
+								<Price>${calculateMembershipCost(yearCount)}</Price>
+								<PriceWithStrikethrough>
+									${calculateOriginalMembershipCost(yearCount)}
+								</PriceWithStrikethrough>
 								{/*<span className="subscription"> / year</span>*/}
 							</Sum>
 						</CalculatorBody>
