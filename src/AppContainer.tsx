@@ -143,8 +143,8 @@ const AppContainerRender: ForwardRefRenderFunction<
 						const { subscribed } = kycDao.kycDao
 
 						startPage = subscribed
-							? StepID.subscribedStartStep
-							: StepID.AgreementStep
+							? StepID.verifyAccountStep
+							: StepID.verifyAccountStep
 					}
 
 					dispatch({

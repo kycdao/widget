@@ -18,6 +18,7 @@ import { NftSelection } from "./nftArtSelection"
 import { SubscribedStartStep } from "./subscribedStartStep"
 import { TaxResidenceStep } from "./taxResidence"
 import { VerificationStep } from "./verificationStep"
+import { VerifyAccountStep } from "./verifyAccount"
 
 const RouterContainer = styled.div`
 	display: flex;
@@ -36,6 +37,9 @@ const RoutedStep: FC<{
 	style?: CSSProperties
 }> = ({ stepID, ...options }) => {
 	switch (stepID) {
+		case StepID.verifyAccountStep: {
+			return <VerifyAccountStep {...options} />
+		}
 		case StepID.AgreementStep: {
 			return <AgreementStep {...options} />
 		}

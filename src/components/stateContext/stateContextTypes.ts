@@ -53,6 +53,7 @@ export enum StepID {
 	grantNameAndAddressStep,
 	grantSocialSecurityNumberStep,
 	fatalError,
+	verifyAccountStep,
 }
 
 export type Data = {

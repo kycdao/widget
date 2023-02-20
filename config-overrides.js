@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const WebpackManifestPlugin =
 	require("webpack-manifest-plugin").WebpackManifestPlugin
 const { SubresourceIntegrityPlugin } = require("webpack-subresource-integrity")
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
 
 module.exports = function override(config, env) {
 	const fallback = {
@@ -38,6 +39,7 @@ module.exports = function override(config, env) {
 		"@App": path.resolve(__dirname, "src/app/"),
 		"@Utils": path.resolve(__dirname, "src/utils/"),
 		"@Hooks": path.resolve(__dirname, "src/hooks/"),
+		"@Images": path.resolve(__dirname, "src/images/"),
 	}
 
 	config.plugins = (config.plugins || []).concat([
