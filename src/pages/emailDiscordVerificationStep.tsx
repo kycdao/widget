@@ -27,8 +27,8 @@ import {
 	SubmitButton,
 } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
-import styled from "styled-components"
-import { ReactComponent as UnstyledDiscordLogo } from "../images/discord.svg"
+import styled from "styled-components/macro"
+import UnstyledDiscordLogo from "../images/discord.svg"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
@@ -39,7 +39,7 @@ const Header = () => (
 	</H1>
 )
 
-const DiscordLogo = styled(UnstyledDiscordLogo)`
+const DiscordLogo = styled.img`
 	width: 32px;
 `
 
@@ -64,11 +64,13 @@ const DiscordLogoContainer = styled.div`
 `
 
 const Body = () => (
-	<P>
-		Please confirm your email by clicking the magic link we will send. <br />
-		This is important for us to maintain effective communication with our
-		members.
-	</P>
+	<>
+		<P>Please confirm your email by clicking the magic link we will send.</P>
+		<P>
+			This is important for us to maintain effective communication with our
+			members.
+		</P>
+	</>
 )
 
 export const EmailDiscordVerificationStep: FC<PageProps> = ({
@@ -247,9 +249,9 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive, onNext, onInputBlurred, onInputFocused }) => (
 			<>
-				<DiscordContainer>
+				<DiscordContainer style={{ display: "none" }}>
 					<DiscordLogoContainer>
-						<DiscordLogo />
+						<DiscordLogo src={UnstyledDiscordLogo} />
 					</DiscordLogoContainer>
 					<ConnectDiscordLabel>Connect Discord Soon</ConnectDiscordLabel>
 				</DiscordContainer>

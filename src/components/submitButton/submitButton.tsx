@@ -9,7 +9,7 @@ import {
 	useState,
 } from "react"
 
-import styled from "styled-components"
+import styled from "styled-components/macro"
 
 export type SubmitButtonProps = {
 	onClick?: () => void

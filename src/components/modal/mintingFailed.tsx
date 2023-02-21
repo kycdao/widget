@@ -8,14 +8,16 @@ import {
 	ModalContainer,
 	ModalHeader,
 } from "./common"
-import { StateContext } from "@Components/stateContext"
+import { DataActionTypes, StateContext } from "@Components/stateContext"
 import { P, Policy } from "@Components/typography"
 import { Button } from "@Components/button/button"
+import { CloseButton } from ".."
 
 export const MintingFailedModal = () => {
 	const minting = useMinting()
 	const {
 		data: { subscriptionYears, imageId, errorModalBody },
+		dispatch,
 	} = useContext(StateContext)
 
 	const onRetry = useCallback(() => {
@@ -23,6 +25,10 @@ export const MintingFailedModal = () => {
 			minting(imageId, subscriptionYears)
 		}
 	}, [minting, subscriptionYears, imageId])
+
+	const onClose = useCallback(() => {
+		dispatch({ type: DataActionTypes.setModal, payload: null })
+	}, [dispatch])
 
 	return (
 		<ModalContainer>
@@ -35,6 +41,9 @@ export const MintingFailedModal = () => {
 					</HeaderIcon>
 					<P>Minting failed</P>
 				</HeadlineWrapper>
+				<CloseButton className={"material-icons"} onClick={onClose}>
+					close
+				</CloseButton>
 			</ModalHeader>
 
 			<ModalBody>

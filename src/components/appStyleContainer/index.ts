@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components/macro"
 
 export const AppStyleContainer = styled.div`
 	--kyc-sdk-primary-font: neue-machina;

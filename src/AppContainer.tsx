@@ -62,17 +62,19 @@ const AppContainerRender: ForwardRefRenderFunction<
 	}))
 
 	useEffect(() => {
+		const messageTargetOrigin =
+			iframeOptions?.messageTargetOrigin || window.location.origin
+
+		dispatch({
+			payload: messageTargetOrigin,
+			type: DataActionTypes.setMessageTargetOrigin,
+		})
+	}, [dispatch, iframeOptions?.messageTargetOrigin])
+
+	useEffect(() => {
 		if (kycDao) {
 			;(async () => {
 				try {
-					const messageTargetOrigin =
-						iframeOptions?.messageTargetOrigin || window.location.origin
-
-					dispatch({
-						payload: messageTargetOrigin,
-						type: DataActionTypes.setMessageTargetOrigin,
-					})
-
 					await kycDao.kycDao.connectWallet(
 						getNetworkType(config.enabledBlockchainNetworks[0])
 					)
@@ -229,7 +231,9 @@ const AppContainerRender: ForwardRefRenderFunction<
 			<StrictMode>
 				<AppStyleContainer>
 					<StateContext.Provider value={contextData}>
+						<Header />
 						<Router />
+						<ModalRouter />
 					</StateContext.Provider>
 				</AppStyleContainer>
 			</StrictMode>

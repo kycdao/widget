@@ -4,6 +4,13 @@
 		["@babel/preset-react", { "runtime": "automatic" }]
 	],
 	"plugins": [
+		"babel-plugin-macros",
+		[
+			"babel-plugin-styled-components",
+			{
+				"fileName": false
+			}
+		],
 		[
 			"babel-plugin-module-resolver",
 			{

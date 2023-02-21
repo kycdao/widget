@@ -2,7 +2,7 @@ import { useContext, useCallback, useState, useEffect, FC } from "react"
 
 import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 import {
 	Button,
 	CenteredH1,

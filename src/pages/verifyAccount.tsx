@@ -15,7 +15,7 @@ import {
 import { FC, useContext, useCallback, useEffect, useState } from "react"
 import { PageProps } from "./pageProps"
 import useChangePage from "@Hooks/useChangePage"
-import styled, { css } from "styled-components"
+import styled, { css } from "styled-components/macro"
 import { Selector } from "./selector"
 
 import VerilabsIcon from "@Images/verilabs-icon.svg"
@@ -88,7 +88,7 @@ const AccountIcon = styled.img`
 
 const AccountProviderLabel = styled(P)<{ comingSoon?: boolean }>`
 	margin-block: auto;
-	min-width: 5em;
+	min-width: 8em;
 	margin-inline-start: 1em;
 	${({ comingSoon }) =>
 		comingSoon &&
@@ -138,19 +138,19 @@ const AccountProviders: AccountProivderProps[] = [
 	{
 		icon: EmptyIcon,
 		id: "soon1",
-		label: "Are",
+		label: "Are you really",
 		comingSoon: true,
 	},
 	{
 		icon: EmptyIcon,
 		id: "soon2",
-		label: "you",
+		label: "this curius,",
 		comingSoon: true,
 	},
 	{
 		icon: EmptyIcon,
 		id: "soon3",
-		label: "curios?",
+		label: "aren't you? 🥚",
 		comingSoon: true,
 	},
 ]

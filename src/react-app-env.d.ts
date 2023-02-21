@@ -13,7 +13,9 @@ type VirtualKeyboardEvent = UIEvent & {
 declare global {
 	interface Window {
 		ethereum: MetaMaskInpageProvider
-		KycDaoClient: { new (config: KycDaoClientOptions): KycDaoClientInterface }
+		KycDaoClient: {
+			new (config: KycDaoClientOptions): KycDaoClientInterface
+		}
 		KycDaoIframeClient: {
 			new (config: KycDaoClientOptions): KycDaoClientInterface
 		}

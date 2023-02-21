@@ -11,7 +11,7 @@ import {
 	KycDaoEnvironment,
 	VerificationType,
 } from "@kycdao/kycdao-sdk/dist/types"
-import { ErrorPage } from "./pages"
+import { ErrorPageFactory } from "./pages"
 
 export type IframeOptions = {
 	url?: string
@@ -66,8 +66,12 @@ export function BootstrapKycDaoModal({
 			: parent
 	)
 
+	const ErrorBoundaryFallbackComponent = ErrorPageFactory(
+		window.location.origin
+	)
+
 	root.render(
-		<ErrorBoundary FallbackComponent={ErrorPage}>
+		<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
 			<KycDaoModal {...props} />
 		</ErrorBoundary>
 	)
@@ -137,8 +141,10 @@ export function BootstrapIframeKycDaoModal({
 		evmProvider,
 	} = urlParams
 
+	const ErrorBoundaryFallbackComponent = ErrorPageFactory(messageTargetOrigin)
+
 	root.render(
-		<ErrorBoundary FallbackComponent={ErrorPage}>
+		<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
 			<KycDaoModal
 				config={{
 					baseUrl,

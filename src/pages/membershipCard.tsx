@@ -6,7 +6,7 @@ import { PageProps } from "@Pages/pageProps"
 
 import { StatusError } from "@kycdao/kycdao-sdk"
 
-import styled from "styled-components"
+import styled from "styled-components/macro"
 import {
 	B,
 	DataActionTypes,
@@ -122,6 +122,7 @@ const Span = styled.span`
 const ProcessContainer = styled.div`
 	display: flex;
 	align-items: center;
+	height: 100%;
 `
 
 const ChartUl = styled(Ul)`
@@ -131,16 +132,6 @@ const ChartUl = styled(Ul)`
 const Body = () => {
 	return (
 		<>
-			<div>
-				<P>
-					kycDAO is building a trusted web3 ecosystem linked together by
-					verified wallets.
-				</P>
-				<P>
-					Once verified and a proof is minted on-chain, all kycDAO partner
-					services will accept the verification.
-				</P>
-			</div>
 			<ProcessContainer>
 				<ChartUl>
 					<Li>

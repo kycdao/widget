@@ -161,6 +161,10 @@ module.exports = function override(config, env) {
 		)
 	)
 
+	if (process.env.REACT_APP_ANALIZE) {
+		config.plugins.push(new BundleAnalyzerPlugin())
+	}
+
 	config.devtool = "source-map"
 
 	return config

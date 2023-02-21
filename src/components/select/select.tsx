@@ -11,7 +11,7 @@ import {
 
 import classes from "./_select.module.scss"
 
-import styled from "styled-components"
+import styled from "styled-components/macro"
 
 type InputProps = {
 	placeholder?: string
