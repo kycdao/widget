@@ -18,9 +18,9 @@ import useChangePage from "@Hooks/useChangePage"
 import styled, { css } from "styled-components/macro"
 import { Selector } from "./selector"
 
-import VerilabsIcon from "@Images/verilabs-icon.svg"
-import EmptyIcon from "@Images/empty-icon.svg"
 import { useVerified } from "@Hooks/useVerified"
+import veriLabs from "@Components/Icons/veriLabs"
+import emptyIcon from "@Components/Icons/emptyIcon"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<SubmitButton
@@ -41,7 +41,7 @@ const Header = () => (
 )
 
 type AccountProivderProps = {
-	icon: string
+	icon: JSX.Element
 	label: string
 	id: string
 	onClick?: (id: string) => void
@@ -82,7 +82,7 @@ const AccountProivderContainer = styled.div<{
 		`}
 `
 
-const AccountIcon = styled.img`
+const AccountIcon = styled.div`
 	width: 64px;
 	height: 64px;
 `
@@ -122,7 +122,7 @@ function AccountProvider({
 			selected={selected}
 			disabled={disabled || comingSoon}
 			onClick={onItemClick}>
-			<AccountIcon src={icon} />
+			<AccountIcon>{icon}</AccountIcon>
 			<AccountProviderLabel comingSoon={comingSoon}>
 				{label}
 			</AccountProviderLabel>
@@ -133,24 +133,24 @@ function AccountProvider({
 
 const AccountProviders: AccountProivderProps[] = [
 	{
-		icon: VerilabsIcon,
+		icon: veriLabs,
 		id: "verilabs",
 		label: "VeriLabs",
 	},
 	{
-		icon: EmptyIcon,
+		icon: emptyIcon,
 		id: "soon1",
 		label: "Are you really",
 		comingSoon: true,
 	},
 	{
-		icon: EmptyIcon,
+		icon: emptyIcon,
 		id: "soon2",
 		label: "this curius,",
 		comingSoon: true,
 	},
 	{
-		icon: EmptyIcon,
+		icon: emptyIcon,
 		id: "soon3",
 		label: "aren't you? 🥚👀",
 		comingSoon: true,
