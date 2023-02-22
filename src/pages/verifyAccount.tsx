@@ -20,6 +20,7 @@ import { Selector } from "./selector"
 
 import VerilabsIcon from "@Images/verilabs-icon.svg"
 import EmptyIcon from "@Images/empty-icon.svg"
+import { useVerified } from "@Hooks/useVerified"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<SubmitButton
@@ -167,14 +168,37 @@ export const VerifyAccountStep: FC<PageProps> = ({
 		data: { returningUserFlow },
 	} = useContext(StateContext)
 	const redirect = useChangePage()
+	const checkVerification = useVerified()
 
 	const onSubmit = useCallback(() => {
 		if (returningUserFlow) {
 			redirect(StepID.nftArtSelection, StepID.verifyAccountStep)
 		} else {
-			redirect(StepID.emailDiscordVerificationStep, StepID.verifyAccountStep)
+			try {
+				;(async function () {
+					if (await checkVerification()) {
+						// If verified, then definitely accepted the terms
+						dispatch({
+							payload: true,
+							type: DataActionTypes.termsAcceptedChange,
+						})
+						redirect(StepID.nftArtSelection, StepID.verifyAccountStep)
+					} else {
+						dispatch({
+							payload: true,
+							type: DataActionTypes.termsAcceptedChange,
+						})
+						redirect(
+							StepID.emailDiscordVerificationStep,
+							StepID.verifyAccountStep
+						)
+					}
+				})()
+			} catch (e) {
+				console.error(e)
+			}
 		}
-	}, [redirect, returningUserFlow])
+	}, [redirect, returningUserFlow, checkVerification, dispatch])
 
 	const onPrev = useCallback(() => {
 		if (returningUserFlow) {

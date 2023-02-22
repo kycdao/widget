@@ -174,6 +174,12 @@ const AppContainerRender: ForwardRefRenderFunction<
 						type: DataActionTypes.setModal,
 						payload: "genericError",
 					})
+
+					dispatch({
+						payload: { current: StepID.fatalError, prev: StepID.loading },
+						type: DataActionTypes.changePage,
+					})
+
 					console.error(err)
 				}
 			})()

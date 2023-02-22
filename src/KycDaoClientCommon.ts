@@ -30,7 +30,10 @@ export type KycDaoClientInterface = {
 	backdrop: boolean
 	onFail?: (reason?: string) => void
 	onSuccess?: (data?: string) => void
-	open: () => void
+	open: (
+		blockchain?: BlockchainNetwork,
+		ethProvider?: KycDaoClientOptions["config"]["evmProvider"]
+	) => void
 	close: () => void
 	messageHndlr: KycDaoClientMessageHandler
 	getParentElement: () => HTMLElement

@@ -174,10 +174,9 @@ export class KycDaoClient implements KycDaoClientInterface {
 	) {
 		if (!this.isOpen) {
 			this.container = document.createElement("div")
-			if (ethProvider) {
-				this.config.evmProvider = ethProvider
-			}
-			this.config.enabledBlockchainNetworks = blockchain
+			const currentEthProvider = ethProvider || this.config.evmProvider
+
+			const enabledBlockchainNetwork = blockchain
 				? [blockchain]
 				: [this.config.enabledBlockchainNetworks[0]]
 
@@ -189,7 +188,11 @@ export class KycDaoClient implements KycDaoClientInterface {
 				})
 			} else {
 				BootstrapKycDaoModal({
-					config: this.config,
+					config: {
+						...this.config,
+						enabledBlockchainNetworks: enabledBlockchainNetwork,
+						evmProvider: currentEthProvider,
+					},
 					height: this.height,
 					parent: this.container,
 					width: this.width,

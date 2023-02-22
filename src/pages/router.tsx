@@ -126,20 +126,20 @@ export const Router: FC = () => {
 			{prevPage && (
 				<RoutedStep
 					stepID={prevPage}
-					animation={currentModal ? undefined : prevAnimation}
+					animation={prevAnimation}
 					inactive={true}
 				/>
 			)}
 			<RoutedStep
 				stepID={currentPage}
-				animation={currentModal ? undefined : currentAnimation}
+				animation={currentAnimation}
 				inactive={!!currentModal}
 				disabled={!!currentModal}
 			/>
 			{nextPage && (
 				<RoutedStep
 					stepID={nextPage}
-					animation={currentModal ? undefined : nextAnimation}
+					animation={nextAnimation}
 					inactive={true}
 				/>
 			)}

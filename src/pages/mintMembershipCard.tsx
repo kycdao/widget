@@ -324,7 +324,7 @@ export const MintStep: FC<PageProps> = ({
 						<CalculatorBody>
 							<CalculatorButton
 								mode="clean"
-								disabled={disabled || yearCount === null}
+								disabled={disabled || yearCount === null || yearCount === 1}
 								className="square"
 								onClick={decrease}>
 								<ButtonIcon>remove</ButtonIcon>
@@ -366,7 +366,7 @@ export const MintStep: FC<PageProps> = ({
 					black
 					fullWidth
 					autoFocus={!inactive && !disabled && !yearCount}
-					disabled={disabled || !yearCount}
+					disabled={disabled || !yearCount || yearCount === 0}
 					onClick={onEnter}
 					inactive={inactive}
 					label={"Pay + mint"}
