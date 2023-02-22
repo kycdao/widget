@@ -1,6 +1,8 @@
 import styled from "styled-components/macro"
 
 export const AppStyleContainer = styled.div`
+	font-size: 12px;
+
 	--kyc-sdk-primary-font: neue-machina;
 	--kyc-sdk-cybergreen: #00ffb3;
 	--kyc-sdk-cybergreen-35: rgba(0, 255, 177, 0.35);
