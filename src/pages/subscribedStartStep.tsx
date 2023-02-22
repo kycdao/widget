@@ -61,7 +61,7 @@ export const SubscribedStartStep: FC<PageProps> = ({
 	const kycDaoContext = useKycDao()
 
 	const onSubmit = useCallback(() => {
-		redirect(StepID.nftArtSelection, StepID.subscribedStartStep)
+		redirect(StepID.verifyAccountStep, StepID.subscribedStartStep)
 	}, [redirect])
 
 	const onTransitionDone = useCallback(() => {

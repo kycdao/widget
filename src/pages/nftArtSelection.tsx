@@ -139,13 +139,11 @@ export const NftSelection: FC<PageProps> = ({
 		dispatch({
 			type: DataActionTypes.changePage,
 			payload: {
-				current: kycDao?.kycDao.subscribed
-					? StepID.subscribedStartStep
-					: StepID.AgreementStep,
+				current: StepID.verifyAccountStep,
 				next: StepID.nftArtSelection,
 			},
 		})
-	}, [dispatch, kycDao])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

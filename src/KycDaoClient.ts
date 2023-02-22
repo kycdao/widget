@@ -1,4 +1,7 @@
-import { KycDaoInitializationResult } from "@kycdao/kycdao-sdk"
+import {
+	BlockchainNetwork,
+	KycDaoInitializationResult,
+} from "@kycdao/kycdao-sdk"
 import {
 	BootstrapIframeKycDaoModal,
 	BootstrapKycDaoModal,
@@ -7,7 +10,6 @@ import type {
 	KycDaoClientInterface,
 	KycDaoClientMessage,
 	KycDaoClientOptions,
-	webWalletAutorunSetting,
 } from "./KycDaoClientCommon"
 
 const errorPrefix = "Wallet callback handling error"
@@ -71,22 +73,21 @@ styleNode.innerText = styles
 document.head.appendChild(styleNode)
 
 export class KycDaoClient {
-	private height: string
-	private width: string
-	private parent: HTMLElement | string = document.body
-	private onFail
-	private onSuccess
-	private config
-	private configFromUrl = false
-	private backdrop = true
-	private modal?: HTMLDivElement
-	private onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
-	private webWalletAutorunSetting?: webWalletAutorunSetting
-	private isOpen = false
-	private isSuccessful = false
-	private isModal = false
-	private container: HTMLDivElement
-	private originalParentZIndex: null | string = null
+	height: string
+	width: string
+	parent: HTMLElement | string = document.body
+	onFail
+	onSuccess
+	config
+	configFromUrl = false
+	backdrop = true
+	modal?: HTMLDivElement
+	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
+	isOpen = false
+	isSuccessful = false
+	isModal = false
+	container?: HTMLDivElement
+	originalParentZIndex: null | string = null
 
 	constructor({
 		height = "650px",
@@ -99,11 +100,8 @@ export class KycDaoClient {
 		backdrop = true,
 		modal = true,
 		onReady,
-		webWalletAutorunSetting,
 	}: KycDaoClientOptions) {
 		this.config = config
-
-		this.webWalletAutorunSetting = webWalletAutorunSetting
 
 		this.width = typeof width === "string" ? width : `${width}px`
 		this.height = typeof height === "string" ? height : `${height}px`
@@ -117,7 +115,6 @@ export class KycDaoClient {
 		this.configFromUrl = configFromUrl
 		this.onReady = onReady
 
-		this.container = document.createElement("div")
 		this.messageHndlr = this.messageHndlr.bind(this)
 
 		/**
@@ -134,25 +131,23 @@ export class KycDaoClient {
 		)
 
 		if (nearNetwork && this.nearRedirectCheck()) {
+			this.container = document.createElement("div")
+
 			this.config.enabledBlockchainNetworks = [nearNetwork]
-		}
-
-		if (this.configFromUrl) {
-			BootstrapIframeKycDaoModal({
-				parent: this.container,
-			})
-		} else {
-			BootstrapKycDaoModal({
-				config: this.config,
-				height: this.height,
-				parent: this.container,
-				width: this.width,
-				isModal: this.isModal,
-				onReady: this.onReady,
-			})
-		}
-
-		if (nearNetwork && this.nearRedirectCheck()) {
+			if (this.configFromUrl) {
+				BootstrapIframeKycDaoModal({
+					parent: this.container,
+				})
+			} else {
+				BootstrapKycDaoModal({
+					config: this.config,
+					height: this.height,
+					parent: this.container,
+					width: this.width,
+					isModal: this.isModal,
+					onReady: this.onReady,
+				})
+			}
 			this.open()
 		}
 	}
@@ -173,9 +168,35 @@ export class KycDaoClient {
 		return this.parent
 	}
 
-	open() {
+	open(
+		blockchain?: BlockchainNetwork,
+		ethProvider?: KycDaoClientOptions["config"]["evmProvider"]
+	) {
 		if (!this.isOpen) {
+			this.container = document.createElement("div")
+			if (ethProvider) {
+				this.config.evmProvider = ethProvider
+			}
+			this.config.enabledBlockchainNetworks = blockchain
+				? [blockchain]
+				: [this.config.enabledBlockchainNetworks[0]]
+
 			this.parent = this.getParentElement() || document.body
+
+			if (this.configFromUrl) {
+				BootstrapIframeKycDaoModal({
+					parent: this.container,
+				})
+			} else {
+				BootstrapKycDaoModal({
+					config: this.config,
+					height: this.height,
+					parent: this.container,
+					width: this.width,
+					isModal: this.isModal,
+					onReady: this.onReady,
+				})
+			}
 
 			if (this.isModal) {
 				this.parent.classList.add("KycDaoModalRoot")
@@ -255,9 +276,9 @@ export class KycDaoClient {
 				}
 			}
 
-			if (parentNode) {
-				parentNode.removeChild(this.modal)
-			}
+			this.container?.remove()
+			parentNode.removeChild(this.modal)
+
 			window.removeEventListener("message", this.messageHndlr)
 			this.isOpen = false
 			// document.body.style.setProperty("height", this.originalBodyHeight)

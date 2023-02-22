@@ -55,6 +55,12 @@ module.exports = function override(config, env) {
 		type: "asset/resource",
 	})
 
+	config.module.rules.push({
+		test: /\.(woff2?)$/,
+		dependency: { not: ["file"] },
+		type: "asset/inline",
+	})
+
 	if (env === "production") {
 		if (process.env.NODE_ENV !== "development") {
 			config.plugins.push(

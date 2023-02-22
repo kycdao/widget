@@ -15,11 +15,6 @@ export type KycDaoClientMessages =
 
 export type KycDaoClientMessageHandler = (message: KycDaoClientMessage) => void
 
-export type webWalletAutorunSetting = {
-	enabled: boolean
-	networkId: BlockchainNetwork
-}
-
 export type KycDaoClientInterface = {
 	nearAutorunEnabled?: boolean
 	config: SdkConfiguration
@@ -46,7 +41,6 @@ export type KycDaoClientInterface = {
 	originalParentZIndex: string
 	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
 	container: HTMLDivElement
-	webWalletAutorunSetting: webWalletAutorunSetting
 	nearRedirectCheck: () => boolean
 }
 
@@ -60,7 +54,6 @@ export type KycDaoClientOptions = {
 	backdrop?: boolean
 	iframeOptions?: IframeOptions
 	nearAutorunEnabled?: boolean
-	webWalletAutorunSetting?: webWalletAutorunSetting
 	onFail?: (reason?: string) => void
 	onSuccess?: (data?: string) => void
 	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void

@@ -146,14 +146,16 @@
 					backdrop: true,
 					config: {
 						demoMode: true,
-						enabledBlockchainNetworks: [],
+						enabledBlockchainNetworks: [
+							"PolygonMumbai",
+							"CeloAlfajores",
+							"SolanaDevnet",
+							"NearTestnet",
+							"EthereumGoerli",
+						],
 						enabledVerificationTypes: ["KYC"],
 						evmProvider: false ? walletConnectEvmProvider : window.ethereum,
-						baseUrl: "https://dev.kycdao.xyz",
-						webWalletAutorunSetting: {
-							enabled: true,
-							networkId: "NearTestnet",
-						},
+						baseUrl: "https://staging.kycdao.xyz",
 					},
 					onReady: (sdkInstance) => {
 						let nftCheckInterval
@@ -186,7 +188,11 @@
 				})
 
 				globalThis.selectorHndlr = function (selectedChain, walletConnectOn) {
-					client.open()
+					console.log(walletConnectOn)
+					client.open(
+						selectedChain,
+						walletConnectOn ? walletConnectEvmProvider : window.ethereum
+					)
 				}
 
 				if (autostart) {

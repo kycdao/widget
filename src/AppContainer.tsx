@@ -99,11 +99,6 @@ const AppContainerRender: ForwardRefRenderFunction<
 
 						dispatch({
 							payload: true,
-							type: DataActionTypes.SetReturnUserFlow,
-						})
-
-						dispatch({
-							payload: true,
 							type: DataActionTypes.SetProcessSucess,
 						})
 
@@ -144,9 +139,14 @@ const AppContainerRender: ForwardRefRenderFunction<
 					} else {
 						const { subscribed } = kycDao.kycDao
 
+						dispatch({
+							payload: true,
+							type: DataActionTypes.SetReturnUserFlow,
+						})
+
 						startPage = subscribed
-							? StepID.verifyAccountStep
-							: StepID.verifyAccountStep
+							? StepID.subscribedStartStep
+							: StepID.kycDAOMembershipStep
 					}
 
 					dispatch({

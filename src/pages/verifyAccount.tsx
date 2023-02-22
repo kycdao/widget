@@ -88,7 +88,7 @@ const AccountIcon = styled.img`
 
 const AccountProviderLabel = styled(P)<{ comingSoon?: boolean }>`
 	margin-block: auto;
-	min-width: 8em;
+	min-width: 50%;
 	margin-inline-start: 1em;
 	${({ comingSoon }) =>
 		comingSoon &&
@@ -102,6 +102,7 @@ const ComingSoonLabel = styled(P)`
 	border: solid 2px black;
 	border-radius: 3px;
 	margin-block: auto;
+	padding: 0.5em;
 `
 
 function AccountProvider({
@@ -161,16 +162,27 @@ export const VerifyAccountStep: FC<PageProps> = ({
 	animation,
 	inactive = false,
 }) => {
-	const { dispatch } = useContext(StateContext)
+	const {
+		dispatch,
+		data: { returningUserFlow },
+	} = useContext(StateContext)
 	const redirect = useChangePage()
 
 	const onSubmit = useCallback(() => {
-		redirect(StepID.emailDiscordVerificationStep, StepID.verificationStep)
-	}, [redirect])
+		if (returningUserFlow) {
+			redirect(StepID.nftArtSelection, StepID.verifyAccountStep)
+		} else {
+			redirect(StepID.emailDiscordVerificationStep, StepID.verificationStep)
+		}
+	}, [redirect, returningUserFlow])
 
 	const onPrev = useCallback(() => {
-		redirect(StepID.kycDAOMembershipStep, StepID.verificationStep, "prev")
-	}, [redirect])
+		if (returningUserFlow) {
+			redirect(StepID.subscribedStartStep, StepID.subscribedStartStep, "prev")
+		} else {
+			redirect(StepID.kycDAOMembershipStep, StepID.AgreementStep, "prev")
+		}
+	}, [redirect, returningUserFlow])
 
 	const [provider, setProvider] = useState("verilabs")
 

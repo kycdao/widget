@@ -73,7 +73,7 @@ export const AgreementStep: FC<PageProps> = ({
 				dispatch({ payload: true, type: DataActionTypes.termsAcceptedChange })
 				redirect(StepID.nftArtSelection, StepID.AgreementStep)
 			} else {
-				redirect(StepID.kycDAOMembershipStep, StepID.AgreementStep)
+				redirect(StepID.verifyAccountStep, StepID.AgreementStep)
 			}
 		} catch (e) {
 			console.error(e)
