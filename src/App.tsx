@@ -7,6 +7,15 @@ import { FC, useCallback, useEffect, useRef, useState } from "react"
 import { AppContainer, AppContainerRef } from "./AppContainer"
 import { RestartContext } from "@Components/restartContext"
 
+const fontFile = new FontFace(
+	"neue-machina",
+	`url(${require("./fonts/NeueMachina-Regular.woff2")})`,
+	{ weight: "400", style: "normal" }
+)
+
+document.fonts.add(fontFile)
+fontFile.load()
+
 export type KycDaoModalProps = {
 	width?: number | string
 	height?: number | string

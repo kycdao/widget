@@ -1,9 +1,9 @@
-import {
+import type {
 	BlockchainNetwork,
 	SdkConfiguration,
 	KycDaoInitializationResult,
 } from "@kycdao/kycdao-sdk"
-import {
+import type {
 	KycDaoEnvironment,
 	VerificationType,
 } from "@kycdao/kycdao-sdk/dist/types"
@@ -16,12 +16,13 @@ export type KycDaoClientMessages =
 export type KycDaoClientMessageHandler = (message: KycDaoClientMessage) => void
 
 export type KycDaoClientInterface = {
+	nearAutorunEnabled?: boolean
 	config: SdkConfiguration
 	iframeOptions?: IframeOptions
 	width: string
 	height: string
 	isOpen: boolean
-	modal: HTMLElement
+	modal?: HTMLElement
 	isModal: boolean
 	parent: HTMLElement | string
 	isSuccessful: boolean
@@ -29,17 +30,17 @@ export type KycDaoClientInterface = {
 	backdrop: boolean
 	onFail?: (reason?: string) => void
 	onSuccess?: (data?: string) => void
-	open: () => void
+	open: (
+		blockchain?: BlockchainNetwork,
+		ethProvider?: KycDaoClientOptions["config"]["evmProvider"]
+	) => void
 	close: () => void
-	onOutsideClick: (event: MouseEvent) => void
-	messageHndlr: () => KycDaoClientMessageHandler
+	messageHndlr: KycDaoClientMessageHandler
 	getParentElement: () => HTMLElement
-	originalBodyHeight: string
-	originalBodyOverflow: string
-	originalParentBackground: string
-	originalParentZIndex: string
+	originalParentZIndex: string | null
 	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
-	container: HTMLDivElement
+	container?: HTMLDivElement
+	nearRedirectCheck: () => boolean
 }
 
 export type KycDaoClientOptions = {
@@ -51,6 +52,7 @@ export type KycDaoClientOptions = {
 	configFromUrl?: boolean
 	backdrop?: boolean
 	iframeOptions?: IframeOptions
+	nearAutorunEnabled?: boolean
 	onFail?: (reason?: string) => void
 	onSuccess?: (data?: string) => void
 	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void

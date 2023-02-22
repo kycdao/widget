@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components/macro"
 
 export const AppStyleContainer = styled.div`
 	--kyc-sdk-primary-font: neue-machina;
@@ -50,7 +50,7 @@ export const AppStyleContainer = styled.div`
 	--light-font: gilroyLight;
 	--display-font: gilroyBold;
 
-	@font-face {
+	/*@font-face {
 		font-family: neue-machina;
 		font-style: normal;
 		font-weight: 400;
@@ -66,7 +66,7 @@ export const AppStyleContainer = styled.div`
 		src: local("neue-machina"),
 			url(https://staging.kycdao.xyz/assets/NeueMachina-Regular.woff2)
 				format("woff2");
-	}
+	}*/
 
 	@font-face {
 		font-family: gilroy-bold;

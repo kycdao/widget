@@ -7,7 +7,7 @@ import {
 	useState,
 } from "react"
 import { useSwipeable } from "react-swipeable"
-import styled, { css } from "styled-components"
+import styled, { css } from "styled-components/macro"
 import clsx from "clsx"
 import { H1 } from "@Components/typography"
 import { StateContext } from "@Components/stateContext"

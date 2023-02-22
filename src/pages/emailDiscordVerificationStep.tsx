@@ -27,22 +27,50 @@ import {
 	SubmitButton,
 } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
+import styled from "styled-components/macro"
+import UnstyledDiscordLogo from "../images/discord.svg"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
 const Header = () => (
 	<H1>
 		<Logo />
-		Email verification
+		Confirm your email
 	</H1>
 )
 
+const DiscordLogo = styled.img`
+	width: 32px;
+`
+
+const ConnectDiscordLabel = styled(P)`
+	margin-block: auto;
+	margin-inline: 1em;
+`
+
+const DiscordContainer = styled.div`
+	display: flex;
+	justify-content: start;
+`
+
+const DiscordLogoContainer = styled.div`
+	color: black;
+	background: var(--kyc-sdk-cybergreen);
+	width: 64px;
+	height: 64px;
+	border-radius: var(--kyc-sdk-border-radius-light);
+	display: flex;
+	justify-content: center;
+`
+
 const Body = () => (
-	<P>
-		Verify your email via the magic link sent to you. <br /> <br />
-		kycDAO won’t know who you are, your account is with our partners. <br />
-		Yet, we need to establish a communication channel with members.
-	</P>
+	<>
+		<P>Please confirm your email by clicking the magic link we will send.</P>
+		<P>
+			This is important for us to maintain effective communication with our
+			members.
+		</P>
+	</>
 )
 
 export const EmailDiscordVerificationStep: FC<PageProps> = ({
@@ -192,7 +220,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	const onPrev = useCallback(() => {
 		clearInterval(confirmationInterval.current)
 		redirect(
-			StepID.verificationStep,
+			StepID.verifyAccountStep,
 			StepID.emailDiscordVerificationStep,
 			"prev"
 		)
@@ -221,6 +249,12 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	const footer = useCallback<StepPart>(
 		({ disabled, inactive, onNext, onInputBlurred, onInputFocused }) => (
 			<>
+				<DiscordContainer style={{ display: "none" }}>
+					<DiscordLogoContainer>
+						<DiscordLogo src={UnstyledDiscordLogo} />
+					</DiscordLogoContainer>
+					<ConnectDiscordLabel>Connect Discord Soon</ConnectDiscordLabel>
+				</DiscordContainer>
 				<Input
 					onInputBlurred={onInputBlurred}
 					onInputFocused={onInputFocused}

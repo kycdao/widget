@@ -17,14 +17,15 @@
 		"b:phase3": "yarn build:hotfix && concurrently 'tsc-alias -p tsconfig.umd.json' 'tsc-alias -p tsconfig.esm.json'",
 		"---build_pipeline_components---": "",
 		"build:web": "REACT_APP_GIT_HASH=$(git rev-parse --short=12 HEAD) GENERATE_SOURCEMAP=false react-app-rewired build",
-		"build:lib": "REACT_APP_GIT_HASH=$(git rev-parse --short=12 HEAD) concurrently 'tsc --project tsconfig.esm.json' 'tsc --project tsconfig.umd.json' 'babel src --extensions \".ts,.tsx,.js\" -d dist/esm' 'babel --config-file ./babel.umd.config.json src -d dist/umd --extensions \".ts,.tsx,.js\"'",
+		"build:lib": "REACT_APP_GIT_HASH=$(git rev-parse --short=12 HEAD) concurrently 'tsc --project tsconfig.esm.json' 'tsc --project tsconfig.umd.json' 'babel src --extensions \".ts,.tsx,.js\" -d dist/esm' 'babel --config-file ./babel.umd.config.json src -d dist/umd --extensions \".ts,.tsx,.js\"' 'mkdir -p dist/esm/fonts' 'mkdir -p dist/umd/fonts' 'mkdir -p dist/esm/images' 'mkdir -p dist/umd/images' 'cp src/images/* dist/esm/images' 'cp src/images/* dist/umd/images' 'cp src/fonts/* dist/umd/fonts' 'cp src/fonts/* dist/esm/fonts'",
 		"build:hotfix": "cp ./dist/web/*.js* ./dist/ && cp ./dist/web/*.ts* ./dist/",
 		"build2": "ts-node --skipProject scripts/build.ts",
 		"test": "react-app-rewired test",
 		"eject": "create-react-app --eject",
 		"lint": "eslint 'src/**/*.{ts,tsx,scss}' --fix",
 		"format": "prettier -w package.json .github/ src/",
-		"clean": "rimraf build dist"
+		"clean": "rimraf build dist",
+		"analize": "REACT_APP_ANALIZE=true yarn build"
 	},
 	"files": [
 		"dist/*",
@@ -59,7 +60,7 @@
 		"./dist/": "./dist/"
 	},
 	"dependencies": {
-		"@kycdao/kycdao-sdk": "^0.6.3",
+		"@kycdao/kycdao-sdk": "^0.6.4",
 		"buffer": "^6.0.3",
 		"clsx": "^1.2.1",
 		"near-api-js": "0.44.2",
@@ -68,8 +69,7 @@
 		"react-scripts": "^5.0.1",
 		"react-swipeable": "^7.0.0",
 		"rxjs": "^7.8.0",
-		"stream": "^0.0.2",
-		"styled-components": "^5.3.6"
+		"stream": "^0.0.2"
 	},
 	"dependenciesMeta": {
 		"@toruslabs/eccrypto": {
@@ -114,7 +114,9 @@
 		"@types/styled-components": "^5.1.26",
 		"@typescript-eslint/eslint-plugin": "^5.52.0",
 		"@typescript-eslint/parser": "^5.52.0",
+		"babel-plugin-macros": "^3.1.0",
 		"babel-plugin-module-resolver": "^5.0.0",
+		"babel-plugin-styled-components": "^2.0.7",
 		"babel-plugin-transform-inline-environment-variables": "^0.4.4",
 		"babel-plugin-transform-remove-imports": "1.7.0",
 		"babel-preset-es2015": "^6.24.1",
@@ -139,9 +141,12 @@
 		"react-app-rewired": "^2.2.1",
 		"react-dom": "^18.2.0",
 		"rimraf": "^4.1.2",
+		"styled-components": "^5.3.6",
 		"tsc": "^2.0.4",
 		"tsc-alias": "^1.8.2",
 		"typescript": "^4.9.5",
+		"webpack": "^5.75.0",
+		"webpack-bundle-analyzer": "^4.8.0",
 		"webpack-subresource-integrity": "^5.1.0"
 	},
 	"eslintConfig": {
@@ -162,7 +167,7 @@
 			"last 1 safari version"
 		]
 	},
-	"packageManager": "yarn@4.0.0-rc.36",
+	"packageManager": "yarn@4.0.0-rc.39",
 	"lint-staged": {
 		"*.{ts,tsx,scss}": [
 			"prettier --write",
@@ -177,6 +182,7 @@
 		"svgo": "^3.0.2",
 		"jest": "^29.4.3",
 		"jest-cli": "^29.4.3",
-		"core-js": "^3.28.0"
+		"core-js": "^3.28.0",
+		"bn.js": "^5.2.1"
 	}
 }

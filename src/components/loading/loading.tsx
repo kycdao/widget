@@ -1,5 +1,5 @@
 import { tr2 } from "@Components/typography"
-import styled, { keyframes } from "styled-components"
+import styled, { keyframes } from "styled-components/macro"
 
 const moveInSteps = keyframes`
 	0% {

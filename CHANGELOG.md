@@ -5,7 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.4.6] - 2023-02-XX
+## [0.5.1] - 2023-02-XX
+
+### Added
+- Display already minted nft, if possible
+- VerifyAccout page
+- Closable error modals
+
+### Fixed
+- A lot of smaller error handling related bugs
+
+## [0.5.0] - 2023-02-20
+
+### Version bump
+
+## [0.4.6] - 2023-02-19
 
 ### Added
 - If the user has an nft on the currrent chain, they go to the final step instantly

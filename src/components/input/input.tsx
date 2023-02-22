@@ -10,7 +10,7 @@ import {
 	useRef,
 	useState,
 } from "react"
-import styled, { css } from "styled-components"
+import styled, { css } from "styled-components/macro"
 
 const specialRegex = /[!$(){}[\]:;<+?\\>]/g
 
@@ -230,7 +230,7 @@ const StyledInput = styled.input<{
 					border-radius: var(--kyc-sdk-border-radius-light);
 			  `}
 	box-shadow: 0 0 0 0 rgba(white, 0);
-	background: white;
+	background: var(--kyc-sdk-cybergreen-35);
 	color: black;
 	font-size: 12pt;
 	font-family: var(--kyc-sdk-primary-font);
@@ -250,7 +250,7 @@ const StyledInput = styled.input<{
 				border-radius: 0 0 var(--kyc-sdk-border-radius-light)
 					var(--kyc-sdk-border-radius-light);
 			`}
-		background: white;
+		background: var(--kyc-sdk-cybergreen-35);
 	}
 
 	&:focus {

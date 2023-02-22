@@ -2,7 +2,7 @@ import { useContext, useCallback, useState, useEffect, FC } from "react"
 
 import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 import {
 	Button,
 	CenteredH1,
@@ -40,14 +40,13 @@ export const FinalStep: FC<PageProps> = ({
 			messageTargetOrigin,
 			chainExplorerUrl,
 			nftImageUrl,
-			returningUserFlow,
 			alreadyHaveAnNftOnThisChain,
 		},
 	} = useContext(StateContext)
 
 	const header = useCallback(
-		() => (returningUserFlow ? <></> : <H1>Congrats!</H1>),
-		[returningUserFlow]
+		() => (alreadyHaveAnNftOnThisChain ? <></> : <H1>Congrats!</H1>),
+		[alreadyHaveAnNftOnThisChain]
 	)
 
 	const onTransitionDone = useCallback(() => {
@@ -77,6 +76,15 @@ export const FinalStep: FC<PageProps> = ({
 
 	useEffect(() => {
 		if (kycDao) {
+			;(async function () {
+				if (!/Near/g.test(kycDao.sdkStatus.availableBlockchainNetworks[0])) {
+					const tokens = (await kycDao.kycDao.getValidNfts("KYC")).tokens
+
+					if (tokens && tokens.length > 0) {
+						setDisplayedNftImageUrl(tokens[0].image)
+					}
+				}
+			})()
 			setDisplayedNftImageUrl(kycDao.mintingResult?.imageUrl || nftImageUrl)
 		}
 	}, [kycDao, nftImageUrl])
@@ -85,7 +93,7 @@ export const FinalStep: FC<PageProps> = ({
 		(props) => (
 			<>
 				<CenteredH1>
-					{returningUserFlow
+					{alreadyHaveAnNftOnThisChain
 						? "You already have a "
 						: "You have successfully minted your "}
 					kycNFT on {kycDao?.kycDao.connectedWallet?.blockchainNetwork}
@@ -104,7 +112,7 @@ export const FinalStep: FC<PageProps> = ({
 				</NftImageContainer>
 			</>
 		),
-		[kycDao, displayedNftImageUrl, returningUserFlow]
+		[kycDao, displayedNftImageUrl, alreadyHaveAnNftOnThisChain]
 	)
 
 	const onFinish = useCallback(async () => {

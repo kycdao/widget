@@ -5,9 +5,9 @@ import {
 } from "@Components/stateContext"
 import { materialIcon, tr2 } from "@Components/typography"
 import { FC, useCallback, useContext } from "react"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 
-const StepHeader = styled.div`
+export const StepHeader = styled.div`
 	display: flex;
 	flex-flow: row;
 	align-items: center;
@@ -18,7 +18,7 @@ const StepHeader = styled.div`
 	background: #fefefe;
 `
 
-const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	margin-left: -0.5rem;
@@ -54,7 +54,7 @@ const Button = styled.button<{ hidden?: boolean }>`
 	}
 `
 
-const CloseButton = styled.button<{ hidden?: boolean }>`
+export const CloseButton = styled.button<{ hidden?: boolean }>`
 	border: none;
 	background: transparent;
 	align-items: center;

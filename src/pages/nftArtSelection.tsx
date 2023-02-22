@@ -4,7 +4,7 @@ import { useKycDao } from "@Hooks/useKycDao"
 import { useMinting } from "@Hooks/useMinting"
 import { PageProps } from "./pageProps"
 
-import styled, { css } from "styled-components"
+import styled, { css } from "styled-components/macro"
 import {
 	Button,
 	DataActionTypes,
@@ -139,13 +139,11 @@ export const NftSelection: FC<PageProps> = ({
 		dispatch({
 			type: DataActionTypes.changePage,
 			payload: {
-				current: kycDao?.kycDao.subscribed
-					? StepID.subscribedStartStep
-					: StepID.AgreementStep,
+				current: StepID.verifyAccountStep,
 				next: StepID.nftArtSelection,
 			},
 		})
-	}, [dispatch, kycDao])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

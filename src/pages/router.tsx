@@ -3,7 +3,7 @@ import { StepAnimation, MovingDirection } from "@Components/step/step"
 
 import { CSSProperties, FC, useContext, useMemo } from "react"
 
-import styled from "styled-components"
+import styled from "styled-components/macro"
 import { AgreementStep } from "./agreementStep"
 import { BeginVerifyingStep } from "./beginVerifying"
 import { EmailDiscordVerificationStep } from "./emailDiscordVerificationStep"
@@ -18,6 +18,7 @@ import { NftSelection } from "./nftArtSelection"
 import { SubscribedStartStep } from "./subscribedStartStep"
 import { TaxResidenceStep } from "./taxResidence"
 import { VerificationStep } from "./verificationStep"
+import { VerifyAccountStep } from "./verifyAccount"
 
 const RouterContainer = styled.div`
 	display: flex;
@@ -36,6 +37,9 @@ const RoutedStep: FC<{
 	style?: CSSProperties
 }> = ({ stepID, ...options }) => {
 	switch (stepID) {
+		case StepID.verifyAccountStep: {
+			return <VerifyAccountStep {...options} />
+		}
 		case StepID.AgreementStep: {
 			return <AgreementStep {...options} />
 		}
@@ -122,20 +126,20 @@ export const Router: FC = () => {
 			{prevPage && (
 				<RoutedStep
 					stepID={prevPage}
-					animation={currentModal ? undefined : prevAnimation}
+					animation={prevAnimation}
 					inactive={true}
 				/>
 			)}
 			<RoutedStep
 				stepID={currentPage}
-				animation={currentModal ? undefined : currentAnimation}
+				animation={currentAnimation}
 				inactive={!!currentModal}
 				disabled={!!currentModal}
 			/>
 			{nextPage && (
 				<RoutedStep
 					stepID={nextPage}
-					animation={currentModal ? undefined : nextAnimation}
+					animation={nextAnimation}
 					inactive={true}
 				/>
 			)}

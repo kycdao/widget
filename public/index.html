@@ -137,25 +137,27 @@
 				//   }
 			})
 
-			function selectorHndlr(selectedChain, walletConnectOn) {
-				console.log({ selectedChain, walletConnectOn })
+			const autostart = false
 
+			onload = () => {
 				const client = new KycDaoClient({
 					parent: "#modalRoot",
 					modal: true,
 					backdrop: true,
 					config: {
 						demoMode: true,
-						enabledBlockchainNetworks: [selectedChain],
+						enabledBlockchainNetworks: [
+							"PolygonMumbai",
+							"CeloAlfajores",
+							"SolanaDevnet",
+							"NearTestnet",
+							"EthereumGoerli",
+						],
 						enabledVerificationTypes: ["KYC"],
-						evmProvider: walletConnectOn
-							? walletConnectEvmProvider
-							: window.ethereum,
+						evmProvider: false ? walletConnectEvmProvider : window.ethereum,
 						baseUrl: "https://staging.kycdao.xyz",
 					},
 					onReady: (sdkInstance) => {
-						sdkInstance = sdkInstance
-
 						let nftCheckInterval
 
 						function writeNFT() {
@@ -185,12 +187,14 @@
 					},
 				})
 
-				client.open()
-			}
+				globalThis.selectorHndlr = function (selectedChain, walletConnectOn) {
+					console.log(walletConnectOn)
+					client.open(
+						selectedChain,
+						walletConnectOn ? walletConnectEvmProvider : window.ethereum
+					)
+				}
 
-			const autostart = false
-
-			onload = () => {
 				if (autostart) {
 					walletConnectOn = false
 

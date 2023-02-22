@@ -5,7 +5,7 @@ import {
 	ModalContainer,
 	ModalHeader,
 } from "./common"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 import { H1, P, Policy } from "@Components/typography"
 import { Loading } from "@Components/loading/loading"
 

@@ -6,12 +6,13 @@ import { PageProps } from "@Pages/pageProps"
 
 import { StatusError } from "@kycdao/kycdao-sdk"
 
-import styled from "styled-components"
+import styled from "styled-components/macro"
 import {
 	B,
 	DataActionTypes,
 	H1,
 	HeaderButtons,
+	Link,
 	Logo,
 	OnNext,
 	OnPrev,
@@ -30,19 +31,19 @@ const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<>
 		<Policy>
 			By starting verification you accept{" "}
-			<a
+			<Link
 				target="_blank"
 				rel="noreferrer"
 				href="https://kycdao.xyz/privacy-policy">
 				Privacy Policy
-			</a>{" "}
+			</Link>{" "}
 			and{" "}
-			<a
+			<Link
 				target="_blank"
 				rel="noreferrer"
 				href="https://kycdao.xyz/terms-and-conditions">
 				Terms &#38; Conditions.
-			</a>
+			</Link>
 		</Policy>
 		<SubmitButton
 			black
@@ -120,8 +121,8 @@ const Span = styled.span`
 
 const ProcessContainer = styled.div`
 	display: flex;
-	height: 100%;
 	align-items: center;
+	height: 100%;
 `
 
 const ChartUl = styled(Ul)`
@@ -130,31 +131,33 @@ const ChartUl = styled(Ul)`
 
 const Body = () => {
 	return (
-		<ProcessContainer>
-			<ChartUl>
-				<Li>
-					<Span>1</Span>
-					<div>
-						<P>Connect</P>
-						<B>Using your wallet</B>
-					</div>
-				</Li>
-				<Li>
-					<Span>2</Span>
-					<div>
-						<P>Verify</P>
-						<B>Log-in or Open a compliant account</B>
-					</div>
-				</Li>
-				<Li>
-					<Span>3</Span>
-					<div>
-						<P>Mint</P>
-						<B>kycNFT - $5</B>
-					</div>
-				</Li>
-			</ChartUl>
-		</ProcessContainer>
+		<>
+			<ProcessContainer>
+				<ChartUl>
+					<Li>
+						<Span>1</Span>
+						<div>
+							<P>Connect</P>
+							<B>Using your wallet</B>
+						</div>
+					</Li>
+					<Li>
+						<Span>2</Span>
+						<div>
+							<P>Verify</P>
+							<B>Log-in or Open a compliant account</B>
+						</div>
+					</Li>
+					<Li>
+						<Span>3</Span>
+						<div>
+							<P>Mint</P>
+							<B>kycNFT - $5</B>
+						</div>
+					</Li>
+				</ChartUl>
+			</ProcessContainer>
+		</>
 	)
 }
 

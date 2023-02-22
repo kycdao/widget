@@ -1,5 +1,5 @@
 import { CSSProperties } from "react"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 
 export type PlaceholderProps = {
 	width: string

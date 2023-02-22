@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components"
+import styled, { css } from "styled-components/macro"
 
 export const transition = css`
 	transition-property: all;
@@ -63,13 +63,6 @@ export const Policy = styled(P)`
 	margin-bottom: 1em;
 	font-size: 12px;
 
-	a {
-		${typoBase}
-		font-size: 12px;
-		color: var(--kyc-sdk-normal-blue);
-		text-decoration: underline;
-	}
-
 	-webkit-font-smoothing: antialiased;
 `
 
@@ -103,4 +96,15 @@ export const translateX = (x: number | string) => css`
 
 export const CenteredH1 = styled(H1)`
 	text-align: center;
+`
+
+export const Link = styled.a`
+	${typoBase}
+	font-family: var(--light-font);
+	font-size: 12px;
+	text-decoration: underline;
+	color: var(--kyc-sdk-dark-blue);
+	:visited {
+		color: var(--kyc-sdk-dark-blue);
+	}
 `

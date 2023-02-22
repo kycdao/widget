@@ -9,7 +9,7 @@ import {
 	ModalHeader,
 } from "./common"
 import { DataActionTypes, StateContext } from "@Components/stateContext"
-import { B, P, Policy } from "@Components/typography"
+import { P, Policy } from "@Components/typography"
 import { Button } from "@Components/button/button"
 
 export const EmailVerificationModal = () => {
@@ -43,14 +43,14 @@ export const EmailVerificationModal = () => {
 						className="material-icons">
 						hourglass_bottom
 					</HeaderIcon>
-					<P>Waiting your mail verification</P>
+					<P>waiting for email confirmation</P>
 				</HeadlineWrapper>
 			</ModalHeader>
 
 			<ModalBody>
 				<Policy>
-					Please verify yourself through the <B>link</B> we have sent you to the
-					following address:
+					Please confirm your email via the magic link sent to the following
+					address:
 				</Policy>
 				<P>{email}</P>
 			</ModalBody>

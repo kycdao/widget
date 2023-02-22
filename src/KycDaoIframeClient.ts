@@ -200,8 +200,8 @@ kycDaoIframeClient.prototype.open = function (this: KycDaoClientInterface) {
 
 		window.addEventListener("message", this.messageHndlr)
 
-		this.originalBodyHeight = document.body.style.height
-		this.originalBodyOverflow = document.body.style.overflow
+		// this.originalBodyHeight = document.body.style.height
+		// this.originalBodyOverflow = document.body.style.overflow
 
 		document.body.style.setProperty("height", "100%")
 		document.body.style.setProperty("overflow", "hidden")
@@ -222,8 +222,8 @@ kycDaoIframeClient.prototype.close = function (this: KycDaoClientInterface) {
 			}
 			window.removeEventListener("message", this.messageHndlr)
 			this.isOpen = false
-			document.body.style.setProperty("height", this.originalBodyHeight)
-			document.body.style.setProperty("overflow", this.originalBodyOverflow)
+			// document.body.style.setProperty("height", this.originalBodyHeight)
+			// document.body.style.setProperty("overflow", this.originalBodyOverflow)
 		}
 	}
 }

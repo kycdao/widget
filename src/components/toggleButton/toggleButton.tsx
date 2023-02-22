@@ -1,5 +1,5 @@
 /*import { CSSProperties, FC } from "react"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 
 export type ToggleButtonProps = {
 	onClick?: () => void
