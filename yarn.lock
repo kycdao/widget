@@ -2420,7 +2420,7 @@ __metadata:
     "@kycdao/kycdao-sdk": "npm:^0.6.4"
     "@playwright/test": "npm:^1.30.0"
     "@testing-library/jest-dom": "npm:^5.16.5"
-    "@testing-library/react": "npm:^13.4.0"
+    "@testing-library/react": "npm:^14.0.0"
     "@testing-library/user-event": "npm:^14.4.3"
     "@types/jest": "npm:^29.4.0"
     "@types/node": "npm:^18.13.0"
@@ -3880,9 +3880,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^8.5.0":
-  version: 8.20.0
-  resolution: "@testing-library/dom@npm:8.20.0"
+"@testing-library/dom@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "@testing-library/dom@npm:9.0.0"
   dependencies:
     "@babel/code-frame": "npm:^7.10.4"
     "@babel/runtime": "npm:^7.12.5"
@@ -3892,7 +3892,7 @@ __metadata:
     dom-accessibility-api: "npm:^0.5.9"
     lz-string: "npm:^1.4.4"
     pretty-format: "npm:^27.0.2"
-  checksum: 8202f86b2c47c02b9b9ff3a3d212b6c0d7ccad00820ee7cbc9620805ca4ff8529be12686d2390818c058c26ae10c03699d550dae61d05ebf89e456cb8c7f56eb
+  checksum: 1ceba9524424bd84097b0c822f9ef29cf0c4a014ee652288d6ddde40e36e1272432eed52ecccc5238fefdc3abb329b2f5e7f7bf26ac3571238261660c5f31924
   languageName: node
   linkType: hard
 
@@ -3913,17 +3913,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^13.4.0":
-  version: 13.4.0
-  resolution: "@testing-library/react@npm:13.4.0"
+"@testing-library/react@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "@testing-library/react@npm:14.0.0"
   dependencies:
     "@babel/runtime": "npm:^7.12.5"
-    "@testing-library/dom": "npm:^8.5.0"
+    "@testing-library/dom": "npm:^9.0.0"
     "@types/react-dom": "npm:^18.0.0"
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 2030d32070b3d43bc374843e9989192be2bdc44d7280aebe17c9223637134b4f769c7077f704d5771cd29174b3f28b91dfae09a95a5d2b5d5db2a5ee689ef67f
+  checksum: c92555e348b8d6bd08ad5c036042ebe23a1767f7b6cf93f490a71e5d5e8635e30b53a3f07e179b8efbce3b872fa6b535de2467713680094f98d9d1307a884453
   languageName: node
   linkType: hard
 
