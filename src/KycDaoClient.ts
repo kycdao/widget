@@ -72,7 +72,7 @@ styleNode.innerText = styles
 
 document.head.appendChild(styleNode)
 
-export class KycDaoClient {
+export class KycDaoClient implements KycDaoClientInterface {
 	height: string
 	width: string
 	parent: HTMLElement | string = document.body

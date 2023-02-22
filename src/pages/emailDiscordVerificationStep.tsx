@@ -220,7 +220,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	const onPrev = useCallback(() => {
 		clearInterval(confirmationInterval.current)
 		redirect(
-			StepID.verificationStep,
+			StepID.verifyAccountStep,
 			StepID.emailDiscordVerificationStep,
 			"prev"
 		)

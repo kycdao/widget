@@ -22,7 +22,7 @@ export type KycDaoClientInterface = {
 	width: string
 	height: string
 	isOpen: boolean
-	modal: HTMLElement
+	modal?: HTMLElement
 	isModal: boolean
 	parent: HTMLElement | string
 	isSuccessful: boolean
@@ -32,15 +32,11 @@ export type KycDaoClientInterface = {
 	onSuccess?: (data?: string) => void
 	open: () => void
 	close: () => void
-	onOutsideClick: (event: MouseEvent) => void
-	messageHndlr: () => KycDaoClientMessageHandler
+	messageHndlr: KycDaoClientMessageHandler
 	getParentElement: () => HTMLElement
-	originalBodyHeight: string
-	originalBodyOverflow: string
-	originalParentBackground: string
-	originalParentZIndex: string
+	originalParentZIndex: string | null
 	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
-	container: HTMLDivElement
+	container?: HTMLDivElement
 	nearRedirectCheck: () => boolean
 }
 

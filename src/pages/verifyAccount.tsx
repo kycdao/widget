@@ -151,7 +151,7 @@ const AccountProviders: AccountProivderProps[] = [
 	{
 		icon: EmptyIcon,
 		id: "soon3",
-		label: "aren't you? 🥚",
+		label: "aren't you? 🥚👀",
 		comingSoon: true,
 	},
 ]
@@ -172,15 +172,15 @@ export const VerifyAccountStep: FC<PageProps> = ({
 		if (returningUserFlow) {
 			redirect(StepID.nftArtSelection, StepID.verifyAccountStep)
 		} else {
-			redirect(StepID.emailDiscordVerificationStep, StepID.verificationStep)
+			redirect(StepID.emailDiscordVerificationStep, StepID.verifyAccountStep)
 		}
 	}, [redirect, returningUserFlow])
 
 	const onPrev = useCallback(() => {
 		if (returningUserFlow) {
-			redirect(StepID.subscribedStartStep, StepID.subscribedStartStep, "prev")
+			redirect(StepID.subscribedStartStep, StepID.verifyAccountStep, "prev")
 		} else {
-			redirect(StepID.kycDAOMembershipStep, StepID.AgreementStep, "prev")
+			redirect(StepID.AgreementStep, StepID.verifyAccountStep, "prev")
 		}
 	}, [redirect, returningUserFlow])
 
