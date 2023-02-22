@@ -7,6 +7,7 @@ const WebpackManifestPlugin =
 	require("webpack-manifest-plugin").WebpackManifestPlugin
 const { SubresourceIntegrityPlugin } = require("webpack-subresource-integrity")
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
+const svgToMiniDataURI = require("mini-svg-data-uri")
 
 module.exports = function override(config, env) {
 	const fallback = {
