@@ -220,6 +220,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helper-create-class-features-plugin@npm:^7.21.0":
+  version: 7.21.0
+  resolution: "@babel/helper-create-class-features-plugin@npm:7.21.0"
+  dependencies:
+    "@babel/helper-annotate-as-pure": "npm:^7.18.6"
+    "@babel/helper-environment-visitor": "npm:^7.18.9"
+    "@babel/helper-function-name": "npm:^7.21.0"
+    "@babel/helper-member-expression-to-functions": "npm:^7.21.0"
+    "@babel/helper-optimise-call-expression": "npm:^7.18.6"
+    "@babel/helper-replace-supers": "npm:^7.20.7"
+    "@babel/helper-skip-transparent-expression-wrappers": "npm:^7.20.0"
+    "@babel/helper-split-export-declaration": "npm:^7.18.6"
+  peerDependencies:
+    "@babel/core": ^7.0.0
+  checksum: aba8666ca097e6ba6969f8da68bcd0e985e08348d35ccc97c709ce400bc57a588e2f992b8287e1698a467775248838e16fefd0922fbac73026f53245e38f79c3
+  languageName: node
+  linkType: hard
+
 "@babel/helper-create-regexp-features-plugin@npm:^7.18.6, @babel/helper-create-regexp-features-plugin@npm:^7.20.5":
   version: 7.20.5
   resolution: "@babel/helper-create-regexp-features-plugin@npm:7.20.5"
@@ -299,6 +317,15 @@ __metadata:
   dependencies:
     "@babel/types": "npm:^7.20.7"
   checksum: 2d0f9523c67657f351febdc432a05aeb44d6e61f062e938b0bc5f33745d00d3bf067ebd5d35f9581513250660f6cbf1553da9b6d47be8c005974da3980992c3a
+  languageName: node
+  linkType: hard
+
+"@babel/helper-member-expression-to-functions@npm:^7.21.0":
+  version: 7.21.0
+  resolution: "@babel/helper-member-expression-to-functions@npm:7.21.0"
+  dependencies:
+    "@babel/types": "npm:^7.21.0"
+  checksum: 68e49f7f4948bb63c130a260f1cf9a7d669f0eff4939018530a6842be20b32e4b2dc48ac72ea87e81c700279710509ae5092bc3a8a200ff766d43fe1fe03b28c
   languageName: node
   linkType: hard
 
@@ -1401,7 +1428,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-typescript@npm:^7.18.6, @babel/plugin-transform-typescript@npm:^7.20.13":
+"@babel/plugin-transform-typescript@npm:^7.18.6":
   version: 7.20.13
   resolution: "@babel/plugin-transform-typescript@npm:7.20.13"
   dependencies:
@@ -1411,6 +1438,19 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0-0
   checksum: 7d1a55fa1dfc96a5b2cf0c3a2c87e13146af80f1869e33ad11e5c445d5965c94dcacaa73d8279b17ea88e7cea5551e25e94e62b0632aa3946fae7abf019393a3
+  languageName: node
+  linkType: hard
+
+"@babel/plugin-transform-typescript@npm:^7.21.0":
+  version: 7.21.0
+  resolution: "@babel/plugin-transform-typescript@npm:7.21.0"
+  dependencies:
+    "@babel/helper-create-class-features-plugin": "npm:^7.21.0"
+    "@babel/helper-plugin-utils": "npm:^7.20.2"
+    "@babel/plugin-syntax-typescript": "npm:^7.20.0"
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 6a837e297a6d8b0fa3c46494b236e61c6eddae8aa0a365c39584b4d4399041a8b37b07b519a18a21ab66ca78fbd6a6278b852cc1df6f78b5bcbfffae9cf34035
   languageName: node
   linkType: hard
 
@@ -2503,7 +2543,7 @@ __metadata:
     "@babel/cli": "npm:^7.20.7"
     "@babel/core": "npm:7.21.0"
     "@babel/plugin-transform-modules-umd": "npm:7.18.6"
-    "@babel/plugin-transform-typescript": "npm:^7.20.13"
+    "@babel/plugin-transform-typescript": "npm:^7.21.0"
     "@babel/preset-env": "npm:^7.20.2"
     "@babel/preset-react": "npm:^7.18.6"
     "@babel/preset-typescript": "npm:^7.18.6"
