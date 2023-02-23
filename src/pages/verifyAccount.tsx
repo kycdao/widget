@@ -192,6 +192,15 @@ export const VerifyAccountStep: FC<PageProps> = ({
 								type: DataActionTypes.termsAcceptedChange,
 							})
 							redirect(StepID.verificationStep, StepID.verifyAccountStep)
+						} else {
+							dispatch({
+								payload: true,
+								type: DataActionTypes.termsAcceptedChange,
+							})
+							redirect(
+								StepID.emailDiscordVerificationStep,
+								StepID.verifyAccountStep
+							)
 						}
 					}
 				})()

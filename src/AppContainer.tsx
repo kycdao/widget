@@ -84,7 +84,6 @@ const AppContainerRender: ForwardRefRenderFunction<
 					await kycDao.kycDao.connectWallet(
 						getNetworkType(config.enabledBlockchainNetworks[0])
 					)
-					await kycDao.kycDao.registerOrLogin()
 
 					dispatch({
 						type: DataActionTypes.setModalMode,
@@ -131,6 +130,8 @@ const AppContainerRender: ForwardRefRenderFunction<
 						return
 					}
 
+					await kycDao.kycDao.registerOrLogin()
+
 					let startPage = StepID.AgreementStep
 
 					if (kycDao.redirectEvent) {
@@ -151,10 +152,16 @@ const AppContainerRender: ForwardRefRenderFunction<
 								)
 								return
 							case "NearMint":
-								if (kycDao.transactionUrl) {
+								if (
+									kycDao.transactionUrl ||
+									kycDao.mintingResult?.transactionUrl
+								) {
 									dispatch({
 										type: DataActionTypes.setChainExplorerUrl,
-										payload: kycDao.transactionUrl,
+										payload:
+											kycDao.transactionUrl ||
+											kycDao.mintingResult?.transactionUrl ||
+											"",
 									})
 									dispatch({
 										type: DataActionTypes.SetNearMinted,
