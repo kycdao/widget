@@ -148,7 +148,7 @@ export const NftSelection: FC<PageProps> = ({
 		dispatch({
 			type: DataActionTypes.changePage,
 			payload: {
-				current: StepID.verifyAccountStep,
+				current: StepID.subscribedStartStep,
 				next: StepID.nftArtSelection,
 			},
 		})

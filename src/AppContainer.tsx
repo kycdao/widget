@@ -139,7 +139,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 
 						switch (kycDao.redirectEvent) {
 							case "NearLogin":
-								startPage = StepID.verificationStep
+								startPage = StepID.AgreementStep
 								break
 							case "NearUserRejectedError":
 								window.parent.postMessage(
@@ -170,6 +170,8 @@ const AppContainerRender: ForwardRefRenderFunction<
 								startPage = StepID.finalStep
 						}
 					} else {
+						await kycDao.kycDao.registerOrLogin()
+
 						const { subscribed } = kycDao.kycDao
 
 						if (subscribed) {

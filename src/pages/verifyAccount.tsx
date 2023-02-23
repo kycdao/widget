@@ -218,8 +218,12 @@ export const VerifyAccountStep: FC<PageProps> = ({
 	])
 
 	const onPrev = useCallback(() => {
-		redirect(StepID.kycDAOMembershipStep, StepID.verifyAccountStep, "prev")
-	}, [redirect])
+		if (returningUserFlow) {
+			redirect(StepID.kycDAOMembershipStep, StepID.verifyAccountStep, "prev")
+		} else {
+			redirect(StepID.kycDAOMembershipStep, StepID.verifyAccountStep, "prev")
+		}
+	}, [redirect, returningUserFlow])
 
 	const [provider, setProvider] = useState("verilabs")
 
