@@ -21,6 +21,7 @@ import {
 	SubmitButton,
 } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
+import useErrorHandler from "@Hooks/errorHandler"
 
 const Body = () => {
 	return (
@@ -235,15 +236,21 @@ export const MintStep: FC<PageProps> = ({
 
 	const minting = useMinting()
 
+	const errorHandler = useErrorHandler()
+
 	const onSubmit = useCallback(async () => {
 		if (kycDao && yearCount && yearCount > 0 && imageId) {
 			dispatch({
 				payload: yearCount,
 				type: DataActionTypes.subscriptionYearsChange,
 			})
-			await minting(imageId, yearCount)
+			try {
+				await minting(imageId, yearCount)
+			} catch (error) {
+				errorHandler("minting", error)
+			}
 		}
-	}, [kycDao, yearCount, minting, dispatch, imageId])
+	}, [kycDao, yearCount, minting, dispatch, imageId, errorHandler])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
@@ -370,6 +377,7 @@ export const MintStep: FC<PageProps> = ({
 					onClick={onEnter}
 					inactive={inactive}
 					label={"Pay + mint"}
+					label2={"Pay + mint"}
 				/>
 			</>
 		),

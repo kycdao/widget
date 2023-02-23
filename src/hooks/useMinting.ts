@@ -1,12 +1,14 @@
 import { DataActionTypes, StateContext, StepID } from "@Components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { useContext } from "react"
+import useErrorHandler from "./errorHandler"
 
 import { useKycDao } from "./useKycDao"
 
 export const useMinting = () => {
 	const kycDao = useKycDao()
 	const state = useContext(StateContext)
+	const errorHandler = useErrorHandler()
 
 	return async function StartMinting(
 		imageId: string,
@@ -56,16 +58,8 @@ export const useMinting = () => {
 					type: DataActionTypes.SetProcessSucess,
 					payload: true,
 				})
-			} catch (e: unknown) {
-				if (typeof e === "object" && !(e instanceof Error)) {
-					console.error(JSON.stringify(e))
-				} else {
-					console.error(e)
-				}
-				dispatch({
-					type: DataActionTypes.setModal,
-					payload: "mintingFailed",
-				})
+			} catch (error) {
+				errorHandler("minting", error)
 			}
 		}
 	}

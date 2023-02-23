@@ -180,7 +180,7 @@
 						if (data) {
 							const i = /Already has an nft on (.*)\./g.exec(data)
 
-							if (i.length > 0) {
+							if (i) {
 								console.log(`Already has an nft on ${i[1]}.`)
 							}
 						}

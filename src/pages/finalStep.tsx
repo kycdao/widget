@@ -16,6 +16,7 @@ import {
 	SubmitButton,
 } from "@Components/index"
 import { KycDaoClientMessageBody } from "KycDaoClientCommon"
+import useErrorHandler from "@Hooks/errorHandler"
 
 export const NftButtonWrapper = styled.div`
 	display: flex;
@@ -43,6 +44,8 @@ export const FinalStep: FC<PageProps> = ({
 			alreadyHaveAnNftOnThisChain,
 		},
 	} = useContext(StateContext)
+
+	const errorHandler = useErrorHandler()
 
 	const header = useCallback(
 		() => (alreadyHaveAnNftOnThisChain ? <></> : <H1>Congrats!</H1>),
@@ -78,16 +81,20 @@ export const FinalStep: FC<PageProps> = ({
 		if (kycDao) {
 			;(async function () {
 				if (!/Near/g.test(kycDao.sdkStatus.availableBlockchainNetworks[0])) {
-					const tokens = (await kycDao.kycDao.getValidNfts("KYC")).tokens
+					try {
+						const tokens = (await kycDao.kycDao.getValidNfts("KYC")).tokens
 
-					if (tokens && tokens.length > 0) {
-						setDisplayedNftImageUrl(tokens[0].image)
+						if (tokens && tokens.length > 0) {
+							setDisplayedNftImageUrl(tokens[0].image)
+						}
+					} catch (error) {
+						errorHandler("minting", error)
 					}
 				}
 			})()
 			setDisplayedNftImageUrl(kycDao.mintingResult?.imageUrl || nftImageUrl)
 		}
-	}, [kycDao, nftImageUrl])
+	}, [kycDao, nftImageUrl, errorHandler])
 
 	const body = useCallback<StepPart>(
 		(props) => (

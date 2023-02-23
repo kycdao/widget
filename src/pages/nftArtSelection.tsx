@@ -22,6 +22,7 @@ import {
 } from "@Components/index"
 
 import { NftButtonWrapper } from "./finalStep"
+import useErrorHandler from "@Hooks/errorHandler"
 
 const Header = () => (
 	<H1>
@@ -86,6 +87,8 @@ export const NftSelection: FC<PageProps> = ({
 
 	const [nftImages, setNftImages] = useState<Nft[]>([])
 
+	const errorHandler = useErrorHandler()
+
 	const onArtClick = useCallback(
 		(id: string) => () => {
 			if (!disabled) {
@@ -122,7 +125,11 @@ export const NftSelection: FC<PageProps> = ({
 			dispatch({ type: DataActionTypes.nftImageChange, payload: currentArt })
 
 			if (kycDao?.kycDao.subscribed) {
-				await startMinting(currentArt)
+				try {
+					await startMinting(currentArt)
+				} catch (error) {
+					errorHandler("fatal", error)
+				}
 			} else {
 				dispatch({
 					type: DataActionTypes.changePage,
@@ -133,7 +140,13 @@ export const NftSelection: FC<PageProps> = ({
 				})
 			}
 		}
-	}, [dispatch, kycDao?.kycDao.subscribed, startMinting, currentArt])
+	}, [
+		dispatch,
+		kycDao?.kycDao.subscribed,
+		startMinting,
+		currentArt,
+		errorHandler,
+	])
 
 	const onPrev = useCallback(() => {
 		dispatch({
@@ -248,6 +261,7 @@ export const NftSelection: FC<PageProps> = ({
 						onClick={onEnter}
 						inactive={inactive}
 						label={kycDao?.kycDao.subscribed ? "Mint free kycNFT" : "Submit"}
+						label2={kycDao?.kycDao.subscribed ? "Mint free kycNFT" : undefined}
 					/>
 				</>
 			)

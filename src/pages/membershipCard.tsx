@@ -26,6 +26,7 @@ import {
 	Ul,
 } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
+import useErrorHandler from "@Hooks/errorHandler"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<>
@@ -176,6 +177,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 }) => {
 	const { dispatch } = useContext(StateContext)
 	const redirect = useChangePage()
+	const errorHandler = useErrorHandler()
 
 	const kycDaoContext = useKycDao()
 
@@ -211,23 +213,11 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 						errorMsg = `${errorMsg} (${e.message})`
 					}
 
-					dispatch({
-						type: DataActionTypes.SetErrorModalText,
-						payload: {
-							header: "An error happened",
-							body: `${errorMsg}`,
-						},
-					})
-					dispatch({ type: DataActionTypes.setModal, payload: "genericError" })
-					if (typeof e === "string" || e instanceof Error) {
-						console.error(e)
-					} else {
-						console.error(JSON.stringify(e))
-					}
+					errorHandler("modal", errorMsg)
 				}
 			}
 		}
-	}, [dispatch, kycDaoContext, redirect])
+	}, [dispatch, kycDaoContext, redirect, errorHandler])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

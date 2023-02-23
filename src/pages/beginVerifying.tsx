@@ -5,6 +5,7 @@ import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "./pageProps"
 import { H1, StateContext, StepID } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
+import useErrorHandler from "@Hooks/errorHandler"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const onError = useCallback((error: string) => {
@@ -12,6 +13,8 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 		verifyingModalOpen.current = false
 		// what should be the error page?
 	}, [])
+
+	const errorHandler = useErrorHandler()
 
 	const {
 		dispatch,
@@ -77,8 +80,8 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 						},
 					}
 				)
-			} catch (e) {
-				console.error(e)
+			} catch (error) {
+				errorHandler("fatal", error)
 			}
 		})()
 	}, [
@@ -97,6 +100,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 		isEmailConfirmed,
 		grantFlowEnabled,
 		redirect,
+		errorHandler,
 	])
 
 	if (!kycDao) {

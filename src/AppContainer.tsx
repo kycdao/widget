@@ -1,4 +1,5 @@
 import { AppStyleContainer } from "@Components/appStyleContainer"
+import { errorHandler } from "@Hooks/errorHandler"
 import {
 	KycDao,
 	KycDaoInitializationResult,
@@ -37,6 +38,7 @@ export type AppContainerProps = {
 	grantFlowEnabled?: boolean
 	height?: string | number
 	width?: string | number
+	messageTargetOrigin: string
 	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
 }
 
@@ -48,12 +50,19 @@ const AppContainerRender: ForwardRefRenderFunction<
 	AppContainerRef,
 	AppContainerProps
 > = function AppContainer(
-	{ config, isModal, iframeOptions, onReady }: AppContainerProps,
+	{
+		config,
+		isModal,
+		iframeOptions,
+		onReady,
+		messageTargetOrigin,
+	}: AppContainerProps,
 	ref
 ) {
 	const [data, dispatch] = useReducer(reducer, DefaultData)
 	const contextData = useMemo(() => ({ data, dispatch }), [data, dispatch])
 	const [kycDao, setKycDao] = useState<KycDaoInitializationResult>()
+	// const errorHandler = useErrorHandler()
 
 	useImperativeHandle(ref, () => ({
 		get kycDaoSdkInstance() {
@@ -62,14 +71,11 @@ const AppContainerRender: ForwardRefRenderFunction<
 	}))
 
 	useEffect(() => {
-		const messageTargetOrigin =
-			iframeOptions?.messageTargetOrigin || window.location.origin
-
 		dispatch({
 			payload: messageTargetOrigin,
 			type: DataActionTypes.setMessageTargetOrigin,
 		})
-	}, [dispatch, iframeOptions?.messageTargetOrigin])
+	}, [dispatch, messageTargetOrigin])
 
 	useEffect(() => {
 		if (kycDao) {
@@ -110,31 +116,33 @@ const AppContainerRender: ForwardRefRenderFunction<
 						return
 					}
 
-					let startPage
+					let startPage = StepID.AgreementStep
+
 					if (kycDao.redirectEvent) {
+						dispatch({
+							type: DataActionTypes.termsAcceptedChange,
+							payload: true,
+						})
+
 						switch (kycDao.redirectEvent) {
 							case "NearLogin":
-								startPage = StepID.verificationStep
-								dispatch({
-									type: DataActionTypes.termsAcceptedChange,
-									payload: true,
-								})
-								break
+								return StepID.verificationStep
 							case "NearUserRejectedError":
-								startPage = StepID.nftArtSelection
-								dispatch({
-									type: DataActionTypes.termsAcceptedChange,
-									payload: true,
-								})
-								break
+								return StepID.nftArtSelection
 							case "NearMint":
-								startPage = StepID.finalStep
 								if (kycDao.transactionUrl) {
 									dispatch({
 										type: DataActionTypes.setChainExplorerUrl,
 										payload: kycDao.transactionUrl,
 									})
 								}
+								if (kycDao.mintingResult?.imageUrl) {
+									dispatch({
+										type: DataActionTypes.setNftImageUrl,
+										payload: kycDao.mintingResult?.imageUrl,
+									})
+								}
+								return StepID.finalStep
 						}
 					} else {
 						const { subscribed } = kycDao.kycDao
@@ -162,29 +170,24 @@ const AppContainerRender: ForwardRefRenderFunction<
 							payload: { button: HeaderButtons.close, state: "hidden" },
 						})
 					}
-				} catch (err) {
-					dispatch({
-						type: DataActionTypes.SetErrorModalText,
-						payload: {
-							header: "An error happened",
-							body: `${err}`,
-						},
-					})
-					dispatch({
-						type: DataActionTypes.setModal,
-						payload: "genericError",
-					})
-
-					dispatch({
-						payload: { current: StepID.fatalError, prev: StepID.loading },
-						type: DataActionTypes.changePage,
-					})
-
-					console.error(err)
+				} catch (error) {
+					errorHandler(
+						"fatal",
+						error,
+						dispatch,
+						StepID.loading,
+						messageTargetOrigin
+					)
 				}
 			})()
 		}
-	}, [kycDao, iframeOptions, isModal, config.enabledBlockchainNetworks])
+	}, [
+		kycDao,
+		iframeOptions,
+		isModal,
+		config.enabledBlockchainNetworks,
+		messageTargetOrigin,
+	])
 
 	useEffect(() => {
 		KycDao.initialize(config)
@@ -195,13 +198,16 @@ const AppContainerRender: ForwardRefRenderFunction<
 					onReady(result)
 				}
 			})
-			.catch(() => {
-				dispatch({
-					type: DataActionTypes.changePage,
-					payload: { current: StepID.fatalError, prev: StepID.loading },
-				})
+			.catch((error) => {
+				errorHandler(
+					"fatal",
+					error,
+					dispatch,
+					StepID.loading,
+					messageTargetOrigin
+				)
 			})
-	}, [config, onReady])
+	}, [config, onReady, messageTargetOrigin])
 
 	useEffect(() => {
 		if (isModal) {
@@ -214,12 +220,12 @@ const AppContainerRender: ForwardRefRenderFunction<
 								? `Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`
 								: data.chainExplorerUrl,
 						} as KycDaoClientMessageBody,
-						data.messageTargetOrigin
+						messageTargetOrigin
 					)
 				} else {
 					window.parent.postMessage(
 						{ type: "kycDaoCloseModal" } as KycDaoClientMessageBody,
-						data.messageTargetOrigin
+						messageTargetOrigin
 					)
 				}
 			})
@@ -228,7 +234,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 	}, [
 		data.chainExplorerUrl,
 		data.isProcessSuccess,
-		data.messageTargetOrigin,
+		messageTargetOrigin,
 		isModal,
 		kycDao?.kycDao.connectedWallet?.blockchainNetwork,
 		data.alreadyHaveAnNftOnThisChain,

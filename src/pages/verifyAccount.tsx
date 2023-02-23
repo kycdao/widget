@@ -21,6 +21,7 @@ import { Selector } from "./selector"
 import { useVerified } from "@Hooks/useVerified"
 import veriLabs from "@Components/Icons/veriLabs"
 import emptyIcon from "@Components/Icons/emptyIcon"
+import useErrorHandler from "@Hooks/errorHandler"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<SubmitButton
@@ -169,6 +170,7 @@ export const VerifyAccountStep: FC<PageProps> = ({
 	} = useContext(StateContext)
 	const redirect = useChangePage()
 	const checkVerification = useVerified()
+	const errorHandler = useErrorHandler()
 
 	const onSubmit = useCallback(() => {
 		if (returningUserFlow) {
@@ -194,11 +196,11 @@ export const VerifyAccountStep: FC<PageProps> = ({
 						)
 					}
 				})()
-			} catch (e) {
-				console.error(e)
+			} catch (error) {
+				errorHandler("minting", error)
 			}
 		}
-	}, [redirect, returningUserFlow, checkVerification, dispatch])
+	}, [redirect, returningUserFlow, checkVerification, dispatch, errorHandler])
 
 	const onPrev = useCallback(() => {
 		if (returningUserFlow) {

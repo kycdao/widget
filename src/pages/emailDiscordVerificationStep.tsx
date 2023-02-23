@@ -29,6 +29,7 @@ import {
 import useChangePage from "@Hooks/useChangePage"
 import styled from "styled-components/macro"
 import UnstyledDiscordLogo from "../images/discord.svg"
+import useErrorHandler from "@Hooks/errorHandler"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
@@ -85,6 +86,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	} = useContext(StateContext)
 	const redirect = useChangePage()
 	const kycDao = useKycDao()
+	const errorHandler = useErrorHandler()
 
 	const [buttonAutofocus, setButtonAutoFocus] = useState(false)
 
@@ -176,46 +178,27 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 
 								clearInterval(confirmationInterval.current)
 							}
-						} catch (e) {
-							dispatch({
-								type: DataActionTypes.SetErrorModalText,
-								payload: {
-									header: "An error happened",
-									body: "Email validation failed, because of an error. Please try again.",
-								},
-							})
-							dispatch({
-								type: DataActionTypes.setModal,
-								payload: "genericError",
-							})
-							if (typeof e === "string" || e instanceof Error) {
-								console.error(e)
-							} else {
-								console.error(JSON.stringify(e))
-							}
+						} catch (error) {
+							errorHandler("modal", error)
 						}
 					}
 					confirmationInterval.current = setInterval(emailCheck, 1500)
-				} catch (e) {
-					dispatch({
-						type: DataActionTypes.SetErrorModalText,
-						payload: {
-							header: "An error happened",
-							body: "Email validation failed, because of an error. Please try again.",
-						},
-					})
-					dispatch({ type: DataActionTypes.setModal, payload: "genericError" })
-					if (typeof e === "string" || e instanceof Error) {
-						console.error(e)
-					} else {
-						console.error(JSON.stringify(e))
-					}
+				} catch (error) {
+					errorHandler("modal", error)
 				}
 			} else {
 				redirect(StepID.taxResidenceStep, StepID.emailDiscordVerificationStep)
 			}
 		}
-	}, [disableSubmit, kycDao, isEmailConfirmed, dispatch, emailValue, redirect])
+	}, [
+		disableSubmit,
+		kycDao,
+		isEmailConfirmed,
+		dispatch,
+		emailValue,
+		redirect,
+		errorHandler,
+	])
 
 	const onPrev = useCallback(() => {
 		clearInterval(confirmationInterval.current)

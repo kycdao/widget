@@ -11,6 +11,7 @@ import {
 import { DataActionTypes, StateContext } from "@Components/stateContext"
 import { P, Policy } from "@Components/typography"
 import { Button } from "@Components/button/button"
+import useErrorHandler from "@Hooks/errorHandler"
 
 export const EmailVerificationModal = () => {
 	const {
@@ -18,17 +19,15 @@ export const EmailVerificationModal = () => {
 		dispatch,
 	} = useContext(StateContext)
 
+	const errorHandler = useErrorHandler()
+
 	const kycDao = useKycDao()
 
-	const onResend = useCallback(async () => {
-		try {
-			await kycDao?.kycDao.resendEmailConfirmationCode()
-		} catch (e) {
-			console.error(e)
-		}
-
-		//something to show, if it worked or not
-	}, [kycDao])
+	const onResend = useCallback(() => {
+		kycDao?.kycDao.resendEmailConfirmationCode().catch((e) => {
+			errorHandler("fatal", e)
+		})
+	}, [kycDao, errorHandler])
 
 	const onChangeEmail = useCallback(() => {
 		dispatch({ type: DataActionTypes.setModal, payload: null })

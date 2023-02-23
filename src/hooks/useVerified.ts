@@ -1,21 +1,24 @@
-import { KycDaoInitializationResult } from "@kycdao/kycdao-sdk"
 import { useKycDao } from "./useKycDao"
-
-export async function getVerified(kycDaoState: KycDaoInitializationResult) {
-	return Object.entries(
-		await kycDaoState.kycDao.checkVerificationStatus()
-	).reduce(
-		(prevValue, [, currentValue]) => (currentValue ? true : prevValue),
-		false
-	)
-}
 
 export function useVerified() {
 	const kycDao = useKycDao()
 
-	if (kycDao) {
-		return () => getVerified(kycDao)
+	return () => {
+		if (kycDao) {
+			return kycDao.kycDao
+				.checkVerificationStatus()
+				.then((result) => {
+					return Object.entries(result).reduce(
+						(prevValue, [, currentValue]) => (currentValue ? true : prevValue),
+						false
+					)
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+		} else
+			throw new Error(
+				"Kycdao should be defined. How this is possyble? Check useVerified()"
+			)
 	}
-
-	throw new Error("Something happened. You are not supposed to be here.")
 }
