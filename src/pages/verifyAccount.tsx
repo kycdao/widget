@@ -205,7 +205,7 @@ export const VerifyAccountStep: FC<PageProps> = ({
 					}
 				})()
 			} catch (error) {
-				errorHandler("minting", error)
+				errorHandler("fatal", error)
 			}
 		}
 	}, [

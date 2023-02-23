@@ -62,7 +62,6 @@ const AppContainerRender: ForwardRefRenderFunction<
 	const [data, dispatch] = useReducer(reducer, DefaultData)
 	const contextData = useMemo(() => ({ data, dispatch }), [data, dispatch])
 	const [kycDao, setKycDao] = useState<KycDaoInitializationResult>()
-	// const errorHandler = useErrorHandler()
 
 	useImperativeHandle(ref, () => ({
 		get kycDaoSdkInstance() {
@@ -104,11 +103,9 @@ const AppContainerRender: ForwardRefRenderFunction<
 						})
 					}
 
-					if (
-						(await kycDao.kycDao.hasValidNft("KYC")) &&
-						kycDao.redirectEvent !== "NearMint" /* ||
-							(await kycDao.kycDao.hasValidNft("AccreditedInvestor"))*/
-					) {
+					const hasValidNft = await kycDao.kycDao.hasValidNft("KYC")
+
+					if (hasValidNft && kycDao.redirectEvent !== "NearMint") {
 						dispatch({
 							payload: {
 								current: StepID.finalStep,
@@ -142,7 +139,8 @@ const AppContainerRender: ForwardRefRenderFunction<
 
 						switch (kycDao.redirectEvent) {
 							case "NearLogin":
-								return StepID.verificationStep
+								startPage = StepID.verificationStep
+								break
 							case "NearUserRejectedError":
 								window.parent.postMessage(
 									{
@@ -152,20 +150,15 @@ const AppContainerRender: ForwardRefRenderFunction<
 								)
 								return
 							case "NearMint":
-								if (
-									kycDao.transactionUrl ||
-									kycDao.mintingResult?.transactionUrl
-								) {
+								dispatch({
+									type: DataActionTypes.SetNearMinted,
+									payload: true,
+								})
+
+								if (kycDao.mintingResult?.transactionUrl) {
 									dispatch({
 										type: DataActionTypes.setChainExplorerUrl,
-										payload:
-											kycDao.transactionUrl ||
-											kycDao.mintingResult?.transactionUrl ||
-											"",
-									})
-									dispatch({
-										type: DataActionTypes.SetNearMinted,
-										payload: true,
+										payload: kycDao.mintingResult?.transactionUrl || "",
 									})
 								}
 								if (kycDao.mintingResult?.imageUrl) {

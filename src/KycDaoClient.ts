@@ -133,22 +133,7 @@ export class KycDaoClient implements KycDaoClientInterface {
 		if (nearNetwork && this.nearRedirectCheck()) {
 			this.container = document.createElement("div")
 
-			this.config.enabledBlockchainNetworks = [nearNetwork]
-			if (this.configFromUrl) {
-				BootstrapIframeKycDaoModal({
-					parent: this.container,
-				})
-			} else {
-				BootstrapKycDaoModal({
-					config: this.config,
-					height: this.height,
-					parent: this.container,
-					width: this.width,
-					isModal: this.isModal,
-					onReady: this.onReady,
-				})
-			}
-			this.open()
+			this.open(nearNetwork)
 		}
 	}
 
