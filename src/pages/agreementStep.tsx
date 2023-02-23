@@ -32,7 +32,7 @@ const Body = () => (
 			CEXs/Ramps already know your wallet address; kycDAO makes it composable.
 		</P>
 		<P>
-			Our proofs allow smart contracts and services to interac with trusted
+			Our proofs allow smart contracts and services to interact with trusted
 			wallets.
 		</P>
 		<P>
