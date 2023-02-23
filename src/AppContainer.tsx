@@ -84,7 +84,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 					await kycDao.kycDao.connectWallet(
 						getNetworkType(config.enabledBlockchainNetworks[0])
 					)
-					// await kycDao.kycDao.registerOrLogin()
+					await kycDao.kycDao.registerOrLogin()
 
 					dispatch({
 						type: DataActionTypes.setModalMode,
