@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/widget",
-	"version": "0.5.1",
+	"version": "0.5.2",
 	"license": "UNLICENSED",
 	"main": "dist/umd/index.js",
 	"types": "dist",
@@ -68,6 +68,7 @@
 		"react-error-boundary": "^3.1.4",
 		"react-scripts": "^5.0.1",
 		"react-swipeable": "^7.0.0",
+		"react-twitter-embed": "^4.0.4",
 		"rxjs": "^7.8.0",
 		"stream": "^0.0.2"
 	},

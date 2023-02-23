@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.5.1] - 2023-02-XX
+## [0.5.2] - 2023-02-23
+
+### Added
+- Twitter share button for a minted nft
+
+## [0.5.1] - 2023-02-23
 
 ### Added
 - Display already minted nft, if possible

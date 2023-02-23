@@ -17,6 +17,7 @@ import {
 } from "@Components/index"
 import { KycDaoClientMessageBody } from "KycDaoClientCommon"
 import useErrorHandler from "@Hooks/errorHandler"
+import { TwitterShareButton } from "react-twitter-embed"
 
 export const NftButtonWrapper = styled.div`
 	display: flex;
@@ -26,6 +27,12 @@ export const NftButtonWrapper = styled.div`
 
 const NftImageContainer = styled.div`
 	text-align: center;
+`
+
+const TwitterButtonContainer = styled.div`
+	justify-content: center;
+	display: flex;
+	padding-top: 1em;
 `
 
 export const FinalStep: FC<PageProps> = ({
@@ -121,6 +128,17 @@ export const FinalStep: FC<PageProps> = ({
 						<Placeholder width="300px" height="300px" />
 					)}
 				</NftImageContainer>
+				<TwitterButtonContainer>
+					<TwitterShareButton
+						url={"https://kycdao.xyz/"}
+						// See options here: https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/overview
+						options={{
+							text: "I’m the n-th #trustedanon of #web3 bc I joined @kycdao!",
+							hashtags: "kyc",
+							size: "large",
+						}}
+					/>
+				</TwitterButtonContainer>
 			</>
 		),
 		[kycDao, displayedNftImageUrl, alreadyHaveAnNftOnThisChain, nearMinted]
