@@ -81,21 +81,24 @@ export const FinalStep: FC<PageProps> = ({
 	useEffect(() => {
 		if (kycDao) {
 			;(async function () {
-				if (!/Near/g.test(kycDao.sdkStatus.availableBlockchainNetworks[0])) {
-					try {
-						const tokens = (await kycDao.kycDao.getValidNfts("KYC")).tokens
+				if (alreadyHaveAnNftOnThisChain) {
+					if (!/Near/g.test(kycDao.sdkStatus.availableBlockchainNetworks[0])) {
+						try {
+							const tokens = (await kycDao.kycDao.getValidNfts("KYC")).tokens
 
-						if (tokens && tokens.length > 0 && tokens[0].image) {
-							setDisplayedNftImageUrl(tokens[0].image)
+							if (tokens && tokens.length > 0 && tokens[0].image) {
+								setDisplayedNftImageUrl(tokens[0].image)
+							}
+						} catch (error) {
+							errorHandler("modal", error)
 						}
-					} catch (error) {
-						errorHandler("modal", error)
 					}
+				} else {
+					setDisplayedNftImageUrl(kycDao.mintingResult?.imageUrl || nftImageUrl)
 				}
 			})()
-			setDisplayedNftImageUrl(kycDao.mintingResult?.imageUrl || nftImageUrl)
 		}
-	}, [kycDao, nftImageUrl, errorHandler])
+	}, [kycDao, nftImageUrl, errorHandler, alreadyHaveAnNftOnThisChain])
 
 	const body = useCallback<StepPart>(
 		(props) => (
