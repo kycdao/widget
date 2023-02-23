@@ -102,11 +102,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 	}, [disabled, inactive, submitDisabled, dispatch, grantFlowEnabled, redirect])
 
 	const onPrev = useCallback(() => {
-		redirect(
-			StepID.emailDiscordVerificationStep,
-			StepID.taxResidenceStep,
-			"prev"
-		)
+		redirect(StepID.verificationStep, StepID.taxResidenceStep, "prev")
 		dispatch({
 			payload: taxResidence.current,
 			type: DataActionTypes.taxResidenceChange,

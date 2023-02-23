@@ -167,7 +167,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 								})
 
 								redirect(
-									StepID.taxResidenceStep,
+									StepID.verificationStep,
 									StepID.emailDiscordVerificationStep
 								)
 

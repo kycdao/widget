@@ -166,7 +166,7 @@ export const VerifyAccountStep: FC<PageProps> = ({
 }) => {
 	const {
 		dispatch,
-		data: { returningUserFlow },
+		data: { returningUserFlow, isEmailConfirmed },
 	} = useContext(StateContext)
 	const redirect = useChangePage()
 	const checkVerification = useVerified()
@@ -186,29 +186,31 @@ export const VerifyAccountStep: FC<PageProps> = ({
 						})
 						redirect(StepID.nftArtSelection, StepID.verifyAccountStep)
 					} else {
-						dispatch({
-							payload: true,
-							type: DataActionTypes.termsAcceptedChange,
-						})
-						redirect(
-							StepID.emailDiscordVerificationStep,
-							StepID.verifyAccountStep
-						)
+						if (isEmailConfirmed) {
+							dispatch({
+								payload: true,
+								type: DataActionTypes.termsAcceptedChange,
+							})
+							redirect(StepID.verificationStep, StepID.verifyAccountStep)
+						}
 					}
 				})()
 			} catch (error) {
 				errorHandler("minting", error)
 			}
 		}
-	}, [redirect, returningUserFlow, checkVerification, dispatch, errorHandler])
+	}, [
+		redirect,
+		returningUserFlow,
+		checkVerification,
+		dispatch,
+		errorHandler,
+		isEmailConfirmed,
+	])
 
 	const onPrev = useCallback(() => {
-		if (returningUserFlow) {
-			redirect(StepID.subscribedStartStep, StepID.verifyAccountStep, "prev")
-		} else {
-			redirect(StepID.AgreementStep, StepID.verifyAccountStep, "prev")
-		}
-	}, [redirect, returningUserFlow])
+		redirect(StepID.kycDAOMembershipStep, StepID.verifyAccountStep, "prev")
+	}, [redirect])
 
 	const [provider, setProvider] = useState("verilabs")
 

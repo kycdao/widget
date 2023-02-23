@@ -69,11 +69,11 @@ export const VerificationStep: FC<PageProps> = ({
 	const redirect = useChangePage()
 
 	const onSubmit = useCallback(() => {
-		redirect(StepID.emailDiscordVerificationStep, StepID.verificationStep)
+		redirect(StepID.taxResidenceStep, StepID.verificationStep)
 	}, [redirect])
 
 	const onPrev = useCallback(() => {
-		redirect(StepID.kycDAOMembershipStep, StepID.verificationStep, "prev")
+		redirect(StepID.verifyAccountStep, StepID.verificationStep, "prev")
 	}, [redirect])
 
 	useEffect(() => {

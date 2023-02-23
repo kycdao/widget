@@ -91,8 +91,23 @@ const AppContainerRender: ForwardRefRenderFunction<
 						payload: isModal,
 					})
 
+					const emailData = await kycDao?.kycDao.checkEmailConfirmed()
+
+					dispatch({
+						type: DataActionTypes.setEmailConfirmed,
+						payload: !!emailData.isConfirmed,
+					})
+
+					if (emailData.address) {
+						dispatch({
+							type: DataActionTypes.emailChange,
+							payload: emailData.address,
+						})
+					}
+
 					if (
-						await kycDao.kycDao.hasValidNft("KYC") /* ||
+						(await kycDao.kycDao.hasValidNft("KYC")) &&
+						kycDao.redirectEvent !== "NearMint" /* ||
 							(await kycDao.kycDao.hasValidNft("AccreditedInvestor"))*/
 					) {
 						dispatch({
@@ -128,7 +143,13 @@ const AppContainerRender: ForwardRefRenderFunction<
 							case "NearLogin":
 								return StepID.verificationStep
 							case "NearUserRejectedError":
-								return StepID.nftArtSelection
+								window.parent.postMessage(
+									{
+										type: "kycDaoCloseModal",
+									} as KycDaoClientMessageBody,
+									messageTargetOrigin
+								)
+								return
 							case "NearMint":
 								if (kycDao.transactionUrl) {
 									dispatch({
@@ -146,7 +167,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 										payload: kycDao.mintingResult?.imageUrl,
 									})
 								}
-								return StepID.finalStep
+								startPage = StepID.finalStep
 						}
 					} else {
 						const { subscribed } = kycDao.kycDao

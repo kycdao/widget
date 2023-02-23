@@ -175,15 +175,22 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 	disabled = false,
 	inactive = false,
 }) => {
-	const { dispatch } = useContext(StateContext)
+	const {
+		dispatch,
+		data: { returningUserFlow },
+	} = useContext(StateContext)
 	const redirect = useChangePage()
 	const errorHandler = useErrorHandler()
 
 	const kycDaoContext = useKycDao()
 
 	const onPrev = useCallback(() => {
-		redirect(StepID.AgreementStep, StepID.kycDAOMembershipStep, "prev")
-	}, [redirect])
+		if (returningUserFlow) {
+			redirect(StepID.subscribedStartStep, StepID.kycDAOMembershipStep, "prev")
+		} else {
+			redirect(StepID.AgreementStep, StepID.kycDAOMembershipStep, "prev")
+		}
+	}, [redirect, returningUserFlow])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
@@ -201,7 +208,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 				try {
 					await kycDaoContext.kycDao.connectWallet(network)
 					await kycDaoContext.kycDao.registerOrLogin()
-					redirect(StepID.verificationStep, StepID.kycDAOMembershipStep)
+					redirect(StepID.verifyAccountStep, StepID.kycDAOMembershipStep)
 					dispatch({ type: DataActionTypes.termsAcceptedChange, payload: true })
 				} catch (e) {
 					// TODO: nicer error handling for unsupported network https://kycdao.atlassian.net/browse/KYC-505

@@ -65,7 +65,7 @@ export const AgreementStep: FC<PageProps> = ({
 	const kycDaoContext = useKycDao()
 
 	const onSubmit = useCallback(async () => {
-		redirect(StepID.verifyAccountStep, StepID.AgreementStep)
+		redirect(StepID.kycDAOMembershipStep, StepID.AgreementStep)
 	}, [redirect])
 
 	const onTransitionDone = useCallback(() => {
