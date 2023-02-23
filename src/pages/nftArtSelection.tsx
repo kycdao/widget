@@ -41,7 +41,7 @@ const NftImageWrapper = styled.div`
 	flex-wrap: wrap;
 	justify-content: space-around;
 	height: 100%;
-	overflow: scroll;
+	overflow: auto;
 `
 
 const NftImageContainer = styled.div<{ selected: boolean }>`
