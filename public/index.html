@@ -5,6 +5,37 @@
 		<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
 
 		<style>
+			@font-face {
+				font-family: neue-machina;
+				src: url("./NeueMachina-Regular.woff2");
+			}
+
+			@font-face {
+				font-family: gilroy-light;
+				font-style: normal;
+				font-weight: 400;
+				src: local("Gilroy-Light"),
+					url(https://fonts.cdnfonts.com/s/16219/Gilroy-Light.woff)
+						format("woff");
+			}
+
+			body {
+				font-family: neue-machina;
+				background-image: url("./kycd-pearl-background-transparent.jpg");
+				background-size: cover;
+				font-weight: 400;
+			}
+
+			a {
+				color: #181f60;
+				font-family: gilroy-light;
+			}
+
+			a:visited {
+				color: #181f60;
+				font-family: gilroy-light;
+			}
+
 			.chainSelectorButton {
 				cursor: pointer;
 				padding: 1em;
@@ -304,16 +335,6 @@
 						<div>
 							<strong>Near:</strong>
 							Test wallet has testnet tokens.
-						</div>
-						<br />
-						<div>
-							<strong>FYI:</strong>
-							<br />
-							<strong>NEAR:</strong>
-							Due to the native browser-based wallet, the widget has to be
-							reopened using the same “NEAR Testnet” button when a redirect
-							happens. We are working hard. This is a known issue in the NEAR
-							community, and the fix is coming soon.
 						</div>
 					</div>
 					<div style="flex: 1"></div>

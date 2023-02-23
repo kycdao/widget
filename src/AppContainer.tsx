@@ -84,7 +84,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 					await kycDao.kycDao.connectWallet(
 						getNetworkType(config.enabledBlockchainNetworks[0])
 					)
-					await kycDao.kycDao.registerOrLogin()
+					// await kycDao.kycDao.registerOrLogin()
 
 					dispatch({
 						type: DataActionTypes.setModalMode,
@@ -134,6 +134,10 @@ const AppContainerRender: ForwardRefRenderFunction<
 									dispatch({
 										type: DataActionTypes.setChainExplorerUrl,
 										payload: kycDao.transactionUrl,
+									})
+									dispatch({
+										type: DataActionTypes.SetNearMinted,
+										payload: true,
 									})
 								}
 								if (kycDao.mintingResult?.imageUrl) {
@@ -216,9 +220,10 @@ const AppContainerRender: ForwardRefRenderFunction<
 					window.parent.postMessage(
 						{
 							type: "kycDaoSuccess",
-							data: data.alreadyHaveAnNftOnThisChain
-								? `Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`
-								: data.chainExplorerUrl,
+							data:
+								data.alreadyHaveAnNftOnThisChain && !data.nearMinted
+									? `Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`
+									: data.chainExplorerUrl,
 						} as KycDaoClientMessageBody,
 						messageTargetOrigin
 					)
@@ -235,6 +240,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 		data.chainExplorerUrl,
 		data.isProcessSuccess,
 		messageTargetOrigin,
+		data.nearMinted,
 		isModal,
 		kycDao?.kycDao.connectedWallet?.blockchainNetwork,
 		data.alreadyHaveAnNftOnThisChain,

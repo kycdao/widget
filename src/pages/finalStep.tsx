@@ -42,6 +42,7 @@ export const FinalStep: FC<PageProps> = ({
 			chainExplorerUrl,
 			nftImageUrl,
 			alreadyHaveAnNftOnThisChain,
+			nearMinted,
 		},
 	} = useContext(StateContext)
 
@@ -84,11 +85,11 @@ export const FinalStep: FC<PageProps> = ({
 					try {
 						const tokens = (await kycDao.kycDao.getValidNfts("KYC")).tokens
 
-						if (tokens && tokens.length > 0) {
+						if (tokens && tokens.length > 0 && tokens[0].image) {
 							setDisplayedNftImageUrl(tokens[0].image)
 						}
 					} catch (error) {
-						errorHandler("minting", error)
+						errorHandler("modal", error)
 					}
 				}
 			})()
@@ -100,7 +101,7 @@ export const FinalStep: FC<PageProps> = ({
 		(props) => (
 			<>
 				<CenteredH1>
-					{alreadyHaveAnNftOnThisChain
+					{alreadyHaveAnNftOnThisChain && !nearMinted
 						? "You already have a "
 						: "You have successfully minted your "}
 					kycNFT on {kycDao?.kycDao.connectedWallet?.blockchainNetwork}
@@ -119,7 +120,7 @@ export const FinalStep: FC<PageProps> = ({
 				</NftImageContainer>
 			</>
 		),
-		[kycDao, displayedNftImageUrl, alreadyHaveAnNftOnThisChain]
+		[kycDao, displayedNftImageUrl, alreadyHaveAnNftOnThisChain, nearMinted]
 	)
 
 	const onFinish = useCallback(async () => {

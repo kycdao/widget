@@ -56,6 +56,7 @@ export const P = styled.p`
 	color: black;
 	margin-bottom: 1em;
 	margin-top: 0;
+	font-weight: 400;
 `
 
 export const Policy = styled(P)`

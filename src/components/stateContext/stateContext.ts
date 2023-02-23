@@ -21,6 +21,9 @@ export const reducer = (
 	{ payload, type }: DataChangeActions
 ): Data => {
 	switch (type) {
+		case DataActionTypes.SetNearMinted: {
+			return { ...data, nearMinted: payload }
+		}
 		case DataActionTypes.SetAlreadyHaveAnNftOnThisChain: {
 			return { ...data, alreadyHaveAnNftOnThisChain: payload }
 		}
@@ -131,6 +134,7 @@ export const DefaultData = {
 	height: 400,
 	grantFlowEnabled: false,
 	alreadyHaveAnNftOnThisChain: false,
+	nearMinted: false,
 } as Data
 
 export const StateContext = createContext<{

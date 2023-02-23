@@ -34,6 +34,7 @@ export enum DataActionTypes {
 	SetReturnUserFlow,
 	SetProcessSucess,
 	SetAlreadyHaveAnNftOnThisChain,
+	SetNearMinted,
 }
 
 export enum StepID {
@@ -90,6 +91,7 @@ export type Data = {
 	returningUserFlow: boolean
 	isProcessSuccess: boolean
 	alreadyHaveAnNftOnThisChain: boolean
+	nearMinted: boolean
 }
 
 export type HeaderButtonState = "enabled" | "disabled" | "hidden"
@@ -209,6 +211,11 @@ export type SetAlreadyHaveAnNftOnThisChain = {
 	payload: boolean
 }
 
+export type SetNearMinted = {
+	type: DataActionTypes.SetNearMinted
+	payload: boolean
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -232,6 +239,7 @@ export type DataChangeActions =
 	| SetReturnUserFlowChange
 	| SetProcessSucess
 	| SetAlreadyHaveAnNftOnThisChain
+	| SetNearMinted
 
 export type ModalType =
 	| "emailVerification"

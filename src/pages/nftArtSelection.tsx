@@ -104,21 +104,17 @@ export const NftSelection: FC<PageProps> = ({
 	)
 
 	useEffect(() => {
-		kycDao?.kycDao.getNftImageOptions().then((options) => {
-			const images = [] as Nft[]
+		if (!disabled && !inactive) {
+			kycDao?.kycDao.getNftImageOptions().then((options) => {
+				const images = [] as Nft[]
 
-			Object.entries(options).forEach(([, url]) => {
-				const splitUrl = url.split("/")
-
-				if (splitUrl.length > 0) {
-					const id = splitUrl[splitUrl.length - 1]
-
+				Object.entries(options).forEach(([id, url]) => {
 					images.push({ url: url + "?timestamp=" + Date.now().toString(), id })
-					setNftImages(images.slice(0, 4))
-				}
+				})
+				setNftImages(images.slice(0, 4))
 			})
-		})
-	}, [kycDao])
+		}
+	}, [kycDao, disabled, inactive])
 
 	const onSubmit = useCallback(async () => {
 		if (currentArt) {
@@ -204,19 +200,10 @@ export const NftSelection: FC<PageProps> = ({
 				type: DataActionTypes.SetHeaderButtonState,
 			})
 
-			Object.entries(options).forEach(([, url]) => {
-				const splitUrl = url.split("/")
-
-				if (splitUrl.length > 0) {
-					const id = splitUrl[splitUrl.length - 1]
-
-					images.push({
-						url: url + "?timestamp=" + Date.now(),
-						id,
-					})
-					setNftImages(images.slice(0, 4))
-				}
+			Object.entries(options).forEach(([id, url]) => {
+				images.push({ url: url + "?timestamp=" + Date.now().toString(), id })
 			})
+			setNftImages(images.slice(0, 4))
 		})
 	}, [kycDao?.kycDao, dispatch])
 
