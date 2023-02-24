@@ -60,7 +60,7 @@
 		"./dist/": "./dist/"
 	},
 	"dependencies": {
-		"@kycdao/kycdao-sdk": "^0.6.5",
+		"@kycdao/kycdao-sdk": "^0.6.6",
 		"buffer": "^6.0.3",
 		"clsx": "^1.2.1",
 		"near-api-js": "0.44.2",
