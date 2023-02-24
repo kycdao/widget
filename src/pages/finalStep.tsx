@@ -56,7 +56,8 @@ export const FinalStep: FC<PageProps> = ({
 	const errorHandler = useErrorHandler()
 
 	const header = useCallback(
-		() => (alreadyHaveAnNftOnThisChain ? <></> : <H1>Congrats!</H1>),
+		() =>
+			alreadyHaveAnNftOnThisChain ? <></> : <H1 marginBottom="0">Congrats!</H1>,
 		[alreadyHaveAnNftOnThisChain]
 	)
 
@@ -110,7 +111,7 @@ export const FinalStep: FC<PageProps> = ({
 	const body = useCallback<StepPart>(
 		(props) => (
 			<>
-				<CenteredH1>
+				<CenteredH1 marginBottom="0">
 					{alreadyHaveAnNftOnThisChain && !nearMinted
 						? "You already have a "
 						: "You have successfully minted your "}

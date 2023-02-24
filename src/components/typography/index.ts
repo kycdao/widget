@@ -31,9 +31,9 @@ export const typoBase = css`
 	font-family: neue-machina;
 `
 
-export const H1 = styled.h1`
+export const H1 = styled.h1<{ marginBottom?: string }>`
 	${typoBase}
-	margin-bottom: 1em;
+	margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : "1em")};
 	font-size: 1.6rem;
 	margin-top: 0;
 `
