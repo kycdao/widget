@@ -6,11 +6,15 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 import { AppContainer, AppContainerRef } from "./AppContainer"
 import { RestartContext } from "@Components/restartContext"
+import NeueMachinaRegularBase64 from "./fonts/NeueMachina-Regular"
 
 const fontFile = new FontFace(
 	"neue-machina",
-	`url(${require("./fonts/NeueMachina-Regular.woff2")})`,
-	{ weight: "400", style: "normal" }
+	`url(${NeueMachinaRegularBase64})`,
+	{
+		weight: "400",
+		style: "normal",
+	}
 )
 
 document.fonts.add(fontFile)
