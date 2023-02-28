@@ -17,7 +17,7 @@ import { fileURLToPath } from "url"
 import { spawn } from "child_process"
 import { mkdirSync } from "fs"
 import path from "path"
-import { env, exit } from "process"
+import { env } from "process"
 
 env.PATH = `${path.join(
 	path.dirname(fileURLToPath(import.meta.url)),
