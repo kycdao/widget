@@ -22,27 +22,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: 'pnpm'
 
-      - uses: actions/cache/restore@v3
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
         with:
-          path: |
-            .yarn
-          key: ${{ runner.os }}-${{ hashFiles('./yarn.lock') }}
+          version: 7
 
-      - run: |
-          yarn set version $( grep -Po  'packageManager": "yarn@\K[^"]+' package.json )
+      - run: pnpm install --frozen-lockfile
 
-      - run: yarn install --immutable
-
-      # explicitly save cache, in case build fails next pipeline can already benefit from cached package archives
-      - uses: actions/cache/save@v3
-        with:
-          path: |
-            .yarn
-          key: ${{ runner.os }}-${{ hashFiles('./yarn.lock') }}
-
-      - run: yarn build
+      - run: pnpm build
 
       - name: Cache for Github Pages
         if: env.PUBLISH == 'true'
