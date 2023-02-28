@@ -67,7 +67,6 @@ specifiers:
   rxjs: ^7.8.0
   stream: ^0.0.2
   styled-components: ^5.3.6
-  tsc: ^2.0.4
   tsc-alias: ^1.8.2
   typescript: ^4.9.5
   webpack: ^5.75.0
@@ -133,7 +132,6 @@ devDependencies:
   react-dom: 18.2.0_react@18.2.0
   rimraf: 4.1.2
   styled-components: 5.3.6_biqbaboplfbrettd7655fr4n2y
-  tsc: 2.0.4
   tsc-alias: 1.8.2
   typescript: 4.9.5
   webpack: 5.75.0
@@ -12515,11 +12513,6 @@ packages:
       mylas: 2.1.13
       normalize-path: 3.0.0
       plimit-lit: 1.5.0
-    dev: true
-
-  /tsc/2.0.4:
-    resolution: {integrity: sha512-fzoSieZI5KKJVBYGvwbVZs/J5za84f2lSTLPYf6AGiIf43tZ3GNrI1QzTLcjtyDDP4aLxd46RTZq1nQxe7+k5Q==}
-    hasBin: true
     dev: true
 
   /tsconfig-paths/3.14.2:
