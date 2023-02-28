@@ -30,7 +30,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm build
+      - run: /bin/bash -c pnpm build
 
       - name: Cache for Github Pages
         if: env.PUBLISH == 'true'
