@@ -13,7 +13,7 @@
     "build": "pnpm b:phase1 && pnpm b:phase2 && pnpm b:phase3",
     "---build_pipeline_phases---": "",
     "b:phase1": "concurrently 'pnpm clean' 'pnpm build:lib' 'pnpm build:web'",
-    "b:phase2": "tsc-alias -p tsconfig.json && mv ./build/ ./dist/web && cp ./dist/web/*.(html|ico|css|jpg|woff2*) ./dist && cp ./dist/*.(ico|css*) ./public",
+    "b:phase2": "tsc-alias -p tsconfig.json && mv ./build/ ./dist/web && cp ./dist/web/*.{html,ico,css,jpg,woff2*} ./dist && cp ./dist/*.{ico,css*} ./public",
     "b:phase3": "pnpm build:hotfix && concurrently 'tsc-alias -p tsconfig.umd.json' 'tsc-alias -p tsconfig.esm.json'",
     "---build_pipeline_components---": "",
     "build:web": "REACT_APP_GIT_HASH=$(git rev-parse --short=12 HEAD) GENERATE_SOURCEMAP=false react-app-rewired build",
