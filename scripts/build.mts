@@ -51,8 +51,8 @@ const run = async (bin: string, args: string[]) => {
 }
 
 const b = await Promise.all([
-	run("yarn", ["build:lib"]),
-	run("yarn", ["build:web"]),
+	run("pnpm", ["build:lib"]),
+	run("pnpm", ["build:web"]),
 ])
 
 console.log(b)
