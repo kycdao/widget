@@ -32,19 +32,19 @@ export const typoBase = css`
 `
 
 export const H1 = styled.h1<{ marginBottom?: string }>`
-	${typoBase}
+	${typoBase};
 	margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : "1em")};
 	font-size: 1.6rem;
 	margin-top: 0;
 `
 
 export const H2 = styled.h2`
-	${typoBase}
+	${typoBase};
 	margin-bottom: 1em;
 `
 
 export const H3 = styled.h3`
-	${typoBase}
+	${typoBase};
 	color: black;
 	font-size: 12pt;
 	margin-bottom: 1em;
@@ -52,7 +52,7 @@ export const H3 = styled.h3`
 
 export const P = styled.p`
 	font-size: 12pt;
-	${typoBase}
+	${typoBase};
 	color: black;
 	margin-bottom: 1em;
 	margin-top: 0;
@@ -68,7 +68,7 @@ export const Policy = styled(P)`
 `
 
 export const Li = styled.li`
-	${typoBase}
+	${typoBase};
 	margin-left: 2em;
 	font-size: 12pt;
 
@@ -80,7 +80,7 @@ export const Li = styled.li`
 
 export const B = styled.b`
 	font-size: 12pt;
-	${typoBase}
+	${typoBase};
 	margin-bottom: 1em;
 	margin-top: 0;
 `
@@ -100,7 +100,7 @@ export const CenteredH1 = styled(H1)`
 `
 
 export const Link = styled.a`
-	${typoBase}
+	${typoBase};
 	font-family: var(--light-font);
 	font-size: 12px;
 	text-decoration: underline;

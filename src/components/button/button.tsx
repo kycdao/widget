@@ -68,42 +68,42 @@ export const Button = styled(unstyledButton)<ButtonProps>`
 		switch (mode) {
 			case "black":
 				return css`
-				:enabled {
-					background: black;
-					border: 2px solid black;
-				}
-		
-				span,
-				i {
-					font-weight: 400;
-					color: white;
-				}
-		
-				&:hover {
-					background: var(--kyc-sdk-cybergreen);
-					box-shadow: 0 0 0 0px var(--kyc-sdk-cybergreen-35);
-		
+					:enabled {
+						background: black;
+						border: 2px solid black;
+					}
+
 					span,
 					i {
-						color: black;
+						font-weight: 400;
+						color: white;
 					}
-				}
-		
-				&:focus {
-					background: var(--kyc-sdk-cybergreen);
-					box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
-		
-					span,
-					i {
-						color: black;
+
+					&:hover {
+						background: var(--kyc-sdk-cybergreen);
+						box-shadow: 0 0 0 0 var(--kyc-sdk-cybergreen-35);
+
+						span,
+						i {
+							color: black;
+						}
 					}
-				}
-		
-				&:active {
-					background: var(--darken-green);
-					box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
-				}
-				}`
+
+					&:focus {
+						background: var(--kyc-sdk-cybergreen);
+						box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
+
+						span,
+						i {
+							color: black;
+						}
+					}
+
+					&:active {
+						background: var(--darken-green);
+						box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-35);
+					}
+				`
 
 			case "green":
 				return css`
