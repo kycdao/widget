@@ -3,6 +3,6 @@
 
 echo "Running pre-commit hook"
 
-yarn lint-staged
+pnpm lint-staged
 
 echo "Pre-commit hook finished"

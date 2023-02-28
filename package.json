@@ -1,6 +1,6 @@
 {
   "name": "@kycdao/widget",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "license": "UNLICENSED",
   "main": "dist/umd/index.js",
   "types": "dist",

@@ -10,7 +10,7 @@
 
 ### Install dependencies
 
-- Run the following command to install the dependencies via yarn:
+- Run the following command to install the dependencies via pnpm:
 
     ```
     pnpm install
