@@ -4,6 +4,7 @@
   "type": "module",
   "module": "./dist/KycDaoWidget.js",
   "main": "./dist/KycDaoWidget.umd.cjs",
+  "types": "dist",
   "repository": {
     "url": "https://github.com/kycdao/widget",
     "type": "git"

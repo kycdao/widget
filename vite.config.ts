@@ -24,19 +24,25 @@ export default defineConfig({
     }
   },
   build: {
+    sourcemap: true,
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       name: "@kycdao/widget",
       fileName: "KycDaoWidget"
     },
+    commonjsOptions: {
+      // See https://github.com/justinmahar/react-social-media-embed/issues/24
+      transformMixedEsModules: true,
+    },
     rollupOptions: {
       external: [
         "react",
-        "react-dom"
+        "react-dom",
       ],
       output: {
         globals: {
-          react: "React"
+          react: "React",
+          'react-dom': "ReactDOM",
         }
       }
     }
