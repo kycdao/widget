@@ -15,7 +15,7 @@ export type ButtonProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 const unstyledButton = forwardRef<HTMLButtonElement, ButtonProps>(
-	({ children, inactive, fullWidth, onClick, ...rest }, ref) => (
+	({ children, inactive, onClick, ...rest }, ref) => (
 		<button ref={ref} {...rest} onClick={inactive ? undefined : onClick}>
 			{children}
 		</button>

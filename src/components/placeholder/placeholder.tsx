@@ -9,12 +9,9 @@ export type PlaceholderProps = {
 	showSize?: boolean
 }
 
-const unstyledPlaceholder = ({
-	height,
-	onClick,
-	showSize,
-	width,
-}: PlaceholderProps) => <div>{showSize ? `${width}&times;${height}` : ""}</div>
+const unstyledPlaceholder = ({ height, showSize, width }: PlaceholderProps) => (
+	<div>{showSize ? `${width}&times;${height}` : ""}</div>
+)
 
 export const Placeholder = styled(unstyledPlaceholder)<{
 	height: string

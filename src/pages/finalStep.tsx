@@ -109,7 +109,7 @@ export const FinalStep: FC<PageProps> = ({
 	}, [kycDao, nftImageUrl, errorHandler, alreadyHaveAnNftOnThisChain])
 
 	const body = useCallback<StepPart>(
-		(props) => (
+		() => (
 			<>
 				<CenteredH1 marginBottom="0">
 					{alreadyHaveAnNftOnThisChain && !nearMinted

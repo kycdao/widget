@@ -157,7 +157,7 @@ export const Input: FC<InputProps> = ({
 							.filter((v) =>
 								v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
 							)
-							.map((v, i) => {
+							.map((v) => {
 								return value !== "" ? (
 									<Option
 										dangerouslySetInnerHTML={{

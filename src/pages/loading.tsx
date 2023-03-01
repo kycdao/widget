@@ -28,7 +28,6 @@ export const LoadingCard: FC<PageProps> = ({
 	className,
 	animation,
 	disabled = false,
-	inactive = false,
 }) => {
 	const { dispatch } = useContext(StateContext)
 

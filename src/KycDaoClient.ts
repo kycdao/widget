@@ -219,7 +219,7 @@ export class KycDaoClient implements KycDaoClientInterface {
 		const knownQueryParamNames = Object.keys(knownNearQueryParams)
 
 		const queryParams = new URLSearchParams(window.location.search)
-		const matches = [...queryParams].filter(([key, _]) =>
+		const matches = [...queryParams].filter(([key]) =>
 			knownQueryParamNames.includes(key)
 		)
 

@@ -3,7 +3,6 @@
 		"browser": true,
 		"es2021": true
 	},
-
 	"extends": [
 		"eslint:recommended",
 		"plugin:react/recommended",
@@ -43,5 +42,8 @@
 		"react": {
 			"version": "18.2.0"
 		}
-	}
+	},
+	"ignorePatterns": [
+		"vite.config.ts"
+	]
 }
