@@ -9,6 +9,7 @@ overrides:
   jest-cli: ^29.4.3
   core-js: ^3.28.0
   bn.js: ^5.2.1
+  buffer: ^6.0.3
 
 specifiers:
   '@babel/cli': ^7.21.0
@@ -71,7 +72,7 @@ specifiers:
   typescript: ^4.9.5
   webpack: ^5.75.0
   webpack-bundle-analyzer: ^4.8.0
-  webpack-subresource-integrity: ^5.2.0-rc.1
+  webpack-subresource-integrity: 5.2.0-rc.1
 
 dependencies:
   '@kycdao/kycdao-sdk': 0.6.7_4tabvle4v5t7afghi7sgobo37i
@@ -3072,7 +3073,7 @@ packages:
       bn.js: 5.2.1
       borsh: 0.7.0
       bs58: 4.0.1
-      buffer: 6.0.1
+      buffer: 6.0.3
       fast-stable-stringify: 1.0.0
       jayson: 3.7.0
       node-fetch: 2.6.9
@@ -5242,20 +5243,6 @@ packages:
     resolution: {integrity: sha512-571s0T7nZWK6vB67HI5dyUF7wXiNcfaPPPTl6zYCNApANjIvYJTg7hlud/+cJpdAhS7dVzqMLmfhfHR3rAcOjQ==}
     dev: false
 
-  /buffer/5.7.1:
-    resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
-    dependencies:
-      base64-js: 1.5.1
-      ieee754: 1.2.1
-    dev: false
-
-  /buffer/6.0.1:
-    resolution: {integrity: sha512-rVAXBwEcEoYtxnHSO5iWyhzV/O1WMtkUYWlfdLS7FjU4PnSJJHEfHXi/uHPI5EwltmOA794gN3bm3/pzuctWjQ==}
-    dependencies:
-      base64-js: 1.5.1
-      ieee754: 1.2.1
-    dev: false
-
   /buffer/6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
     dependencies:
@@ -5701,7 +5688,7 @@ packages:
   /crc/3.8.0:
     resolution: {integrity: sha512-iX3mfgcTMIq3ZKLIsVFAbv7+Mc10kxabAGQb8HvjA1o3T1PIYprbakQ65d3I+2HGHt6nSKkM9PYjgoJO2KcFBQ==}
     dependencies:
-      buffer: 5.7.1
+      buffer: 6.0.3
     dev: false
 
   /create-ecdh/4.0.4:
@@ -10843,7 +10830,7 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
     dependencies:
-      buffer: 5.7.1
+      buffer: 6.0.3
       buffer-alloc: 1.2.0
       buffer-from: 1.1.2
       dijkstrajs: 1.0.2

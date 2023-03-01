@@ -68,7 +68,7 @@ export const CloseButton = styled.button`
 
 export const HeaderIcon = styled.i<{ background?: string; color?: string }>`
 	background: ${({ background }) => background};
-	color: ${({ color }) => color};
+	color: ${({ color }) => color || "black"};
 	border-radius: 100%;
 	height: 1.5em;
 	width: 1.5em;
