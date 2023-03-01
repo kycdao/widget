@@ -10,7 +10,7 @@ import {
 	useRef,
 	useState,
 } from "react"
-import styled, { css } from "styled-components/macro"
+import styled, { css } from "styled-components"
 
 const specialRegex = /[!$(){}[\]:;<+?\\>]/g
 

@@ -2,7 +2,7 @@ import { FC, useCallback, useContext } from "react"
 
 import { PageProps } from "./pageProps"
 
-import styled from "styled-components/macro"
+import styled from "styled-components"
 import {
 	DataActionTypes,
 	HeaderButtons,

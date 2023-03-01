@@ -1,43 +1,31 @@
 {
-	"compilerOptions": {
-		"skipDefaultLibCheck": true,
-		"target": "ES6",
-		"declaration": true,
-		"downlevelIteration": true,
-		"sourceMap": true,
-		"lib": ["dom", "dom.iterable", "ES2021"],
-		"allowJs": true,
-		"skipLibCheck": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"noFallthroughCasesInSwitch": true,
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"jsx": "react-jsx",
-		"module": "ES2020",
-		"removeComments": true,
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
-		"baseUrl": "./src",
-		"declarationDir": "build/web",
-		"outDir": "build",
-		"paths": {
-			"@Components/*": ["components/*"],
-			"@Environments/*": ["environments/*"],
-			"@Pages/*": ["pages/*"],
-			"@App/*": ["app/*"],
-			"@Utils/*": ["utils/*"],
-			"@Hooks/*": ["hooks/*"],
-			"@Images/*": ["images/*"]
-		}
-	},
-	"include": ["src"],
-	"exclude": [
-		"dist",
-		"node_modules",
-		"src/**/*.test.tsx",
-		"src/**/*.stories.tsx"
-	]
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "paths": {
+      "@Components/*": ["components/*"],
+      "@Environments/*": ["environments/*"],
+      "@Pages/*": ["pages/*"],
+      "@App/*": ["app/*"],
+      "@Utils/*": ["utils/*"],
+      "@Hooks/*": ["hooks/*"],
+      "@Assets/*": ["assets/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

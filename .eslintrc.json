@@ -10,13 +10,15 @@
 		"plugin:@typescript-eslint/recommended",
 		"plugin:react/jsx-runtime",
 		"prettier",
-		"react-app",
 		"plugin:rxjs/recommended",
 		"plugin:react-hooks/recommended"
 	],
 	"overrides": [
 		{
-			"files": ["src/**/*.ts", "src/**/*.tsx"]
+			"files": [
+				"src/**/*.ts",
+				"src/**/*.tsx"
+			]
 		}
 	],
 	"parser": "@typescript-eslint/parser",
@@ -25,7 +27,12 @@
 		"sourceType": "module",
 		"project": ["./tsconfig.json"]
 	},
-	"plugins": ["react", "@typescript-eslint", "prettier", "react-hooks"],
+	"plugins": [
+		"react",
+		"@typescript-eslint",
+		"prettier",
+		"react-hooks"
+	],
 	"rules": {
 		"react/react-in-jsx-scope": "off",
 		"@typescript-eslint/no-empty-function": "warn",
@@ -36,6 +43,5 @@
 		"react": {
 			"version": "18.2.0"
 		}
-	},
-	"ignorePatterns": ["config-overrides.js"]
+	}
 }

@@ -15,7 +15,7 @@ import {
 import { FC, useContext, useCallback, useEffect, useState } from "react"
 import { PageProps } from "./pageProps"
 import useChangePage from "@Hooks/useChangePage"
-import styled, { css } from "styled-components/macro"
+import styled, { css } from "styled-components"
 import { Selector } from "./selector"
 
 import { useVerified } from "@Hooks/useVerified"

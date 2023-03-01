@@ -1,4 +1,4 @@
-import styled from "styled-components/macro"
+import styled from "styled-components"
 
 export const ModalBackdrop = styled.div`
 	height: 100%;
@@ -68,7 +68,7 @@ export const CloseButton = styled.button`
 
 export const HeaderIcon = styled.i<{ background?: string; color?: string }>`
 	background: ${({ background }) => background};
-	color: ${({ color }) => color || "black"};
+	color: ${({ color }) => color};
 	border-radius: 100%;
 	height: 1.5em;
 	width: 1.5em;

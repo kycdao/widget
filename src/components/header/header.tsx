@@ -5,7 +5,7 @@ import {
 } from "@Components/stateContext"
 import { materialIcon, tr2 } from "@Components/typography"
 import { FC, useCallback, useContext } from "react"
-import styled from "styled-components/macro"
+import styled from "styled-components"
 
 export const StepHeader = styled.div`
 	display: flex;

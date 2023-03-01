@@ -4,7 +4,7 @@ import { useKycDao } from "@Hooks/useKycDao"
 import { useMinting } from "@Hooks/useMinting"
 import { PageProps } from "./pageProps"
 
-import styled, { css } from "styled-components/macro"
+import styled, { css } from "styled-components"
 import {
 	Button,
 	DataActionTypes,

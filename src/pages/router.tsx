@@ -3,7 +3,7 @@ import { StepAnimation, MovingDirection } from "@Components/step/step"
 
 import { CSSProperties, FC, useContext, useMemo } from "react"
 
-import styled from "styled-components/macro"
+import styled from "styled-components"
 import { AgreementStep } from "./agreementStep"
 import { BeginVerifyingStep } from "./beginVerifying"
 import { EmailDiscordVerificationStep } from "./emailDiscordVerificationStep"

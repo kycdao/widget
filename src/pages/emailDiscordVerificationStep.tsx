@@ -8,7 +8,6 @@ import {
 	useLayoutEffect,
 	useRef,
 } from "react"
-
 import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
 import {
@@ -27,8 +26,8 @@ import {
 	SubmitButton,
 } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
-import styled from "styled-components/macro"
-import UnstyledDiscordLogo from "../images/discord.svg"
+import styled from "styled-components"
+import UnstyledDiscordLogo from "@Assets/discord.svg"
 import useErrorHandler from "@Hooks/errorHandler"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
