@@ -239,9 +239,10 @@ export class KycDaoClient implements KycDaoClientInterface {
 				)}.`
 			)
 		} else if (matches.length === 1) {
-			const match = matches[0]
-			const key = match[0] as keyof typeof knownNearQueryParams
-			const event = knownNearQueryParams[key]
+			const [match] = matches
+			const [key] = match
+			const event =
+				knownNearQueryParams[key as keyof typeof knownNearQueryParams]
 
 			if (event.startsWith("Near")) {
 				return true

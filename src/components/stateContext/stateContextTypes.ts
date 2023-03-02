@@ -1,3 +1,5 @@
+import { Flow } from "./getNextStep"
+
 export enum HeaderActionTypes {
 	setNextButtonState,
 	setPrevButtonState,
@@ -35,6 +37,7 @@ export enum DataActionTypes {
 	SetProcessSucess,
 	SetAlreadyHaveAnNftOnThisChain,
 	SetNearMinted,
+	GoToNextStep,
 }
 
 export enum StepID {
@@ -58,13 +61,15 @@ export enum StepID {
 }
 
 export type Data = {
+	flowStack: Flow[]
+	stepIndices: StepID[]
 	nftImageUrl?: string
 	resetKey?: number
 	imageId?: string
 	chain?: string
 	email: string
 	taxResidency: string
-	currentPage: number
+	currentPage: StepID
 	prevPage?: number
 	nextPage?: number
 	reversePaging?: boolean
@@ -216,6 +221,11 @@ export type SetNearMinted = {
 	payload: boolean
 }
 
+export type GoToNextStep = {
+	type: DataActionTypes.GoToNextStep
+	payload: never
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -240,6 +250,7 @@ export type DataChangeActions =
 	| SetProcessSucess
 	| SetAlreadyHaveAnNftOnThisChain
 	| SetNearMinted
+	| GoToNextStep
 
 export type ModalType =
 	| "emailVerification"

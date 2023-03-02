@@ -1,5 +1,6 @@
 import { createContext } from "react"
 import { Subject } from "rxjs"
+import { CalculateNextStep } from "./getNextStep"
 import {
 	Data,
 	DataActionTypes,
@@ -21,6 +22,9 @@ export const reducer = (
 	{ payload, type }: DataChangeActions
 ): Data => {
 	switch (type) {
+		case DataActionTypes.GoToNextStep: {
+			return CalculateNextStep(data)
+		}
 		case DataActionTypes.SetNearMinted: {
 			return { ...data, nearMinted: payload }
 		}
@@ -109,6 +113,8 @@ export const reducer = (
 }
 
 export const DefaultData = {
+	flowStack: [],
+	stepIndices: [],
 	returningUserFlow: false,
 	isProcessSuccess: false,
 	closeButtonState: "enabled",

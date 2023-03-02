@@ -153,7 +153,7 @@ const AccountProviders: AccountProivderProps[] = [
 	{
 		icon: emptyIcon,
 		id: "soon3",
-		label: "aren't you? 🥚👀",
+		label: "aren't you? 🥚",
 		comingSoon: true,
 	},
 ]
