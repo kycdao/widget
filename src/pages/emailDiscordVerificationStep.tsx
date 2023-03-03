@@ -202,12 +202,8 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 
 	const onPrev = useCallback(() => {
 		clearInterval(confirmationInterval.current)
-		redirect(
-			StepID.verifyAccountStep,
-			StepID.emailDiscordVerificationStep,
-			"prev"
-		)
-	}, [redirect])
+		dispatch({ type: DataActionTypes.GoToPrevStep })
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

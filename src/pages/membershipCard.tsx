@@ -20,12 +20,10 @@ import {
 	Policy,
 	StateContext,
 	Step,
-	StepID,
 	StepPart,
 	SubmitButton,
 	Ul,
 } from "@Components/index"
-import useChangePage from "@Hooks/useChangePage"
 import useErrorHandler from "@Hooks/errorHandler"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
@@ -175,22 +173,14 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 	disabled = false,
 	inactive = false,
 }) => {
-	const {
-		dispatch,
-		data: { returningUserFlow },
-	} = useContext(StateContext)
-	const redirect = useChangePage()
+	const { dispatch } = useContext(StateContext)
 	const errorHandler = useErrorHandler()
 
 	const kycDaoContext = useKycDao()
 
 	const onPrev = useCallback(() => {
-		if (returningUserFlow) {
-			redirect(StepID.subscribedStartStep, StepID.kycDAOMembershipStep, "prev")
-		} else {
-			redirect(StepID.AgreementStep, StepID.kycDAOMembershipStep, "prev")
-		}
-	}, [redirect, returningUserFlow])
+		dispatch({ type: DataActionTypes.GoToPrevStep })
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
@@ -208,8 +198,8 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 				try {
 					await kycDaoContext.kycDao.connectWallet(network)
 					await kycDaoContext.kycDao.registerOrLogin()
-					redirect(StepID.verifyAccountStep, StepID.kycDAOMembershipStep)
 					dispatch({ type: DataActionTypes.termsAcceptedChange, payload: true })
+					dispatch({ type: DataActionTypes.GoToNextStep })
 				} catch (e) {
 					// TODO: nicer error handling for unsupported network https://kycdao.atlassian.net/browse/KYC-505
 					let errorMsg =
@@ -224,7 +214,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 				}
 			}
 		}
-	}, [dispatch, kycDaoContext, redirect, errorHandler])
+	}, [dispatch, kycDaoContext, errorHandler])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

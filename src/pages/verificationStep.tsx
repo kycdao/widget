@@ -9,14 +9,12 @@ import {
 	P,
 	StateContext,
 	Step,
-	StepID,
 	StepPart,
 	SubmitButton,
 	Ul,
 } from "@Components/index"
 import { FC, useContext, useCallback, useEffect } from "react"
 import { PageProps } from "./pageProps"
-import useChangePage from "@Hooks/useChangePage"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<SubmitButton
@@ -66,15 +64,14 @@ export const VerificationStep: FC<PageProps> = ({
 	inactive = false,
 }) => {
 	const { dispatch } = useContext(StateContext)
-	const redirect = useChangePage()
 
 	const onSubmit = useCallback(() => {
-		redirect(StepID.taxResidenceStep, StepID.verificationStep)
-	}, [redirect])
+		dispatch({ type: DataActionTypes.GoToNextStep })
+	}, [dispatch])
 
 	const onPrev = useCallback(() => {
-		redirect(StepID.verifyAccountStep, StepID.verificationStep, "prev")
-	}, [redirect])
+		dispatch({ type: DataActionTypes.GoToPrevStep })
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

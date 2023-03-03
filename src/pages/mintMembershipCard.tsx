@@ -16,11 +16,9 @@ import {
 	P,
 	StateContext,
 	Step,
-	StepID,
 	StepPart,
 	SubmitButton,
 } from "@Components/index"
-import useChangePage from "@Hooks/useChangePage"
 import useErrorHandler from "@Hooks/errorHandler"
 
 const Body = () => {
@@ -230,7 +228,6 @@ export const MintStep: FC<PageProps> = ({
 		data: { imageId },
 	} = useContext(StateContext)
 	const kycDao = useKycDao()
-	const redirect = useChangePage()
 
 	const [yearCount, setYearCount] = useState<number>(1)
 
@@ -305,8 +302,8 @@ export const MintStep: FC<PageProps> = ({
 	}, [])
 
 	const onPrev = useCallback(() => {
-		redirect(StepID.nftArtSelection, StepID.mintStep, "prev")
-	}, [redirect])
+		dispatch({ type: DataActionTypes.GoToPrevStep })
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

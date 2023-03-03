@@ -15,7 +15,6 @@ import {
 	OnPrev,
 	StateContext,
 	Step,
-	StepID,
 	StepPart,
 	SubmitButton,
 	tr2,
@@ -127,13 +126,7 @@ export const NftSelection: FC<PageProps> = ({
 					errorHandler("fatal", error)
 				}
 			} else {
-				dispatch({
-					type: DataActionTypes.changePage,
-					payload: {
-						current: StepID.mintStep,
-						prev: StepID.nftArtSelection,
-					},
-				})
+				dispatch({ type: DataActionTypes.GoToNextStep })
 			}
 		}
 	}, [
@@ -145,13 +138,7 @@ export const NftSelection: FC<PageProps> = ({
 	])
 
 	const onPrev = useCallback(() => {
-		dispatch({
-			type: DataActionTypes.changePage,
-			payload: {
-				current: StepID.subscribedStartStep,
-				next: StepID.nftArtSelection,
-			},
-		})
+		dispatch({ type: DataActionTypes.GoToPrevStep })
 	}, [dispatch])
 
 	useEffect(() => {

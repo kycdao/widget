@@ -107,14 +107,6 @@ const AppContainerRender: ForwardRefRenderFunction<
 
 					if (hasValidNft && kycDao.redirectEvent !== "NearMint") {
 						dispatch({
-							payload: {
-								current: StepID.finalStep,
-								prev: StepID.loading,
-							},
-							type: DataActionTypes.changePage,
-						})
-
-						dispatch({
 							payload: true,
 							type: DataActionTypes.SetProcessSucess,
 						})
@@ -124,12 +116,12 @@ const AppContainerRender: ForwardRefRenderFunction<
 							type: DataActionTypes.SetAlreadyHaveAnNftOnThisChain,
 						})
 
+						dispatch({ type: DataActionTypes.GoToNextStep })
+
 						return
 					}
 
 					await kycDao.kycDao.registerOrLogin()
-
-					let startPage = StepID.AgreementStep
 
 					if (kycDao.redirectEvent) {
 						dispatch({
@@ -139,7 +131,6 @@ const AppContainerRender: ForwardRefRenderFunction<
 
 						switch (kycDao.redirectEvent) {
 							case "NearLogin":
-								startPage = StepID.AgreementStep
 								break
 							case "NearUserRejectedError":
 								window.parent.postMessage(
@@ -167,11 +158,8 @@ const AppContainerRender: ForwardRefRenderFunction<
 										payload: kycDao.mintingResult?.imageUrl,
 									})
 								}
-								startPage = StepID.finalStep
 						}
 					} else {
-						await kycDao.kycDao.registerOrLogin()
-
 						const { subscribed } = kycDao.kycDao
 
 						if (subscribed) {
@@ -180,16 +168,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 								type: DataActionTypes.SetReturnUserFlow,
 							})
 						}
-
-						startPage = subscribed
-							? StepID.subscribedStartStep
-							: StepID.AgreementStep
 					}
-
-					dispatch({
-						payload: { current: startPage, prev: StepID.loading },
-						type: DataActionTypes.changePage,
-					})
 
 					if (!isModal) {
 						dispatch({
@@ -206,6 +185,8 @@ const AppContainerRender: ForwardRefRenderFunction<
 						messageTargetOrigin
 					)
 				}
+
+				dispatch({ type: DataActionTypes.StartFlow })
 			})()
 		}
 	}, [

@@ -118,15 +118,12 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 			return
 		}
 
-		redirect(
-			StepID.grantSocialSecurityNumberStep,
-			StepID.grantNameAndAddressStep
-		)
-	}, [disabled, inactive, isStepValid, redirect])
+		dispatch({ type: DataActionTypes.GoToNextStep })
+	}, [disabled, inactive, isStepValid, dispatch])
 
 	const onPrev = useCallback(() => {
-		redirect(StepID.taxResidenceStep, StepID.grantNameAndAddressStep, "prev")
-	}, [redirect])
+		dispatch({ type: DataActionTypes.GoToPrevStep })
+	}, [dispatch])
 
 	useEffect(() => {
 		dispatch({

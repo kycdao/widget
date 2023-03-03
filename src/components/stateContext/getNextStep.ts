@@ -12,6 +12,13 @@ export type Flow = {
 	}[]
 }
 
+export const GrantFlow = {
+	steps: [
+		{ step: StepID.grantSocialSecurityNumberStep },
+		{ step: StepID.grantNameAndAddressStep },
+	],
+} as Flow
+
 export const ReturningUserFlow = {
 	steps: [
 		{ step: StepID.subscribedStartStep },
@@ -21,11 +28,24 @@ export const ReturningUserFlow = {
 } as Flow
 
 const VerificationFlow = {
-	steps: [{ step: StepID.taxResidenceStep }, { step: StepID.verificationStep }],
+	steps: [
+		{ step: StepID.taxResidenceStep },
+		{
+			step: StepID.verificationStep,
+			startSubFlow: ({ grantFlowEnabled }) => {
+				if (grantFlowEnabled) {
+					return GrantFlow
+				}
+			},
+		},
+	],
 } as Flow
 
 export const EmailVerificationFlow = {
-	steps: [{ step: StepID.verifyAccountStep, ...VerificationFlow.steps }],
+	steps: [
+		{ step: StepID.verifyAccountStep },
+		{ step: StepID.emailDiscordVerificationStep },
+	],
 } as Flow
 
 export const NewSubscriberFlow = {
@@ -33,9 +53,12 @@ export const NewSubscriberFlow = {
 		{ step: StepID.AgreementStep },
 		{
 			step: StepID.kycDAOMembershipStep,
-			startSubFlow: ({ isEmailConfirmed }) => {
+			startSubFlow: ({ isEmailConfirmed, returningUserFlow }) => {
 				if (!isEmailConfirmed) {
 					return EmailVerificationFlow
+				}
+				if (returningUserFlow) {
+					return VerificationFlow
 				}
 			},
 		},
@@ -78,10 +101,12 @@ function last<T>(this: Array<T>) {
 /**
  * Gets back the step
  * @param data The current state
+ * @param direction The direction to go
  * @returns The new state, with the next step
  */
-export function CalculateNextStep(data: Data): Data {
-	const { flowStack, stepIndices } = data
+export function CalculateStep(data: Data, direction: boolean): Data {
+	const { flowStack, stepIndices, currentPage: prevPage } = data
+	const offset = direction ? 1 : -1
 
 	if (flowStack.length === 0) {
 		return data
@@ -93,18 +118,18 @@ export function CalculateNextStep(data: Data): Data {
 	 * If there is a flow running
 	 */
 	if (currentFlow) {
-		const currentStepIndex = last.call(stepIndices) as StepID | undefined
+		const currentStepIndex = last.call(stepIndices) as number | undefined
 
 		/**
 		 * If there is a current step
 		 */
-		if (currentStepIndex) {
+		if (typeof currentStepIndex !== "undefined") {
 			const lastFlowStep = currentFlow.steps[currentStepIndex]
 
 			/**
-			 * If there are subflows, then we have to check if the app has to go to on a subflow
+			 * If there are subflows, then we have to check if the app has to go to on a subflow, only if we are going forward
 			 */
-			if (lastFlowStep.startSubFlow) {
+			if (direction && lastFlowStep.startSubFlow) {
 				const nextSubflow: Flow | undefined = lastFlowStep.startSubFlow(data)
 				/**
 				 * If it has to go on a subflow, then the first step of the subflow will be the next step.
@@ -115,24 +140,38 @@ export function CalculateNextStep(data: Data): Data {
 					const [nextStep] = nextSubflow.steps
 
 					flowStack.push(nextSubflow)
-					stepIndices.push(nextStep.step)
+					stepIndices.push(0)
 
 					return {
 						...data,
 						currentPage: nextStep.step,
+						prevPage,
 						flowStack,
 					}
 				}
 			}
 
+			let newIndex = currentStepIndex + offset
+
 			/** If there are still steps in the flow, then continue with that one, if not, then
 			 * pop the flow from the flowstack and continue with that one. If that was the last one,
 			 * the flow is done.
 			 */
-			if (currentFlow && currentFlow.steps.length > currentStepIndex + 1) {
-				return { ...data, currentPage: currentStepIndex + 1 }
+			if (currentFlow && currentFlow.steps.length > newIndex && 0 <= newIndex) {
+				const stepIndices = [...data.stepIndices]
+				stepIndices[stepIndices.length - 1] = newIndex
+
+				return {
+					...data,
+					...{
+						prevPage: offset === 1 ? prevPage : undefined,
+						nextPage: offset === -1 ? prevPage : undefined,
+					},
+					currentPage: currentFlow.steps[newIndex].step,
+					stepIndices,
+				}
 			} else {
-				while (flowStack.length === 0) {
+				while (flowStack.length !== 0) {
 					flowStack.pop()
 					const prevFlow = last.call(flowStack) as Flow | undefined
 
@@ -145,7 +184,7 @@ export function CalculateNextStep(data: Data): Data {
 
 					stepIndices.pop()
 
-					const prevStepIndex = last.call(stepIndices) as StepID | undefined
+					const prevStepIndex = last.call(stepIndices) as number | undefined
 
 					/**
 					 * If there is no steps in the flow anymore, then it is done
@@ -154,14 +193,18 @@ export function CalculateNextStep(data: Data): Data {
 						continue
 					}
 
-					if (
-						prevFlow &&
-						prevStepIndex &&
-						prevFlow.steps.length > prevStepIndex + 1
-					) {
+					newIndex = prevStepIndex + offset === -1 ? 0 : 1
+
+					if (prevFlow && prevStepIndex && prevFlow.steps.length > newIndex) {
+						stepIndices[stepIndices.length - 1] = newIndex
+
 						return {
 							...data,
-							currentPage: prevStepIndex + 1,
+							currentPage: prevFlow.steps[newIndex].step,
+							...{
+								prevPage: offset === 1 ? prevPage : undefined,
+								nextPage: offset === -1 ? prevPage : undefined,
+							},
 							flowStack,
 							stepIndices,
 						}
@@ -172,3 +215,6 @@ export function CalculateNextStep(data: Data): Data {
 	}
 	return data
 }
+
+export const CalculateNextStep = (data: Data) => CalculateStep(data, true)
+export const CalculatePrevStep = (data: Data) => CalculateStep(data, false)

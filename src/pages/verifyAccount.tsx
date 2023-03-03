@@ -8,20 +8,16 @@ import {
 	P,
 	StateContext,
 	Step,
-	StepID,
 	StepPart,
 	SubmitButton,
 } from "@Components/index"
 import { FC, useContext, useCallback, useEffect, useState } from "react"
 import { PageProps } from "./pageProps"
-import useChangePage from "@Hooks/useChangePage"
 import styled, { css } from "styled-components/macro"
 import { Selector } from "./selector"
 
-import { useVerified } from "@Hooks/useVerified"
 import veriLabs from "@Components/Icons/veriLabs"
 import emptyIcon from "@Components/Icons/emptyIcon"
-import useErrorHandler from "@Hooks/errorHandler"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<SubmitButton
@@ -164,66 +160,15 @@ export const VerifyAccountStep: FC<PageProps> = ({
 	animation,
 	inactive = false,
 }) => {
-	const {
-		dispatch,
-		data: { returningUserFlow, isEmailConfirmed },
-	} = useContext(StateContext)
-	const redirect = useChangePage()
-	const checkVerification = useVerified()
-	const errorHandler = useErrorHandler()
+	const { dispatch } = useContext(StateContext)
 
 	const onSubmit = useCallback(() => {
-		if (returningUserFlow) {
-			redirect(StepID.nftArtSelection, StepID.verifyAccountStep)
-		} else {
-			try {
-				;(async function () {
-					if (await checkVerification()) {
-						// If verified, then definitely accepted the terms
-						dispatch({
-							payload: true,
-							type: DataActionTypes.termsAcceptedChange,
-						})
-						redirect(StepID.nftArtSelection, StepID.verifyAccountStep)
-					} else {
-						if (isEmailConfirmed) {
-							dispatch({
-								payload: true,
-								type: DataActionTypes.termsAcceptedChange,
-							})
-							redirect(StepID.verificationStep, StepID.verifyAccountStep)
-						} else {
-							dispatch({
-								payload: true,
-								type: DataActionTypes.termsAcceptedChange,
-							})
-							redirect(
-								StepID.emailDiscordVerificationStep,
-								StepID.verifyAccountStep
-							)
-						}
-					}
-				})()
-			} catch (error) {
-				errorHandler("fatal", error)
-			}
-		}
-	}, [
-		redirect,
-		returningUserFlow,
-		checkVerification,
-		dispatch,
-		errorHandler,
-		isEmailConfirmed,
-	])
+		dispatch({ type: DataActionTypes.GoToNextStep })
+	}, [dispatch])
 
 	const onPrev = useCallback(() => {
-		if (returningUserFlow) {
-			redirect(StepID.kycDAOMembershipStep, StepID.verifyAccountStep, "prev")
-		} else {
-			redirect(StepID.kycDAOMembershipStep, StepID.verifyAccountStep, "prev")
-		}
-	}, [redirect, returningUserFlow])
+		dispatch({ type: DataActionTypes.GoToPrevStep })
+	}, [dispatch])
 
 	const [provider, setProvider] = useState("verilabs")
 

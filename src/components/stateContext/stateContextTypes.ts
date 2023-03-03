@@ -38,6 +38,8 @@ export enum DataActionTypes {
 	SetAlreadyHaveAnNftOnThisChain,
 	SetNearMinted,
 	GoToNextStep,
+	StartFlow,
+	GoToPrevStep,
 }
 
 export enum StepID {
@@ -62,7 +64,7 @@ export enum StepID {
 
 export type Data = {
 	flowStack: Flow[]
-	stepIndices: StepID[]
+	stepIndices: number[]
 	nftImageUrl?: string
 	resetKey?: number
 	imageId?: string
@@ -223,7 +225,17 @@ export type SetNearMinted = {
 
 export type GoToNextStep = {
 	type: DataActionTypes.GoToNextStep
-	payload: never
+	payload?: never
+}
+
+export type StartFlow = {
+	type: DataActionTypes.StartFlow
+	payload?: never
+}
+
+export type GoToPrevStep = {
+	type: DataActionTypes.GoToPrevStep
+	payload?: never
 }
 
 export type DataChangeActions =
@@ -251,6 +263,8 @@ export type DataChangeActions =
 	| SetAlreadyHaveAnNftOnThisChain
 	| SetNearMinted
 	| GoToNextStep
+	| StartFlow
+	| GoToPrevStep
 
 export type ModalType =
 	| "emailVerification"
