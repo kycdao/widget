@@ -61,12 +61,13 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 	const [hasInteracted, setHasInteracted] = useState(false)
 	const [hasSigned, setHasSigned] = useState(false)
 
-	const sign = useCallback(() => {
+	const sign = useCallback(async () => {
 		if (isSigning) return
 
 		isSigning = true
-		window.ethereum
-			.request<string>({
+
+		try {
+			await window.ethereum.request<string>({
 				method: "personal_sign",
 				params: [
 					hexEncodeString(
@@ -76,19 +77,13 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 					kycDao?.kycDao.connectedWallet?.address,
 				],
 			})
-			.then(() => {
-				setHasSigned(true)
-			})
-			.catch(() => {
-				redirect(
-					StepID.taxResidenceStep,
-					StepID.grantNameAndAddressStep,
-					"prev"
-				)
-			})
-			.finally(() => {
-				isSigning = false
-			})
+
+			setHasSigned(true)
+		} catch {
+			redirect(StepID.taxResidenceStep, StepID.grantNameAndAddressStep, "prev")
+		} finally {
+			isSigning = false
+		}
 	}, [kycDao?.kycDao.connectedWallet?.address, redirect])
 
 	useEffect(() => {

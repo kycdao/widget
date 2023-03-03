@@ -12,9 +12,11 @@ import {
 
 export const GenericErrorModal = () => {
 	const {
-		data: { errorModalHeader, errorModalBody },
+		data: { error },
 		dispatch,
 	} = useContext(StateContext)
+
+	const { body, header } = error || { body: undefined, header: undefined }
 
 	const onClose = useCallback(() => {
 		dispatch({ type: DataActionTypes.setModal, payload: null })
@@ -29,7 +31,7 @@ export const GenericErrorModal = () => {
 						className="material-icons">
 						error
 					</HeaderIcon>
-					<P>{errorModalHeader}</P>
+					<P>{header}</P>
 				</HeadlineWrapper>
 				<CloseButton className={"material-icons"} onClick={onClose}>
 					close
@@ -37,7 +39,7 @@ export const GenericErrorModal = () => {
 			</ModalHeader>
 
 			<ModalBody>
-				<Policy>{errorModalBody}</Policy>
+				<Policy>{body}</Policy>
 			</ModalBody>
 		</ModalContainer>
 	)

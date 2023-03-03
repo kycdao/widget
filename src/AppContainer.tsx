@@ -27,7 +27,6 @@ import {
 	OnClose,
 	reducer,
 	StateContext,
-	StepID,
 } from "./components"
 import { Router } from "./pages"
 
@@ -121,8 +120,6 @@ const AppContainerRender: ForwardRefRenderFunction<
 						return
 					}
 
-					await kycDao.kycDao.registerOrLogin()
-
 					if (kycDao.redirectEvent) {
 						dispatch({
 							type: DataActionTypes.termsAcceptedChange,
@@ -160,6 +157,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 								}
 						}
 					} else {
+						await kycDao.kycDao.registerOrLogin()
 						const { subscribed } = kycDao.kycDao
 
 						if (subscribed) {
@@ -177,13 +175,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 						})
 					}
 				} catch (error) {
-					errorHandler(
-						"fatal",
-						error,
-						dispatch,
-						StepID.loading,
-						messageTargetOrigin
-					)
+					errorHandler("fatal", error, dispatch, messageTargetOrigin)
 				}
 
 				dispatch({ type: DataActionTypes.StartFlow })
@@ -207,13 +199,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 				}
 			})
 			.catch((error) => {
-				errorHandler(
-					"fatal",
-					error,
-					dispatch,
-					StepID.loading,
-					messageTargetOrigin
-				)
+				errorHandler("fatal", error, dispatch, messageTargetOrigin)
 			})
 	}, [config, onReady, messageTargetOrigin])
 

@@ -1,7 +1,7 @@
 /// <reference types="react-scripts" />
-import { MetaMaskInpageProvider } from "@metamask/providers"
-import { KycDaoWidgetConfig } from "./widget"
-import {
+import type { MetaMaskInpageProvider } from "@metamask/providers"
+import type { KycDaoWidgetConfig } from "./widget"
+import type {
 	KycDaoClientOptions,
 	KycDaoClientInterface,
 } from "./KycDaoClientCommon"

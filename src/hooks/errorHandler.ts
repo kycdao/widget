@@ -2,7 +2,6 @@ import {
 	DataActionTypes,
 	DataChangeActions,
 	StateContext,
-	StepID,
 } from "@Components/stateContext"
 import { KycDaoClientMessageBody } from "KycDaoClientCommon"
 import { useContext } from "react"
@@ -19,16 +18,16 @@ export function errorHandler(
 	type: "fatal" | "modal" | "minting",
 	error: unknown,
 	dispatch: React.Dispatch<DataChangeActions>,
-	currentPage: StepID,
 	messageTargetOrigin: string
 ) {
 	const errorText = getErrorText(error)
 
 	dispatch({
-		type: DataActionTypes.SetErrorModalText,
+		type: DataActionTypes.ShowError,
 		payload: {
 			header: "An error happened",
-			body: `${errorText}`,
+			body: errorText,
+			type: type,
 		},
 	})
 
@@ -44,18 +43,13 @@ export function errorHandler(
 		return
 	}
 
-	console.error(errorText)
-
 	switch (type) {
 		case "fatal":
-			dispatch({
-				payload: { current: StepID.fatalError, prev: currentPage },
-				type: DataActionTypes.changePage,
-			})
 			dispatch({
 				type: DataActionTypes.setModal,
 				payload: null,
 			})
+			dispatch({ type: DataActionTypes.GoToNextStep })
 			break
 		case "minting": {
 			dispatch({
@@ -71,14 +65,16 @@ export function errorHandler(
 			})
 		}
 	}
+
+	console.error(errorText)
 }
 
 export default function useErrorHandler() {
 	const {
 		dispatch,
-		data: { currentPage, messageTargetOrigin },
+		data: { messageTargetOrigin },
 	} = useContext(StateContext)
 
 	return (type: "fatal" | "modal" | "minting", error: unknown) =>
-		errorHandler(type, error, dispatch, currentPage, messageTargetOrigin)
+		errorHandler(type, error, dispatch, messageTargetOrigin)
 }

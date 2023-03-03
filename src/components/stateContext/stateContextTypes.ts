@@ -26,7 +26,6 @@ export enum DataActionTypes {
 	setEmailConfirmed,
 	nftImageChange,
 	subscriptionYearsChange,
-	SetErrorModalText,
 	setChainExplorerUrl,
 	setMessageTargetOrigin,
 	setModalMode,
@@ -40,6 +39,7 @@ export enum DataActionTypes {
 	GoToNextStep,
 	StartFlow,
 	GoToPrevStep,
+	ShowError,
 }
 
 export enum StepID {
@@ -61,6 +61,8 @@ export enum StepID {
 	fatalError,
 	verifyAccountStep,
 }
+
+export type ErrorType = "fatal" | "modal" | "minting"
 
 export type Data = {
 	flowStack: Flow[]
@@ -85,8 +87,11 @@ export type Data = {
 	translations: { [key: string]: { [key: string]: string } }
 	isEmailConfirmed: boolean
 	subscriptionYears?: number
-	errorModalHeader?: string
-	errorModalBody?: string
+	error?: {
+		header: string
+		body: string
+		type: ErrorType
+	}
 	chainExplorerUrl?: string
 	isModal: boolean
 	grantFlowEnabled: boolean
@@ -168,11 +173,6 @@ export type SetSubscriptionYearsAction = {
 	payload: number
 }
 
-export type SetErrorModalTextAction = {
-	type: DataActionTypes.SetErrorModalText
-	payload: { header: string; body: string }
-}
-
 export type SetChainExplorerUrl = {
 	type: DataActionTypes.setChainExplorerUrl
 	payload: string
@@ -238,6 +238,15 @@ export type GoToPrevStep = {
 	payload?: never
 }
 
+export type ShowError = {
+	type: DataActionTypes.ShowError
+	payload?: {
+		header: string
+		body: string
+		type: ErrorType
+	}
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -251,7 +260,6 @@ export type DataChangeActions =
 	| EmailConfirmedChangeAction
 	| NftImageChangeAction
 	| SetSubscriptionYearsAction
-	| SetErrorModalTextAction
 	| SetChainExplorerUrl
 	| SetMessageTargetOrigin
 	| SetModalMode
@@ -265,6 +273,7 @@ export type DataChangeActions =
 	| GoToNextStep
 	| StartFlow
 	| GoToPrevStep
+	| ShowError
 
 export type ModalType =
 	| "emailVerification"

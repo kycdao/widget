@@ -105,7 +105,19 @@ function last<T>(this: Array<T>) {
  * @returns The new state, with the next step
  */
 export function CalculateStep(data: Data, direction: boolean): Data {
-	const { flowStack, stepIndices, currentPage: prevPage } = data
+	const { flowStack, stepIndices, currentPage: prevPage, error } = data
+
+	/**
+	 * Check for fatal error, it is allways a priority
+	 */
+	if (error && error.type === "fatal") {
+		return {
+			...data,
+			prevPage,
+			currentPage: StepID.fatalError,
+		}
+	}
+
 	const offset = direction ? 1 : -1
 
 	if (flowStack.length === 0) {

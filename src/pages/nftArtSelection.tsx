@@ -177,22 +177,28 @@ export const NftSelection: FC<PageProps> = ({
 		}
 	}, [disabled, inactive, dispatch, currentArt])
 
-	const onRegenerate = useCallback(() => {
-		kycDao?.kycDao.regenerateNftImageOptions().then((options) => {
-			const images = [] as Nft[]
-			setCurrentArt(undefined)
+	const onRegenerate = useCallback(async () => {
+		try {
+			const options = await kycDao?.kycDao.regenerateNftImageOptions()
 
-			dispatch({
-				payload: { button: HeaderButtons.next, state: "hidden" },
-				type: DataActionTypes.SetHeaderButtonState,
-			})
+			if (options) {
+				const images = [] as Nft[]
+				setCurrentArt(undefined)
 
-			Object.entries(options).forEach(([id, url]) => {
-				images.push({ url: url + "?timestamp=" + Date.now().toString(), id })
-			})
-			setNftImages(images.slice(0, 4))
-		})
-	}, [kycDao?.kycDao, dispatch])
+				dispatch({
+					payload: { button: HeaderButtons.next, state: "hidden" },
+					type: DataActionTypes.SetHeaderButtonState,
+				})
+
+				Object.entries(options).forEach(([id, url]) => {
+					images.push({ url: url + "?timestamp=" + Date.now().toString(), id })
+				})
+				setNftImages(images.slice(0, 4))
+			}
+		} catch (error) {
+			errorHandler("fatal", error)
+		}
+	}, [kycDao?.kycDao, dispatch, errorHandler])
 
 	const body = useCallback<StepPart>(
 		() => (

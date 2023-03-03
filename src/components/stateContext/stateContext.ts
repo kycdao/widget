@@ -6,6 +6,7 @@ import {
 	DataActionTypes,
 	DataChangeActions,
 	HeaderButtons,
+	ModalType,
 	StepID,
 } from "./stateContextTypes"
 
@@ -27,6 +28,23 @@ export const reducer = (
 		}
 		case DataActionTypes.GoToPrevStep: {
 			return CalculatePrevStep(data)
+		}
+		case DataActionTypes.ShowError: {
+			let currentModal: ModalType | null = null
+
+			switch (payload?.type) {
+				case "minting":
+					currentModal = "mintingFailed"
+					break
+				case "modal":
+					currentModal = "genericError"
+			}
+
+			return {
+				...data,
+				currentModal,
+				error: payload,
+			}
 		}
 		case DataActionTypes.StartFlow: {
 			return CalculateNextStep({
@@ -68,13 +86,6 @@ export const reducer = (
 				prevPage: payload.prev,
 				currentPage: payload.current,
 			}
-		case DataActionTypes.SetErrorModalText: {
-			return {
-				...data,
-				errorModalHeader: payload.header,
-				errorModalBody: payload.body,
-			}
-		}
 		case DataActionTypes.taxResidenceChange:
 			return { ...data, taxResidency: payload }
 		case DataActionTypes.setNftImageUrl:
