@@ -23,6 +23,9 @@ import {
 	StepPart,
 	SubmitButton,
 	Ul,
+	bold,
+	smallText,
+	text,
 } from "@Components/index"
 import useErrorHandler from "@Hooks/errorHandler"
 
@@ -92,20 +95,18 @@ const Li = styled.li`
 
 		${P},
 		b {
-			font-family: var(--kyc-sdk-primary-font);
-			font-weight: 400;
-			color: black;
+			${text}
 			margin-bottom: 0;
 		}
 
 		b {
-			font-size: 12px;
-			color: black;
+			${smallText}
 		}
 	}
 `
 
 const Span = styled.span`
+	${bold}
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -114,8 +115,6 @@ const Span = styled.span`
 	outline: 0.5rem solid var(--kyc-sdk-cybergreen-35);
 	border-radius: 999rem;
 	background: var(--kyc-sdk-cybergreen);
-	color: black;
-	font-weight: 800;
 `
 
 const ProcessContainer = styled.div`

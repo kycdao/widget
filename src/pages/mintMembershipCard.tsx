@@ -7,6 +7,7 @@ import { useMinting } from "@Hooks/useMinting"
 import styled from "styled-components/macro"
 import {
 	Button,
+	Centered,
 	DataActionTypes,
 	H1,
 	HeaderButtons,
@@ -18,6 +19,9 @@ import {
 	Step,
 	StepPart,
 	SubmitButton,
+	bold,
+	smallText,
+	text,
 } from "@Components/index"
 import useErrorHandler from "@Hooks/errorHandler"
 
@@ -143,11 +147,8 @@ const Sum = styled.div`
 `
 
 const Price = styled.span`
-	color: black;
-	font-size: 12pt;
-	font-weight: 800;
-	font-family: var(--kyc-sdk-primary-font);
-	-webkit-font-smoothing: antialiased;
+	${text}
+	${bold}
 `
 
 const PriceWithStrikethrough = styled(Price)`
@@ -157,11 +158,9 @@ const PriceWithStrikethrough = styled(Price)`
 `
 
 const Value = styled.div`
-	color: black;
-	font-size: 12px;
+	${smallText}
 	display: flex;
 	margin-bottom: 1em;
-	font-family: var(--kyc-sdk-primary-font);
 
 	padding: 0.5rem;
 	background: var(--kyc-sdk-cybergreen-35);
@@ -174,26 +173,22 @@ const Value = styled.div`
 	}
 
 	p {
+		${smallText}
 		display: flex;
-		font-size: 12px;
 		padding-right: 3px;
 
 		> strong {
+			${bold}
 			padding-right: 3px;
-			color: black;
-			font-weight: 800;
 		}
 	}
 `
 
 const YearCount = styled.div`
+	${Centered}
+	${text}
 	padding: 1rem;
-	font-size: 12pt;
 	width: 10rem;
-	text-align: center;
-	font-family: var(--kyc-sdk-primary-font);
-	-webkit-font-smoothing: antialiased;
-	color: black;
 	display: flex;
 	align-items: center;
 	margin-block: auto;

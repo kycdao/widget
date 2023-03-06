@@ -49,8 +49,8 @@ export const AppStyleContainer = styled.div`
 
 	--kyc-sdk-red-35: rgba(255, 70, 70, 0.35);
 
-	--light-font: gilroyLight;
-	--display-font: gilroyBold;
+	--light-font: gilroy-light;
+	--display-font: gilroy-bold;
 
 	@font-face {
 		font-family: gilroy-bold;

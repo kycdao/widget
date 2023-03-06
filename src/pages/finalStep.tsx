@@ -5,6 +5,7 @@ import { useKycDao } from "@Hooks/useKycDao"
 import styled from "styled-components/macro"
 import {
 	Button,
+	Centered,
 	CenteredH1,
 	DataActionTypes,
 	H1,
@@ -26,7 +27,7 @@ export const NftButtonWrapper = styled.div`
 `
 
 const NftImageContainer = styled.div`
-	text-align: center;
+	${Centered}
 `
 
 const TwitterButtonContainer = styled.div`
