@@ -23,8 +23,8 @@ export const FatalErrorStep: FC<PageProps> = ({
 	const ResetApp = useContext(RestartContext)
 
 	const { body, header } = error || {
-		errorModalHeader: "Something went wrong!",
-		errorModalBody: "An unknown, fatal error happened!",
+		header: "Something went wrong!",
+		body: "An unknown, fatal error happened!",
 	}
 
 	const Header = () => <H1>{header}</H1>

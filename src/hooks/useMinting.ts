@@ -21,7 +21,7 @@ export const useMinting = () => {
 			} = state
 
 			dispatch({
-				type: DataActionTypes.setModal,
+				type: DataActionTypes.ShowModal,
 				payload: "minting",
 			})
 
@@ -47,8 +47,8 @@ export const useMinting = () => {
 					throw Error("Something went wrong")
 				}
 				dispatch({
-					type: DataActionTypes.setModal,
-					payload: null,
+					type: DataActionTypes.ShowModal,
+					payload: undefined,
 				})
 				dispatch({
 					type: DataActionTypes.changePage,

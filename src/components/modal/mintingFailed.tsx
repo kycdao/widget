@@ -16,11 +16,12 @@ import { CloseButton } from ".."
 export const MintingFailedModal = () => {
 	const minting = useMinting()
 	const {
-		data: { subscriptionYears, imageId, error },
+		data: { subscriptionYears, imageId, modal },
 		dispatch,
 	} = useContext(StateContext)
 
-	const { body } = error || { body: undefined }
+	const { body } =
+		typeof modal === "string" || !modal ? { body: undefined } : modal
 
 	const onRetry = useCallback(() => {
 		if (imageId) {
@@ -29,7 +30,7 @@ export const MintingFailedModal = () => {
 	}, [minting, subscriptionYears, imageId])
 
 	const onClose = useCallback(() => {
-		dispatch({ type: DataActionTypes.setModal, payload: null })
+		dispatch({ type: DataActionTypes.ShowModal, payload: undefined })
 	}, [dispatch])
 
 	return (

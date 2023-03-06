@@ -22,15 +22,6 @@ export function errorHandler(
 ) {
 	const errorText = getErrorText(error)
 
-	dispatch({
-		type: DataActionTypes.ShowError,
-		payload: {
-			header: "An error happened",
-			body: errorText,
-			type: type,
-		},
-	})
-
 	if (/\[RejectedByUser\]/g.test(errorText)) {
 		window.parent.postMessage(
 			{
@@ -46,22 +37,39 @@ export function errorHandler(
 	switch (type) {
 		case "fatal":
 			dispatch({
-				type: DataActionTypes.setModal,
-				payload: null,
+				type: DataActionTypes.ShowModal,
+				payload: undefined,
 			})
+			dispatch({ type: DataActionTypes.SetError, payload: { type: "fatal" } })
 			dispatch({ type: DataActionTypes.GoToNextStep })
 			break
 		case "minting": {
 			dispatch({
-				type: DataActionTypes.setModal,
+				type: DataActionTypes.ShowModal,
 				payload: "mintingFailed",
 			})
+
+			dispatch({
+				type: DataActionTypes.ShowModal,
+				payload: {
+					header: "An error happened",
+					body: errorText,
+					type: "mintingFailed",
+					showRetry: false,
+				},
+			})
+
 			break
 		}
 		case "modal": {
 			dispatch({
-				type: DataActionTypes.setModal,
-				payload: "genericError",
+				type: DataActionTypes.ShowModal,
+				payload: {
+					type: "genericError",
+					showRetry: false,
+					body: errorText,
+					header: "An error happened",
+				},
 			})
 		}
 	}

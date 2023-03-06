@@ -13,6 +13,7 @@ export enum HeaderButtons {
 }
 
 export enum DataActionTypes {
+	SetError,
 	chainChange,
 	changePage,
 	prevPage,
@@ -22,7 +23,6 @@ export enum DataActionTypes {
 	SetHeaderButtonState,
 	setVerifyingModalOpen,
 	OnClickHeaderButton,
-	setModal,
 	setEmailConfirmed,
 	nftImageChange,
 	subscriptionYearsChange,
@@ -39,7 +39,8 @@ export enum DataActionTypes {
 	GoToNextStep,
 	StartFlow,
 	GoToPrevStep,
-	ShowError,
+	SetLoadingMessage,
+	ShowModal,
 }
 
 export enum StepID {
@@ -64,7 +65,16 @@ export enum StepID {
 
 export type ErrorType = "fatal" | "modal" | "minting"
 
+export type ModalData = {
+	header: string
+	body: string
+	type: ModalType
+	showRetry: boolean
+}
+
 export type Data = {
+	error?: ErrorData
+	loadingMessage: string
 	flowStack: Flow[]
 	stepIndices: number[]
 	nftImageUrl?: string
@@ -87,11 +97,7 @@ export type Data = {
 	translations: { [key: string]: { [key: string]: string } }
 	isEmailConfirmed: boolean
 	subscriptionYears?: number
-	error?: {
-		header: string
-		body: string
-		type: ErrorType
-	}
+	modal?: ModalData | ModalType
 	chainExplorerUrl?: string
 	isModal: boolean
 	grantFlowEnabled: boolean
@@ -151,11 +157,6 @@ export type SetHeaderButtonStateAction = {
 export type HeaderButtonClickAction = {
 	type: DataActionTypes.OnClickHeaderButton
 	payload: { button: HeaderButtons }
-}
-
-export type SetModalAction = {
-	type: DataActionTypes.setModal
-	payload: ModalType | null
 }
 
 export type EmailConfirmedChangeAction = {
@@ -238,13 +239,21 @@ export type GoToPrevStep = {
 	payload?: never
 }
 
-export type ShowError = {
-	type: DataActionTypes.ShowError
-	payload?: {
-		header: string
-		body: string
-		type: ErrorType
-	}
+export type ShowModal = {
+	type: DataActionTypes.ShowModal
+	payload?: ModalData | ModalType
+}
+
+export type SetLoadingMessage = {
+	type: DataActionTypes.SetLoadingMessage
+	payload: string
+}
+
+export type ErrorData = { type: ErrorType; header?: string; body?: string }
+
+export type SetError = {
+	type: DataActionTypes.SetError
+	payload: ErrorData
 }
 
 export type DataChangeActions =
@@ -256,7 +265,6 @@ export type DataChangeActions =
 	| EmailChangeAction
 	| ChangePageAction
 	| TaxResidentChangeAction
-	| SetModalAction
 	| EmailConfirmedChangeAction
 	| NftImageChangeAction
 	| SetSubscriptionYearsAction
@@ -273,10 +281,13 @@ export type DataChangeActions =
 	| GoToNextStep
 	| StartFlow
 	| GoToPrevStep
-	| ShowError
+	| ShowModal
+	| SetLoadingMessage
+	| SetError
 
 export type ModalType =
 	| "emailVerification"
 	| "minting"
 	| "mintingFailed"
 	| "genericError"
+	| "genericInfo"

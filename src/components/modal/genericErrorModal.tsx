@@ -6,28 +6,52 @@ import {
 	HeaderIcon,
 	HeadlineWrapper,
 	ModalBody,
+	ModalButtonWrapper,
 	ModalContainer,
 	ModalHeader,
 } from "./common"
+import { Button } from "@Components/button/button"
+import { RestartContext } from "@Components/restartContext"
 
-export const GenericErrorModal = () => {
+export type GenericModalProps = {
+	mode: "error" | "info"
+}
+
+export const GenericModal = ({ mode }: GenericModalProps) => {
 	const {
-		data: { error },
+		data: { modal, currentModal },
 		dispatch,
 	} = useContext(StateContext)
 
-	const { body, header } = error || { body: undefined, header: undefined }
+	const { body, header, showRetry } =
+		!modal || typeof modal === "string"
+			? {
+					body: undefined,
+					header: undefined,
+					showRetry: false,
+			  }
+			: modal
+
+	const ResetApp = useContext(RestartContext)
 
 	const onClose = useCallback(() => {
-		dispatch({ type: DataActionTypes.setModal, payload: null })
+		dispatch({ type: DataActionTypes.ShowModal, payload: undefined })
 	}, [dispatch])
+
+	const startAgain = useCallback(() => {
+		ResetApp()
+	}, [ResetApp])
 
 	return (
 		<ModalContainer>
 			<ModalHeader>
 				<HeadlineWrapper>
 					<HeaderIcon
-						background="var(--kyc-sdk-red)"
+						background={
+							currentModal === "genericError"
+								? "var(--kyc-sdk-red)"
+								: "var(--kyc-sdk-green)"
+						}
 						className="material-icons">
 						error
 					</HeaderIcon>
@@ -41,6 +65,15 @@ export const GenericErrorModal = () => {
 			<ModalBody>
 				<Policy>{body}</Policy>
 			</ModalBody>
+
+			{showRetry && (
+				<ModalButtonWrapper>
+					<Button mode="underline" onClick={startAgain}>
+						<i className="material-icons">refresh</i>
+						<span>Retry</span>
+					</Button>
+				</ModalButtonWrapper>
+			)}
 		</ModalContainer>
 	)
 }

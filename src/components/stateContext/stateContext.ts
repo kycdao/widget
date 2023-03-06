@@ -6,7 +6,6 @@ import {
 	DataActionTypes,
 	DataChangeActions,
 	HeaderButtons,
-	ModalType,
 	StepID,
 } from "./stateContextTypes"
 
@@ -29,20 +28,15 @@ export const reducer = (
 		case DataActionTypes.GoToPrevStep: {
 			return CalculatePrevStep(data)
 		}
-		case DataActionTypes.ShowError: {
-			let currentModal: ModalType | null = null
-
-			switch (payload?.type) {
-				case "minting":
-					currentModal = "mintingFailed"
-					break
-				case "modal":
-					currentModal = "genericError"
-			}
-
+		case DataActionTypes.ShowModal: {
 			return {
 				...data,
-				currentModal,
+				modal: payload,
+			}
+		}
+		case DataActionTypes.SetError: {
+			return {
+				...data,
 				error: payload,
 			}
 		}
@@ -52,6 +46,9 @@ export const reducer = (
 				flowStack: [MainFlow],
 				stepIndices: [0],
 			})
+		}
+		case DataActionTypes.SetLoadingMessage: {
+			return { ...data, loadingMessage: payload }
 		}
 		case DataActionTypes.SetNearMinted: {
 			return { ...data, nearMinted: payload }
@@ -75,8 +72,6 @@ export const reducer = (
 			return { ...data, chain: payload }
 		case DataActionTypes.emailChange:
 			return { ...data, email: payload }
-		case DataActionTypes.setModal:
-			return { ...data, currentModal: payload }
 		case DataActionTypes.subscriptionYearsChange:
 			return { ...data, subscriptionYears: payload }
 		case DataActionTypes.changePage:
@@ -134,6 +129,7 @@ export const reducer = (
 }
 
 export const DefaultData = {
+	loadingMessage: "",
 	flowStack: [MainFlow],
 	stepIndices: [0],
 	returningUserFlow: false,

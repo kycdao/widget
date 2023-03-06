@@ -148,9 +148,10 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 		if (!disableSubmit && kycDao) {
 			if (!isEmailConfirmed) {
 				dispatch({
-					type: DataActionTypes.setModal,
+					type: DataActionTypes.ShowModal,
 					payload: "emailVerification",
 				})
+
 				dispatch({ type: DataActionTypes.emailChange, payload: emailValue })
 
 				try {
@@ -172,8 +173,8 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 								)
 
 								dispatch({
-									type: DataActionTypes.setModal,
-									payload: null,
+									type: DataActionTypes.ShowModal,
+									payload: undefined,
 								})
 
 								clearInterval(confirmationInterval.current)

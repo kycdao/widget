@@ -110,7 +110,7 @@ export function CalculateStep(data: Data, direction: boolean): Data {
 	/**
 	 * Check for fatal error, it is allways a priority
 	 */
-	if (error && error.type === "fatal") {
+	if (error?.type === "fatal") {
 		return {
 			...data,
 			prevPage,

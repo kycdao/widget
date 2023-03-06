@@ -5,7 +5,6 @@ import {
 	KycDaoInitializationResult,
 	SdkConfiguration,
 } from "@kycdao/kycdao-sdk"
-import { getNetworkType } from "@Utils/getNetworkType"
 import { KycDaoClientMessageBody } from "KycDaoClientCommon"
 import {
 	useMemo,
@@ -29,6 +28,7 @@ import {
 	StateContext,
 } from "./components"
 import { Router } from "./pages"
+import { getNetworkType } from "@Utils/getNetworkType"
 
 export type AppContainerProps = {
 	config: SdkConfiguration
@@ -79,9 +79,39 @@ const AppContainerRender: ForwardRefRenderFunction<
 		if (kycDao) {
 			;(async () => {
 				try {
+					dispatch({
+						type: DataActionTypes.SetLoadingMessage,
+						payload:
+							"Trying to connet your wallet. If it does not succeed please ask for help on our Discord.",
+					})
+
+					const modalTimeout = setTimeout(() => {
+						dispatch({
+							type: DataActionTypes.ShowModal,
+							payload: {
+								body: "If it seems stuck, please click to retry.",
+								header: "Trying to connect your wallet",
+								type: "genericInfo",
+								showRetry: true,
+							},
+						})
+					}, 5000)
+
 					await kycDao.kycDao.connectWallet(
 						getNetworkType(config.enabledBlockchainNetworks[0])
 					)
+
+					dispatch({
+						type: DataActionTypes.ShowModal,
+						payload: undefined,
+					})
+
+					clearTimeout(modalTimeout)
+
+					await dispatch({
+						type: DataActionTypes.SetLoadingMessage,
+						payload: "",
+					})
 
 					dispatch({
 						type: DataActionTypes.setModalMode,
