@@ -7,3 +7,9 @@ export interface KycDaoEvent extends Event {
 export interface KycDaoOnReadyEvent extends KycDaoEvent {
 	data: KycDaoInitializationResult
 }
+
+export enum KycDaoEventTypes {
+	READY = "KycDaoIframeWidgetOnReady",
+	FAIL = "KycDaoIframeWidgetOnFail",
+	SUCCESS = "KycDaoIframeWidgetOnSuccess",
+}

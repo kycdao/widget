@@ -6,7 +6,7 @@ import {
 import { ErrorPageFactory } from "@Pages/ErrorPage"
 import { ErrorBoundary } from "react-error-boundary"
 import { createRoot } from "react-dom/client"
-import { KycDaoEvent, KycDaoOnReadyEvent } from "./types"
+import { KycDaoEvent, KycDaoEventTypes, KycDaoOnReadyEvent } from "./types"
 
 export interface StandaloneIframeClientConfig extends WidgetConfig {
 	container: HTMLElement | string
@@ -85,25 +85,34 @@ export const open = (
 		document.body.style.setProperty("overflow", "hidden")
 	}
 
-	window.addEventListener("KycDaoIframeWidgetOnSuccess", (event) => {
+	const close = () => {
+		window.removeEventListener(KycDaoEventTypes.SUCCESS, onSuccessHandler)
+		window.removeEventListener(KycDaoEventTypes.FAIL, onFailHandler)
+		window.removeEventListener(KycDaoEventTypes.READY, onReadyHandler)
+		root.unmount()
+	}
+
+	const onSuccessHandler = (event: Event) => {
 		onSuccess?.((event as KycDaoEvent).data)
-		root.unmount()
-	})
+		close()
+	}
 
-	window.addEventListener("KycDaoIframeWidgetOnFail", (event) => {
-		onFail?.((event as KycDaoEvent).data)
-		root.unmount()
-	})
-
-	window.addEventListener("KycDaoIframeWidgetOnReady", (event) => {
+	const onReadyHandler = (event: Event) => {
 		onReady?.((event as KycDaoOnReadyEvent).data)
-		root.unmount()
-	})
+		close()
+	}
+
+	const onFailHandler = (event: Event) => {
+		onFail?.((event as KycDaoEvent).data)
+		close()
+	}
+
+	window.addEventListener(KycDaoEventTypes.SUCCESS, onSuccessHandler)
+	window.addEventListener(KycDaoEventTypes.FAIL, onFailHandler)
+	window.addEventListener(KycDaoEventTypes.READY, onReadyHandler)
 
 	return {
-		close: () => {
-			root.unmount()
-		},
+		close,
 	}
 }
 
