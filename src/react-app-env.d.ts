@@ -1,10 +1,11 @@
 /// <reference types="react-scripts" />
 import { MetaMaskInpageProvider } from "@metamask/providers"
-import { KycDaoWidgetConfig } from "./widget"
+import { KycDaoWidgetConfig } from "./Widget"
 import {
 	KycDaoClientOptions,
 	KycDaoClientInterface,
 } from "./KycDaoClientCommon"
+import { StandaloneClientHandle } from "./StandaloneClient"
 
 type VirtualKeyboardEvent = UIEvent & {
 	target: { boundingRect: { height: string } }
@@ -19,7 +20,9 @@ declare global {
 		KycDaoIframeClient: {
 			new (config: KycDaoClientOptions): KycDaoClientInterface
 		}
-		KycDaoWidget: React.FC<KycDaoWidgetConfig>
+		KycDaoWidget: {
+			open: (config: KycDaoWidgetConfig) => StandaloneClientHandle
+		}
 	}
 
 	interface Navigator {

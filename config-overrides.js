@@ -21,7 +21,8 @@ module.exports = function override(config, env) {
 		KycDaoIframeClient: "./src/KycDaoIframeClient.ts",
 		// "index": "./src/index.js",
 		app: "./src/App.tsx",
-		widget: "./src/widget.tsx",
+		Widget: "./src/Widget.tsx",
+		StandaloneClient: "./src/StandaloneClient.tsx",
 	}
 	config.output = {
 		filename: "[name].js",

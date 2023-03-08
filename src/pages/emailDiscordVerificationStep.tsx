@@ -29,7 +29,7 @@ import {
 import useChangePage from "@Hooks/useChangePage"
 import styled from "styled-components/macro"
 import UnstyledDiscordLogo from "../images/discord.svg"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 
@@ -86,7 +86,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 	} = useContext(StateContext)
 	const redirect = useChangePage()
 	const kycDao = useKycDao()
-	const errorHandler = useErrorHandler()
+	const { handleError } = useErrorHandler()
 
 	const [buttonAutofocus, setButtonAutoFocus] = useState(false)
 
@@ -179,12 +179,12 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 								clearInterval(confirmationInterval.current)
 							}
 						} catch (error) {
-							errorHandler("modal", error)
+							handleError("modal", error)
 						}
 					}
 					confirmationInterval.current = setInterval(emailCheck, 1500)
 				} catch (error) {
-					errorHandler("modal", error)
+					handleError("modal", error)
 				}
 			} else {
 				redirect(StepID.taxResidenceStep, StepID.emailDiscordVerificationStep)
@@ -197,7 +197,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 		dispatch,
 		emailValue,
 		redirect,
-		errorHandler,
+		handleError,
 	])
 
 	const onPrev = useCallback(() => {

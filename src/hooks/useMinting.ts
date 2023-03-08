@@ -1,14 +1,14 @@
 import { DataActionTypes, StateContext, StepID } from "@Components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { useContext } from "react"
-import useErrorHandler from "./errorHandler"
+import useErrorHandler from "./useErrorHandler"
 
 import { useKycDao } from "./useKycDao"
 
 export const useMinting = () => {
 	const kycDao = useKycDao()
 	const state = useContext(StateContext)
-	const errorHandler = useErrorHandler()
+	const { handleError } = useErrorHandler()
 
 	return async function StartMinting(
 		imageId: string,
@@ -59,7 +59,7 @@ export const useMinting = () => {
 					payload: true,
 				})
 			} catch (error) {
-				errorHandler("minting", error)
+				handleError("minting", error)
 			}
 		}
 	}

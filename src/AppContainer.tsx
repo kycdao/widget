@@ -1,5 +1,4 @@
 import { AppStyleContainer } from "@Components/appStyleContainer"
-import { errorHandler } from "@Hooks/errorHandler"
 import {
 	KycDao,
 	KycDaoInitializationResult,
@@ -30,6 +29,7 @@ import {
 	StepID,
 } from "./components"
 import { Router } from "./pages"
+import errorHandler from "@Utils/errorHandler"
 
 export type AppContainerProps = {
 	config: SdkConfiguration
@@ -236,6 +236,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 			})
 	}, [config, onReady, messageTargetOrigin])
 
+	// todo: is this needed?
 	useEffect(() => {
 		if (isModal) {
 			const close = OnClose.subscribe(() => {

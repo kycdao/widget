@@ -22,7 +22,7 @@ import {
 } from "@Components/index"
 
 import { NftButtonWrapper } from "./finalStep"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 
 const Header = () => (
 	<H1>
@@ -87,7 +87,7 @@ export const NftSelection: FC<PageProps> = ({
 
 	const [nftImages, setNftImages] = useState<Nft[]>([])
 
-	const errorHandler = useErrorHandler()
+	const { handleError } = useErrorHandler()
 
 	const onArtClick = useCallback(
 		(id: string) => () => {
@@ -124,7 +124,7 @@ export const NftSelection: FC<PageProps> = ({
 				try {
 					await startMinting(currentArt)
 				} catch (error) {
-					errorHandler("fatal", error)
+					handleError("fatal", error)
 				}
 			} else {
 				dispatch({
@@ -141,7 +141,7 @@ export const NftSelection: FC<PageProps> = ({
 		kycDao?.kycDao.subscribed,
 		startMinting,
 		currentArt,
-		errorHandler,
+		handleError,
 	])
 
 	const onPrev = useCallback(() => {

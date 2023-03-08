@@ -157,15 +157,6 @@
 					44787: "https://alfajores-forno.celo-testnet.org",
 				},
 				chainId: 80001,
-				//   qrcodeModalOptions: {
-				//     desktopLinks: [
-				//       'ledger',
-				//       'zerion',
-				//     ],
-				//     mobileLinks: [
-				//       "metamask",
-				//     ],
-				//   }
 			})
 
 			const autostart = false
@@ -220,10 +211,27 @@
 
 				globalThis.selectorHndlr = function (selectedChain, walletConnectOn) {
 					console.log(walletConnectOn)
-					client.open(
-						selectedChain,
-						walletConnectOn ? walletConnectEvmProvider : window.ethereum
-					)
+					const config = {
+						isModal: true,
+						container: '#modalRoot',
+						config: {
+							demoMode: true,
+							enabledBlockchainNetworks: [
+								"PolygonMumbai",
+							],
+							enabledVerificationTypes: ["KYC"],
+							evmProvider: walletConnectOn ? walletConnectEvmProvider : window.ethereum,
+							baseUrl: "https://staging.kycdao.xyz",
+						}
+					}
+
+					const handle = KycDaoWidget.open(config)
+					console.log('handle', handle)
+
+					// client.open(
+					// 	selectedChain,
+					// 	walletConnectOn ? walletConnectEvmProvider : window.ethereum
+					// )
 				}
 
 				if (autostart) {

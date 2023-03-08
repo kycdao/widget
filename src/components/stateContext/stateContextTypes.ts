@@ -92,6 +92,8 @@ export type Data = {
 	isProcessSuccess: boolean
 	alreadyHaveAnNftOnThisChain: boolean
 	nearMinted: boolean
+	onSuccess?: (data?: string) => void
+	onFail?: (reason?: string) => void
 }
 
 export type HeaderButtonState = "enabled" | "disabled" | "hidden"

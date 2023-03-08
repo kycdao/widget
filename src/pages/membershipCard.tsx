@@ -26,7 +26,7 @@ import {
 	Ul,
 } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<>
@@ -180,7 +180,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 		data: { returningUserFlow },
 	} = useContext(StateContext)
 	const redirect = useChangePage()
-	const errorHandler = useErrorHandler()
+	const { handleError } = useErrorHandler()
 
 	const kycDaoContext = useKycDao()
 
@@ -220,11 +220,11 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 						errorMsg = `${errorMsg} (${e.message})`
 					}
 
-					errorHandler("modal", errorMsg)
+					handleError("modal", errorMsg)
 				}
 			}
 		}
-	}, [dispatch, kycDaoContext, redirect, errorHandler])
+	}, [dispatch, kycDaoContext, redirect, handleError])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

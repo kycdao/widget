@@ -15,8 +15,7 @@ import {
 	StepPart,
 	SubmitButton,
 } from "@Components/index"
-import { KycDaoClientMessageBody } from "KycDaoClientCommon"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 import { TwitterShareButton } from "react-twitter-embed"
 
 export const NftButtonWrapper = styled.div`
@@ -45,15 +44,15 @@ export const FinalStep: FC<PageProps> = ({
 	const {
 		dispatch,
 		data: {
-			messageTargetOrigin,
 			chainExplorerUrl,
 			nftImageUrl,
 			alreadyHaveAnNftOnThisChain,
 			nearMinted,
+			onSuccess,
 		},
 	} = useContext(StateContext)
 
-	const errorHandler = useErrorHandler()
+	const { handleError } = useErrorHandler()
 
 	const header = useCallback(
 		() =>
@@ -97,14 +96,14 @@ export const FinalStep: FC<PageProps> = ({
 							setDisplayedNftImageUrl(tokens[0].image)
 						}
 					} catch (error) {
-						errorHandler("modal", error)
+							handleError("modal", error)
 					}
 				} else {
 					setDisplayedNftImageUrl(kycDao.mintingResult?.imageUrl || nftImageUrl)
 				}
 			})()
 		}
-	}, [kycDao, nftImageUrl, errorHandler, alreadyHaveAnNftOnThisChain])
+	}, [kycDao, nftImageUrl, handleError, alreadyHaveAnNftOnThisChain])
 
 	const body = useCallback<StepPart>(
 		(props) => (
@@ -145,26 +144,17 @@ export const FinalStep: FC<PageProps> = ({
 
 	const onFinish = useCallback(async () => {
 		if (alreadyHaveAnNftOnThisChain) {
-			window.parent.postMessage(
-				{
-					type: "kycDaoSuccess",
-					data: `Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`,
-				} as KycDaoClientMessageBody,
-				messageTargetOrigin
+			onSuccess?.(
+				`Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`
 			)
-		} else {
-			window.parent.postMessage(
-				{
-					type: "kycDaoSuccess",
-					data: chainExplorerUrl,
-				} as KycDaoClientMessageBody,
-				messageTargetOrigin
-			)
+			return
 		}
+
+		onSuccess?.(chainExplorerUrl || "")
 	}, [
-		messageTargetOrigin,
-		chainExplorerUrl,
 		alreadyHaveAnNftOnThisChain,
+		chainExplorerUrl,
+		onSuccess,
 		kycDao?.kycDao.connectedWallet?.blockchainNetwork,
 	])
 

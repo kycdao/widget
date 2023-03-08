@@ -1,24 +1,18 @@
 import {
 	DataActionTypes,
 	DataChangeActions,
-	StateContext,
 	StepID,
 } from "@Components/stateContext"
-import { KycDaoClientMessageBody } from "KycDaoClientCommon"
-import { useContext } from "react"
+import getErrorText from "@Utils/getErrorText"
+import { KycDaoClientMessageBody } from "../KycDaoClientCommon"
+import { Dispatch } from "react"
 
-function getErrorText(error: unknown) {
-	if (typeof error === "object" && !(error instanceof Error)) {
-		return JSON.stringify(error)
-	} else {
-		return `${error}`
-	}
-}
+export type ErrorType = "fatal" | "modal" | "minting"
 
-export function errorHandler(
-	type: "fatal" | "modal" | "minting",
+export default function errorHandler(
+	type: ErrorType,
 	error: unknown,
-	dispatch: React.Dispatch<DataChangeActions>,
+	dispatch: Dispatch<DataChangeActions>,
 	currentPage: StepID,
 	messageTargetOrigin: string
 ) {
@@ -71,14 +65,4 @@ export function errorHandler(
 			})
 		}
 	}
-}
-
-export default function useErrorHandler() {
-	const {
-		dispatch,
-		data: { currentPage, messageTargetOrigin },
-	} = useContext(StateContext)
-
-	return (type: "fatal" | "modal" | "minting", error: unknown) =>
-		errorHandler(type, error, dispatch, currentPage, messageTargetOrigin)
 }
