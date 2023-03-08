@@ -1,4 +1,3 @@
-// todo: move to types
 import { Widget, WidgetConfig } from "./Widget"
 import { ErrorPageFactory } from "@Pages/ErrorPage"
 import { ErrorBoundary } from "react-error-boundary"

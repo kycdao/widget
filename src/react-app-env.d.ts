@@ -1,11 +1,17 @@
 /// <reference types="react-scripts" />
 import { MetaMaskInpageProvider } from "@metamask/providers"
-import { KycDaoWidgetConfig } from "./Widget"
 import {
 	KycDaoClientOptions,
 	KycDaoClientInterface,
 } from "./KycDaoClientCommon"
-import { StandaloneClientHandle } from "./StandaloneClient"
+import {
+	StandaloneClientConfig,
+	StandaloneClientHandle,
+} from "./StandaloneClient"
+import {
+	StandaloneIframeClientConfig,
+	StandaloneIframeClientHandle,
+} from "./StandaloneIframeClient"
 
 type VirtualKeyboardEvent = UIEvent & {
 	target: { boundingRect: { height: string } }
@@ -14,14 +20,21 @@ type VirtualKeyboardEvent = UIEvent & {
 declare global {
 	interface Window {
 		ethereum: MetaMaskInpageProvider
+		// todo: remove
 		KycDaoClient: {
 			new (config: KycDaoClientOptions): KycDaoClientInterface
 		}
+		// todo: remove
 		KycDaoIframeClient: {
 			new (config: KycDaoClientOptions): KycDaoClientInterface
 		}
 		KycDaoWidget: {
-			open: (config: KycDaoWidgetConfig) => StandaloneClientHandle
+			open: (config: StandaloneClientConfig) => StandaloneClientHandle
+		}
+		KycDaoIframeWidget: {
+			open: (
+				config: StandaloneIframeClientConfig
+			) => StandaloneIframeClientHandle
 		}
 	}
 

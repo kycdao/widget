@@ -1,5 +1,6 @@
 import {
 	FC,
+	PropsWithChildren,
 	StrictMode,
 	useCallback,
 	useEffect,
@@ -47,7 +48,7 @@ export interface WidgetConfig {
 	modalOptions?: ModalOptions
 }
 
-const defaultModalOptions: ModalOptions = {
+export const defaultModalOptions: ModalOptions = {
 	width: "480px",
 	height: "600px",
 	backdrop: "rgba(0, 0, 0, 0.7)",
@@ -65,6 +66,23 @@ const fontFile = new FontFace(
 
 document.fonts.add(fontFile)
 fontFile.load()
+
+export const WidgetModalContainer: FC<PropsWithChildren<ModalOptions>> = ({
+	children,
+	height,
+	width,
+	backdrop,
+}) => {
+	return (
+		<ModalRoot backdrop={backdrop}>
+			<Modal
+				width={typeof width === "string" ? width : `${width}px`}
+				height={typeof height === "string" ? height : `${height}px`}>
+				{children}
+			</Modal>
+		</ModalRoot>
+	)
+}
 
 export const Widget: FC<WidgetConfig> = ({
 	config,
@@ -253,13 +271,9 @@ export const Widget: FC<WidgetConfig> = ({
 
 	if (isModal) {
 		return (
-			<ModalRoot>
-				<Modal
-					width={typeof width === "string" ? width : `${width}px`}
-					height={typeof height === "string" ? height : `${height}px`}>
-					{InlineWidget}
-				</Modal>
-			</ModalRoot>
+			<WidgetModalContainer height={height} width={width} backdrop={backdrop}>
+				{InlineWidget}
+			</WidgetModalContainer>
 		)
 	}
 
