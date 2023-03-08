@@ -8,27 +8,32 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.5.9] - 2023-02-23
 
 ### Changed
+
 - Updated deps
 - Near shows the token, if already exist one
 
 ## [0.5.3] - 2023-02-23
 
 ### Fixed
+
 - Final page related style issues
 
 ## [0.5.2] - 2023-02-23
 
 ### Added
+
 - Twitter share button for a minted nft
 
 ## [0.5.1] - 2023-02-23
 
 ### Added
+
 - Display already minted nft, if possible
 - VerifyAccout page
 - Closable error modals
 
 ### Fixed
+
 - A lot of smaller error handling related bugs
 
 ## [0.5.0] - 2023-02-20
@@ -38,9 +43,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.4.6] - 2023-02-19
 
 ### Added
+
 - If the user has an nft on the currrent chain, they go to the final step instantly
 
 ### Fixed
+
 - Font size related issue on taxresidence selector & minting
 
 ## [0.4.5] - 2023-02-17
