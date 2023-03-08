@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.5.9] - 2023-02-23
+
+### Changed
+- Updated deps
+- Near shows the token, if already exist one
+
 ## [0.5.3] - 2023-02-23
 
 ### Fixed
