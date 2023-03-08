@@ -22,6 +22,9 @@ export const reducer = (
 	{ payload, type }: DataChangeActions
 ): Data => {
 	switch (type) {
+		case DataActionTypes.HideModal: {
+			return { ...data, modal: undefined }
+		}
 		case DataActionTypes.GoToNextStep: {
 			return CalculateNextStep(data)
 		}

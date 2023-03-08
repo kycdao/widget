@@ -41,6 +41,7 @@ export enum DataActionTypes {
 	GoToPrevStep,
 	SetLoadingMessage,
 	ShowModal,
+	HideModal,
 }
 
 export enum StepID {
@@ -256,6 +257,11 @@ export type SetError = {
 	payload: ErrorData
 }
 
+export type HideModal = {
+	type: DataActionTypes.HideModal
+	payload?: never
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -284,6 +290,7 @@ export type DataChangeActions =
 	| ShowModal
 	| SetLoadingMessage
 	| SetError
+	| HideModal
 
 export type ModalType =
 	| "emailVerification"

@@ -13,12 +13,56 @@ export type KycDaoClientMessages =
 	| "kycDaoSuccess"
 	| "kycDaoFail"
 
+export const errorPrefix = "Wallet callback handling error"
+
+export const knownNearQueryParams = {
+	account_id: "NearLogin",
+	errorCode: "NearUserRejectedError",
+	transactionHashes: "NearMint",
+}
+
+export const nearNetworkRegex = /Near*./g
+
 export type KycDaoClientMessageHandler = (message: KycDaoClientMessage) => void
+
+export function messageHndlr(
+	this: KycDaoClientInterface,
+	{ data: { data, type } }: KycDaoClientMessage
+) {
+	switch (type) {
+		case "kycDaoCloseModal":
+			if (this.onFail) {
+				this.onFail("cancelled")
+			}
+			if (this.isOpen) {
+				this.close()
+			}
+			break
+		case "kycDaoSuccess":
+			this.isSuccessful = true
+			if (this.onSuccess) {
+				this.onSuccess(data)
+				this.close()
+			}
+			break
+		case "kycDaoFail": {
+			if (this.onFail) {
+				this.onFail(data)
+			}
+		}
+	}
+}
+
+/**
+ * Compile time environment variable injection by babel-plugin-transform-inline-environment-variables & webpack.DefinePlugin.
+ * 	{@link https://www.npmjs.com/package/babel-plugin-transform-inline-environment-variables package/babel-plugin-transform-inline-environment-variables}
+ *	{@link https://webpack.js.org/plugins/define-plugin define-plugin}
+ */
+export const WelcomeString = `Thank you for using ${process.env.npm_package_name} version ${process.env.npm_package_version}+${process.env.REACT_APP_GIT_HASH}`
 
 export type KycDaoClientInterface = {
 	nearAutorunEnabled?: boolean
 	config: SdkConfiguration
-	iframeOptions?: IframeOptions
 	width: string
 	height: string
 	isOpen: boolean
@@ -35,12 +79,27 @@ export type KycDaoClientInterface = {
 		ethProvider?: KycDaoClientOptions["config"]["evmProvider"]
 	) => void
 	close: () => void
-	messageHndlr: KycDaoClientMessageHandler
 	getParentElement: () => HTMLElement
 	originalParentZIndex: string | null
 	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
 	container?: HTMLDivElement
-	nearRedirectCheck: () => boolean
+	messageHndlr: ({ data: { data, type } }: KycDaoClientMessage) => void
+}
+
+export function getParentElement(this: KycDaoClientInterface) {
+	if (typeof this.parent === "string") {
+		const parentElement = document.querySelector(
+			this.parent
+		) as HTMLElement | null
+		if (!parentElement) {
+			throw new Error(
+				`There is no such element as '${this.parent}', check your parent selector string!`
+			)
+		}
+
+		return parentElement
+	}
+	return this.parent
 }
 
 export type KycDaoClientOptions = {
@@ -51,7 +110,6 @@ export type KycDaoClientOptions = {
 	config: SdkConfiguration
 	configFromUrl?: boolean
 	backdrop?: boolean
-	iframeOptions?: IframeOptions
 	nearAutorunEnabled?: boolean
 	onFail?: (reason?: string) => void
 	onSuccess?: (data?: string) => void
@@ -61,6 +119,33 @@ export type KycDaoClientOptions = {
 export type IframeOptions = {
 	url?: string
 	messageTargetOrigin: string
+}
+
+export function nearRedirectCheck() {
+	const knownQueryParamNames = Object.keys(knownNearQueryParams)
+
+	const queryParams = new URLSearchParams(window.location.search)
+	const matches = [...queryParams].filter(([key, _]) =>
+		knownQueryParamNames.includes(key)
+	)
+
+	if (matches.length > 1) {
+		console.error(
+			`${errorPrefix} - Multiple URL query parameters identified: ${matches.map(
+				([key]) => key
+			)}.`
+		)
+	} else if (matches.length === 1) {
+		const [match] = matches
+		const [key] = match
+		const event = knownNearQueryParams[key as keyof typeof knownNearQueryParams]
+
+		if (event.startsWith("Near")) {
+			return true
+		}
+	}
+
+	return false
 }
 
 export type UrlParams = {

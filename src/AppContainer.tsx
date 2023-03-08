@@ -85,6 +85,11 @@ const AppContainerRender: ForwardRefRenderFunction<
 							"Trying to connet your wallet. If it does not succeed please ask for help on our Discord.",
 					})
 
+					dispatch({
+						type: DataActionTypes.setModalMode,
+						payload: isModal,
+					})
+
 					const modalTimeout = setTimeout(() => {
 						dispatch({
 							type: DataActionTypes.ShowModal,
@@ -102,21 +107,15 @@ const AppContainerRender: ForwardRefRenderFunction<
 					)
 
 					dispatch({
-						type: DataActionTypes.ShowModal,
-						payload: undefined,
-					})
-
-					clearTimeout(modalTimeout)
-
-					await dispatch({
 						type: DataActionTypes.SetLoadingMessage,
 						payload: "",
 					})
 
 					dispatch({
-						type: DataActionTypes.setModalMode,
-						payload: isModal,
+						type: DataActionTypes.HideModal,
 					})
+
+					clearTimeout(modalTimeout)
 
 					const emailData = await kycDao?.kycDao.checkEmailConfirmed()
 

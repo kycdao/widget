@@ -37,8 +37,7 @@ export function errorHandler(
 	switch (type) {
 		case "fatal":
 			dispatch({
-				type: DataActionTypes.ShowModal,
-				payload: undefined,
+				type: DataActionTypes.HideModal,
 			})
 			dispatch({ type: DataActionTypes.SetError, payload: { type: "fatal" } })
 			dispatch({ type: DataActionTypes.GoToNextStep })

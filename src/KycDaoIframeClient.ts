@@ -1,7 +1,18 @@
 import {
+	BlockchainNetwork,
+	KycDaoInitializationResult,
+	SdkConfiguration,
+} from "@kycdao/kycdao-sdk"
+import {
+	IframeOptions,
 	KycDaoClientInterface,
 	KycDaoClientMessage,
 	KycDaoClientOptions,
+	WelcomeString,
+	getParentElement,
+	messageHndlr,
+	nearNetworkRegex,
+	nearRedirectCheck,
 } from "./KycDaoClientCommon"
 
 // basically the KycDaoClient.css
@@ -56,9 +67,31 @@ styleNode.innerText = styles
 
 document.head.appendChild(styleNode)
 
-export function kycDaoIframeClient(
-	this: KycDaoClientInterface,
-	{
+export type KycDaoIframeClientOptions = KycDaoClientOptions & {
+	iframeOptions: IframeOptions
+}
+
+export class KycDaoIframeClient implements KycDaoClientInterface {
+	messageHndlr: ({ data: { data, type } }: KycDaoClientMessage) => void
+	height: string
+	width: string
+	parent: HTMLElement | string = document.body
+	onFail
+	onSuccess
+	config
+	configFromUrl = false
+	backdrop = true
+	modal?: HTMLDivElement
+	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
+	isOpen = false
+	isSuccessful = false
+	isModal = false
+	container?: HTMLDivElement
+	originalParentZIndex: null | string = null
+	iframeOptions: IframeOptions
+	getParentElement: () => HTMLElement
+
+	constructor({
 		height = 650,
 		width = 400,
 		parent = document.body,
@@ -68,170 +101,143 @@ export function kycDaoIframeClient(
 		config,
 		backdrop = true,
 		modal = true,
-	}: KycDaoClientOptions
-) {
-	if ("virtualKeyboard" in navigator) {
-		navigator.virtualKeyboard.overlaysContent = true
-	}
-
-	this.config = config
-	this.iframeOptions = iframeOptions
-
-	this.width = typeof width === "string" ? width : `${width}px`
-	this.height = typeof height === "string" ? height : `${height}px`
-
-	this.isOpen = false
-	this.parent = parent
-	this.onFail = onFail
-	this.onSuccess = onSuccess
-	this.isSuccessful = false
-	this.isModal = modal
-
-	this.messageHndlr = this.messageHndlr.bind(this)
-	this.open = this.open.bind(this)
-	this.close = this.close.bind(this)
-	this.getParentElement = this.getParentElement.bind(this)
-	this.backdrop = backdrop
-}
-
-kycDaoIframeClient.prototype.messageHndlr = function (
-	this: KycDaoClientInterface,
-	{ data: { data, type } }: KycDaoClientMessage
-) {
-	switch (type) {
-		case "kycDaoCloseModal":
-			if (this.onFail) {
-				this.onFail("cancelled")
-			}
-			if (this.isOpen) {
-				this.close()
-			}
-			break
-		case "kycDaoSuccess":
-			this.isSuccessful = true
-			if (this.onSuccess) {
-				this.onSuccess(data)
-				this.close()
-			}
-			break
-		case "kycDaoFail": {
-			if (this.onFail) {
-				this.onFail(data)
-			}
-		}
-	}
-}
-
-kycDaoIframeClient.prototype.getParentElement = function (
-	this: KycDaoClientInterface
-) {
-	if (typeof this.parent === "string") {
-		const parentElement = document.querySelector(
-			this.parent
-		) as HTMLElement | null
-		if (!parentElement) {
-			throw new Error(
-				`There is no such element as '${this.parent}', check your parent selector string!`
-			)
-		}
-
-		return parentElement
-	}
-	return this.parent
-}
-
-kycDaoIframeClient.prototype.open = function (this: KycDaoClientInterface) {
-	if (!this.iframeOptions?.url) {
-		throw new Error(
-			"An URL is needed if you want to use an iframe! What do you want to display?"
-		)
-	}
-
-	if (!this.isOpen) {
-		const params = new URLSearchParams()
-		const paramSetter = ({ 0: key, 1: value }: { 0: string; 1: string }) =>
-			params.set(key, Array.isArray(value) ? `["${value.join('","')}"]` : value)
-
-		Object.entries(this.config).forEach(paramSetter)
-		Object.entries(this.iframeOptions).forEach(paramSetter)
-
-		params.set("messageTargetOrigin", this.iframeOptions.messageTargetOrigin)
-
-		this.parent = this.getParentElement() || document.body
-		if (this.isModal) {
-			this.parent.classList.add("KycDaoIframeModalRoot")
-		}
-
-		if (this.backdrop && this.isModal) {
-			this.parent.style.setProperty(
-				"--backdrop",
-				typeof this.backdrop === "boolean"
-					? "rgba(0, 0, 0, 0.7)"
-					: this.backdrop
-			)
-		}
-
-		this.modal = document.createElement("div")
-
-		if (this.isModal) {
-			this.modal.classList.add("KycDaoIframeModalRoot")
-			this.modal.style.setProperty("--width", this.width)
-			this.modal.style.setProperty("--height", this.height)
-		}
-
-		const container = document.createElement("iframe")
-		container.allow = "encrypted-media; camera"
-		container.src = this.iframeOptions.url + "?" + params.toString()
-		container.width = this.width
-		container.height = this.height
-
-		if (this.isModal) {
-			container.classList.add("KycDaoModalIFrame")
-		}
-
-		this.modal.appendChild(container)
-
-		this.parent.appendChild(this.modal)
-		this.isOpen = true
-
+	}: KycDaoIframeClientOptions) {
 		if ("virtualKeyboard" in navigator) {
 			navigator.virtualKeyboard.overlaysContent = true
 		}
 
-		window.addEventListener("message", this.messageHndlr)
+		this.config = config
+		this.iframeOptions = iframeOptions
 
-		// this.originalBodyHeight = document.body.style.height
-		// this.originalBodyOverflow = document.body.style.overflow
+		this.width = typeof width === "string" ? width : `${width}px`
+		this.height = typeof height === "string" ? height : `${height}px`
 
-		document.body.style.setProperty("height", "100%")
-		document.body.style.setProperty("overflow", "hidden")
+		this.isOpen = false
+		this.parent = parent
+		this.onFail = onFail
+		this.onSuccess = onSuccess
+		this.isSuccessful = false
+		this.isModal = modal
+		this.backdrop = backdrop
+
+		this.messageHndlr = messageHndlr.bind(this)
+		this.getParentElement = getParentElement.bind(this)
+
+		console.log(WelcomeString)
+
+		const nearNetwork = this.config.enabledBlockchainNetworks.find((network) =>
+			nearNetworkRegex.test(network)
+		)
+
+		if (nearNetwork && nearRedirectCheck()) {
+			this.container = document.createElement("div")
+
+			this.open(nearNetwork)
+		}
 	}
-}
 
-kycDaoIframeClient.prototype.close = function (this: KycDaoClientInterface) {
-	if (this.isOpen) {
-		if (this.modal) {
-			const parentNode = this.getParentElement()
+	open(blockchain?: BlockchainNetwork) {
+		if (!this.iframeOptions) {
+			throw new Error("iframeOptions are not set!")
+		}
+
+		if (!this.iframeOptions.url) {
+			throw new Error(
+				"An URL is needed if you want to use an iframe! What do you want to display?"
+			)
+		}
+
+		if (!this.isOpen) {
+			const config = { ...this.config } as SdkConfiguration
+
+			config.enabledBlockchainNetworks = blockchain
+				? [blockchain]
+				: [this.config.enabledBlockchainNetworks[0]]
+
+			const params = new URLSearchParams()
+			const paramSetter = ({ 0: key, 1: value }: { 0?: string; 1?: string }) =>
+				key &&
+				value &&
+				params.set(
+					key,
+					Array.isArray(value) ? `["${value.join('","')}"]` : value
+				)
+
+			Object.entries(config).forEach(paramSetter)
+			Object.entries(this.iframeOptions).forEach(paramSetter)
+
+			params.set("messageTargetOrigin", window.location.origin)
+
+			this.parent = this.getParentElement() || document.body
+			if (this.isModal) {
+				this.parent.classList.add("KycDaoIframeModalRoot")
+			}
+			if (this.backdrop && this.isModal) {
+				this.originalParentZIndex =
+					this.parent.style.getPropertyValue("z-index")
+
+				this.parent.style.setProperty(
+					"--kyc-dao-backdrop",
+					typeof this.backdrop === "boolean"
+						? "rgba(0, 0, 0, 0.7)"
+						: this.backdrop
+				)
+				this.parent.style.setProperty("z-index", "101")
+			}
+
+			this.modal = document.createElement("div")
 
 			if (this.isModal) {
-				parentNode.classList.remove("KycDaoIframeModalRoot")
+				this.modal.classList.add("KycDaoIframeModalRoot")
+				this.modal.style.setProperty("--width", this.width)
+				this.modal.style.setProperty("--height", this.height)
 			}
 
-			if (parentNode) {
-				parentNode.removeChild(this.modal)
+			const container = document.createElement("iframe")
+			container.allow = "encrypted-media; camera"
+			container.src = this.iframeOptions.url + "?" + params.toString()
+			container.width = this.width
+			container.height = this.height
+
+			if (this.isModal) {
+				container.classList.add("KycDaoModalIFrame")
 			}
-			window.removeEventListener("message", this.messageHndlr)
-			this.isOpen = false
-			// document.body.style.setProperty("height", this.originalBodyHeight)
-			// document.body.style.setProperty("overflow", this.originalBodyOverflow)
+
+			this.modal.appendChild(container)
+
+			this.parent.appendChild(this.modal)
+			this.isOpen = true
+
+			if ("virtualKeyboard" in navigator) {
+				navigator.virtualKeyboard.overlaysContent = true
+			}
+
+			window.addEventListener("message", messageHndlr.bind(this))
+		}
+	}
+
+	close() {
+		if (this.isOpen) {
+			if (this.modal) {
+				const parentNode = this.getParentElement()
+
+				if (this.isModal) {
+					parentNode.classList.remove("KycDaoIframeModalRoot")
+					parentNode.style.setProperty("z-index", this.originalParentZIndex)
+
+					if (this.backdrop) {
+						parentNode.style.setProperty("--kyc-dao-backdrop", null)
+					}
+				}
+
+				if (parentNode) {
+					parentNode.removeChild(this.modal)
+				}
+				window.removeEventListener("message", messageHndlr.bind(this))
+				this.isOpen = false
+			}
 		}
 	}
 }
 
-window.KycDaoIframeClient = kycDaoIframeClient as unknown as {
-	new (config: KycDaoClientOptions): KycDaoClientInterface
-}
-
-export const KycDaoIframeClient = kycDaoIframeClient as unknown as {
-	new (config: KycDaoClientOptions): KycDaoClientInterface
-}
+window.KycDaoIframeClient = KycDaoIframeClient

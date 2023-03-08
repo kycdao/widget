@@ -173,8 +173,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 								)
 
 								dispatch({
-									type: DataActionTypes.ShowModal,
-									payload: undefined,
+									type: DataActionTypes.HideModal,
 								})
 
 								clearInterval(confirmationInterval.current)

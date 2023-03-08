@@ -30,7 +30,7 @@ export const MintingFailedModal = () => {
 	}, [minting, subscriptionYears, imageId])
 
 	const onClose = useCallback(() => {
-		dispatch({ type: DataActionTypes.ShowModal, payload: undefined })
+		dispatch({ type: DataActionTypes.HideModal })
 	}, [dispatch])
 
 	return (

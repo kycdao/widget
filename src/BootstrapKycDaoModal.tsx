@@ -13,11 +13,6 @@ import {
 } from "@kycdao/kycdao-sdk/dist/types"
 import { ErrorPageFactory } from "./pages"
 
-export type IframeOptions = {
-	url?: string
-	messageTargetOrigin: string
-}
-
 // don't know why this stopped working, so I do a manual polyfill
 
 if (!window.Buffer) {

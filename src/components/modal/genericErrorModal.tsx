@@ -35,7 +35,7 @@ export const GenericModal = ({ mode }: GenericModalProps) => {
 	const ResetApp = useContext(RestartContext)
 
 	const onClose = useCallback(() => {
-		dispatch({ type: DataActionTypes.ShowModal, payload: undefined })
+		dispatch({ type: DataActionTypes.HideModal })
 	}, [dispatch])
 
 	const startAgain = useCallback(() => {

@@ -10,6 +10,19 @@
 				const client = new KycDaoClient({
 					parent: "#modalRoot",
 					configFromUrl: true,
+					config: {
+						demoMode: true,
+						enabledBlockchainNetworks: [
+							"PolygonMumbai",
+							"CeloAlfajores",
+							"SolanaDevnet",
+							"NearTestnet",
+							"EthereumGoerli",
+						],
+						enabledVerificationTypes: ["KYC"],
+						evmProvider: false ? walletConnectEvmProvider : window.ethereum,
+						baseUrl: "https://staging.kycdao.xyz",
+					},
 				})
 
 				client.open()

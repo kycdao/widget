@@ -6,21 +6,16 @@ import {
 	BootstrapIframeKycDaoModal,
 	BootstrapKycDaoModal,
 } from "./BootstrapKycDaoModal"
-import type {
+import {
 	KycDaoClientInterface,
 	KycDaoClientMessage,
 	KycDaoClientOptions,
+	WelcomeString,
+	getParentElement,
+	messageHndlr,
+	nearNetworkRegex,
+	nearRedirectCheck,
 } from "./KycDaoClientCommon"
-
-const errorPrefix = "Wallet callback handling error"
-
-const knownNearQueryParams = {
-	account_id: "NearLogin",
-	errorCode: "NearUserRejectedError",
-	transactionHashes: "NearMint",
-}
-
-const nearNetworkRegex = /Near*./g
 
 // basically the KycDaoClient.css
 const styles = `
@@ -73,6 +68,7 @@ styleNode.innerText = styles
 document.head.appendChild(styleNode)
 
 export class KycDaoClient implements KycDaoClientInterface {
+	messageHndlr: ({ data: { data, type } }: KycDaoClientMessage) => void
 	height: string
 	width: string
 	parent: HTMLElement | string = document.body
@@ -88,6 +84,7 @@ export class KycDaoClient implements KycDaoClientInterface {
 	isModal = false
 	container?: HTMLDivElement
 	originalParentZIndex: null | string = null
+	getParentElement: () => HTMLElement
 
 	constructor({
 		height = "650px",
@@ -115,42 +112,20 @@ export class KycDaoClient implements KycDaoClientInterface {
 		this.configFromUrl = configFromUrl
 		this.onReady = onReady
 
-		this.messageHndlr = this.messageHndlr.bind(this)
+		this.messageHndlr = messageHndlr.bind(this)
+		this.getParentElement = getParentElement.bind(this)
 
-		/**
-		 * Compile time environment variable injection by babel-plugin-transform-inline-environment-variables & webpack.DefinePlugin.
-		 * 	{@link https://www.npmjs.com/package/babel-plugin-transform-inline-environment-variables package/babel-plugin-transform-inline-environment-variables}
-		 *	{@link https://webpack.js.org/plugins/define-plugin define-plugin}
-		 */
-		console.log(
-			`Thank you for using ${process.env.npm_package_name} version ${process.env.npm_package_version}+${process.env.REACT_APP_GIT_HASH}`
-		)
+		console.log(WelcomeString)
 
 		const nearNetwork = this.config.enabledBlockchainNetworks.find((network) =>
 			nearNetworkRegex.test(network)
 		)
 
-		if (nearNetwork && this.nearRedirectCheck()) {
+		if (nearNetwork && nearRedirectCheck()) {
 			this.container = document.createElement("div")
 
 			this.open(nearNetwork)
 		}
-	}
-
-	getParentElement() {
-		if (typeof this.parent === "string") {
-			const parentElement = document.querySelector(
-				this.parent
-			) as HTMLElement | null
-			if (!parentElement) {
-				throw new Error(
-					`There is no such element as '${this.parent}', check your parent selector string!`
-				)
-			}
-
-			return parentElement
-		}
-		return this.parent
 	}
 
 	open(
@@ -224,34 +199,6 @@ export class KycDaoClient implements KycDaoClientInterface {
 		}
 	}
 
-	nearRedirectCheck() {
-		const knownQueryParamNames = Object.keys(knownNearQueryParams)
-
-		const queryParams = new URLSearchParams(window.location.search)
-		const matches = [...queryParams].filter(([key, _]) =>
-			knownQueryParamNames.includes(key)
-		)
-
-		if (matches.length > 1) {
-			console.error(
-				`${errorPrefix} - Multiple URL query parameters identified: ${matches.map(
-					([key]) => key
-				)}.`
-			)
-		} else if (matches.length === 1) {
-			const [match] = matches
-			const [key] = match
-			const event =
-				knownNearQueryParams[key as keyof typeof knownNearQueryParams]
-
-			if (event.startsWith("Near")) {
-				return true
-			}
-		}
-
-		return false
-	}
-
 	close() {
 		if (this.isOpen && this.modal) {
 			const parentNode = this.getParentElement()
@@ -273,33 +220,6 @@ export class KycDaoClient implements KycDaoClientInterface {
 			// document.body.style.setProperty("height", this.originalBodyHeight)
 		}
 	}
-
-	messageHndlr({ data: { data, type } }: KycDaoClientMessage) {
-		switch (type) {
-			case "kycDaoCloseModal":
-				if (this.onFail) {
-					this.onFail("cancelled")
-				}
-				if (this.isOpen) {
-					this.close()
-				}
-				break
-			case "kycDaoSuccess":
-				this.isSuccessful = true
-				if (this.onSuccess) {
-					this.onSuccess(data)
-				}
-				this.close()
-				break
-			case "kycDaoFail": {
-				if (this.onFail) {
-					this.onFail(data)
-				}
-			}
-		}
-	}
 }
 
-window.KycDaoClient = KycDaoClient as unknown as {
-	new (config: KycDaoClientOptions): KycDaoClientInterface
-}
+window.KycDaoClient = KycDaoClient

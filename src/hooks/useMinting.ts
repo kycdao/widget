@@ -47,8 +47,7 @@ export const useMinting = () => {
 					throw Error("Something went wrong")
 				}
 				dispatch({
-					type: DataActionTypes.ShowModal,
-					payload: undefined,
+					type: DataActionTypes.HideModal,
 				})
 				dispatch({
 					type: DataActionTypes.changePage,
