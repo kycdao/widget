@@ -17,11 +17,6 @@ module.exports = function override(config, env) {
 	const outDir = "./build"
 	config.target = "web"
 	config.entry = {
-		KycDaoClient: "./src/KycDaoClient.ts",
-		KycDaoIframeClient: "./src/KycDaoIframeClient.ts",
-		// "index": "./src/index.js",
-		app: "./src/App.tsx",
-		// todo: remove above
 		Widget: "./src/Widget.tsx",
 		StandaloneClient: "./src/StandaloneClient.tsx",
 		StandaloneIframeClient: "./src/StandaloneIframeClient.tsx",

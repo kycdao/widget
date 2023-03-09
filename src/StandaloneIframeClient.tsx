@@ -59,21 +59,34 @@ export const open = (
 	// unpack the config object into the URL params
 	addParams(params, config)
 
-	root.render(
-		<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
-			<WidgetModalContainer
-				width={modalOptions?.width}
-				height={modalOptions.height}
-				backdrop={modalOptions.backdrop}>
+	if (isModal) {
+		root.render(
+			<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
+				<WidgetModalContainer
+					width={modalOptions?.width}
+					height={modalOptions.height}
+					backdrop={modalOptions.backdrop}>
+					<iframe
+						title="KycDaoWidget"
+						allow="encrypted-media; camera"
+						src={`${url}?${params.toString()}`}
+						// todo: width and height needed?
+					/>
+				</WidgetModalContainer>
+			</ErrorBoundary>
+		)
+	} else {
+		root.render(
+			<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
 				<iframe
 					title="KycDaoWidget"
 					allow="encrypted-media; camera"
 					src={`${url}?${params.toString()}`}
 					// todo: width and height needed?
 				/>
-			</WidgetModalContainer>
-		</ErrorBoundary>
-	)
+			</ErrorBoundary>
+		)
+	}
 
 	if ("virtualKeyboard" in navigator) {
 		navigator.virtualKeyboard.overlaysContent = true
@@ -99,7 +112,6 @@ export const open = (
 
 	const onReadyHandler = (event: Event) => {
 		onReady?.((event as KycDaoOnReadyEvent).data)
-		close()
 	}
 
 	const onFailHandler = (event: Event) => {
@@ -117,7 +129,7 @@ export const open = (
 }
 
 /**
- * The KycDaoIframeWidget is the global object that is exposed to the window – which can be accessed from Vanilla JS applications (StandaloneClient).
+ * The KycDaoIframeWidget is the global object that is exposed to the window – which can be accessed from Vanilla JS applications (StandaloneIframeClient).
  */
 window.KycDaoIframeWidget = {
 	open,

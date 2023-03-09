@@ -7,12 +7,43 @@
 		<title>kycDAO</title>
 		<script>
 			window.onload = function () {
-				const client = new KycDaoClient({
-					parent: "#modalRoot",
-					configFromUrl: true,
-				})
+				function getObjectFromUrlParams(keys) {
+					const searchParams = new URLSearchParams(window.location.search);
+					const result = {};
+					keys.forEach(key => {
+						const value = searchParams.get(key);
+						if (value !== null) {
+							result[key] = value;
+						}
+					});
+					return result;
+				}
 
-				client.open()
+				const keys = [
+					"apiKey",
+					"environment",
+					"demoMode",
+					"baseUrl",
+					"enabledBlockchainNetworks",
+					"enabledVerificationTypes",
+					"evmProvider",
+					"blockchainNetworkConfiguration",
+					"sentryConfiguration"
+				];
+
+				KycDaoWidget.open({
+					container: "#modalRoot",
+					config: getObjectFromUrlParams(keys),
+					onSuccess: () => {
+						window.parent.document.dispatchEvent(new CustomEvent('KycDaoIframeWidgetOnSuccess'));
+					},
+					onFail: () => {
+						window.parent.document.dispatchEvent(new CustomEvent('KycDaoIframeWidgetOnFail'));
+					},
+					onReady: (sdkInstance) => {
+						window.parent.document.dispatchEvent(new CustomEvent('KycDaoIframeWidgetOnReady', { data: sdkInstance }));
+					}
+				})
 			}
 		</script>
 	</head>

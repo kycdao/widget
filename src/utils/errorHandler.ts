@@ -4,7 +4,6 @@ import {
 	StepID,
 } from "@Components/stateContext"
 import getErrorText from "@Utils/getErrorText"
-import { KycDaoClientMessageBody } from "../KycDaoClientCommon"
 import { Dispatch } from "react"
 
 export type ErrorType = "fatal" | "modal" | "minting"
@@ -27,13 +26,14 @@ export default function errorHandler(
 	})
 
 	if (/\[RejectedByUser\]/g.test(errorText)) {
-		window.parent.postMessage(
-			{
-				type: "kycDaoCloseModal",
-				data: errorText,
-			} as KycDaoClientMessageBody,
-			messageTargetOrigin
-		)
+		// todo: move this too hook and onclose
+		// window.parent.postMessage(
+		// 	{
+		// 		type: "kycDaoCloseModal",
+		// 		data: errorText,
+		// 	} as KycDaoClientMessageBody,
+		// 	messageTargetOrigin
+		// )
 
 		return
 	}
