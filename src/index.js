@@ -1,3 +1,3 @@
 export * from "./Widget"
-export * from "./StandaloneClient"
-export * from "./StandaloneIframeClient"
+export { default as StandaloneClient } from "./StandaloneClient"
+export { default as StandaloneIframeClient }  from "./StandaloneIframeClient"

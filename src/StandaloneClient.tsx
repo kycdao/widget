@@ -64,9 +64,13 @@ export const open = (
 	}
 }
 
+const StandaloneClient = {
+	open,
+}
+
+export default StandaloneClient
+
 /**
  * The KycDaoWidget is the global object that is exposed to the window – which can be accessed from Vanilla JS applications (StandaloneClient).
  */
-window.KycDaoWidget = {
-	open,
-}
+window.KycDaoWidget = StandaloneClient

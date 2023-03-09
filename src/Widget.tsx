@@ -19,6 +19,7 @@ import {
 	DataActionTypes,
 	DefaultData,
 	HeaderButtons,
+	OnClose,
 	reducer,
 	StateContext,
 	StepID,
@@ -49,8 +50,8 @@ export interface WidgetConfig {
 }
 
 export const defaultModalOptions: ModalOptions = {
-	width: "480px",
-	height: "600px",
+	width: "400px",
+	height: "650px",
 	backdrop: "rgba(0, 0, 0, 0.7)",
 }
 
@@ -248,6 +249,33 @@ export const Widget: FC<WidgetConfig> = ({
 			})
 	}, [config, handleError, onReady])
 
+	useEffect(() => {
+		// todo: should we wrap this in ismodal?
+		if (isModal) {
+			const close = OnClose.subscribe(() => {
+				if (data.isProcessSuccess) {
+					onSuccess?.(
+						data.alreadyHaveAnNftOnThisChain && !data.nearMinted
+							? `Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`
+							: data.chainExplorerUrl
+					)
+				} else {
+					onFail?.()
+				}
+			})
+			return close.unsubscribe.bind(close)
+		}
+	}, [
+		data.chainExplorerUrl,
+		data.isProcessSuccess,
+		data.nearMinted,
+		isModal,
+		kycDao?.kycDao.connectedWallet?.blockchainNetwork,
+		data.alreadyHaveAnNftOnThisChain,
+		onSuccess,
+		onFail,
+	])
+
 	const InlineWidget = useMemo(
 		() => (
 			<StyledWidget key={key}>
@@ -322,5 +350,11 @@ const Modal = styled.div<Pick<ModalOptions, "width" | "height">>`
 		border-radius: 12px;
 		overflow: hidden;
 		inset: 0;
+	}
+
+	iframe {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
 	}
 `

@@ -20,6 +20,7 @@ module.exports = function override(config, env) {
 		Widget: "./src/Widget.tsx",
 		StandaloneClient: "./src/StandaloneClient.tsx",
 		StandaloneIframeClient: "./src/StandaloneIframeClient.tsx",
+		loadIframePage: "./src/loadIframePage.ts",
 	}
 	config.output = {
 		filename: "[name].js",

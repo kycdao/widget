@@ -1,55 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="theme-color" content="#000000" />
-		<title>kycDAO</title>
-		<script>
-			window.onload = function () {
-				function getObjectFromUrlParams(keys) {
-					const searchParams = new URLSearchParams(window.location.search);
-					const result = {};
-					keys.forEach(key => {
-						const value = searchParams.get(key);
-						if (value !== null) {
-							result[key] = value;
-						}
-					});
-					return result;
-				}
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <title>kycDAO</title>
+  <script>
+    window.onload = function() {
+      loadIframePage();
+    };
+  </script>
+  <style>
+      html, body {
+          margin: 0;
+          overflow: hidden;
+      }
+  </style>
+</head>
 
-				const keys = [
-					"apiKey",
-					"environment",
-					"demoMode",
-					"baseUrl",
-					"enabledBlockchainNetworks",
-					"enabledVerificationTypes",
-					"evmProvider",
-					"blockchainNetworkConfiguration",
-					"sentryConfiguration"
-				];
-
-				KycDaoWidget.open({
-					container: "#modalRoot",
-					config: getObjectFromUrlParams(keys),
-					onSuccess: () => {
-						window.parent.document.dispatchEvent(new CustomEvent('KycDaoIframeWidgetOnSuccess'));
-					},
-					onFail: () => {
-						window.parent.document.dispatchEvent(new CustomEvent('KycDaoIframeWidgetOnFail'));
-					},
-					onReady: (sdkInstance) => {
-						window.parent.document.dispatchEvent(new CustomEvent('KycDaoIframeWidgetOnReady', { data: sdkInstance }));
-					}
-				})
-			}
-		</script>
-	</head>
-
-	<body>
-		<noscript>You need to enable JavaScript to run this app.</noscript>
-		<div id="modalRoot"></div>
-	</body>
+<body>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="modalRoot"></div>
+</body>
 </html>

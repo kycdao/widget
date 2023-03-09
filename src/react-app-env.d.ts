@@ -24,6 +24,7 @@ declare global {
 				config: StandaloneIframeClientConfig
 			) => StandaloneIframeClientHandle
 		}
+		loadIframePage: () => void
 	}
 
 	interface Navigator {

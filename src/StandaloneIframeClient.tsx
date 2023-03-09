@@ -7,6 +7,7 @@ import { ErrorPageFactory } from "@Pages/ErrorPage"
 import { ErrorBoundary } from "react-error-boundary"
 import { createRoot } from "react-dom/client"
 import { KycDaoEvent, KycDaoEventTypes, KycDaoOnReadyEvent } from "./types"
+import qs from "qs"
 
 export interface StandaloneIframeClientConfig extends WidgetConfig {
 	container: HTMLElement | string
@@ -15,12 +16,6 @@ export interface StandaloneIframeClientConfig extends WidgetConfig {
 
 export interface StandaloneIframeClientHandle {
 	close: () => void
-}
-
-const addParams = (params: URLSearchParams, obj: Record<string, any>): void => {
-	for (const [key, value] of Object.entries(obj)) {
-		params.set(key, Array.isArray(value) ? `["${value.join('","')}"]` : value)
-	}
 }
 
 export const open = (
@@ -55,9 +50,7 @@ export const open = (
 		window.location.origin
 	)
 
-	const params = new URLSearchParams()
-	// unpack the config object into the URL params
-	addParams(params, config)
+	const params = qs.stringify(config, { encode: false })
 
 	if (isModal) {
 		root.render(
@@ -69,7 +62,8 @@ export const open = (
 					<iframe
 						title="KycDaoWidget"
 						allow="encrypted-media; camera"
-						src={`${url}?${params.toString()}`}
+						src={`${url}?${params}`}
+						scrolling="no"
 						// todo: width and height needed?
 					/>
 				</WidgetModalContainer>
@@ -81,7 +75,7 @@ export const open = (
 				<iframe
 					title="KycDaoWidget"
 					allow="encrypted-media; camera"
-					src={`${url}?${params.toString()}`}
+					src={`${url}?${params}`}
 					// todo: width and height needed?
 				/>
 			</ErrorBoundary>
@@ -128,9 +122,13 @@ export const open = (
 	}
 }
 
+const StandaloneIframeClient = {
+	open,
+}
+
+export default StandaloneIframeClient
+
 /**
  * The KycDaoIframeWidget is the global object that is exposed to the window – which can be accessed from Vanilla JS applications (StandaloneIframeClient).
  */
-window.KycDaoIframeWidget = {
-	open,
-}
+window.KycDaoIframeWidget = StandaloneIframeClient
