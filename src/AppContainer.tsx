@@ -5,7 +5,13 @@ import {
 	KycDaoInitializationResult,
 	SdkConfiguration,
 } from "@kycdao/kycdao-sdk"
-import { KycDaoClientMessageBody } from "KycDaoClientCommon"
+import {
+	KycDaoClientMessage,
+	KycDaoClientMessageBody,
+	KycDaoClientMessageTypes,
+	KycDaoClientRegisterOrLogin,
+	nearNetworkRegex,
+} from "./KycDaoClientCommon"
 import {
 	useMemo,
 	useEffect,
@@ -78,6 +84,9 @@ const AppContainerRender: ForwardRefRenderFunction<
 	useEffect(() => {
 		if (kycDao) {
 			;(async () => {
+				let modalTimeout
+				const [currentChain] = config.enabledBlockchainNetworks
+
 				try {
 					dispatch({
 						type: DataActionTypes.SetLoadingMessage,
@@ -90,7 +99,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 						payload: isModal,
 					})
 
-					const modalTimeout = setTimeout(() => {
+					modalTimeout = setTimeout(() => {
 						dispatch({
 							type: DataActionTypes.ShowModal,
 							payload: {
@@ -102,14 +111,30 @@ const AppContainerRender: ForwardRefRenderFunction<
 						})
 					}, 5000)
 
-					await kycDao.kycDao.connectWallet(
-						getNetworkType(config.enabledBlockchainNetworks[0])
+					nearNetworkRegex.lastIndex = 0
+
+					//TODO Make this foolproof
+					const isNearLoggedIn = Object.keys(localStorage).find((value) =>
+						/near-api-js:keystore:(.*)/g.test(value)
 					)
 
-					dispatch({
-						type: DataActionTypes.SetLoadingMessage,
-						payload: "",
-					})
+					if (
+						nearNetworkRegex.test(currentChain) &&
+						iframeOptions?.messageTargetOrigin === window.location.origin &&
+						!isNearLoggedIn
+					) {
+						window.parent.postMessage(
+							{
+								type: KycDaoClientMessageTypes.kycDaoRegisterOrLogin,
+								data: { chainNetwork: [currentChain] },
+							} as KycDaoClientRegisterOrLogin,
+							messageTargetOrigin
+						)
+
+						return
+					}
+
+					await kycDao.kycDao.connectWallet(getNetworkType(currentChain))
 
 					dispatch({
 						type: DataActionTypes.HideModal,
@@ -161,7 +186,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 							case "NearUserRejectedError":
 								window.parent.postMessage(
 									{
-										type: "kycDaoCloseModal",
+										type: KycDaoClientMessageTypes.kycDaoCloseModal,
 									} as KycDaoClientMessageBody,
 									messageTargetOrigin
 								)
@@ -186,7 +211,27 @@ const AppContainerRender: ForwardRefRenderFunction<
 								}
 						}
 					} else {
+						nearNetworkRegex.lastIndex = 0
+
+						if (
+							nearNetworkRegex.test(currentChain) &&
+							iframeOptions?.messageTargetOrigin === window.location.origin
+						) {
+							window.parent.postMessage(
+								{
+									origin: iframeOptions.messageTargetOrigin,
+									data: {
+										type: KycDaoClientMessageTypes.kycDaoRegisterOrLogin,
+									},
+								} as KycDaoClientMessage,
+								messageTargetOrigin
+							)
+
+							return
+						}
+
 						await kycDao.kycDao.registerOrLogin()
+
 						const { subscribed } = kycDao.kycDao
 
 						if (subscribed) {
@@ -204,8 +249,14 @@ const AppContainerRender: ForwardRefRenderFunction<
 						})
 					}
 				} catch (error) {
+					clearTimeout(modalTimeout)
 					errorHandler("fatal", error, dispatch, messageTargetOrigin)
 				}
+
+				dispatch({
+					type: DataActionTypes.SetLoadingMessage,
+					payload: "",
+				})
 
 				dispatch({ type: DataActionTypes.StartFlow })
 			})()
@@ -238,7 +289,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 				if (data.isProcessSuccess) {
 					window.parent.postMessage(
 						{
-							type: "kycDaoSuccess",
+							type: KycDaoClientMessageTypes.kycDaoSuccess,
 							data:
 								data.alreadyHaveAnNftOnThisChain && !data.nearMinted
 									? `Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`
@@ -248,7 +299,9 @@ const AppContainerRender: ForwardRefRenderFunction<
 					)
 				} else {
 					window.parent.postMessage(
-						{ type: "kycDaoCloseModal" } as KycDaoClientMessageBody,
+						{
+							type: KycDaoClientMessageTypes.kycDaoCloseModal,
+						} as KycDaoClientMessageBody,
 						messageTargetOrigin
 					)
 				}

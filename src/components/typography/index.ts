@@ -9,7 +9,7 @@ export const tr2 = css`
 `
 
 export const materialIcon = css`
-	font-family: Material Icons;
+	font-family: "Material Icons";
 	font-weight: normal;
 	font-style: normal;
 	font-size: 24px;

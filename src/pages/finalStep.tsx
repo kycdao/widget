@@ -16,7 +16,10 @@ import {
 	StepPart,
 	SubmitButton,
 } from "@Components/index"
-import { KycDaoClientMessageBody } from "KycDaoClientCommon"
+import {
+	KycDaoClientMessageBody,
+	KycDaoClientMessageTypes,
+} from "../KycDaoClientCommon"
 import useErrorHandler from "@Hooks/errorHandler"
 import { TwitterShareButton } from "react-twitter-embed"
 
@@ -148,7 +151,7 @@ export const FinalStep: FC<PageProps> = ({
 		if (alreadyHaveAnNftOnThisChain) {
 			window.parent.postMessage(
 				{
-					type: "kycDaoSuccess",
+					type: KycDaoClientMessageTypes.kycDaoSuccess,
 					data: `Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`,
 				} as KycDaoClientMessageBody,
 				messageTargetOrigin
@@ -156,7 +159,7 @@ export const FinalStep: FC<PageProps> = ({
 		} else {
 			window.parent.postMessage(
 				{
-					type: "kycDaoSuccess",
+					type: KycDaoClientMessageTypes.kycDaoSuccess,
 					data: chainExplorerUrl,
 				} as KycDaoClientMessageBody,
 				messageTargetOrigin

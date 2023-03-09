@@ -3,7 +3,10 @@ import {
 	DataChangeActions,
 	StateContext,
 } from "@Components/stateContext"
-import { KycDaoClientMessageBody } from "KycDaoClientCommon"
+import {
+	KycDaoClientMessageBody,
+	KycDaoClientMessageTypes,
+} from "../KycDaoClientCommon"
 import { useContext } from "react"
 
 function getErrorText(error: unknown) {
@@ -25,7 +28,7 @@ export function errorHandler(
 	if (/\[RejectedByUser\]/g.test(errorText)) {
 		window.parent.postMessage(
 			{
-				type: "kycDaoCloseModal",
+				type: KycDaoClientMessageTypes.kycDaoCloseModal,
 				data: errorText,
 			} as KycDaoClientMessageBody,
 			messageTargetOrigin

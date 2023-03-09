@@ -117,8 +117,12 @@ export class KycDaoClient implements KycDaoClientInterface {
 
 		console.log(WelcomeString)
 
-		const nearNetwork = this.config.enabledBlockchainNetworks.find((network) =>
-			nearNetworkRegex.test(network)
+		const nearNetwork = this.config.enabledBlockchainNetworks.find(
+			(network) => {
+				nearNetworkRegex.lastIndex = 0
+
+				return nearNetworkRegex.test(network)
+			}
 		)
 
 		if (nearNetwork && nearRedirectCheck()) {

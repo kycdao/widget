@@ -320,7 +320,7 @@
 							"EthereumGoerli",
 						],
 						enabledVerificationTypes: ["KYC"],
-						// evmProvider: false ? walletConnectEvmProvider : window.ethereum,
+						// evmProvider: walletConnectOn ? "walletConnect" : "ethereum",
 						baseUrl: "https://staging.kycdao.xyz",
 					},
 					onReady: (sdkInstance) => {
@@ -340,6 +340,8 @@
 							}
 						}
 
+						console.log("SDK instance", nftCheckInterval)
+
 						nftCheckInterval = setInterval(writeNFT, 1000)
 					},
 					onSuccess: (data) => {
@@ -353,7 +355,7 @@
 					},
 				})
 
-				globalThis.selectorHndlr = function (selectedChain, walletConnectOn) {
+				window.selectorHndlr = function (selectedChain, walletConnectOn) {
 					console.log(walletConnectOn)
 					if (mode === "integrated") {
 						client.open(
@@ -362,14 +364,14 @@
 						)
 					} else if (mode === "iframe") {
 						iFrameClient.open(
-							selectedChain
-							// walletConnectOn ? walletConnectEvmProvider : window.ethereum
+							selectedChain,
+							walletConnectOn ? "walletConnect" : "ethereum"
 						)
 					}
 				}
 
 				if (autostart) {
-					walletConnectOn = false
+					const walletConnectOn = false
 
 					const chains = [
 						"PolygonMumbai",

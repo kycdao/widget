@@ -5,7 +5,6 @@ import {
 	SdkConfiguration,
 } from "@kycdao/kycdao-sdk"
 import { ErrorBoundary } from "react-error-boundary"
-import buffer from "buffer"
 import {
 	BlockchainNetwork,
 	KycDaoEnvironment,
@@ -13,12 +12,7 @@ import {
 } from "@kycdao/kycdao-sdk/dist/types"
 import { ErrorPageFactory } from "./pages"
 
-// don't know why this stopped working, so I do a manual polyfill
-
-if (!window.Buffer) {
-	//eslint-disable-next-line @typescript-eslint/no-explicit-any
-	;(window as any).Buffer = (buffer as any).Buffer
-}
+import WalletConnectProvider from "@walletconnect/web3-provider/dist/esm"
 
 // https://prod-test.kycdao.xyz
 
@@ -72,12 +66,31 @@ export function BootstrapKycDaoModal({
 	)
 }
 
-export type EvmProvidersT = "ethereum"
+export type EvmProvidersT = "ethereum" | "walletConnect"
 
 const EvmProviders: {
 	[index in EvmProvidersT]: unknown
 } = {
 	ethereum: window.ethereum,
+	walletConnect: new WalletConnectProvider({
+		rpc: {
+			1: "https://rpc.ankr.com/eth",
+			5: "https://rpc.ankr.com/eth_goerli",
+			137: "https://rpc-mainnet.maticvigil.com/",
+			80001: "https://rpc-mumbai.maticvigil.com/",
+			44787: "https://alfajores-forno.celo-testnet.org",
+		},
+		chainId: 80001,
+		//   qrcodeModalOptions: {
+		//     desktopLinks: [
+		//       'ledger',
+		//       'zerion',
+		//     ],
+		//     mobileLinks: [
+		//       "metamask",
+		//     ],
+		//   }
+	}),
 }
 
 export function BootstrapIframeKycDaoModal({

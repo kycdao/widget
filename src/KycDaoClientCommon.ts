@@ -1,17 +1,22 @@
-import type {
+import {
 	BlockchainNetwork,
 	SdkConfiguration,
 	KycDaoInitializationResult,
+	KycDao,
 } from "@kycdao/kycdao-sdk"
 import type {
 	KycDaoEnvironment,
 	VerificationType,
 } from "@kycdao/kycdao-sdk/dist/types"
 
-export type KycDaoClientMessages =
-	| "kycDaoCloseModal"
-	| "kycDaoSuccess"
-	| "kycDaoFail"
+export enum KycDaoClientMessageTypes {
+	"kycDaoCloseModal",
+	"kycDaoSuccess",
+	"kycDaoFail",
+	"kycDaoCancelled",
+	"kycDaoRegisterOrLogin",
+	"kycDaoMint",
+}
 
 export const errorPrefix = "Wallet callback handling error"
 
@@ -21,36 +26,71 @@ export const knownNearQueryParams = {
 	transactionHashes: "NearMint",
 }
 
-export const nearNetworkRegex = /Near*./g
+export const nearNetworkRegex = /.*Near*./g
 
 export type KycDaoClientMessageHandler = (message: KycDaoClientMessage) => void
 
 export function messageHndlr(
 	this: KycDaoClientInterface,
-	{ data: { data, type } }: KycDaoClientMessage
+	{ data: { type, data }, origin }: KycDaoClientMessage
 ) {
-	switch (type) {
-		case "kycDaoCloseModal":
-			if (this.onFail) {
-				this.onFail("cancelled")
-			}
-			if (this.isOpen) {
+	if (origin === window.location.origin)
+		switch (type) {
+			case KycDaoClientMessageTypes.kycDaoCancelled:
+			case KycDaoClientMessageTypes.kycDaoCloseModal:
+				if (this.onFail) {
+					this.onFail("cancelled")
+				}
 				this.close()
-			}
-			break
-		case "kycDaoSuccess":
-			this.isSuccessful = true
-			if (this.onSuccess) {
-				this.onSuccess(data)
+				return
+			case KycDaoClientMessageTypes.kycDaoSuccess:
+				this.isSuccessful = true
+				if (this.onSuccess) {
+					this.onSuccess(data as string)
+				}
 				this.close()
+				return
+			case KycDaoClientMessageTypes.kycDaoFail: {
+				if (this.onFail) {
+					this.onFail(data as string)
+				}
+				return
 			}
-			break
-		case "kycDaoFail": {
-			if (this.onFail) {
-				this.onFail(data)
+			case KycDaoClientMessageTypes.kycDaoMint: {
+				KycDao.initialize(this.config)
+					.then((result) => {
+						result.kycDao.startMinting({
+							disclaimerAccepted: true,
+							imageId: "",
+							subscriptionYears: 1,
+							verificationType: "KYC",
+						})
+					})
+					.catch((error) => {
+						alert(error)
+					})
+
+				return
+			}
+			case KycDaoClientMessageTypes.kycDaoRegisterOrLogin: {
+				const chainNetwork = (data as KycDaoClientRegisterOrLogin["data"])
+					?.chainNetwork
+				if (chainNetwork) {
+					const config = { ...this.config }
+					config.enabledBlockchainNetworks = chainNetwork
+
+					KycDao.initialize(config)
+						.then((result) => {
+							result.kycDao.connectWallet("Near")
+							result.kycDao.registerOrLogin()
+						})
+						.catch((error) => {
+							alert(error)
+						})
+					return
+				}
 			}
 		}
-	}
 }
 
 /**
@@ -72,8 +112,8 @@ export type KycDaoClientInterface = {
 	isSuccessful: boolean
 	configFromUrl?: boolean
 	backdrop: boolean
-	onFail?: (reason?: string) => void
-	onSuccess?: (data?: string) => void
+	onFail?: (reason: string) => void
+	onSuccess?: (data: string) => void
 	open: (
 		blockchain?: BlockchainNetwork,
 		ethProvider?: KycDaoClientOptions["config"]["evmProvider"]
@@ -177,10 +217,37 @@ export type KycDaoClientIFrameUrlParameters = {
 
 export type KycDaoClientMessageBody = {
 	data?: string
-	type: KycDaoClientMessages
+	type: KycDaoClientMessageTypes
+}
+
+export type KycDaoClientRegisterOrLogin = {
+	data?: { chainNetwork: SdkConfiguration["enabledBlockchainNetworks"] }
+	type: KycDaoClientMessageTypes
+}
+
+export type KycDaoClientMint = {
+	data: KycDaoClientMint
+	type: KycDaoClientMessageTypes.kycDaoMint
+}
+
+export type KycDaoClientSuccess = {
+	data: string
+	type: KycDaoClientMessageTypes.kycDaoSuccess
+}
+
+export type KycDaoClientFail = {
+	data: KycDaoClientFail
+	type: KycDaoClientMessageTypes.kycDaoFail
 }
 
 export type KycDaoClientMessage = {
 	origin: string
-	data: KycDaoClientMessageBody
+	data:
+		| KycDaoClientMessageBody
+		| KycDaoClientRegisterOrLogin
+		| KycDaoClientMint
+		| KycDaoClientSuccess
+		| KycDaoClientFail
 }
+
+export type KycDaoClientMessages = KycDaoClientMessage

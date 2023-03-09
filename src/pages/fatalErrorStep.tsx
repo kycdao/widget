@@ -22,18 +22,12 @@ export const FatalErrorStep: FC<PageProps> = ({
 
 	const ResetApp = useContext(RestartContext)
 
-	const { body, header } = error
-		? error
-		: {
-				header: "Something went wrong!",
-				body: "An unknown, fatal error happened!",
-		  }
+	const Header = useCallback(
+		() => <H1>{error?.header || "Something went wrong!"}</H1>,
+		[error?.header]
+	)
 
-	const Header = () => <H1>{header}</H1>
-
-	const startAgain = useCallback(() => {
-		ResetApp()
-	}, [ResetApp])
+	const startAgain = useCallback(ResetApp, [ResetApp])
 
 	useEffect(() => {
 		dispatch({
@@ -53,10 +47,10 @@ export const FatalErrorStep: FC<PageProps> = ({
 	const modalBody = useCallback(
 		() => (
 			<div role="alert">
-				<P>{body}</P>
+				<P>{error?.body || "An unknown, fatal error happened!"}</P>
 			</div>
 		),
-		[body]
+		[error?.body]
 	)
 
 	const footer = useCallback(

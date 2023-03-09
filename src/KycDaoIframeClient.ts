@@ -125,8 +125,12 @@ export class KycDaoIframeClient implements KycDaoClientInterface {
 
 		console.log(WelcomeString)
 
-		const nearNetwork = this.config.enabledBlockchainNetworks.find((network) =>
-			nearNetworkRegex.test(network)
+		const nearNetwork = this.config.enabledBlockchainNetworks.find(
+			(network) => {
+				nearNetworkRegex.lastIndex = 0
+
+				return nearNetworkRegex.test(network)
+			}
 		)
 
 		if (nearNetwork && nearRedirectCheck()) {
@@ -136,7 +140,10 @@ export class KycDaoIframeClient implements KycDaoClientInterface {
 		}
 	}
 
-	open(blockchain?: BlockchainNetwork) {
+	open(
+		blockchain?: BlockchainNetwork,
+		ethProvider?: KycDaoClientOptions["config"]["evmProvider"]
+	) {
 		if (!this.iframeOptions) {
 			throw new Error("iframeOptions are not set!")
 		}
@@ -149,10 +156,13 @@ export class KycDaoIframeClient implements KycDaoClientInterface {
 
 		if (!this.isOpen) {
 			const config = { ...this.config } as SdkConfiguration
+			const [currentChain] = config.enabledBlockchainNetworks
 
-			config.enabledBlockchainNetworks = blockchain
-				? [blockchain]
-				: [this.config.enabledBlockchainNetworks[0]]
+			config.enabledBlockchainNetworks = [blockchain || currentChain]
+
+			if (ethProvider) {
+				config.evmProvider = ethProvider
+			}
 
 			const params = new URLSearchParams()
 			const paramSetter = ({ 0: key, 1: value }: { 0?: string; 1?: string }) =>
@@ -217,25 +227,25 @@ export class KycDaoIframeClient implements KycDaoClientInterface {
 	}
 
 	close() {
-		if (this.isOpen) {
-			if (this.modal) {
-				const parentNode = this.getParentElement()
+		if (this.isOpen && this.modal) {
+			const parentNode = this.getParentElement()
 
-				if (this.isModal) {
-					parentNode.classList.remove("KycDaoIframeModalRoot")
-					parentNode.style.setProperty("z-index", this.originalParentZIndex)
+			if (this.isModal) {
+				parentNode.classList.remove("KycDaoIframeModalRoot")
+				parentNode.style.setProperty("z-index", this.originalParentZIndex)
 
-					if (this.backdrop) {
-						parentNode.style.setProperty("--kyc-dao-backdrop", null)
-					}
+				if (this.backdrop) {
+					parentNode.style.setProperty("--kyc-dao-backdrop", null)
 				}
-
-				if (parentNode) {
-					parentNode.removeChild(this.modal)
-				}
-				window.removeEventListener("message", messageHndlr.bind(this))
-				this.isOpen = false
 			}
+
+			this.container?.remove()
+
+			if (parentNode) {
+				parentNode.removeChild(this.modal)
+			}
+			window.removeEventListener("message", messageHndlr.bind(this))
+			this.isOpen = false
 		}
 	}
 }

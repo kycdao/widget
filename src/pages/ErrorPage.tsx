@@ -1,6 +1,9 @@
 import { CloseOnlyHeader } from "@Components/header/closeOnlyHeader"
 import { Step, H1, P, Button } from "@Components/index"
-import { KycDaoClientMessageBody } from "KycDaoClientCommon"
+import {
+	KycDaoClientMessageBody,
+	KycDaoClientMessageTypes,
+} from "../KycDaoClientCommon"
 import { useCallback } from "react"
 import { FallbackProps } from "react-error-boundary"
 
@@ -18,7 +21,9 @@ export const ErrorPageFactory = (messageTargetOrigin: string) =>
 
 		const onClose = useCallback(() => {
 			window.parent.postMessage(
-				{ type: "kycDaoCloseModal" } as KycDaoClientMessageBody,
+				{
+					type: KycDaoClientMessageTypes.kycDaoCloseModal,
+				} as KycDaoClientMessageBody,
 				messageTargetOrigin
 			)
 		}, [])
