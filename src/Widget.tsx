@@ -314,19 +314,12 @@ const StyledWidget = styled(AppStyleContainer)`
 const ModalRoot = styled.div<Pick<ModalOptions, "backdrop">>`
 	z-index: 9999;
 	width: 100%;
-	position: absolute;
+	position: fixed;
 	inset: 0;
 	background: ${({ backdrop }) => backdrop || defaultModalOptions.backdrop};
-
-	// todo: refactor: mobile first
-	@media only screen and (max-width: 992px) {
-		overflow: hidden;
-		position: fixed;
-	}
+	overflow: hidden;
 
 	@media only screen and (min-width: 992px) {
-		position: fixed;
-		overflow: hidden;
 		height: 100vh;
 	}
 `
@@ -338,13 +331,10 @@ const Modal = styled.div<Pick<ModalOptions, "width" | "height">>`
 	background-color: #fefefe;
 	position: absolute;
 	overflow: hidden;
-	// todo: is this needed?
-	--width: ${({ width }) => width};
-	--height: ${({ height }) => height};
 
 	@media only screen and (min-width: 992px) {
-		width: var(--width);
-		height: var(--height);
+		width: ${({ width }) => width};
+		height: ${({ height }) => height};
 		margin: auto;
 		border-radius: 12px;
 		overflow: hidden;
