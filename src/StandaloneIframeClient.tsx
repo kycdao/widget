@@ -96,7 +96,7 @@ export const open = (
 		navigator.virtualKeyboard.overlaysContent = true
 	}
 
-	// todo: test this, then close should clean this up
+	// If the widget is opened in a modal, we need to prevent the user from scrolling the page
 	if (isModal) {
 		document.body.style.setProperty("height", "100%")
 		document.body.style.setProperty("overflow", "hidden")

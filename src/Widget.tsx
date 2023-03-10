@@ -57,19 +57,6 @@ export const defaultModalOptions: ModalOptions = {
 	backdrop: "rgba(0, 0, 0, 0.7)",
 }
 
-// todo: move this to CSS
-const fontFile = new FontFace(
-	"neue-machina",
-	`url(${NeueMachinaRegularBase64})`,
-	{
-		weight: "400",
-		style: "normal",
-	}
-)
-
-document.fonts.add(fontFile)
-fontFile.load()
-
 export const WidgetModalContainer: FC<PropsWithChildren<ModalOptions>> = ({
 	children,
 	height,
@@ -317,6 +304,11 @@ export const Widget: FC<WidgetConfig> = ({
 
 const StyledWidget = styled(AppStyleContainer)`
 	width: 100%;
+	@font-face {
+		font-family: "neue-machina";
+		src: url(${NeueMachinaRegularBase64});
+		font-weight: 400;
+	}
 `
 
 const ModalRoot = styled.div<Pick<ModalOptions, "backdrop">>`
