@@ -6,6 +6,7 @@ import {
 } from "@kycdao/kycdao-sdk"
 import type {
 	KycDaoEnvironment,
+	MintingData,
 	VerificationType,
 } from "@kycdao/kycdao-sdk/dist/types"
 
@@ -57,14 +58,13 @@ export function messageHndlr(
 				return
 			}
 			case KycDaoClientMessageTypes.kycDaoMint: {
+				const mintingData = data as MintingData
+
 				KycDao.initialize(this.config)
 					.then((result) => {
-						result.kycDao.startMinting({
-							disclaimerAccepted: true,
-							imageId: "",
-							subscriptionYears: 1,
-							verificationType: "KYC",
-						})
+						result.kycDao.connectWallet("Near")
+						result.kycDao.registerOrLogin()
+						result.kycDao.startMinting(mintingData)
 					})
 					.catch((error) => {
 						alert(error)
@@ -87,7 +87,6 @@ export function messageHndlr(
 						.catch((error) => {
 							alert(error)
 						})
-					return
 				}
 			}
 		}
@@ -226,7 +225,7 @@ export type KycDaoClientRegisterOrLogin = {
 }
 
 export type KycDaoClientMint = {
-	data: KycDaoClientMint
+	data: MintingData
 	type: KycDaoClientMessageTypes.kycDaoMint
 }
 

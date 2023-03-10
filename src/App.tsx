@@ -20,6 +20,8 @@ const fontFile = new FontFace(
 document.fonts.add(fontFile)
 fontFile.load()
 
+window.Buffer = Buffer
+
 export type KycDaoModalProps = {
 	width?: number | string
 	height?: number | string

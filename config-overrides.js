@@ -98,7 +98,7 @@ module.exports = function override(config, env) {
 
 	config.plugins.push(
 		new webpack.ProvidePlugin({
-			Buffer: ["buffer"],
+			Buffer: ["buffer", "Buffer"],
 			ethereum: "ethereum",
 		}),
 		new webpack.DefinePlugin({

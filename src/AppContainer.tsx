@@ -120,7 +120,7 @@ const AppContainerRender: ForwardRefRenderFunction<
 
 					if (
 						nearNetworkRegex.test(currentChain) &&
-						iframeOptions?.messageTargetOrigin === window.location.origin &&
+						window !== window.parent &&
 						!isNearLoggedIn
 					) {
 						window.parent.postMessage(
