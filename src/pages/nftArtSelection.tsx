@@ -86,7 +86,7 @@ export const NftSelection: FC<PageProps> = ({
 
 	const [nftImages, setNftImages] = useState<Nft[]>([])
 
-	const errorHandler = useErrorHandler()
+	const handleError = useErrorHandler()
 
 	const onArtClick = useCallback(
 		(id: string) => () => {
@@ -123,7 +123,7 @@ export const NftSelection: FC<PageProps> = ({
 				try {
 					await startMinting(currentArt)
 				} catch (error) {
-					errorHandler("fatal", error)
+					handleError("fatal", error)
 				}
 			} else {
 				dispatch({ type: DataActionTypes.GoToNextStep })
@@ -134,7 +134,7 @@ export const NftSelection: FC<PageProps> = ({
 		kycDao?.kycDao.subscribed,
 		startMinting,
 		currentArt,
-		errorHandler,
+		handleError,
 	])
 
 	const onPrev = useCallback(() => {
@@ -196,9 +196,9 @@ export const NftSelection: FC<PageProps> = ({
 				setNftImages(images.slice(0, 4))
 			}
 		} catch (error) {
-			errorHandler("fatal", error)
+			handleError("fatal", error)
 		}
-	}, [kycDao?.kycDao, dispatch, errorHandler])
+	}, [kycDao?.kycDao, dispatch, handleError])
 
 	const body = useCallback<StepPart>(
 		() => (

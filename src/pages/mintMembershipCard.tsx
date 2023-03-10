@@ -228,7 +228,7 @@ export const MintStep: FC<PageProps> = ({
 
 	const minting = useMinting()
 
-	const errorHandler = useErrorHandler()
+	const handleError = useErrorHandler()
 
 	const onSubmit = useCallback(async () => {
 		if (kycDao && yearCount && yearCount > 0 && imageId) {
@@ -239,10 +239,10 @@ export const MintStep: FC<PageProps> = ({
 			try {
 				await minting(imageId, yearCount)
 			} catch (error) {
-				errorHandler("minting", error)
+				handleError("minting", error)
 			}
 		}
-	}, [kycDao, yearCount, minting, dispatch, imageId, errorHandler])
+	}, [kycDao, yearCount, minting, dispatch, imageId, handleError])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {

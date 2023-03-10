@@ -173,7 +173,7 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 	inactive = false,
 }) => {
 	const { dispatch } = useContext(StateContext)
-	const errorHandler = useErrorHandler()
+	const handleError = useErrorHandler()
 
 	const kycDaoContext = useKycDao()
 
@@ -209,11 +209,11 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 						errorMsg = `${errorMsg} (${e.message})`
 					}
 
-					errorHandler("modal", errorMsg)
+					handleError("modal", errorMsg)
 				}
 			}
 		}
-	}, [dispatch, kycDaoContext, errorHandler])
+	}, [dispatch, kycDaoContext, handleError])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

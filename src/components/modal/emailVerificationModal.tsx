@@ -19,15 +19,15 @@ export const EmailVerificationModal = () => {
 		dispatch,
 	} = useContext(StateContext)
 
-	const errorHandler = useErrorHandler()
+	const handleError = useErrorHandler()
 
 	const kycDao = useKycDao()
 
 	const onResend = useCallback(() => {
 		kycDao?.kycDao.resendEmailConfirmationCode().catch((e) => {
-			errorHandler("fatal", e)
+			handleError("fatal", e)
 		})
-	}, [kycDao, errorHandler])
+	}, [kycDao, handleError])
 
 	const onChangeEmail = useCallback(() => {
 		dispatch({ type: DataActionTypes.HideModal })

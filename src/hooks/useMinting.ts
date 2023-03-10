@@ -12,7 +12,7 @@ import {
 export const useMinting = () => {
 	const kycDao = useKycDao()
 	const state = useContext(StateContext)
-	const errorHandler = useErrorHandler()
+	const handleError = useErrorHandler()
 
 	return async function StartMinting(
 		imageId: string,
@@ -74,7 +74,7 @@ export const useMinting = () => {
 						payload: true,
 					})
 				} catch (error) {
-					errorHandler("minting", error)
+					handleError("minting", error)
 				}
 			}
 		}

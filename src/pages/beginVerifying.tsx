@@ -14,7 +14,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 		// what should be the error page?
 	}, [])
 
-	const errorHandler = useErrorHandler()
+	const handleError = useErrorHandler()
 
 	const {
 		dispatch,
@@ -81,7 +81,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 					}
 				)
 			} catch (error) {
-				errorHandler("fatal", error)
+				handleError("fatal", error)
 			}
 		})()
 	}, [
@@ -100,7 +100,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 		isEmailConfirmed,
 		grantFlowEnabled,
 		redirect,
-		errorHandler,
+		handleError,
 	])
 
 	if (!kycDao) {

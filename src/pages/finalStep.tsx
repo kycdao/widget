@@ -57,7 +57,7 @@ export const FinalStep: FC<PageProps> = ({
 		},
 	} = useContext(StateContext)
 
-	const errorHandler = useErrorHandler()
+	const handleError = useErrorHandler()
 
 	const header = useCallback(
 		() =>
@@ -101,14 +101,14 @@ export const FinalStep: FC<PageProps> = ({
 							setDisplayedNftImageUrl(tokens[0].image)
 						}
 					} catch (error) {
-						errorHandler("modal", error)
+						handleError("modal", error)
 					}
 				} else {
 					setDisplayedNftImageUrl(kycDao.mintingResult?.imageUrl || nftImageUrl)
 				}
 			})()
 		}
-	}, [kycDao, nftImageUrl, errorHandler, alreadyHaveAnNftOnThisChain])
+	}, [kycDao, nftImageUrl, handleError, alreadyHaveAnNftOnThisChain])
 
 	const body = useCallback<StepPart>(
 		(props) => (
