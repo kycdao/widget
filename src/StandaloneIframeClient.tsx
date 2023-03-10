@@ -74,7 +74,6 @@ export const open = (
 						title="KycDaoWidget"
 						allow="encrypted-media; camera"
 						src={`${url}?${params}`}
-						// todo: width and height needed?
 					/>
 				</WidgetModalContainer>
 			</ErrorBoundary>
@@ -86,7 +85,6 @@ export const open = (
 					title="KycDaoWidget"
 					allow="encrypted-media; camera"
 					src={`${url}?${params}`}
-					// todo: width and height needed?
 				/>
 			</ErrorBoundary>
 		)
