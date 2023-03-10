@@ -35,6 +35,7 @@ export const open = (
 	)
 
 	// As a side effect, unmount the widget when the user closes the modal
+	// todo: what about no modal?
 	const onFailWrapper = (reason?: string) => {
 		if (onFail) {
 			onFail(reason)

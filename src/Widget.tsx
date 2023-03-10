@@ -48,6 +48,7 @@ export interface WidgetConfig {
 	onReady?: OnReadyCallback
 	isModal?: boolean
 	modalOptions?: ModalOptions
+	messageTargetOrigin?: string
 }
 
 export const defaultModalOptions: ModalOptions = {
@@ -96,6 +97,7 @@ export const Widget: FC<WidgetConfig> = ({
 		width: defaultModalOptions.width,
 		height: defaultModalOptions.height,
 	},
+	messageTargetOrigin = window.location.origin,
 }) => {
 	const [data, dispatch] = useReducer(reducer, {
 		...DefaultData,
@@ -232,6 +234,13 @@ export const Widget: FC<WidgetConfig> = ({
 		startFlow()
 	}, [startFlow])
 
+	useEffect(() => {
+		dispatch({
+			payload: messageTargetOrigin,
+			type: DataActionTypes.setMessageTargetOrigin,
+		})
+	}, [dispatch, messageTargetOrigin])
+
 	const RestartApp = useCallback(() => {
 		setKey(Date.now())
 	}, [])
@@ -251,21 +260,18 @@ export const Widget: FC<WidgetConfig> = ({
 	}, [config, handleError, onReady])
 
 	useEffect(() => {
-		// todo: should we wrap this in ismodal?
-		if (isModal) {
-			const close = OnClose.subscribe(() => {
-				if (data.isProcessSuccess) {
-					onSuccess?.(
-						data.alreadyHaveAnNftOnThisChain && !data.nearMinted
-							? `Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`
-							: data.chainExplorerUrl
-					)
-				} else {
-					onFail?.()
-				}
-			})
-			return close.unsubscribe.bind(close)
-		}
+		const close = OnClose.subscribe(() => {
+			if (data.isProcessSuccess) {
+				onSuccess?.(
+					data.alreadyHaveAnNftOnThisChain && !data.nearMinted
+						? `Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`
+						: data.chainExplorerUrl
+				)
+			} else {
+				onFail?.()
+			}
+		})
+		return close.unsubscribe.bind(close)
 	}, [
 		data.chainExplorerUrl,
 		data.isProcessSuccess,

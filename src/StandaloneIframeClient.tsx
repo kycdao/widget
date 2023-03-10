@@ -6,7 +6,12 @@ import {
 import { ErrorPageFactory } from "@Pages/ErrorPage"
 import { ErrorBoundary } from "react-error-boundary"
 import { createRoot } from "react-dom/client"
-import { KycDaoEvent, KycDaoEventTypes, KycDaoOnReadyEvent } from "./types"
+import {
+	isOnFailMessage,
+	isOnReadyMessage,
+	isOnSuccessMessage,
+	KycDaoMessage,
+} from "./types"
 import qs from "qs"
 
 export interface StandaloneIframeClientConfig extends WidgetConfig {
@@ -50,7 +55,13 @@ export const open = (
 		window.location.origin
 	)
 
-	const params = qs.stringify(config, { encode: false })
+	const params = qs.stringify(
+		{
+			...config,
+			messageTargetOrigin: window.location.origin,
+		},
+		{ encode: false }
+	)
 
 	if (isModal) {
 		root.render(
@@ -92,29 +103,28 @@ export const open = (
 	}
 
 	const close = () => {
-		window.removeEventListener(KycDaoEventTypes.SUCCESS, onSuccessHandler)
-		window.removeEventListener(KycDaoEventTypes.FAIL, onFailHandler)
-		window.removeEventListener(KycDaoEventTypes.READY, onReadyHandler)
+		window.removeEventListener("message", messageHandler)
 		root.unmount()
 	}
 
-	const onSuccessHandler = (event: Event) => {
-		onSuccess?.((event as KycDaoEvent).data)
-		close()
+	const messageHandler = (event: KycDaoMessage) => {
+		if (isOnReadyMessage(event)) {
+			onReady?.(event.data.data)
+			close()
+		}
+
+		if (isOnFailMessage(event)) {
+			onFail?.(event.data.data)
+			close()
+		}
+
+		if (isOnSuccessMessage(event)) {
+			onSuccess?.(event.data.data)
+			close()
+		}
 	}
 
-	const onReadyHandler = (event: Event) => {
-		onReady?.((event as KycDaoOnReadyEvent).data)
-	}
-
-	const onFailHandler = (event: Event) => {
-		onFail?.((event as KycDaoEvent).data)
-		close()
-	}
-
-	window.addEventListener(KycDaoEventTypes.SUCCESS, onSuccessHandler)
-	window.addEventListener(KycDaoEventTypes.FAIL, onFailHandler)
-	window.addEventListener(KycDaoEventTypes.READY, onReadyHandler)
+	window.addEventListener("message", messageHandler, false)
 
 	return {
 		close,

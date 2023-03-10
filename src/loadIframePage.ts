@@ -1,32 +1,51 @@
 import { StandaloneClient } from "./index"
 import qs from "qs"
 import { SdkConfiguration } from "@kycdao/kycdao-sdk"
-import { KycDaoEventTypes, KycDaoOnReadyEvent } from "./types"
+import { KycDaoMessageTypes } from "./types"
 
+interface SdkConfigurationWithMessageTargetOrigin extends SdkConfiguration {
+	messageTargetOrigin: string
+}
+
+/**
+ * This is an internal function that is used to load our hosted iframe page.
+ */
 const loadIframePage = () => {
-	const parsedConfig = {
+	const { messageTargetOrigin, ...config } = {
 		...qs.parse(window.location.search, { ignoreQueryPrefix: true }),
 		evmProvider: window.ethereum,
-	} as SdkConfiguration
+	} as SdkConfigurationWithMessageTargetOrigin
+
+	// todo: runtime validate query params
 
 	StandaloneClient.open({
 		container: "#modalRoot",
-		config: parsedConfig,
-		onSuccess: () => {
-			window.parent.document.dispatchEvent(
-				new CustomEvent(KycDaoEventTypes.SUCCESS)
+		config,
+		onSuccess: (data) => {
+			window.top?.postMessage(
+				{
+					type: KycDaoMessageTypes.SUCCESS,
+					data,
+				},
+				messageTargetOrigin
 			)
 		},
-		onFail: () => {
-			window.parent.document.dispatchEvent(
-				new CustomEvent(KycDaoEventTypes.FAIL)
+		onFail: (error) => {
+			window.top?.postMessage(
+				{
+					type: KycDaoMessageTypes.FAIL,
+					data: error,
+				},
+				messageTargetOrigin
 			)
 		},
 		onReady: (sdkInstance) => {
-			window.parent.document.dispatchEvent(
-				new CustomEvent(KycDaoEventTypes.READY, {
+			window.top?.postMessage(
+				{
+					type: KycDaoMessageTypes.SUCCESS,
 					data: sdkInstance,
-				} as KycDaoOnReadyEvent)
+				},
+				messageTargetOrigin
 			)
 		},
 	})
