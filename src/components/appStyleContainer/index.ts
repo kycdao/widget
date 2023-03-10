@@ -1,6 +1,20 @@
 import styled from "styled-components/macro"
 
 export const AppStyleContainer = styled.div`
+	.material-icons {
+		font-family: "Material Icons";
+		font-weight: normal;
+		font-style: normal;
+		font-size: 24px;
+		line-height: 1;
+		letter-spacing: normal;
+		text-transform: none;
+		white-space: nowrap;
+		word-wrap: normal;
+		direction: ltr;
+		font-feature-settings: liga;
+		-webkit-font-smoothing: antialiased;
+	}
 	font-size: 12px;
 
 	--kyc-sdk-primary-font: neue-machina;
@@ -211,26 +225,11 @@ export const AppStyleContainer = styled.div`
 
 	/* fallback */
 	@font-face {
-		font-family: Material Icons;
+		font-family: "Material Icons";
 		font-style: normal;
 		font-weight: 400;
 		src: url(https://fonts.gstatic.com/s/materialicons/v139/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
 			format("woff2");
 		font-display: block;
-	}
-
-	.material-icons {
-		font-family: Material Icons;
-		font-weight: normal;
-		font-style: normal;
-		font-size: 24px;
-		line-height: 1;
-		letter-spacing: normal;
-		text-transform: none;
-		white-space: nowrap;
-		word-wrap: normal;
-		direction: ltr;
-		font-feature-settings: liga;
-		-webkit-font-smoothing: antialiased;
 	}
 `
