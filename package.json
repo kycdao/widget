@@ -1,6 +1,6 @@
 {
 	"name": "@kycdao/widget",
-	"version": "0.5.9",
+	"version": "0.5.10",
 	"license": "UNLICENSED",
 	"main": "dist/umd/index.js",
 	"types": "dist",
@@ -60,7 +60,7 @@
 		"./dist/": "./dist/"
 	},
 	"dependencies": {
-		"@kycdao/kycdao-sdk": "^0.6.9",
+		"@kycdao/kycdao-sdk": "^0.6.10",
 		"styled-components": "^5.3.8",
 		"buffer": "^6.0.3",
 		"clsx": "^1.2.1",

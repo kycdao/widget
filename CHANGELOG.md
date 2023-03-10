@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.5.10] - 2023-03-10
+
+### Changed
+
+- Updated Core SDK version to 0.6.10 (improved automatic retries during EVM minting cost calculation)
+
 ## [0.5.9] - 2023-02-23
 
 ### Changed

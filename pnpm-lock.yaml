@@ -19,7 +19,7 @@ specifiers:
   '@babel/preset-env': ^7.20.2
   '@babel/preset-react': ^7.18.6
   '@babel/preset-typescript': ^7.21.0
-  '@kycdao/kycdao-sdk': ^0.6.9
+  '@kycdao/kycdao-sdk': ^0.6.10
   '@playwright/test': ^1.31.2
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^14.0.0
@@ -75,7 +75,7 @@ specifiers:
   webpack-subresource-integrity: 5.2.0-rc.1
 
 dependencies:
-  '@kycdao/kycdao-sdk': 0.6.9_qdcwzzrvzgdiw4czd5hzyewndu
+  '@kycdao/kycdao-sdk': 0.6.10_qdcwzzrvzgdiw4czd5hzyewndu
   buffer: 6.0.3
   clsx: 1.2.1
   near-api-js: 1.1.0
@@ -2154,8 +2154,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@kycdao/kycdao-sdk/0.6.9_qdcwzzrvzgdiw4czd5hzyewndu:
-    resolution: {integrity: sha512-wLz4Dkyvb5sA0kTyHJ8ywSVopo0/zvgqK0yOd1D/gAcWO6ntx4yf6jSOoE3e9ZsLShe4mymyw/XDejTDjo7uEA==}
+  /@kycdao/kycdao-sdk/0.6.10_qdcwzzrvzgdiw4czd5hzyewndu:
+    resolution: {integrity: sha512-hPuSTEvuI+b8zTrDepJWj8Y2sXDCBlz2Q9jyQ09kjhBITL2rzNh7IqxV/Dp3O+3GbxG/te4R5ASJnx++YEC65Q==}
     peerDependencies:
       near-api-js: ^1
       persona: ^4
@@ -4298,7 +4298,7 @@ packages:
   /@walletconnect/window-metadata/1.0.0:
     resolution: {integrity: sha512-9eFvmJxIKCC3YWOL97SgRkKhlyGXkrHwamfechmqszbypFspaSk+t2jQXAEU7YClHF6Qjw5eYOmy1//zFi9/GA==}
     dependencies:
-      '@walletconnect/window-getters': 1.0.0
+      '@walletconnect/window-getters': 1.0.1
     dev: false
 
   /@walletconnect/window-metadata/1.0.1:
