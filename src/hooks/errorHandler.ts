@@ -42,7 +42,10 @@ export function errorHandler(
 			dispatch({
 				type: DataActionTypes.HideModal,
 			})
-			dispatch({ type: DataActionTypes.SetError, payload: { type: "fatal" } })
+			dispatch({
+				type: DataActionTypes.SetError,
+				payload: { type: "fatal", body: errorText },
+			})
 			dispatch({ type: DataActionTypes.GoToNextStep })
 			break
 		case "minting": {

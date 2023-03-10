@@ -71,7 +71,8 @@
 		"react-twitter-embed": "^4.0.4",
 		"rxjs": "^7.8.0",
 		"stream": "^0.0.2",
-		"styled-components": "^5.3.8"
+		"styled-components": "^5.3.8",
+		"@walletconnect/web3-provider": "^1.8.0"
 	},
 	"dependenciesMeta": {
 		"@toruslabs/eccrypto": {
