@@ -7,7 +7,7 @@ import { useKycDao } from "./useKycDao"
 import {
 	KycDaoClientMessageTypes,
 	KycDaoClientMint,
-} from "../KycDaoClientCommon"
+} from "../StandaloneClientCommon"
 
 export const useMinting = () => {
 	const kycDao = useKycDao()

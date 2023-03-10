@@ -19,7 +19,7 @@ import {
 import {
 	KycDaoClientMessageBody,
 	KycDaoClientMessageTypes,
-} from "../KycDaoClientCommon"
+} from "../StandaloneClientCommon"
 import useErrorHandler from "@Hooks/errorHandler"
 import { TwitterShareButton } from "react-twitter-embed"
 

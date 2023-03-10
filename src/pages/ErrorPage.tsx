@@ -3,7 +3,7 @@ import { Step, H1, P, Button } from "@Components/index"
 import {
 	KycDaoClientMessageBody,
 	KycDaoClientMessageTypes,
-} from "../KycDaoClientCommon"
+} from "../StandaloneClientCommon"
 import { useCallback } from "react"
 import { FallbackProps } from "react-error-boundary"
 

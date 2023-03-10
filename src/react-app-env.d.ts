@@ -4,8 +4,8 @@ import type { KycDaoWidgetConfig } from "./widget"
 import {
 	KycDaoIframeClient,
 	KycDaoIframeClientOptions,
-} from "KycDaoIframeClient"
-import { KycDaoClient } from "KycDaoClient"
+} from "StandaloneIframeClient"
+import { KycDaoClient } from "StandaloneClient"
 
 type VirtualKeyboardEvent = UIEvent & {
 	target: { boundingRect: { height: string } }

@@ -1,10 +1,10 @@
 import { FC, useEffect, useRef } from "react"
 
-import { KycDaoClient } from "./KycDaoClient"
+import { KycDaoClient } from "./StandaloneClient"
 import {
 	KycDaoClientInterface,
 	KycDaoClientOptions,
-} from "./KycDaoClientCommon"
+} from "./StandaloneClientCommon"
 import {
 	KycDaoInitializationResult,
 	SdkConfiguration,

@@ -6,7 +6,7 @@ import {
 import {
 	KycDaoClientMessageBody,
 	KycDaoClientMessageTypes,
-} from "../KycDaoClientCommon"
+} from "../StandaloneClientCommon"
 import { useContext } from "react"
 
 function getErrorText(error: unknown) {

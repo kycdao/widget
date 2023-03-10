@@ -13,7 +13,7 @@ import {
 	messageHndlr,
 	nearNetworkRegex,
 	nearRedirectCheck,
-} from "./KycDaoClientCommon"
+} from "./StandaloneClientCommon"
 
 // basically the KycDaoClient.css
 const styles = `

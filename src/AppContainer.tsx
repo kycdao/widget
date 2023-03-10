@@ -11,7 +11,7 @@ import {
 	KycDaoClientMessageTypes,
 	KycDaoClientRegisterOrLogin,
 	nearNetworkRegex,
-} from "./KycDaoClientCommon"
+} from "./StandaloneClientCommon"
 import {
 	useMemo,
 	useEffect,
