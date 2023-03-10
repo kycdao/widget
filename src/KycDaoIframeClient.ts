@@ -222,7 +222,7 @@ export class KycDaoIframeClient implements KycDaoClientInterface {
 				navigator.virtualKeyboard.overlaysContent = true
 			}
 
-			window.addEventListener("message", messageHndlr.bind(this))
+			window.addEventListener("message", this.messageHndlr)
 		}
 	}
 
@@ -240,11 +240,9 @@ export class KycDaoIframeClient implements KycDaoClientInterface {
 			}
 
 			this.container?.remove()
+			parentNode.removeChild(this.modal)
 
-			if (parentNode) {
-				parentNode.removeChild(this.modal)
-			}
-			window.removeEventListener("message", messageHndlr.bind(this))
+			window.removeEventListener("message", this.messageHndlr)
 			this.isOpen = false
 		}
 	}
