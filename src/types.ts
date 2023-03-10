@@ -13,3 +13,7 @@ export enum KycDaoEventTypes {
 	FAIL = "KycDaoIframeWidgetOnFail",
 	SUCCESS = "KycDaoIframeWidgetOnSuccess",
 }
+
+export type OnFailCallback = (error?: string) => void
+export type OnSuccessCallback = (data?: string) => void
+export type OnReadyCallback = (data: KycDaoInitializationResult) => void

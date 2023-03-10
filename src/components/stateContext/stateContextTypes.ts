@@ -1,3 +1,5 @@
+import { OnFailCallback, OnSuccessCallback } from "../../types"
+
 export enum HeaderActionTypes {
 	setNextButtonState,
 	setPrevButtonState,
@@ -92,8 +94,8 @@ export type Data = {
 	isProcessSuccess: boolean
 	alreadyHaveAnNftOnThisChain: boolean
 	nearMinted: boolean
-	onSuccess?: (data?: string) => void
-	onFail?: (reason?: string) => void
+	onSuccess?: OnSuccessCallback
+	onFail?: OnFailCallback
 }
 
 export type HeaderButtonState = "enabled" | "disabled" | "hidden"

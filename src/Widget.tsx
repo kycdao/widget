@@ -33,6 +33,7 @@ import { AppStyleContainer } from "@Components/appStyleContainer"
 import { RestartContext } from "@Components/restartContext"
 import NeueMachinaRegularBase64 from "./fonts/NeueMachina-Regular"
 import { getNetworkType } from "@Utils/getNetworkType"
+import { OnFailCallback, OnReadyCallback, OnSuccessCallback } from "./types"
 
 export interface ModalOptions {
 	width: string | number
@@ -42,9 +43,9 @@ export interface ModalOptions {
 
 export interface WidgetConfig {
 	config: SdkConfiguration
-	onFail?: (reason?: string) => void
-	onSuccess?: (data?: string) => void
-	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
+	onFail?: OnFailCallback
+	onSuccess?: OnSuccessCallback
+	onReady?: OnReadyCallback
 	isModal?: boolean
 	modalOptions?: ModalOptions
 }

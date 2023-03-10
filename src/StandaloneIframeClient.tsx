@@ -63,7 +63,6 @@ export const open = (
 						title="KycDaoWidget"
 						allow="encrypted-media; camera"
 						src={`${url}?${params}`}
-						scrolling="no"
 						// todo: width and height needed?
 					/>
 				</WidgetModalContainer>
