@@ -1,5 +1,5 @@
 import { AppStyleContainer } from "@Components/appStyleContainer"
-import { errorHandler } from "@Hooks/errorHandler"
+import { errorHandler } from "@Hooks/useErrorHandler"
 import {
 	KycDao,
 	KycDaoInitializationResult,

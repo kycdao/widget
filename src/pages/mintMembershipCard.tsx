@@ -23,7 +23,7 @@ import {
 	smallText,
 	text,
 } from "@Components/index"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 
 const Body = () => {
 	return (

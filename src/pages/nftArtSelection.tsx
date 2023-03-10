@@ -21,7 +21,7 @@ import {
 } from "@Components/index"
 
 import { NftButtonWrapper } from "./finalStep"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 
 const Header = () => (
 	<H1>

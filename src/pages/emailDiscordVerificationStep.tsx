@@ -29,7 +29,7 @@ import {
 import useChangePage from "@Hooks/useChangePage"
 import styled from "styled-components/macro"
 import UnstyledDiscordLogo from "../images/discord.svg"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 
 const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
 

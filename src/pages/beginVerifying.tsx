@@ -5,7 +5,7 @@ import { useKycDao } from "@Hooks/useKycDao"
 import { PageProps } from "./pageProps"
 import { H1, StateContext, StepID } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const onError = useCallback((error: string) => {

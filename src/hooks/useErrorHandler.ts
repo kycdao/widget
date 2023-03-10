@@ -8,14 +8,7 @@ import {
 	KycDaoClientMessageTypes,
 } from "../StandaloneClientCommon"
 import { useContext } from "react"
-
-function getErrorText(error: unknown) {
-	if (typeof error === "object" && !(error instanceof Error)) {
-		return JSON.stringify(error)
-	} else {
-		return `${error}`
-	}
-}
+import getErrorText from "@Utils/getErrorText"
 
 export function errorHandler(
 	type: "fatal" | "modal" | "minting",

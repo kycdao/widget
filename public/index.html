@@ -210,15 +210,6 @@
 					44787: "https://alfajores-forno.celo-testnet.org",
 				},
 				chainId: 80001,
-				//   qrcodeModalOptions: {
-				//     desktopLinks: [
-				//       'ledger',
-				//       'zerion',
-				//     ],
-				//     mobileLinks: [
-				//       "metamask",
-				//     ],
-				//   }
 			})
 			const autostart = false
 
@@ -355,7 +346,7 @@
 					},
 				})
 
-				window.selectorHndlr = function (selectedChain, walletConnectOn) {
+				window.selectorHandler = function (selectedChain, walletConnectOn) {
 					console.log(walletConnectOn)
 					if (mode === "integrated") {
 						client.open(
@@ -381,7 +372,7 @@
 						"EthereumGoerli",
 					]
 
-					selectorHndlr(chains[0], walletConnectOn)
+					selectorHandler(chains[0], walletConnectOn)
 				}
 			}
 		</script>
@@ -410,46 +401,46 @@
 						<div class="dualButton">
 							<div
 								class="chainSelectorButton"
-								onclick="selectorHndlr('CeloAlfajores', false)">
+								onclick="selectorHandler('CeloAlfajores', false)">
 								Celo Testnet (Alfajores)
 							</div>
 							<div
 								class="chainSelectorButton"
-								onclick="selectorHndlr('PolygonMumbai', true)">
+								onclick="selectorHandler('PolygonMumbai', true)">
 								with WalletConnect
 							</div>
 						</div>
 						<div class="dualButton">
 							<div
 								class="chainSelectorButton"
-								onclick="selectorHndlr('PolygonMumbai', false)">
+								onclick="selectorHandler('PolygonMumbai', false)">
 								Polygon Testnet (Mumbai)
 							</div>
 							<div
 								class="chainSelectorButton"
-								onclick="selectorHndlr('PolygonMumbai', true)">
+								onclick="selectorHandler('PolygonMumbai', true)">
 								with WalletConnect
 							</div>
 						</div>
 						<div
 							class="chainSelectorButton"
-							onclick="selectorHndlr('SolanaDevnet', true)">
+							onclick="selectorHandler('SolanaDevnet', true)">
 							Solana Devnet
 						</div>
 						<div
 							class="chainSelectorButton"
-							onclick="selectorHndlr('NearTestnet', false)">
+							onclick="selectorHandler('NearTestnet', false)">
 							NEAR Testnet
 						</div>
 						<div class="dualButton">
 							<div
 								class="chainSelectorButton"
-								onclick="selectorHndlr('EthereumGoerli', false)">
+								onclick="selectorHandler('EthereumGoerli', false)">
 								Ethereum Testnet (Goerli)
 							</div>
 							<div
 								class="chainSelectorButton"
-								onclick="selectorHndlr('EthereumGoerli', true)">
+								onclick="selectorHandler('EthereumGoerli', true)">
 								with WalletConnect
 							</div>
 						</div>

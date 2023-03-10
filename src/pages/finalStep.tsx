@@ -20,7 +20,7 @@ import {
 	KycDaoClientMessageBody,
 	KycDaoClientMessageTypes,
 } from "../StandaloneClientCommon"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 import { TwitterShareButton } from "react-twitter-embed"
 
 export const NftButtonWrapper = styled.div`

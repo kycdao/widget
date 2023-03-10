@@ -1,7 +1,7 @@
 import { DataActionTypes, StateContext, StepID } from "@Components/stateContext"
 import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { useContext } from "react"
-import useErrorHandler from "./errorHandler"
+import useErrorHandler from "./useErrorHandler"
 
 import { useKycDao } from "./useKycDao"
 import {

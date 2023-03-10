@@ -11,7 +11,7 @@ import {
 import { DataActionTypes, StateContext } from "@Components/stateContext"
 import { P, Policy } from "@Components/typography"
 import { Button } from "@Components/button/button"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 
 export const EmailVerificationModal = () => {
 	const {
