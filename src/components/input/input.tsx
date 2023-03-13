@@ -54,9 +54,8 @@ export const Input: FC<InputProps> = ({
 
 	const onChangeEventHndlr: ChangeEventHandler<HTMLInputElement> = useCallback(
 		({ target: { value } }) => {
-			if (onChange) {
-				onChange(value)
-			}
+			onChange?.(value)
+
 			if (autoCompleteData) {
 				setShowAutoComplete(
 					autoCompleteData.filter((v) =>
@@ -105,9 +104,7 @@ export const Input: FC<InputProps> = ({
 
 	const onAutocompleteHndlr = useCallback(
 		(value: string) => () => {
-			if (onChange) {
-				onChange(value)
-			}
+			onChange?.(value)
 			setShowAutoComplete(false)
 		},
 		[onChange]
@@ -130,18 +127,13 @@ export const Input: FC<InputProps> = ({
 	}, [disabled, autoFocus, inputRef])
 
 	const onBlur = useCallback(() => {
-		if (onInputBlurred) {
-			onInputBlurred()
-		}
+		onInputBlurred?.()
 
 		setFocused(false)
 	}, [onInputBlurred])
 
 	const onFocus = useCallback(() => {
-		if (onInputFocused) {
-			onInputFocused()
-		}
-
+		onInputFocused?.()
 		setFocused(true)
 	}, [onInputFocused])
 

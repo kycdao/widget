@@ -39,22 +39,19 @@ export function messageHndlr(
 		switch (type) {
 			case KycDaoClientMessageTypes.kycDaoCancelled:
 			case KycDaoClientMessageTypes.kycDaoCloseModal:
-				if (this.onFail) {
-					this.onFail("cancelled")
-				}
+				this.onFail?.("cancelled")
+
 				this.close()
 				return
 			case KycDaoClientMessageTypes.kycDaoSuccess:
 				this.isSuccessful = true
-				if (this.onSuccess) {
-					this.onSuccess(data as string)
-				}
+				this.onSuccess?.(data as string)
+
 				this.close()
 				return
 			case KycDaoClientMessageTypes.kycDaoFail: {
-				if (this.onFail) {
-					this.onFail(data as string)
-				}
+				this.onFail?.(data as string)
+
 				return
 			}
 			case KycDaoClientMessageTypes.kycDaoMint: {

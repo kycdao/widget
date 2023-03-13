@@ -34,6 +34,11 @@ import { RestartContext } from "@Components/restartContext"
 import NeueMachinaRegularBase64 from "./fonts/NeueMachina-Regular"
 import { getNetworkType } from "@Utils/getNetworkType"
 import { OnFailCallback, OnReadyCallback, OnSuccessCallback } from "./types"
+import {
+	KycDaoClientMessageTypes,
+	KycDaoClientRegisterOrLogin,
+	nearNetworkRegex,
+} from "StandaloneClientCommon"
 
 export interface ModalOptions {
 	width: string | number
@@ -96,13 +101,66 @@ export const Widget: FC<WidgetConfig> = ({
 	const [key, setKey] = useState(Date.now())
 	const { handleError } = useErrorHandler()
 	const { width, height, backdrop } = modalOptions
+
 	const startFlow = useCallback(async () => {
 		if (!kycDao) return
 
+		const [firstChainNetwork] = config.enabledBlockchainNetworks
+
 		try {
-			await kycDao.kycDao.connectWallet(
-				getNetworkType(config.enabledBlockchainNetworks[0])
+			dispatch({
+				type: DataActionTypes.SetLoadingMessage,
+				payload:
+					"Trying to connet your wallet. If it does not succeed please ask for help on our Discord.",
+			})
+
+			dispatch({
+				type: DataActionTypes.setModalMode,
+				payload: isModal,
+			})
+
+			const modalTimeout = setTimeout(() => {
+				dispatch({
+					type: DataActionTypes.ShowModal,
+					payload: {
+						body: "If it seems stuck, please click to retry.",
+						header: "Trying to connect your wallet",
+						type: "genericInfo",
+						showRetry: true,
+					},
+				})
+			}, 5000)
+
+			nearNetworkRegex.lastIndex = 0
+
+			//TODO Make this foolproof
+			const isNearLoggedIn = Object.keys(localStorage).find((value) =>
+				/near-api-js:keystore:(.*)/g.test(value)
 			)
+
+			if (
+				nearNetworkRegex.test(firstChainNetwork) &&
+				window !== window.parent &&
+				!isNearLoggedIn
+			) {
+				window.parent.postMessage(
+					{
+						type: KycDaoClientMessageTypes.kycDaoRegisterOrLogin,
+						data: { chainNetwork: [firstChainNetwork] },
+					} as KycDaoClientRegisterOrLogin,
+					messageTargetOrigin
+				)
+
+				return
+			}
+
+			await kycDao.kycDao.connectWallet(getNetworkType(firstChainNetwork))
+
+			dispatch({
+				type: DataActionTypes.HideModal,
+			})
+
+			clearTimeout(modalTimeout)
 
 			dispatch({
 				type: DataActionTypes.setModalMode,
@@ -215,7 +273,14 @@ export const Widget: FC<WidgetConfig> = ({
 		} catch (error) {
 			handleError("fatal", error)
 		}
-	}, [config.enabledBlockchainNetworks, handleError, isModal, kycDao, onFail])
+	}, [
+		config.enabledBlockchainNetworks,
+		handleError,
+		isModal,
+		kycDao,
+		onFail,
+		messageTargetOrigin,
+	])
 
 	useEffect(() => {
 		startFlow()
@@ -236,10 +301,7 @@ export const Widget: FC<WidgetConfig> = ({
 		KycDao.initialize(config)
 			.then((result) => {
 				setKycDao(result)
-
-				if (onReady) {
-					onReady(result)
-				}
+				onReady?.(result)
 			})
 			.catch((error) => {
 				handleError("fatal", error)
