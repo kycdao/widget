@@ -1,12 +1,12 @@
 /// <reference types="react-scripts" />
 import { MetaMaskInpageProvider } from "@metamask/providers"
 import {
-	StandaloneClientConfig,
 	StandaloneClientHandle,
+	StandaloneClientOptions,
 } from "./StandaloneClient"
 import {
-	StandaloneIframeClientConfig,
 	StandaloneIframeClientHandle,
+	StandaloneIframeClientOptions,
 } from "./StandaloneIframeClient"
 
 type VirtualKeyboardEvent = UIEvent & {
@@ -17,11 +17,11 @@ declare global {
 	interface Window {
 		ethereum: MetaMaskInpageProvider
 		KycDaoWidget: {
-			open: (config: StandaloneClientConfig) => StandaloneClientHandle
+			init: (options: StandaloneClientOptions) => StandaloneClientHandle
 		}
 		KycDaoIframeWidget: {
-			open: (
-				config: StandaloneIframeClientConfig
+			init: (
+				options: StandaloneIframeClientOptions
 			) => StandaloneIframeClientHandle
 		}
 		loadIframePage: () => void

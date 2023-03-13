@@ -13,124 +13,144 @@ import {
 	KycDaoMessage,
 } from "./types"
 import qs from "qs"
+import { BlockchainNetwork } from "@kycdao/kycdao-sdk"
+import hasNearRedirected from "@Utils/hasNearRedirected"
+import getEnabledNearNetwork from "@Utils/getEnabledNearNetwork"
 
-export interface StandaloneIframeClientConfig extends WidgetConfig {
+export interface StandaloneIframeClientOptions extends WidgetConfig {
 	container: HTMLElement | string
 	url: string
 }
 
 export interface StandaloneIframeClientHandle {
-	close: () => void
+	open: (blockchainNetwork: BlockchainNetwork) => void
 }
 
-export const open = (
-	clientConfig: StandaloneIframeClientConfig
-): StandaloneIframeClientHandle => {
-	const {
-		container,
-		url,
-		config,
-		modalOptions = defaultModalOptions,
-		onFail,
-		onReady,
-		onSuccess,
-		isModal,
-	} = clientConfig
+const open =
+	(options: StandaloneIframeClientOptions) =>
+	(blockchainNetwork: BlockchainNetwork) => {
+		const {
+			container,
+			url,
+			modalOptions = defaultModalOptions,
+			onFail,
+			onReady,
+			config,
+			onSuccess,
+			isModal,
+		} = options
 
-	const rootElement =
-		typeof container === "string"
-			? document.querySelector(container)
-			: container
+		config.enabledBlockchainNetworks = [blockchainNetwork]
 
-	if (!rootElement) {
-		throw new Error(
-			`There is no such element as '${container}', check your parent selector string!`
+		const rootElement =
+			typeof container === "string"
+				? document.querySelector(container)
+				: container
+
+		if (!rootElement) {
+			throw new Error(
+				`There is no such element as '${container}', check your parent selector string!`
+			)
+		}
+
+		const root = createRoot(rootElement)
+
+		// todo: move this to a component
+		const ErrorBoundaryFallbackComponent = ErrorPageFactory(
+			window.location.origin
 		)
-	}
 
-	const root = createRoot(rootElement)
+		const params = qs.stringify(
+			{
+				...config,
+				messageTargetOrigin: window.location.origin,
+			},
+			{ encode: false }
+		)
 
-	// todo: move this to a component
-	const ErrorBoundaryFallbackComponent = ErrorPageFactory(
-		window.location.origin
-	)
-
-	const params = qs.stringify(
-		{
-			...config,
-			messageTargetOrigin: window.location.origin,
-		},
-		{ encode: false }
-	)
-
-	if (isModal) {
-		root.render(
-			<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
-				<WidgetModalContainer
-					width={modalOptions?.width}
-					height={modalOptions.height}
-					backdrop={modalOptions.backdrop}>
+		if (isModal) {
+			root.render(
+				<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
+					<WidgetModalContainer
+						width={modalOptions?.width}
+						height={modalOptions.height}
+						backdrop={modalOptions.backdrop}>
+						<iframe
+							title="KycDaoWidget"
+							allow="encrypted-media; camera"
+							src={`${url}?${params}`}
+						/>
+					</WidgetModalContainer>
+				</ErrorBoundary>
+			)
+		} else {
+			root.render(
+				<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
 					<iframe
 						title="KycDaoWidget"
 						allow="encrypted-media; camera"
 						src={`${url}?${params}`}
 					/>
-				</WidgetModalContainer>
-			</ErrorBoundary>
+				</ErrorBoundary>
+			)
+		}
+
+		if ("virtualKeyboard" in navigator) {
+			navigator.virtualKeyboard.overlaysContent = true
+		}
+
+		// If the widget is opened in a modal, we need to prevent the user from scrolling the page
+		if (isModal) {
+			document.body.style.setProperty("height", "100%")
+			document.body.style.setProperty("overflow", "hidden")
+		}
+
+		const close = () => {
+			window.removeEventListener("message", messageHandler)
+			root.unmount()
+		}
+
+		const messageHandler = (event: KycDaoMessage) => {
+			if (isOnReadyMessage(event)) {
+				onReady?.(event.data.data)
+				close()
+			}
+
+			if (isOnFailMessage(event)) {
+				onFail?.(event.data.data)
+				close()
+			}
+
+			if (isOnSuccessMessage(event)) {
+				onSuccess?.(event.data.data)
+				close()
+			}
+		}
+
+		window.addEventListener("message", messageHandler, false)
+
+		return {
+			close,
+		}
+	}
+
+const init = (
+	options: StandaloneIframeClientOptions
+): StandaloneIframeClientHandle => {
+	// if the user has been redirected from near, open the widget with the near network
+	if (hasNearRedirected(window.location.search)) {
+		open(options)(
+			getEnabledNearNetwork(options.config.enabledBlockchainNetworks)
 		)
-	} else {
-		root.render(
-			<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
-				<iframe
-					title="KycDaoWidget"
-					allow="encrypted-media; camera"
-					src={`${url}?${params}`}
-				/>
-			</ErrorBoundary>
-		)
 	}
-
-	if ("virtualKeyboard" in navigator) {
-		navigator.virtualKeyboard.overlaysContent = true
-	}
-
-	// If the widget is opened in a modal, we need to prevent the user from scrolling the page
-	if (isModal) {
-		document.body.style.setProperty("height", "100%")
-		document.body.style.setProperty("overflow", "hidden")
-	}
-
-	const close = () => {
-		window.removeEventListener("message", messageHandler)
-		root.unmount()
-	}
-
-	const messageHandler = (event: KycDaoMessage) => {
-		if (isOnReadyMessage(event)) {
-			onReady?.(event.data.data)
-			close()
-		}
-
-		if (isOnFailMessage(event)) {
-			onFail?.(event.data.data)
-			close()
-		}
-
-		if (isOnSuccessMessage(event)) {
-			onSuccess?.(event.data.data)
-			close()
-		}
-	}
-
-	window.addEventListener("message", messageHandler, false)
 
 	return {
-		close,
+		open: open(options),
 	}
 }
 
 const StandaloneIframeClient = {
-	open,
+	init,
 }
 
 export default StandaloneIframeClient

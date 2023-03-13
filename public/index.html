@@ -233,63 +233,74 @@
 				btn.classList.add("buttonHeaderButton-selected")
 			}
 
+			const chains = [
+				"PolygonMumbai",
+				"CeloAlfajores",
+				"SolanaDevnet",
+				"NearTestnet",
+				"EthereumGoerli",
+			]
+
 			onload = () => {
+				const config = {
+					isModal: true,
+					container: "#modalRoot",
+					config: {
+						demoMode: true,
+						enabledBlockchainNetworks: chains,
+						enabledVerificationTypes: ["KYC"],
+						evmProvider: window.ethereum,
+						baseUrl: "https://staging.kycdao.xyz",
+					},
+					onReady: (sdkInstance) => {
+						let nftCheckInterval
+
+						function writeNFT() {
+							if (sdkInstance.kycDao.connectedWallet) {
+								sdkInstance.kycDao
+									.hasValidNft("KYC")
+									.then((value) => {
+										console.log(
+											`This wallet ${value ? "has" : "has not"} a valid nft.`
+										)
+									})
+									.catch(console.error)
+								clearInterval(nftCheckInterval)
+							}
+						}
+
+						nftCheckInterval = setInterval(writeNFT, 1000)
+					},
+					onSuccess: (data) => {
+						if (data) {
+							const i = /Already has an nft on (.*)\./g.exec(data)
+
+							if (i) {
+								console.log(`Already has an nft on ${i[1]}.`)
+							}
+						}
+					},
+				}
+
+				const kycDaoWindowEvm = KycDaoWidget.init(config)
+				const kycDaoWalletConnectEvm = KycDaoWidget.init({
+					...config,
+					config: {
+						...config.config,
+						evmProvider: walletConnectEvmProvider,
+					},
+				})
+
 				globalThis.selectorHandler = function (selectedChain, walletConnectOn) {
-					const config = {
-						isModal: true,
-						container: "#modalRoot",
-						config: {
-							demoMode: true,
-							enabledBlockchainNetworks: [selectedChain],
-							enabledVerificationTypes: ["KYC"],
-							evmProvider: walletConnectOn
-								? walletConnectEvmProvider
-								: window.ethereum,
-							baseUrl: "https://staging.kycdao.xyz",
-						},
-						onReady: (sdkInstance) => {
-							let nftCheckInterval
-
-							function writeNFT() {
-								if (sdkInstance.kycDao.connectedWallet) {
-									sdkInstance.kycDao
-										.hasValidNft("KYC")
-										.then((value) => {
-											console.log(
-												`This wallet ${value ? "has" : "has not"} a valid nft.`
-											)
-										})
-										.catch(console.error)
-									clearInterval(nftCheckInterval)
-								}
-							}
-
-							nftCheckInterval = setInterval(writeNFT, 1000)
-						},
-						onSuccess: (data) => {
-							if (data) {
-								const i = /Already has an nft on (.*)\./g.exec(data)
-
-								if (i) {
-									console.log(`Already has an nft on ${i[1]}.`)
-								}
-							}
-						},
+					if (walletConnectOn) {
+						kycDaoWalletConnectEvm.open(selectedChain)
+					} else {
+						kycDaoWindowEvm.open(selectedChain)
 					}
-
-					KycDaoWidget.open(config)
 				}
 
 				if (autostart) {
 					const walletConnectOn = false
-
-					const chains = [
-						"PolygonMumbai",
-						"CeloAlfajores",
-						"SolanaDevnet",
-						"NearTestnet",
-						"EthereumGoerli",
-					]
 
 					selectorHandler(chains[0], walletConnectOn)
 				}

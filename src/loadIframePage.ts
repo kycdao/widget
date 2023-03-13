@@ -18,7 +18,7 @@ const loadIframePage = () => {
 
 	// todo: runtime validate query params
 
-	StandaloneClient.open({
+	const kycDao = StandaloneClient.init({
 		container: "#modalRoot",
 		config,
 		onSuccess: (data) => {
@@ -49,6 +49,8 @@ const loadIframePage = () => {
 			)
 		},
 	})
+
+	kycDao.open(config.enabledBlockchainNetworks[0])
 }
 
 export default loadIframePage

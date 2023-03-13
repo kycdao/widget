@@ -2,71 +2,94 @@ import { Widget, WidgetConfig } from "./Widget"
 import { ErrorPageFactory } from "@Pages/ErrorPage"
 import { ErrorBoundary } from "react-error-boundary"
 import { createRoot } from "react-dom/client"
+import { BlockchainNetwork } from "@kycdao/kycdao-sdk"
+import hasNearRedirected from "@Utils/hasNearRedirected"
+import getEnabledNearNetwork from "@Utils/getEnabledNearNetwork"
 
-export interface StandaloneClientConfig extends WidgetConfig {
+export interface StandaloneClientOptions extends WidgetConfig {
 	container: HTMLElement | string
 }
 
 export interface StandaloneClientHandle {
-	close: () => void
+	open: (blockchainNetwork: BlockchainNetwork) => void
 }
 
-export const open = (
-	clientConfig: StandaloneClientConfig
-): StandaloneClientHandle => {
-	const { container, onFail, onSuccess, ...props } = clientConfig
+const open =
+	(options: StandaloneClientOptions) =>
+	(blockchainNetwork: BlockchainNetwork) => {
+		const { container, onFail, config, onSuccess, ...props } = options
 
-	const rootElement =
-		typeof container === "string"
-			? document.querySelector(container)
-			: container
+		config.enabledBlockchainNetworks = [blockchainNetwork]
 
-	if (!rootElement) {
-		throw new Error(
-			`There is no such element as '${container}', check your parent selector string!`
+		const rootElement =
+			typeof container === "string"
+				? document.querySelector(container)
+				: container
+
+		if (!rootElement) {
+			throw new Error(
+				`There is no such element as '${container}', check your parent selector string!`
+			)
+		}
+
+		const root = createRoot(rootElement)
+
+		// todo: move this to a component
+		const ErrorBoundaryFallbackComponent = ErrorPageFactory(
+			window.location.origin
+		)
+
+		// As a side effect, unmount the widget when the user closes the modal
+		// todo: what about no modal?
+		const onFailWrapper = (reason?: string) => {
+			if (onFail) {
+				onFail(reason)
+			}
+
+			root.unmount()
+		}
+
+		const onSuccessWrapper = (data?: string) => {
+			if (onSuccess) {
+				onSuccess(data)
+			}
+
+			root.unmount()
+		}
+
+		root.render(
+			<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
+				<Widget
+					onFail={onFailWrapper}
+					onSuccess={onSuccessWrapper}
+					config={config}
+					{...props}
+				/>
+			</ErrorBoundary>
+		)
+
+		return {
+			close: () => {
+				root.unmount()
+			},
+		}
+	}
+
+const init = (options: StandaloneClientOptions): StandaloneClientHandle => {
+	// if the user has been redirected from near, open the widget with the near network
+	if (hasNearRedirected(window.location.search)) {
+		open(options)(
+			getEnabledNearNetwork(options.config.enabledBlockchainNetworks)
 		)
 	}
 
-	const root = createRoot(rootElement)
-
-	// todo: move this to a component
-	const ErrorBoundaryFallbackComponent = ErrorPageFactory(
-		window.location.origin
-	)
-
-	// As a side effect, unmount the widget when the user closes the modal
-	// todo: what about no modal?
-	const onFailWrapper = (reason?: string) => {
-		if (onFail) {
-			onFail(reason)
-		}
-
-		root.unmount()
-	}
-
-	const onSuccessWrapper = (data?: string) => {
-		if (onSuccess) {
-			onSuccess(data)
-		}
-
-		root.unmount()
-	}
-
-	root.render(
-		<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
-			<Widget onFail={onFailWrapper} onSuccess={onSuccessWrapper} {...props} />
-		</ErrorBoundary>
-	)
-
 	return {
-		close: () => {
-			root.unmount()
-		},
+		open: open(options),
 	}
 }
 
 const StandaloneClient = {
-	open,
+	init,
 }
 
 export default StandaloneClient
