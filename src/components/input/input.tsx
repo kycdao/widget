@@ -1,4 +1,4 @@
-import { tr2 } from "@Components/typography"
+import { bold, tr2 } from "@Components/typography"
 import {
 	ChangeEventHandler,
 	createRef,
@@ -253,25 +253,7 @@ const StyledInput = styled.input<{
 		background: var(--kyc-sdk-cybergreen-35);
 	}
 
-	&:focus {
-		border: 2px solid var(--kyc-sdk-cybergreen);
-		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
-		${({ showAutoComplete }) =>
-			showAutoComplete &&
-			css`
-				border-radius: 0 0 var(--kyc-sdk-border-radius-light)
-					var(--kyc-sdk-border-radius-light);
-			`}
-		color: white;
-		background: black;
-
-		::placeholder {
-			color: white;
-			font-family: var(--kyc-sdk-primary-font);
-		}
-	}
-
-	&:active {
+	&:focus &:active {
 		border: 2px solid var(--kyc-sdk-cybergreen);
 		box-shadow: 0 0 0 5px var(--kyc-sdk-cybergreen-50);
 		${({ showAutoComplete }) =>
@@ -335,8 +317,7 @@ const Option = styled.div`
 	width: 100%;
 
 	strong {
-		font-family: var(--kyc-sdk-primary-font);
-		font-weight: 800;
+		${bold}
 		justify-content: center;
 	}
 

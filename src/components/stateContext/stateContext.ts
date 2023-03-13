@@ -1,5 +1,6 @@
 import { createContext } from "react"
 import { Subject } from "rxjs"
+import { CalculateNextStep, CalculatePrevStep, MainFlow } from "./getNextStep"
 import {
 	Data,
 	DataActionTypes,
@@ -21,6 +22,37 @@ export const reducer = (
 	{ payload, type }: DataChangeActions
 ): Data => {
 	switch (type) {
+		case DataActionTypes.HideModal: {
+			return { ...data, modal: undefined }
+		}
+		case DataActionTypes.GoToNextStep: {
+			return CalculateNextStep(data)
+		}
+		case DataActionTypes.GoToPrevStep: {
+			return CalculatePrevStep(data)
+		}
+		case DataActionTypes.ShowModal: {
+			return {
+				...data,
+				modal: payload,
+			}
+		}
+		case DataActionTypes.SetError: {
+			return {
+				...data,
+				error: payload,
+			}
+		}
+		case DataActionTypes.StartFlow: {
+			return CalculateNextStep({
+				...data,
+				flowStack: [MainFlow],
+				stepIndices: [0],
+			})
+		}
+		case DataActionTypes.SetLoadingMessage: {
+			return { ...data, loadingMessage: payload }
+		}
 		case DataActionTypes.SetNearMinted: {
 			return { ...data, nearMinted: payload }
 		}
@@ -43,8 +75,6 @@ export const reducer = (
 			return { ...data, chain: payload }
 		case DataActionTypes.emailChange:
 			return { ...data, email: payload }
-		case DataActionTypes.setModal:
-			return { ...data, currentModal: payload }
 		case DataActionTypes.subscriptionYearsChange:
 			return { ...data, subscriptionYears: payload }
 		case DataActionTypes.changePage:
@@ -54,13 +84,6 @@ export const reducer = (
 				prevPage: payload.prev,
 				currentPage: payload.current,
 			}
-		case DataActionTypes.SetErrorModalText: {
-			return {
-				...data,
-				errorModalHeader: payload.header,
-				errorModalBody: payload.body,
-			}
-		}
 		case DataActionTypes.taxResidenceChange:
 			return { ...data, taxResidency: payload }
 		case DataActionTypes.setNftImageUrl:
@@ -109,6 +132,9 @@ export const reducer = (
 }
 
 export const DefaultData = {
+	loadingMessage: "",
+	flowStack: [MainFlow],
+	stepIndices: [0],
 	returningUserFlow: false,
 	isProcessSuccess: false,
 	closeButtonState: "enabled",

@@ -5,6 +5,7 @@ import { useKycDao } from "@Hooks/useKycDao"
 import styled from "styled-components/macro"
 import {
 	Button,
+	Centered,
 	CenteredH1,
 	DataActionTypes,
 	H1,
@@ -15,6 +16,10 @@ import {
 	StepPart,
 	SubmitButton,
 } from "@Components/index"
+import {
+	KycDaoClientMessageBody,
+	KycDaoClientMessageTypes,
+} from "../StandaloneClientCommon"
 import useErrorHandler from "@Hooks/useErrorHandler"
 import { TwitterShareButton } from "react-twitter-embed"
 
@@ -25,7 +30,7 @@ export const NftButtonWrapper = styled.div`
 `
 
 const NftImageContainer = styled.div`
-	text-align: center;
+	${Centered}
 `
 
 const TwitterButtonContainer = styled.div`
@@ -49,6 +54,7 @@ export const FinalStep: FC<PageProps> = ({
 			alreadyHaveAnNftOnThisChain,
 			nearMinted,
 			onSuccess,
+			messageTargetOrigin,
 		},
 	} = useContext(StateContext)
 
@@ -96,7 +102,7 @@ export const FinalStep: FC<PageProps> = ({
 							setDisplayedNftImageUrl(tokens[0].image)
 						}
 					} catch (error) {
-							handleError("modal", error)
+						handleError("modal", error)
 					}
 				} else {
 					setDisplayedNftImageUrl(kycDao.mintingResult?.imageUrl || nftImageUrl)
@@ -147,6 +153,21 @@ export const FinalStep: FC<PageProps> = ({
 			onSuccess?.(
 				`Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`
 			)
+			window.parent.postMessage(
+				{
+					type: KycDaoClientMessageTypes.kycDaoSuccess,
+					data: `Already has an nft on ${kycDao?.kycDao.connectedWallet?.blockchainNetwork}.`,
+				} as KycDaoClientMessageBody,
+				messageTargetOrigin
+			)
+		} else {
+			window.parent.postMessage(
+				{
+					type: KycDaoClientMessageTypes.kycDaoSuccess,
+					data: chainExplorerUrl,
+				} as KycDaoClientMessageBody,
+				messageTargetOrigin
+			)
 			return
 		}
 
@@ -155,6 +176,7 @@ export const FinalStep: FC<PageProps> = ({
 		alreadyHaveAnNftOnThisChain,
 		chainExplorerUrl,
 		onSuccess,
+		messageTargetOrigin,
 		kycDao?.kycDao.connectedWallet?.blockchainNetwork,
 	])
 

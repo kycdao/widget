@@ -8,11 +8,9 @@ import {
 	P,
 	StateContext,
 	Step,
-	StepID,
 	StepPart,
 	SubmitButton,
 } from "@Components/index"
-import useChangePage from "@Hooks/useChangePage"
 import { useKycDao } from "@Hooks/useKycDao"
 import { FC, useContext, useCallback, useEffect } from "react"
 import { PageProps } from "./pageProps"
@@ -56,13 +54,13 @@ export const SubscribedStartStep: FC<PageProps> = ({
 	inactive = false,
 }) => {
 	const { dispatch } = useContext(StateContext)
-	const redirect = useChangePage()
 
 	const kycDaoContext = useKycDao()
 
 	const onSubmit = useCallback(() => {
-		redirect(StepID.nftArtSelection, StepID.subscribedStartStep)
-	}, [redirect])
+		// redirect(StepID.nftArtSelection, StepID.subscribedStartStep)
+		dispatch({ type: DataActionTypes.GoToNextStep })
+	}, [dispatch])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {

@@ -1,6 +1,10 @@
 import { CloseOnlyHeader } from "@Components/header/closeOnlyHeader"
 import { Step, H1, P, Button, StateContext } from "@Components/index"
 import { useCallback, useContext } from "react"
+import {
+	KycDaoClientMessageBody,
+	KycDaoClientMessageTypes,
+} from "../StandaloneClientCommon"
 import { FallbackProps } from "react-error-boundary"
 
 const Header = () => <H1>Something went wrong!</H1>
@@ -21,6 +25,12 @@ export const ErrorPageFactory = (messageTargetOrigin: string) =>
 
 		const onClose = useCallback(() => {
 			onFail?.()
+			window.parent.postMessage(
+				{
+					type: KycDaoClientMessageTypes.kycDaoCloseModal,
+				} as KycDaoClientMessageBody,
+				messageTargetOrigin
+			)
 		}, [onFail])
 
 		const footer = useCallback(

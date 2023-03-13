@@ -148,9 +148,10 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 		if (!disableSubmit && kycDao) {
 			if (!isEmailConfirmed) {
 				dispatch({
-					type: DataActionTypes.setModal,
+					type: DataActionTypes.ShowModal,
 					payload: "emailVerification",
 				})
+
 				dispatch({ type: DataActionTypes.emailChange, payload: emailValue })
 
 				try {
@@ -172,8 +173,7 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 								)
 
 								dispatch({
-									type: DataActionTypes.setModal,
-									payload: null,
+									type: DataActionTypes.HideModal,
 								})
 
 								clearInterval(confirmationInterval.current)
@@ -202,12 +202,8 @@ export const EmailDiscordVerificationStep: FC<PageProps> = ({
 
 	const onPrev = useCallback(() => {
 		clearInterval(confirmationInterval.current)
-		redirect(
-			StepID.verifyAccountStep,
-			StepID.emailDiscordVerificationStep,
-			"prev"
-		)
-	}, [redirect])
+		dispatch({ type: DataActionTypes.GoToPrevStep })
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

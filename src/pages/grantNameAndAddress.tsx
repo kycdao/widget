@@ -61,12 +61,13 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 	const [hasInteracted, setHasInteracted] = useState(false)
 	const [hasSigned, setHasSigned] = useState(false)
 
-	const sign = useCallback(() => {
+	const sign = useCallback(async () => {
 		if (isSigning) return
 
 		isSigning = true
-		window.ethereum
-			.request<string>({
+
+		try {
+			await window.ethereum.request<string>({
 				method: "personal_sign",
 				params: [
 					hexEncodeString(
@@ -76,19 +77,13 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 					kycDao?.kycDao.connectedWallet?.address,
 				],
 			})
-			.then(() => {
-				setHasSigned(true)
-			})
-			.catch(() => {
-				redirect(
-					StepID.taxResidenceStep,
-					StepID.grantNameAndAddressStep,
-					"prev"
-				)
-			})
-			.finally(() => {
-				isSigning = false
-			})
+
+			setHasSigned(true)
+		} catch {
+			redirect(StepID.taxResidenceStep, StepID.grantNameAndAddressStep, "prev")
+		} finally {
+			isSigning = false
+		}
 	}, [kycDao?.kycDao.connectedWallet?.address, redirect])
 
 	useEffect(() => {
@@ -118,15 +113,12 @@ export const GrantNameAndAddress: FC<PageProps> = ({
 			return
 		}
 
-		redirect(
-			StepID.grantSocialSecurityNumberStep,
-			StepID.grantNameAndAddressStep
-		)
-	}, [disabled, inactive, isStepValid, redirect])
+		dispatch({ type: DataActionTypes.GoToNextStep })
+	}, [disabled, inactive, isStepValid, dispatch])
 
 	const onPrev = useCallback(() => {
-		redirect(StepID.taxResidenceStep, StepID.grantNameAndAddressStep, "prev")
-	}, [redirect])
+		dispatch({ type: DataActionTypes.GoToPrevStep })
+	}, [dispatch])
 
 	useEffect(() => {
 		dispatch({

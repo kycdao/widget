@@ -51,6 +51,7 @@
 	},
 	"dependencies": {
 		"@kycdao/kycdao-sdk": "^0.6.10",
+		"@walletconnect/web3-provider": "^1.8.0",
 		"buffer": "^6.0.3",
 		"clsx": "^1.2.1",
 		"near-api-js": "^1.1.0",
@@ -85,6 +86,7 @@
 		}
 	},
 	"peerDependencies": {
+		"@walletconnect/web3-provider": "^1.8.0",
 		"react": "^18",
 		"react-dom": "^18"
 	},
@@ -96,18 +98,20 @@
 		"@babel/preset-env": "^7.20.2",
 		"@babel/preset-react": "^7.18.6",
 		"@babel/preset-typescript": "^7.21.0",
+		"@metamask/providers": "^10.2.1",
 		"@playwright/test": "^1.31.2",
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/react": "^14.0.0",
 		"@testing-library/user-event": "^14.4.3",
 		"@types/jest": "^29.4.0",
-		"@types/node": "^18.15.0",
+		"@types/node": "^18.15.1",
 		"@types/qs": "^6.9.7",
 		"@types/react": "^18.0.28",
 		"@types/react-dom": "^18.0.11",
 		"@types/styled-components": "^5.1.26",
 		"@typescript-eslint/eslint-plugin": "^5.54.1",
 		"@typescript-eslint/parser": "^5.54.1",
+		"@walletconnect/web3-provider": "^1.8.0",
 		"babel-plugin-macros": "^3.1.0",
 		"babel-plugin-module-resolver": "^5.0.0",
 		"babel-plugin-styled-components": "^2.0.7",
@@ -116,7 +120,7 @@
 		"concurrently": "^7.6.0",
 		"create-react-app": "^5.0.1",
 		"cross-env": "^7.0.3",
-		"eslint": "^8.35.0",
+		"eslint": "^8.36.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^8.7.0",
 		"eslint-plugin-import": "^2.27.5",
@@ -137,7 +141,7 @@
 		"styled-components": "^5.3.8",
 		"tsc-alias": "^1.8.3",
 		"typescript": "^4.9.5",
-		"webpack": "^5.76.0",
+		"webpack": "^5.76.1",
 		"webpack-bundle-analyzer": "^4.8.0",
 		"webpack-subresource-integrity": "5.2.0-rc.1"
 	},
@@ -176,7 +180,8 @@
 			"jest-cli": "^29.4.3",
 			"core-js": "^3.28.0",
 			"bn.js": "^5.2.1",
-			"buffer": "^6.0.3"
+			"buffer": "^6.0.3",
+			"bs58": "^5.0.0"
 		}
 	}
 }

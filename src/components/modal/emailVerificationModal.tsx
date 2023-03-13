@@ -30,7 +30,7 @@ export const EmailVerificationModal = () => {
 	}, [kycDao, handleError])
 
 	const onChangeEmail = useCallback(() => {
-		dispatch({ type: DataActionTypes.setModal, payload: null })
+		dispatch({ type: DataActionTypes.HideModal })
 	}, [dispatch])
 
 	return (

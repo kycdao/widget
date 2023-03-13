@@ -1,4 +1,5 @@
 import { OnFailCallback, OnSuccessCallback } from "../../types"
+import { Flow } from "./getNextStep"
 
 export enum HeaderActionTypes {
 	setNextButtonState,
@@ -13,6 +14,7 @@ export enum HeaderButtons {
 }
 
 export enum DataActionTypes {
+	SetError,
 	chainChange,
 	changePage,
 	prevPage,
@@ -22,11 +24,9 @@ export enum DataActionTypes {
 	SetHeaderButtonState,
 	setVerifyingModalOpen,
 	OnClickHeaderButton,
-	setModal,
 	setEmailConfirmed,
 	nftImageChange,
 	subscriptionYearsChange,
-	SetErrorModalText,
 	setChainExplorerUrl,
 	setMessageTargetOrigin,
 	setModalMode,
@@ -37,6 +37,12 @@ export enum DataActionTypes {
 	SetProcessSucess,
 	SetAlreadyHaveAnNftOnThisChain,
 	SetNearMinted,
+	GoToNextStep,
+	StartFlow,
+	GoToPrevStep,
+	SetLoadingMessage,
+	ShowModal,
+	HideModal,
 }
 
 export enum StepID {
@@ -59,14 +65,27 @@ export enum StepID {
 	verifyAccountStep,
 }
 
+export type ErrorType = "fatal" | "modal" | "minting"
+
+export type ModalData = {
+	header: string
+	body: string
+	type: ModalType
+	showRetry: boolean
+}
+
 export type Data = {
+	error?: ErrorData
+	loadingMessage: string
+	flowStack: Flow[]
+	stepIndices: number[]
 	nftImageUrl?: string
 	resetKey?: number
 	imageId?: string
 	chain?: string
 	email: string
 	taxResidency: string
-	currentPage: number
+	currentPage: StepID
 	prevPage?: number
 	nextPage?: number
 	reversePaging?: boolean
@@ -80,8 +99,7 @@ export type Data = {
 	translations: { [key: string]: { [key: string]: string } }
 	isEmailConfirmed: boolean
 	subscriptionYears?: number
-	errorModalHeader?: string
-	errorModalBody?: string
+	modal?: ModalData | ModalType
 	chainExplorerUrl?: string
 	isModal: boolean
 	grantFlowEnabled: boolean
@@ -145,11 +163,6 @@ export type HeaderButtonClickAction = {
 	payload: { button: HeaderButtons }
 }
 
-export type SetModalAction = {
-	type: DataActionTypes.setModal
-	payload: ModalType | null
-}
-
 export type EmailConfirmedChangeAction = {
 	type: DataActionTypes.setEmailConfirmed
 	payload: boolean
@@ -163,11 +176,6 @@ export type NftImageChangeAction = {
 export type SetSubscriptionYearsAction = {
 	type: DataActionTypes.subscriptionYearsChange
 	payload: number
-}
-
-export type SetErrorModalTextAction = {
-	type: DataActionTypes.SetErrorModalText
-	payload: { header: string; body: string }
 }
 
 export type SetChainExplorerUrl = {
@@ -220,6 +228,43 @@ export type SetNearMinted = {
 	payload: boolean
 }
 
+export type GoToNextStep = {
+	type: DataActionTypes.GoToNextStep
+	payload?: never
+}
+
+export type StartFlow = {
+	type: DataActionTypes.StartFlow
+	payload?: never
+}
+
+export type GoToPrevStep = {
+	type: DataActionTypes.GoToPrevStep
+	payload?: never
+}
+
+export type ShowModal = {
+	type: DataActionTypes.ShowModal
+	payload?: ModalData | ModalType
+}
+
+export type SetLoadingMessage = {
+	type: DataActionTypes.SetLoadingMessage
+	payload: string
+}
+
+export type ErrorData = { type: ErrorType; header?: string; body?: string }
+
+export type SetError = {
+	type: DataActionTypes.SetError
+	payload: ErrorData
+}
+
+export type HideModal = {
+	type: DataActionTypes.HideModal
+	payload?: never
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -229,11 +274,9 @@ export type DataChangeActions =
 	| EmailChangeAction
 	| ChangePageAction
 	| TaxResidentChangeAction
-	| SetModalAction
 	| EmailConfirmedChangeAction
 	| NftImageChangeAction
 	| SetSubscriptionYearsAction
-	| SetErrorModalTextAction
 	| SetChainExplorerUrl
 	| SetMessageTargetOrigin
 	| SetModalMode
@@ -244,9 +287,17 @@ export type DataChangeActions =
 	| SetProcessSucess
 	| SetAlreadyHaveAnNftOnThisChain
 	| SetNearMinted
+	| GoToNextStep
+	| StartFlow
+	| GoToPrevStep
+	| ShowModal
+	| SetLoadingMessage
+	| SetError
+	| HideModal
 
 export type ModalType =
 	| "emailVerification"
 	| "minting"
 	| "mintingFailed"
 	| "genericError"
+	| "genericInfo"

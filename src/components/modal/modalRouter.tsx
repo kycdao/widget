@@ -1,17 +1,17 @@
-import { StateContext } from "@Components/stateContext"
+import { ModalData, StateContext } from "@Components/stateContext"
 import { FC, useContext } from "react"
 import { ModalBackdrop } from "./common"
 import { EmailVerificationModal } from "./emailVerificationModal"
-import { GenericErrorModal } from "./genericErrorModal"
+import { GenericModal } from "./genericErrorModal"
 import { MintingFailedModal } from "./mintingFailed"
 import { MintingModal } from "./mintingModal"
 
-export const ModalRouter: FC = () => {
-	const {
-		data: { currentModal },
-	} = useContext(StateContext)
+function RenderModal(type?: ModalData["type"]) {
+	if (!type) {
+		return
+	}
 
-	switch (currentModal) {
+	switch (type) {
 		case "emailVerification": {
 			return (
 				<ModalBackdrop>
@@ -39,7 +39,15 @@ export const ModalRouter: FC = () => {
 		case "genericError": {
 			return (
 				<ModalBackdrop>
-					<GenericErrorModal />
+					<GenericModal mode="error" />
+				</ModalBackdrop>
+			)
+		}
+
+		case "genericInfo": {
+			return (
+				<ModalBackdrop>
+					<GenericModal mode="info" />
 				</ModalBackdrop>
 			)
 		}
@@ -47,4 +55,16 @@ export const ModalRouter: FC = () => {
 		default:
 			return null
 	}
+}
+
+export const ModalRouter: FC = () => {
+	const {
+		data: { modal },
+	} = useContext(StateContext)
+
+	return modal ? (
+		<ModalBackdrop>
+			{RenderModal(typeof modal === "string" ? modal : modal?.type)}
+		</ModalBackdrop>
+	) : null
 }

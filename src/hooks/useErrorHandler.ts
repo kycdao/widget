@@ -15,8 +15,9 @@ export default function useErrorHandler() {
 			const errorText = getErrorText(error)
 
 			dispatch({
-				type: DataActionTypes.SetErrorModalText,
+				type: DataActionTypes.SetError,
 				payload: {
+					type: "fatal",
 					header: "An error happened",
 					body: `${errorText}`,
 				},
@@ -36,20 +37,19 @@ export default function useErrorHandler() {
 						type: DataActionTypes.changePage,
 					})
 					dispatch({
-						type: DataActionTypes.setModal,
-						payload: null,
+						type: DataActionTypes.HideModal,
 					})
 					break
 				case "minting": {
 					dispatch({
-						type: DataActionTypes.setModal,
+						type: DataActionTypes.ShowModal,
 						payload: "mintingFailed",
 					})
 					break
 				}
 				case "modal": {
 					dispatch({
-						type: DataActionTypes.setModal,
+						type: DataActionTypes.ShowModal,
 						payload: "genericError",
 					})
 				}

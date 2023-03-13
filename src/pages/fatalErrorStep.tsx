@@ -16,17 +16,18 @@ export const FatalErrorStep: FC<PageProps> = ({
 	...rest
 }) => {
 	const {
-		data: { errorModalBody, errorModalHeader },
+		data: { error },
 		dispatch,
 	} = useContext(StateContext)
 
 	const ResetApp = useContext(RestartContext)
 
-	const Header = () => <H1>{errorModalHeader || "Something went wrong!"}</H1>
+	const Header = useCallback(
+		() => <H1>{error?.header || "Something went wrong!"}</H1>,
+		[error?.header]
+	)
 
-	const startAgain = useCallback(() => {
-		ResetApp()
-	}, [ResetApp])
+	const startAgain = useCallback(ResetApp, [ResetApp])
 
 	useEffect(() => {
 		dispatch({
@@ -43,13 +44,13 @@ export const FatalErrorStep: FC<PageProps> = ({
 		})
 	}, [dispatch])
 
-	const body = useCallback(
+	const modalBody = useCallback(
 		() => (
 			<div role="alert">
-				<P>{errorModalBody || "An unknown, fatal error happened!"}</P>
+				<P>{error?.body || "An unknown, fatal error happened!"}</P>
 			</div>
 		),
-		[errorModalBody]
+		[error?.body]
 	)
 
 	const footer = useCallback(
@@ -68,7 +69,7 @@ export const FatalErrorStep: FC<PageProps> = ({
 			disabled={disabled}
 			footer={footer}
 			header={Header}
-			body={body}
+			body={modalBody}
 		/>
 	)
 }

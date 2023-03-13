@@ -24,35 +24,44 @@ export const materialIcon = css`
 	-webkit-font-smoothing: antialiased;
 `
 
-export const typoBase = css`
+export const text = css`
 	color: black;
+	font-weight: 400;
+	font-size: 12pt;
 	line-height: 100%;
+	font-family: var(--kyc-sdk-primary-font);
 	-webkit-font-smoothing: antialiased;
-	font-family: neue-machina;
+`
+
+export const smallText = css`
+	${text};
+	font-size: 12px;
+`
+
+export const bold = css`
+	${text};
+	font-weight: 800;
 `
 
 export const H1 = styled.h1<{ marginBottom?: string }>`
-	${typoBase};
+	${text};
 	margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : "1em")};
 	font-size: 1.6rem;
 	margin-top: 0;
 `
 
 export const H2 = styled.h2`
-	${typoBase};
+	${text};
 	margin-bottom: 1em;
 `
 
 export const H3 = styled.h3`
-	${typoBase};
-	color: black;
-	font-size: 12pt;
+	${text};
 	margin-bottom: 1em;
 `
 
 export const P = styled.p`
-	font-size: 12pt;
-	${typoBase};
+	${text};
 	color: black;
 	margin-bottom: 1em;
 	margin-top: 0;
@@ -60,32 +69,27 @@ export const P = styled.p`
 `
 
 export const Policy = styled(P)`
-	font-family: var(--kyc-sdk-primary-font);
+	${smallText}
 	margin-bottom: 1em;
-	font-size: 12px;
-
-	-webkit-font-smoothing: antialiased;
 `
 
 export const Li = styled.li`
-	${typoBase};
+	${text};
 	margin-left: 2em;
-	font-size: 12pt;
 
 	${P} {
 		margin-bottom: 1em;
-		${typoBase}
 	}
 `
 
 export const B = styled.b`
-	font-size: 12pt;
-	${typoBase};
+	${text};
 	margin-bottom: 1em;
 	margin-top: 0;
 `
 
 export const Ul = styled.ul`
+	${text};
 	padding: 1rem 0;
 	width: fit-content;
 	list-style: disc;
@@ -95,14 +99,17 @@ export const translateX = (x: number | string) => css`
 	transform: translateX(${x});
 `
 
-export const CenteredH1 = styled(H1)`
+export const Centered = css`
 	text-align: center;
 `
 
+export const CenteredH1 = styled(H1)`
+	${Centered}
+`
+
 export const Link = styled.a`
-	${typoBase};
+	${smallText}
 	font-family: var(--light-font);
-	font-size: 12px;
 	text-decoration: underline;
 	color: var(--kyc-sdk-dark-blue);
 	:visited {

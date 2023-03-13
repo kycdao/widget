@@ -15,7 +15,6 @@ import {
 	OnPrev,
 	StateContext,
 	Step,
-	StepID,
 	StepPart,
 	SubmitButton,
 	tr2,
@@ -127,13 +126,7 @@ export const NftSelection: FC<PageProps> = ({
 					handleError("fatal", error)
 				}
 			} else {
-				dispatch({
-					type: DataActionTypes.changePage,
-					payload: {
-						current: StepID.mintStep,
-						prev: StepID.nftArtSelection,
-					},
-				})
+				dispatch({ type: DataActionTypes.GoToNextStep })
 			}
 		}
 	}, [
@@ -145,13 +138,7 @@ export const NftSelection: FC<PageProps> = ({
 	])
 
 	const onPrev = useCallback(() => {
-		dispatch({
-			type: DataActionTypes.changePage,
-			payload: {
-				current: StepID.subscribedStartStep,
-				next: StepID.nftArtSelection,
-			},
-		})
+		dispatch({ type: DataActionTypes.GoToPrevStep })
 	}, [dispatch])
 
 	useEffect(() => {
@@ -190,22 +177,28 @@ export const NftSelection: FC<PageProps> = ({
 		}
 	}, [disabled, inactive, dispatch, currentArt])
 
-	const onRegenerate = useCallback(() => {
-		kycDao?.kycDao.regenerateNftImageOptions().then((options) => {
-			const images = [] as Nft[]
-			setCurrentArt(undefined)
+	const onRegenerate = useCallback(async () => {
+		try {
+			const options = await kycDao?.kycDao.regenerateNftImageOptions()
 
-			dispatch({
-				payload: { button: HeaderButtons.next, state: "hidden" },
-				type: DataActionTypes.SetHeaderButtonState,
-			})
+			if (options) {
+				const images = [] as Nft[]
+				setCurrentArt(undefined)
 
-			Object.entries(options).forEach(([id, url]) => {
-				images.push({ url: url + "?timestamp=" + Date.now().toString(), id })
-			})
-			setNftImages(images.slice(0, 4))
-		})
-	}, [kycDao?.kycDao, dispatch])
+				dispatch({
+					payload: { button: HeaderButtons.next, state: "hidden" },
+					type: DataActionTypes.SetHeaderButtonState,
+				})
+
+				Object.entries(options).forEach(([id, url]) => {
+					images.push({ url: url + "?timestamp=" + Date.now().toString(), id })
+				})
+				setNftImages(images.slice(0, 4))
+			}
+		} catch (error) {
+			handleError("fatal", error)
+		}
+	}, [kycDao?.kycDao, dispatch, handleError])
 
 	const body = useCallback<StepPart>(
 		() => (

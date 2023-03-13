@@ -174,11 +174,8 @@ export const Button = styled(unstyledButton)<ButtonProps>`
 						align-items: center;
 					}
 
+					i:disabled,
 					span:disabled {
-						color: grey;
-					}
-
-					i:disabled {
 						color: grey;
 					}
 
