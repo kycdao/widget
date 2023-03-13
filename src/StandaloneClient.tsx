@@ -2,7 +2,6 @@ import { Widget, WidgetConfig } from "./Widget"
 import { ErrorPageFactory } from "@Pages/ErrorPage"
 import { ErrorBoundary } from "react-error-boundary"
 import { createRoot } from "react-dom/client"
-
 export interface StandaloneClientConfig extends WidgetConfig {
 	container: HTMLElement | string
 }

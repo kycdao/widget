@@ -211,7 +211,15 @@
 			})
 			const autostart = false
 
-			let mode = localStorage.getItem("mode") || "integrated"
+			let mode = localStorage.getItem("mode")
+
+			if (!mode) {
+				const integratedTypeButton = document.getElementsByClassName(
+					"typeSelectorContainer"
+				)[0].children[0]
+
+				handleModeClick(integratedTypeButton)
+			}
 
 			function handleModeClick(btn) {
 				const typeSelectorChildren = document.getElementsByClassName(
