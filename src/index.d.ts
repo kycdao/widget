@@ -1,5 +1,3 @@
-export * from "./BootstrapKycDaoModal"
-export * from "./App"
-export * from "./widget"
-export * from "./StandaloneClient"
-export * from "./StandaloneIframeClient"
+export * from "./Widget"
+export { default as StandaloneClient } from "./StandaloneClient"
+export { default as StandaloneIframeClient } from "./StandaloneIframeClient"
