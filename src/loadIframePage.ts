@@ -39,11 +39,10 @@ const loadIframePage = () => {
 				messageTargetOrigin
 			)
 		},
-		onReady: (sdkInstance) => {
+		onReady: () => {
 			window.top?.postMessage(
 				{
 					type: KycDaoMessageTypes.SUCCESS,
-					data: sdkInstance,
 				},
 				messageTargetOrigin
 			)

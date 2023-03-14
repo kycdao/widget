@@ -28,7 +28,7 @@ import { Header } from "@Components/header/header"
 import { Router } from "@Pages/router"
 import { ModalRouter } from "@Components/modal"
 import styled from "styled-components/macro"
-import useErrorHandler from "@Hooks/useErrorHandler"
+import { HandleError } from "@Hooks/useErrorHandler"
 import { AppStyleContainer } from "@Components/appStyleContainer"
 import { RestartContext } from "@Components/restartContext"
 import NeueMachinaRegularBase64 from "./fonts/NeueMachina-Regular"
@@ -38,7 +38,7 @@ import {
 	KycDaoClientMessageTypes,
 	KycDaoClientRegisterOrLogin,
 	nearNetworkRegex,
-} from "StandaloneClientCommon"
+} from "./StandaloneClientCommon"
 
 export interface ModalOptions {
 	width: string | number
@@ -99,13 +99,16 @@ export const Widget: FC<WidgetConfig> = ({
 	const contextData = useMemo(() => ({ data, dispatch }), [data, dispatch])
 	const [kycDao, setKycDao] = useState<KycDaoInitializationResult>()
 	const [key, setKey] = useState(Date.now())
-	const { handleError } = useErrorHandler()
+
 	const { width, height, backdrop } = modalOptions
 
 	const startFlow = useCallback(async () => {
-		if (!kycDao) return
+		console.log(dispatch.toString())
+		if (!kycDao || dispatch.toString() === "function () { }") return
 
 		const [firstChainNetwork] = config.enabledBlockchainNetworks
+
+		let modalTimeout
 
 		try {
 			dispatch({
@@ -119,7 +122,7 @@ export const Widget: FC<WidgetConfig> = ({
 				payload: isModal,
 			})
 
-			const modalTimeout = setTimeout(() => {
+			modalTimeout = setTimeout(() => {
 				dispatch({
 					type: DataActionTypes.ShowModal,
 					payload: {
@@ -271,12 +274,13 @@ export const Widget: FC<WidgetConfig> = ({
 				})
 			}
 		} catch (error) {
-			handleError("fatal", error)
+			HandleError(dispatch, "fatal", error, data.onFail)
+			clearTimeout(modalTimeout)
 		}
 	}, [
 		config.enabledBlockchainNetworks,
-		handleError,
 		isModal,
+		data.onFail,
 		kycDao,
 		onFail,
 		messageTargetOrigin,
@@ -298,15 +302,17 @@ export const Widget: FC<WidgetConfig> = ({
 	}, [])
 
 	useEffect(() => {
-		KycDao.initialize(config)
-			.then((result) => {
-				setKycDao(result)
-				onReady?.(result)
-			})
-			.catch((error) => {
-				handleError("fatal", error)
-			})
-	}, [config, handleError, onReady])
+		if (dispatch.toString() !== "function () { }" && !kycDao && !data.error) {
+			KycDao.initialize(config)
+				.then((result) => {
+					setKycDao(result)
+					onReady?.(result)
+				})
+				.catch((error) => {
+					HandleError(dispatch, "fatal", error, data.onFail)
+				})
+		}
+	}, [config, onReady, dispatch, data.error, kycDao, data.onFail])
 
 	useEffect(() => {
 		const close = OnClose.subscribe(() => {
@@ -350,7 +356,17 @@ export const Widget: FC<WidgetConfig> = ({
 	)
 
 	if (!kycDao) {
-		return null
+		return (
+			<StyledWidget key={key}>
+				<RestartContext.Provider value={RestartApp}>
+					<StateContext.Provider value={contextData}>
+						<Header />
+						<Router />
+						<ModalRouter />
+					</StateContext.Provider>
+				</RestartContext.Provider>
+			</StyledWidget>
+		)
 	}
 
 	if (isModal) {

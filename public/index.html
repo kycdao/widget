@@ -7,7 +7,7 @@
 		<style>
 			@font-face {
 				font-family: neue-machina;
-				src: url("./NeueMachina-Regular.woff2");
+				src: url("/NeueMachina-Regular.woff2") format("woff2");
 			}
 
 			@font-face {
@@ -211,15 +211,9 @@
 			})
 			const autostart = false
 
-			let mode = localStorage.getItem("mode")
+			let mode = localStorage.getItem("mode") || "integrated"
 
-			if (!mode) {
-				const integratedTypeButton = document.getElementsByClassName(
-					"typeSelectorContainer"
-				)[0].children[0]
-
-				handleModeClick(integratedTypeButton)
-			}
+			console.log(mode)
 
 			function handleModeClick(btn) {
 				const typeSelectorChildren = document.getElementsByClassName(
@@ -250,8 +244,17 @@
 			]
 
 			onload = () => {
+				const integratedTypeButton = document.getElementsByClassName(
+					"typeSelectorContainer"
+				)[0].children
+
+				const currentTypeButton =
+					integratedTypeButton[mode === "integrated" ? 0 : 1]
+				currentTypeButton.classList.add("buttonHeaderButton-selected")
+
 				const config = {
 					isModal: true,
+					nearAutorunEnabled: true,
 					container: "#modalRoot",
 					config: {
 						demoMode: true,
@@ -290,20 +293,64 @@
 					},
 				}
 
-				const kycDaoWindowEvm = KycDaoWidget.init(config)
-				const kycDaoWalletConnectEvm = KycDaoWidget.init({
-					...config,
+				const iframeConfig = {
+					container: "#modalRoot",
+					backdrop: true,
+					isModal: true,
+					nearAutorunEnabled: true,
+					url: `${window.location.origin}/iframe.html`,
+					messageTargetOrigin: window.location.origin,
 					config: {
-						...config.config,
-						evmProvider: walletConnectEvmProvider,
+						demoMode: true,
+						enabledBlockchainNetworks: chains,
+						enabledVerificationTypes: ["KYC"],
+						evmProvider: "ethereum",
+						baseUrl: "https://staging.kycdao.xyz",
 					},
-				})
+					onReady: () => {
+						console.log("This ran")
+					},
+					onSuccess: (data) => {
+						if (data) {
+							const i = /Already has an nft on (.*)\./g.exec(data)
+
+							if (i) {
+								console.log(`Already has an nft on ${i[1]}.`)
+							}
+						}
+					},
+					onFail: () => {
+						console.log("This ran")
+					},
+				}
 
 				globalThis.selectorHandler = function (selectedChain, walletConnectOn) {
 					if (walletConnectOn) {
-						kycDaoWalletConnectEvm.open(selectedChain)
+						if (mode === "integrated") {
+							const kycDaoWalletConnectEvm = KycDaoWidget.init(config)
+
+							kycDaoWalletConnectEvm.open(selectedChain)
+						} else if (mode === "iframe") {
+							const kycDaoIframeWalletConnectEvm =
+								KycDaoIframeWidget.init(iframeConfig)
+							kycDaoIframeWalletConnectEvm.open(selectedChain)
+						}
 					} else {
-						kycDaoWindowEvm.open(selectedChain)
+						if (mode === "integrated") {
+							const kycDaoEvm = KycDaoWidget.init({
+								...config,
+								config: {
+									...config.config,
+									evmProvider: walletConnectEvmProvider,
+								},
+							})
+							kycDaoEvm.open(selectedChain)
+						} else if (mode === "iframe") {
+							const kycDaoIframeWindowEvm =
+								KycDaoIframeWidget.init(iframeConfig)
+
+							kycDaoIframeWindowEvm.open(selectedChain)
+						}
 					}
 				}
 
