@@ -19,7 +19,7 @@ const loadIframePage = () => {
 	// todo: runtime validate query params
 
 	const kycDao = StandaloneClient.init({
-		container: "#modalRoot",
+		container: "#iframeModalRoot",
 		config,
 		onSuccess: (data) => {
 			window.top?.postMessage(

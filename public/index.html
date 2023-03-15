@@ -327,7 +327,13 @@
 				globalThis.selectorHandler = function (selectedChain, walletConnectOn) {
 					if (walletConnectOn) {
 						if (mode === "integrated") {
-							const kycDaoWalletConnectEvm = KycDaoWidget.init(config)
+							const kycDaoWalletConnectEvm = KycDaoWidget.init({
+								...config,
+								config: {
+									...config.config,
+									evmProvider: walletConnectEvmProvider,
+								},
+							})
 
 							kycDaoWalletConnectEvm.open(selectedChain)
 						} else if (mode === "iframe") {
@@ -337,13 +343,7 @@
 						}
 					} else {
 						if (mode === "integrated") {
-							const kycDaoEvm = KycDaoWidget.init({
-								...config,
-								config: {
-									...config.config,
-									evmProvider: walletConnectEvmProvider,
-								},
-							})
+							const kycDaoEvm = KycDaoWidget.init(config)
 							kycDaoEvm.open(selectedChain)
 						} else if (mode === "iframe") {
 							const kycDaoIframeWindowEvm =

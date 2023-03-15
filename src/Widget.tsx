@@ -44,6 +44,7 @@ export interface ModalOptions {
 	width: string | number
 	height: string | number
 	backdrop?: string
+	enabled: boolean
 }
 
 export interface WidgetConfig {
@@ -60,6 +61,7 @@ export const defaultModalOptions: ModalOptions = {
 	width: "400px",
 	height: "650px",
 	backdrop: "rgba(0, 0, 0, 0.7)",
+	enabled: true,
 }
 
 export const WidgetModalContainer: FC<PropsWithChildren<ModalOptions>> = ({
@@ -67,16 +69,19 @@ export const WidgetModalContainer: FC<PropsWithChildren<ModalOptions>> = ({
 	height,
 	width,
 	backdrop,
+	enabled,
 }) => {
-	return (
-		<ModalRoot backdrop={backdrop}>
-			<Modal
-				width={typeof width === "string" ? width : `${width}px`}
-				height={typeof height === "string" ? height : `${height}px`}>
-				{children}
-			</Modal>
-		</ModalRoot>
-	)
+	if (enabled)
+		return (
+			<ModalRoot backdrop={backdrop}>
+				<Modal
+					width={typeof width === "string" ? width : `${width}px`}
+					height={typeof height === "string" ? height : `${height}px`}>
+					{children}
+				</Modal>
+			</ModalRoot>
+		)
+	else return <>{children}</>
 }
 
 export const Widget: FC<WidgetConfig> = ({
@@ -85,10 +90,7 @@ export const Widget: FC<WidgetConfig> = ({
 	onFail,
 	onSuccess,
 	isModal = false,
-	modalOptions = {
-		width: defaultModalOptions.width,
-		height: defaultModalOptions.height,
-	},
+	modalOptions = defaultModalOptions,
 	messageTargetOrigin = window.location.origin,
 }) => {
 	const [data, dispatch] = useReducer(reducer, {
@@ -331,7 +333,6 @@ export const Widget: FC<WidgetConfig> = ({
 		data.chainExplorerUrl,
 		data.isProcessSuccess,
 		data.nearMinted,
-		isModal,
 		kycDao?.kycDao.connectedWallet?.blockchainNetwork,
 		data.alreadyHaveAnNftOnThisChain,
 		onSuccess,
@@ -340,44 +341,30 @@ export const Widget: FC<WidgetConfig> = ({
 
 	const InlineWidget = useMemo(
 		() => (
-			<StyledWidget key={key}>
-				<RestartContext.Provider value={RestartApp}>
-					<KycDaoContext.Provider value={kycDao}>
-						<StateContext.Provider value={contextData}>
-							<Header />
-							<Router />
-							<ModalRouter />
-						</StateContext.Provider>
-					</KycDaoContext.Provider>
-				</RestartContext.Provider>
-			</StyledWidget>
+			<StrictMode>
+				<WidgetModalContainer
+					enabled={isModal}
+					height={height}
+					width={width}
+					backdrop={backdrop}>
+					<StyledWidget key={key}>
+						<RestartContext.Provider value={RestartApp}>
+							<KycDaoContext.Provider value={kycDao}>
+								<StateContext.Provider value={contextData}>
+									<Header />
+									<Router />
+									<ModalRouter />
+								</StateContext.Provider>
+							</KycDaoContext.Provider>
+						</RestartContext.Provider>
+					</StyledWidget>
+				</WidgetModalContainer>
+			</StrictMode>
 		),
-		[RestartApp, contextData, key, kycDao]
+		[RestartApp, contextData, key, kycDao, backdrop, isModal, height, width]
 	)
 
-	if (!kycDao) {
-		return (
-			<StyledWidget key={key}>
-				<RestartContext.Provider value={RestartApp}>
-					<StateContext.Provider value={contextData}>
-						<Header />
-						<Router />
-						<ModalRouter />
-					</StateContext.Provider>
-				</RestartContext.Provider>
-			</StyledWidget>
-		)
-	}
-
-	if (isModal) {
-		return (
-			<WidgetModalContainer height={height} width={width} backdrop={backdrop}>
-				{InlineWidget}
-			</WidgetModalContainer>
-		)
-	}
-
-	return <StrictMode>{InlineWidget}</StrictMode>
+	return InlineWidget
 }
 
 const StyledWidget = styled(AppStyleContainer)`
@@ -423,5 +410,6 @@ const Modal = styled.div<Pick<ModalOptions, "width" | "height">>`
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
+		border-width: 0;
 	}
 `

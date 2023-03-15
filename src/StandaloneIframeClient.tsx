@@ -37,7 +37,7 @@ const open =
 			onReady,
 			config,
 			onSuccess,
-			isModal,
+			isModal = true,
 		} = options
 
 		config.enabledBlockchainNetworks = [blockchainNetwork]
@@ -68,32 +68,21 @@ const open =
 			{ encode: false }
 		)
 
-		if (isModal) {
-			root.render(
-				<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
-					<WidgetModalContainer
-						width={modalOptions?.width}
-						height={modalOptions.height}
-						backdrop={modalOptions.backdrop}>
-						<iframe
-							title="KycDaoWidget"
-							allow="encrypted-media; camera"
-							src={`${url}?${params}`}
-						/>
-					</WidgetModalContainer>
-				</ErrorBoundary>
-			)
-		} else {
-			root.render(
-				<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
+		root.render(
+			<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
+				<WidgetModalContainer
+					width={modalOptions?.width}
+					height={modalOptions.height}
+					backdrop={modalOptions.backdrop}
+					enabled={isModal}>
 					<iframe
 						title="KycDaoWidget"
 						allow="encrypted-media; camera"
 						src={`${url}?${params}`}
 					/>
-				</ErrorBoundary>
-			)
-		}
+				</WidgetModalContainer>
+			</ErrorBoundary>
+		)
 
 		if ("virtualKeyboard" in navigator) {
 			navigator.virtualKeyboard.overlaysContent = true
