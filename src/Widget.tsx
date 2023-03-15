@@ -70,19 +70,18 @@ export const WidgetModalContainer: FC<PropsWithChildren<ModalOptions>> = ({
 	width,
 	backdrop,
 	enabled,
-}) => {
-	if (enabled)
-		return (
-			<ModalRoot backdrop={backdrop}>
-				<Modal
-					width={typeof width === "string" ? width : `${width}px`}
-					height={typeof height === "string" ? height : `${height}px`}>
-					{children}
-				</Modal>
-			</ModalRoot>
-		)
-	else return <>{children}</>
-}
+}) =>
+	enabled ? (
+		<ModalRoot backdrop={backdrop}>
+			<Modal
+				width={typeof width === "string" ? width : `${width}px`}
+				height={typeof height === "string" ? height : `${height}px`}>
+				{children}
+			</Modal>
+		</ModalRoot>
+	) : (
+		<>{children}</>
+	)
 
 export const Widget: FC<WidgetConfig> = ({
 	config,

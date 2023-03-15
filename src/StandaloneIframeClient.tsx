@@ -96,7 +96,9 @@ const open =
 
 		const close = () => {
 			window.removeEventListener("message", messageHandler)
-			root.unmount()
+			setTimeout(() => {
+				root.unmount()
+			}, 0)
 		}
 
 		const messageHandler = (event: KycDaoMessage) => {

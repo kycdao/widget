@@ -41,16 +41,21 @@ const open =
 
 		// As a side effect, unmount the widget when the user closes the modal
 		// todo: what about no modal?
+		// The settimeout looks weird, but neccesary in the moment: https://github.com/facebook/react/issues/25675
 		const onFailWrapper = (reason?: string) => {
 			onFail?.(reason)
 
-			root.unmount()
+			setTimeout(() => {
+				root.unmount()
+			}, 0)
 		}
 
 		const onSuccessWrapper = (data?: string) => {
 			onSuccess?.(data)
 
-			root.unmount()
+			setTimeout(() => {
+				root.unmount()
+			}, 0)
 		}
 
 		root.render(
@@ -66,7 +71,9 @@ const open =
 
 		return {
 			close: () => {
-				root.unmount()
+				setTimeout(() => {
+					root.unmount()
+				}, 0)
 			},
 		}
 	}
