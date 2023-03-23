@@ -324,6 +324,14 @@
 					},
 				}
 
+				console.log("modes")
+
+				if (mode === "integrated") {
+					const kycDaoIframeClientNearCheck = KycDaoWidget.init(config)
+				} else if (mode === "iframe") {
+					const kycDaoClientNearCheck = KycDaoIframeWidget.init(iframeConfig)
+				}
+
 				globalThis.selectorHandler = function (selectedChain, walletConnectOn) {
 					if (walletConnectOn) {
 						if (mode === "integrated") {

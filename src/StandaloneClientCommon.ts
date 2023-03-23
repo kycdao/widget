@@ -27,7 +27,7 @@ export const knownNearQueryParams = {
 	transactionHashes: "NearMint",
 }
 
-export const nearNetworkRegex = /.*Near*./g
+export const nearNetworkRegex = () => /.*Near*./g
 
 export type KycDaoClientMessageHandler = (message: KycDaoClientMessage) => void
 
@@ -217,8 +217,8 @@ export type KycDaoClientMessageBody = {
 }
 
 export type KycDaoClientRegisterOrLogin = {
-	data?: { chainNetwork: SdkConfiguration["enabledBlockchainNetworks"] }
-	type: KycDaoClientMessageTypes
+	data?: string
+	type: KycDaoClientMessageTypes.kycDaoMint
 }
 
 export type KycDaoClientMint = {

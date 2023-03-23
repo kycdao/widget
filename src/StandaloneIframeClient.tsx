@@ -8,14 +8,17 @@ import { ErrorBoundary } from "react-error-boundary"
 import { createRoot } from "react-dom/client"
 import {
 	isOnFailMessage,
+	isOnMint,
 	isOnReadyMessage,
+	isOnRegisterOrLogin,
 	isOnSuccessMessage,
 	KycDaoMessage,
 } from "./types"
 import qs from "qs"
-import { BlockchainNetwork } from "@kycdao/kycdao-sdk"
+import { BlockchainNetwork, KycDao } from "@kycdao/kycdao-sdk"
 import hasNearRedirected from "@Utils/hasNearRedirected"
 import getEnabledNearNetwork from "@Utils/getEnabledNearNetwork"
+import { nearNetworkRegex } from "./StandaloneClientCommon"
 
 export interface StandaloneIframeClientOptions extends WidgetConfig {
 	container: HTMLElement | string
@@ -25,6 +28,10 @@ export interface StandaloneIframeClientOptions extends WidgetConfig {
 export interface StandaloneIframeClientHandle {
 	open: (blockchainNetwork: BlockchainNetwork) => void
 }
+
+window.name = "Main window"
+
+console.log("the iframeclient window is", window.name)
 
 const open =
 	(options: StandaloneIframeClientOptions) =>
@@ -68,7 +75,59 @@ const open =
 			{ encode: false }
 		)
 
-		console.log(`${url}?${params}`)
+		const messageHandler = (event: KycDaoMessage) => {
+			console.log(event.data)
+
+			if (isOnReadyMessage(event)) {
+				onReady?.(event.data.data)
+			} else if (isOnFailMessage(event)) {
+				onFail?.(event.data.data)
+				close()
+			} else if (isOnSuccessMessage(event)) {
+				onSuccess?.(event.data.data)
+				close()
+			} else if (isOnRegisterOrLogin(event)) {
+				const chainNetwork = event.data.data as BlockchainNetwork
+
+				if (nearNetworkRegex().test(chainNetwork)) {
+					const config = { ...options.config }
+					config.enabledBlockchainNetworks = [chainNetwork]
+
+					KycDao.initialize(config)
+						.then((result) => {
+							result.kycDao.connectWallet("Near")
+							result.kycDao.registerOrLogin()
+						})
+						.catch((error) => {
+							alert(error)
+						})
+				}
+			} else if (isOnMint(event)) {
+				const chainNetwork = event.data.data.chainNetwork as BlockchainNetwork
+
+				if (nearNetworkRegex().test(chainNetwork)) {
+					const config = { ...options.config }
+					config.enabledBlockchainNetworks = [chainNetwork]
+
+					KycDao.initialize(config)
+						.then((result) => {
+							result.kycDao.connectWallet("Near")
+							result.kycDao.registerOrLogin()
+							result.kycDao.startMinting(event.data.data)
+						})
+						.catch((error) => {
+							alert(error)
+						})
+				}
+			}
+		}
+
+		console.log(
+			"The iframe client messagehandler is atteched to",
+			window.top?.name
+		)
+
+		window.top?.addEventListener("message", messageHandler, false)
 
 		root.render(
 			<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
@@ -97,30 +156,12 @@ const open =
 		}
 
 		const close = () => {
-			window.removeEventListener("message", messageHandler)
+			window.top?.removeEventListener("message", messageHandler)
 			setTimeout(() => {
 				console.log("unmount")
 				root.unmount()
 			}, 0)
 		}
-
-		const messageHandler = (event: KycDaoMessage) => {
-			if (isOnReadyMessage(event)) {
-				onReady?.(event.data.data)
-			}
-
-			if (isOnFailMessage(event)) {
-				onFail?.(event.data.data)
-				close()
-			}
-
-			if (isOnSuccessMessage(event)) {
-				onSuccess?.(event.data.data)
-				close()
-			}
-		}
-
-		window.addEventListener("message", messageHandler, false)
 
 		return {
 			close,

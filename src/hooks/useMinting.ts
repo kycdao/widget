@@ -4,10 +4,7 @@ import { useContext } from "react"
 import useErrorHandler from "./useErrorHandler"
 
 import { useKycDao } from "./useKycDao"
-import {
-	KycDaoClientMessageTypes,
-	KycDaoClientMint,
-} from "../StandaloneClientCommon"
+import { KycDaoMessageTypes } from "../types"
 
 export const useMinting = () => {
 	const kycDao = useKycDao()
@@ -39,9 +36,9 @@ export const useMinting = () => {
 			if (window !== window.parent) {
 				window.parent.postMessage(
 					{
-						type: KycDaoClientMessageTypes.kycDaoMint,
+						type: KycDaoMessageTypes.MINT,
 						data: mintingData,
-					} as KycDaoClientMint,
+					},
 					messageTargetOrigin
 				)
 			} else {

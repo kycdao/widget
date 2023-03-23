@@ -33,12 +33,14 @@ import { AppStyleContainer } from "@Components/appStyleContainer"
 import { RestartContext } from "@Components/restartContext"
 import NeueMachinaRegularBase64 from "./fonts/NeueMachina-Regular"
 import { getNetworkType } from "@Utils/getNetworkType"
-import { OnFailCallback, OnReadyCallback, OnSuccessCallback } from "./types"
 import {
-	KycDaoClientMessageTypes,
-	KycDaoClientRegisterOrLogin,
-	nearNetworkRegex,
-} from "./StandaloneClientCommon"
+	KycDaoMessageTypes,
+	KycDaoOnRegisterOrLoginData,
+	OnFailCallback,
+	OnReadyCallback,
+	OnSuccessCallback,
+} from "./types"
+import { nearNetworkRegex } from "./StandaloneClientCommon"
 
 export interface ModalOptions {
 	width: string | number
@@ -82,6 +84,9 @@ export const WidgetModalContainer: FC<PropsWithChildren<ModalOptions>> = ({
 	) : (
 		<>{children}</>
 	)
+
+// Debug purpose
+window.name = "Widget window"
 
 export const Widget: FC<WidgetConfig> = ({
 	config,
@@ -135,23 +140,21 @@ export const Widget: FC<WidgetConfig> = ({
 				})
 			}, 5000)
 
-			nearNetworkRegex.lastIndex = 0
-
 			//TODO Make this foolproof
 			const isNearLoggedIn = Object.keys(localStorage).find((value) =>
-				/near-api-js:keystore:(.*)/g.test(value)
+				/near-api-js:keystore:(?!pending)(.*)/g.test(value)
 			)
 
 			if (
-				nearNetworkRegex.test(firstChainNetwork) &&
-				window !== window.parent &&
+				nearNetworkRegex().test(firstChainNetwork) &&
+				window !== window?.top &&
 				!isNearLoggedIn
 			) {
-				window.parent.postMessage(
+				window?.top?.postMessage(
 					{
-						type: KycDaoClientMessageTypes.kycDaoRegisterOrLogin,
-						data: { chainNetwork: [firstChainNetwork] },
-					} as KycDaoClientRegisterOrLogin,
+						data: firstChainNetwork as KycDaoOnRegisterOrLoginData,
+						type: KycDaoMessageTypes.REGISTERORLOGIN,
+					},
 					messageTargetOrigin
 				)
 

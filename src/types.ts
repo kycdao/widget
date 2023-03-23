@@ -1,19 +1,39 @@
-import { KycDaoInitializationResult } from "@kycdao/kycdao-sdk"
+import type {
+	KycDaoInitializationResult,
+	VerificationType,
+} from "@kycdao/kycdao-sdk"
+import { KycDaoClientOptions } from "StandaloneClientCommon"
 
 export enum KycDaoMessageTypes {
 	READY = "KycDaoIframeWidgetOnReady",
 	FAIL = "KycDaoIframeWidgetOnFail",
 	SUCCESS = "KycDaoIframeWidgetOnSuccess",
+	REGISTERORLOGIN = "KycDaoIframeWidgetRegisterOrLogin",
+	MINT = "KycDaoIframeWidgetMint",
 }
 
 export type KycDaoOnReadyData = KycDaoInitializationResult
 export type KycDaoOnFailData = string
 export type KycDaoOnSuccessData = string
+export type KycDaoOnRegisterOrLoginData =
+	KycDaoClientOptions["config"]["enabledBlockchainNetworks"][0]
+export type KycDaoOnMintData = {
+	disclaimerAccepted: boolean
+	verificationType?: VerificationType
+	imageId: string
+	subscriptionYears?: number
+	chainNetwork: string
+}
 
 export interface KycDaoMessage extends MessageEvent {
 	data: {
 		type: KycDaoMessageTypes
-		data: KycDaoOnFailData | KycDaoOnSuccessData | KycDaoOnReadyData
+		data:
+			| KycDaoOnFailData
+			| KycDaoOnSuccessData
+			| KycDaoOnReadyData
+			| KycDaoOnMintData
+			| KycDaoOnRegisterOrLoginData
 	}
 }
 
@@ -35,6 +55,20 @@ export interface KycDaoOnSuccessMessage extends KycDaoMessage {
 	data: {
 		type: KycDaoMessageTypes.SUCCESS
 		data: KycDaoOnSuccessData
+	}
+}
+
+export interface KycDaoOnRegisterOrLogin extends KycDaoMessage {
+	data: {
+		type: KycDaoMessageTypes.REGISTERORLOGIN
+		data: KycDaoOnRegisterOrLoginData
+	}
+}
+
+export interface KycDaoOnMint extends KycDaoMessage {
+	data: {
+		type: KycDaoMessageTypes.MINT
+		data: KycDaoOnMintData
 	}
 }
 
@@ -62,6 +96,22 @@ export function isOnSuccessMessage(
 	return (
 		typeof event.data !== "string" &&
 		event.data.type === KycDaoMessageTypes.SUCCESS
+	)
+}
+
+export function isOnRegisterOrLogin(
+	event: KycDaoMessage
+): event is KycDaoOnRegisterOrLogin {
+	return (
+		typeof event.data !== "string" &&
+		event.data.type === KycDaoMessageTypes.REGISTERORLOGIN
+	)
+}
+
+export function isOnMint(event: KycDaoMessage): event is KycDaoOnMint {
+	return (
+		typeof event.data !== "string" &&
+		event.data.type === KycDaoMessageTypes.MINT
 	)
 }
 
