@@ -214,8 +214,6 @@ export const Widget: FC<WidgetConfig> = ({
 
 			await kycDao.kycDao.registerOrLogin()
 
-			let startPage = StepID.AgreementStep
-
 			if (kycDao.redirectEvent) {
 				dispatch({
 					type: DataActionTypes.termsAcceptedChange,
@@ -223,9 +221,6 @@ export const Widget: FC<WidgetConfig> = ({
 				})
 
 				switch (kycDao.redirectEvent) {
-					case "NearLogin":
-						startPage = StepID.AgreementStep
-						break
 					case "NearUserRejectedError":
 						onFail?.()
 						return
@@ -247,7 +242,6 @@ export const Widget: FC<WidgetConfig> = ({
 								payload: kycDao.mintingResult?.imageUrl,
 							})
 						}
-						startPage = StepID.finalStep
 				}
 			} else {
 				await kycDao.kycDao.registerOrLogin()
@@ -260,16 +254,9 @@ export const Widget: FC<WidgetConfig> = ({
 						type: DataActionTypes.SetReturnUserFlow,
 					})
 				}
-
-				startPage = subscribed
-					? StepID.subscribedStartStep
-					: StepID.AgreementStep
 			}
 
-			dispatch({
-				payload: { current: startPage, prev: StepID.loading },
-				type: DataActionTypes.changePage,
-			})
+			dispatch({ type: DataActionTypes.GoToNextStep })
 
 			if (!isModal) {
 				dispatch({
@@ -343,12 +330,12 @@ export const Widget: FC<WidgetConfig> = ({
 
 	const InlineWidget = useMemo(
 		() => (
-			<StrictMode>
-				<WidgetModalContainer
-					enabled={isModal}
-					height={height}
-					width={width}
-					backdrop={backdrop}>
+			<WidgetModalContainer
+				enabled={isModal}
+				height={height}
+				width={width}
+				backdrop={backdrop}>
+				<StrictMode>
 					<StyledWidget key={key}>
 						<RestartContext.Provider value={RestartApp}>
 							<KycDaoContext.Provider value={kycDao}>
@@ -360,8 +347,8 @@ export const Widget: FC<WidgetConfig> = ({
 							</KycDaoContext.Provider>
 						</RestartContext.Provider>
 					</StyledWidget>
-				</WidgetModalContainer>
-			</StrictMode>
+				</StrictMode>
+			</WidgetModalContainer>
 		),
 		[RestartApp, contextData, key, kycDao, backdrop, isModal, height, width]
 	)
