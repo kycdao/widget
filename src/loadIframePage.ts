@@ -22,6 +22,7 @@ const loadIframePage = () => {
 
 	const kycDao = StandaloneClient.init({
 		container: "#iframeModalRoot",
+		isModal: true,
 		config,
 		onSuccess: (data) => {
 			window.top?.postMessage(
