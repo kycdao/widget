@@ -68,6 +68,8 @@ const open =
 			{ encode: false }
 		)
 
+		console.log(`${url}?${params}`)
+
 		root.render(
 			<ErrorBoundary FallbackComponent={ErrorBoundaryFallbackComponent}>
 				<WidgetModalContainer
@@ -97,6 +99,7 @@ const open =
 		const close = () => {
 			window.removeEventListener("message", messageHandler)
 			setTimeout(() => {
+				console.log("unmount")
 				root.unmount()
 			}, 0)
 		}
@@ -104,7 +107,6 @@ const open =
 		const messageHandler = (event: KycDaoMessage) => {
 			if (isOnReadyMessage(event)) {
 				onReady?.(event.data.data)
-				close()
 			}
 
 			if (isOnFailMessage(event)) {

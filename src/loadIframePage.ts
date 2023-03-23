@@ -18,6 +18,8 @@ const loadIframePage = () => {
 
 	// todo: runtime validate query params
 
+	console.log(config.enabledBlockchainNetworks, config.enabledVerificationTypes)
+
 	const kycDao = StandaloneClient.init({
 		container: "#iframeModalRoot",
 		config,
@@ -42,7 +44,7 @@ const loadIframePage = () => {
 		onReady: () => {
 			window.top?.postMessage(
 				{
-					type: KycDaoMessageTypes.SUCCESS,
+					type: KycDaoMessageTypes.READY,
 				},
 				messageTargetOrigin
 			)

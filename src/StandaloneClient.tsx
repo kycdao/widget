@@ -27,12 +27,17 @@ const open =
 				: container
 
 		if (!rootElement) {
+			console.error(
+				`There is no such element as '${container}', check your parent selector string!`
+			)
 			throw new Error(
 				`There is no such element as '${container}', check your parent selector string!`
 			)
 		}
 
 		const root = createRoot(rootElement)
+
+		console.log(root)
 
 		// todo: move this to a component
 		const ErrorBoundaryFallbackComponent = ErrorPageFactory(
@@ -46,12 +51,16 @@ const open =
 			onFail?.(reason)
 
 			setTimeout(() => {
+				console.log("Unmount")
+
 				root.unmount()
 			}, 0)
 		}
 
 		const onSuccessWrapper = (data?: string) => {
 			onSuccess?.(data)
+
+			console.log("Unmount")
 
 			setTimeout(() => {
 				root.unmount()
