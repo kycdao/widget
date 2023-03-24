@@ -310,6 +310,7 @@ const Option = styled.div`
 
 	strong {
 		${bold}
+		line-height: inherit;
 		justify-content: center;
 	}
 

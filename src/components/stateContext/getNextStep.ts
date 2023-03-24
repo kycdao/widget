@@ -58,7 +58,7 @@ export const NewSubscriberFlow = {
 				if (!isEmailConfirmed) {
 					return EmailVerificationFlow
 				}
-				if (returningUserFlow) {
+				if (!returningUserFlow) {
 					return VerificationFlow
 				}
 			},

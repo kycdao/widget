@@ -272,8 +272,6 @@ export const Widget: FC<WidgetConfig> = ({
 					})
 				}
 			} catch (error) {
-				console.log(error)
-
 				HandleError(dispatch, "fatal", error, data.onFail)
 				clearTimeout(modalTimeout)
 			}
