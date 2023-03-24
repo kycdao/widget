@@ -42,6 +42,7 @@ import {
 	OnSuccessCallback,
 } from "./types"
 import { nearNetworkRegex } from "./StandaloneClientCommon"
+import { isVerified } from "@Hooks/useVerified"
 
 export interface ModalOptions {
 	width: string | number
@@ -88,6 +89,8 @@ export const WidgetModalContainer: FC<PropsWithChildren<ModalOptions>> = ({
 
 // Debug purpose
 window.name = "Widget window"
+
+// Some error can still happen, when the user email is verified, but not verified by the persona. Some paging loop happens. Sorry, had no time. Probably state machine related thing. Restart fixes it.
 
 export const Widget: FC<WidgetConfig> = ({
 	config,
@@ -152,7 +155,7 @@ export const Widget: FC<WidgetConfig> = ({
 					window !== window?.top &&
 					!isNearLoggedIn
 				) {
-					window?.top?.postMessage(
+					window.top?.postMessage(
 						{
 							data: firstChainNetwork as KycDaoOnRegisterOrLoginData,
 							type: KycDaoMessageTypes.REGISTERORLOGIN,
@@ -195,9 +198,14 @@ export const Widget: FC<WidgetConfig> = ({
 					})
 				}
 
-				const hasValidNft = await kycDao.kycDao.hasValidNft("KYC")
+				if (await isVerified(kycDao)) {
+					dispatch({ type: DataActionTypes.SetVerified, payload: true })
+				}
 
-				if (hasValidNft && kycDao.redirectEvent !== "NearMint") {
+				if (
+					(await kycDao.kycDao.hasValidNft("KYC")) &&
+					kycDao.redirectEvent !== "NearMint"
+				) {
 					dispatch({
 						payload: {
 							current: StepID.finalStep,
@@ -229,8 +237,10 @@ export const Widget: FC<WidgetConfig> = ({
 
 					switch (kycDao.redirectEvent) {
 						case "NearUserRejectedError":
-							onFail?.()
-							return
+							// So, if the user rejected the transation, it should start a special flow, a rejected near flow. Now it should lead to an error page. Iframe not allways does it. I didn't had time to finish this one. :(
+							// For testing: https://localhost:4002/?authCode=4139164564&errorCode=userRejected&errorMessage=User%2520rejected%2520transaction
+							clearTimeout(modalTimeout)
+							throw new InternalError("You have rejected the transaction.")
 						case "NearMint":
 							dispatch({
 								type: DataActionTypes.SetNearMinted,
@@ -281,7 +291,6 @@ export const Widget: FC<WidgetConfig> = ({
 		isModal,
 		data.onFail,
 		kycDao,
-		onFail,
 		messageTargetOrigin,
 		key,
 	])

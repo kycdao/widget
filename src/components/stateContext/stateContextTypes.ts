@@ -44,6 +44,7 @@ export enum DataActionTypes {
 	SetLoadingMessage,
 	ShowModal,
 	HideModal,
+	SetVerified,
 }
 
 export enum StepID {
@@ -76,6 +77,7 @@ export type ModalData = {
 }
 
 export type Data = {
+	isVerified: boolean
 	error?: ErrorData
 	loadingMessage: string
 	flowStack: Flow[]
@@ -266,6 +268,11 @@ export type HideModal = {
 	payload?: never
 }
 
+export type SetVerified = {
+	type: DataActionTypes.SetVerified
+	payload: boolean
+}
+
 export type Reset = {
 	type: DataActionTypes.Reset
 	payload?: never
@@ -300,6 +307,7 @@ export type DataChangeActions =
 	| SetLoadingMessage
 	| SetError
 	| HideModal
+	| SetVerified
 	| Reset
 
 export type ModalType =

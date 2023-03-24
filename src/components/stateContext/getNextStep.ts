@@ -56,17 +56,17 @@ export const NewSubscriberFlow = {
 		{ step: StepID.AgreementStep },
 		{
 			step: StepID.kycDAOMembershipStep,
-			startSubFlow: ({ isEmailConfirmed, returningUserFlow }) => {
+			startSubFlow: ({ isEmailConfirmed, isVerified }) => {
 				if (!isEmailConfirmed) {
 					return EmailVerificationFlow
 				}
-				if (!returningUserFlow) {
+				if (!isVerified) {
 					return VerificationFlow
 				}
 			},
 		},
 		{ step: StepID.nftArtSelection },
-		{ step: StepID.kycDAOMembershipStep },
+		{ step: StepID.mintStep },
 		{ step: StepID.finalStep },
 	],
 } as Flow

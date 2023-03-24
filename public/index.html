@@ -318,8 +318,15 @@
 					onFail: () => {},
 				}
 
-				const kycDaoWidget = KycDaoWidget.init(config)
-				const kycDaoIframeWidget = KycDaoIframeWidget.init(iframeConfig)
+				let kycDaoWidget
+				let kycDaoIframeWidget
+
+				// This is needed for the near autostart. Somehow, they should be not run, if no near redirect happened. This should create and error, if someone runs an iframe after an integrated modal. Had no time, sorry. :(
+				if (mode === "integrated") {
+					kycDaoWidget = KycDaoWidget.init(config)
+				} else if (mode === "iframe") {
+					kycDaoIframeWidget = KycDaoIframeWidget.init(iframeConfig)
+				}
 
 				globalThis.selectorHandler = function (selectedChain, walletConnectOn) {
 					if (walletConnectOn) {

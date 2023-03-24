@@ -6,6 +6,7 @@ import { PageProps } from "./pageProps"
 import { DataActionTypes, H1, StateContext, StepID } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
 import useErrorHandler from "@Hooks/useErrorHandler"
+import { LoadingCard } from "./loading"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const onError = useCallback((error: string) => {
@@ -31,7 +32,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	useEffect(() => {
 		dispatch({
 			type: DataActionTypes.SetLoadingMessage,
-			payload: "Starting verification",
+			payload: "Verification is in progress",
 		})
 	}, [dispatch])
 
@@ -116,5 +117,5 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 		return <H1>Error</H1>
 	}
 
-	return <></>
+	return <LoadingCard />
 }

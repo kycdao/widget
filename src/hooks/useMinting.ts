@@ -4,7 +4,7 @@ import { useContext } from "react"
 import useErrorHandler from "./useErrorHandler"
 
 import { useKycDao } from "./useKycDao"
-import { KycDaoMessageTypes } from "../types"
+import { KycDaoMessageTypes, KycDaoOnMintData } from "../types"
 
 export const useMinting = () => {
 	const kycDao = useKycDao()
@@ -31,13 +31,18 @@ export const useMinting = () => {
 				verificationType: VerificationTypes.KYC,
 				imageId,
 				subscriptionYears,
-			}
+				chainNetwork: kycDao.kycDao.connectedWallet?.blockchainNetwork,
+			} as KycDaoOnMintData
 
-			if (window !== window.parent) {
-				window.parent.postMessage(
+			if (
+				window !== window.parent &&
+				kycDao.kycDao.connectedWallet?.blockchain === "Near"
+			) {
+				console.log("on mint on near")
+				window.top?.postMessage(
 					{
-						type: KycDaoMessageTypes.MINT,
 						data: mintingData,
+						type: KycDaoMessageTypes.MINT,
 					},
 					messageTargetOrigin
 				)

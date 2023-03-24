@@ -61,6 +61,9 @@ export const reducer = (
 		case DataActionTypes.SetNearMinted: {
 			return { ...data, nearMinted: payload }
 		}
+		case DataActionTypes.SetVerified: {
+			return { ...data, isVerified: payload }
+		}
 		case DataActionTypes.SetAlreadyHaveAnNftOnThisChain: {
 			return { ...data, alreadyHaveAnNftOnThisChain: payload }
 		}
@@ -147,6 +150,7 @@ export const DefaultData = {
 	email: "",
 	taxResidency: "",
 	termsAccepted: false,
+	isVerified: false,
 	verifyingModalOpen: false,
 	nextButtonState: "enabled",
 	prevButtonState: "enabled",

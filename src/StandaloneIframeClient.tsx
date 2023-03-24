@@ -16,13 +16,14 @@ import {
 } from "./types"
 import qs from "qs"
 import { BlockchainNetwork, KycDao } from "@kycdao/kycdao-sdk"
-import hasNearRedirected from "@Utils/hasNearRedirected"
+import hasNearRedirected, { getNearQueryParams } from "@Utils/hasNearRedirected"
 import getEnabledNearNetwork from "@Utils/getEnabledNearNetwork"
-import { nearNetworkRegex } from "./StandaloneClientCommon"
 
 export interface StandaloneIframeClientOptions extends WidgetConfig {
 	container: HTMLElement | string
 	url: string
+	// Used for the Near iframe redirection in the moment
+	extraParams?: [string, string][]
 }
 
 export interface StandaloneIframeClientHandle {
@@ -69,15 +70,24 @@ const open =
 			window.location.origin
 		)
 
+		const extraParams: { [key: string]: string } = {}
+
+		options.extraParams?.forEach(([key, value]) => {
+			extraParams[key] = value
+		})
+
+		console.log(extraParams)
+
 		const params = qs.stringify(
 			{
 				...config,
 				messageTargetOrigin: window.location.origin,
+				...extraParams,
 			},
 			{ encode: false }
 		)
 
-		const messageHandler = (event: KycDaoMessage) => {
+		const messageHandler = async (event: KycDaoMessage) => {
 			if (isOnReadyMessage(event)) {
 				onReady?.(event.data.data)
 			} else if (isOnFailMessage(event)) {
@@ -93,14 +103,14 @@ const open =
 					const config = { ...options.config }
 					config.enabledBlockchainNetworks = [chainNetwork]
 
-					KycDao.initialize(config)
-						.then((result) => {
-							result.kycDao.connectWallet("Near")
-							result.kycDao.registerOrLogin()
-						})
-						.catch((error) => {
-							alert(error)
-						})
+					try {
+						const client = await KycDao.initialize(config)
+
+						await client.kycDao.connectWallet("Near")
+						await client.kycDao.registerOrLogin()
+					} catch (error) {
+						alert(error)
+					}
 				}
 			} else if (isOnMint(event)) {
 				const chainNetwork = event.data.data.chainNetwork as BlockchainNetwork
@@ -109,15 +119,15 @@ const open =
 					const config = { ...options.config }
 					config.enabledBlockchainNetworks = [chainNetwork]
 
-					KycDao.initialize(config)
-						.then((result) => {
-							result.kycDao.connectWallet("Near")
-							result.kycDao.registerOrLogin()
-							result.kycDao.startMinting(event.data.data)
-						})
-						.catch((error) => {
-							alert(error)
-						})
+					try {
+						const client = await KycDao.initialize(config)
+
+						await client.kycDao.connectWallet("Near")
+						await client.kycDao.registerOrLogin()
+						await client.kycDao.startMinting(event.data.data)
+					} catch (error) {
+						alert(error)
+					}
 				}
 			}
 		}
@@ -167,6 +177,8 @@ const init = (
 ): StandaloneIframeClientHandle => {
 	// if the user has been redirected from near, open the widget with the near network
 	if (hasNearRedirected(window.location.search)) {
+		options.extraParams = getNearQueryParams(window.location.search)
+
 		open(options)(
 			getEnabledNearNetwork(options.config.enabledBlockchainNetworks)
 		)

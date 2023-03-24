@@ -1,8 +1,7 @@
-import {
+import type {
 	BlockchainNetwork,
 	SdkConfiguration,
 	KycDaoInitializationResult,
-	KycDao,
 } from "@kycdao/kycdao-sdk"
 import type {
 	KycDaoEnvironment,
@@ -30,64 +29,6 @@ export const knownNearQueryParams = {
 export const nearNetworkRegex = () => /.*Near*./g
 
 export type KycDaoClientMessageHandler = (message: KycDaoClientMessage) => void
-
-export function messageHndlr(
-	this: KycDaoClientInterface,
-	{ data: { type, data }, origin }: KycDaoClientMessage
-) {
-	if (origin === window.location.origin)
-		switch (type) {
-			case KycDaoClientMessageTypes.kycDaoCancelled:
-			case KycDaoClientMessageTypes.kycDaoCloseModal:
-				this.onFail?.("cancelled")
-
-				this.close()
-				return
-			case KycDaoClientMessageTypes.kycDaoSuccess:
-				this.isSuccessful = true
-				this.onSuccess?.(data as string)
-
-				this.close()
-				return
-			case KycDaoClientMessageTypes.kycDaoFail: {
-				this.onFail?.(data as string)
-
-				return
-			}
-			case KycDaoClientMessageTypes.kycDaoMint: {
-				const mintingData = data as MintingData
-
-				KycDao.initialize(this.config)
-					.then((result) => {
-						result.kycDao.connectWallet("Near")
-						result.kycDao.registerOrLogin()
-						result.kycDao.startMinting(mintingData)
-					})
-					.catch((error) => {
-						alert(error)
-					})
-
-				return
-			}
-			case KycDaoClientMessageTypes.kycDaoRegisterOrLogin: {
-				const chainNetwork = (data as KycDaoClientRegisterOrLogin["data"])
-					?.chainNetwork
-				if (chainNetwork) {
-					const config = { ...this.config }
-					config.enabledBlockchainNetworks = chainNetwork
-
-					KycDao.initialize(config)
-						.then((result) => {
-							result.kycDao.connectWallet("Near")
-							result.kycDao.registerOrLogin()
-						})
-						.catch((error) => {
-							alert(error)
-						})
-				}
-			}
-		}
-}
 
 /**
  * Compile time environment variable injection by babel-plugin-transform-inline-environment-variables & webpack.DefinePlugin.
