@@ -30,14 +30,16 @@ export const ReturningUserFlow = {
 
 const VerificationFlow = {
 	steps: [
-		{ step: StepID.taxResidenceStep },
 		{
-			step: StepID.verificationStep,
+			step: StepID.taxResidenceStep,
 			startSubFlow: ({ grantFlowEnabled }) => {
 				if (grantFlowEnabled) {
 					return GrantFlow
 				}
 			},
+		},
+		{
+			step: StepID.beginVerificationStep,
 		},
 	],
 } as Flow

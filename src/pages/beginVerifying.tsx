@@ -3,7 +3,7 @@ import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { useKycDao } from "@Hooks/useKycDao"
 
 import { PageProps } from "./pageProps"
-import { H1, StateContext, StepID } from "@Components/index"
+import { DataActionTypes, H1, StateContext, StepID } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
 import useErrorHandler from "@Hooks/useErrorHandler"
 
@@ -27,6 +27,14 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 			grantFlowEnabled,
 		},
 	} = useContext(StateContext)
+
+	useEffect(() => {
+		dispatch({
+			type: DataActionTypes.SetLoadingMessage,
+			payload: "Starting verification",
+		})
+	}, [dispatch])
+
 	const kycDao = useKycDao()
 	const verifyingModalOpen = useRef(false)
 	const redirect = useChangePage()
@@ -37,13 +45,14 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	}, [redirect])
 
 	const onCancel = useCallback(() => {
-		if (grantFlowEnabled) {
+		/*if (grantFlowEnabled) {
 			redirect(StepID.grantSocialSecurityNumberStep, StepID.loading, "prev")
 		} else {
 			redirect(StepID.taxResidenceStep, StepID.loading, "prev")
-		}
+		}*/
+		dispatch({ type: DataActionTypes.GoToPrevStep })
 		verifyingModalOpen.current = false
-	}, [grantFlowEnabled, redirect])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (inactive || disabled || !kycDao || verifyingModalOpen.current) {
