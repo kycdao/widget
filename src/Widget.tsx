@@ -300,6 +300,7 @@ export const Widget: FC<WidgetConfig> = ({
 	}, [dispatch, messageTargetOrigin])
 
 	const RestartApp = useCallback(() => {
+		dispatch({ type: DataActionTypes.Reset })
 		setKey(Date.now())
 	}, [])
 

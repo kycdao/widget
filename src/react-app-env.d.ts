@@ -1,5 +1,5 @@
 /// <reference types="react-scripts" />
-import { MetaMaskInpageProvider } from "@metamask/providers"
+import type { MetaMaskInpageProvider } from "@metamask/providers"
 import {
 	StandaloneClientHandle,
 	StandaloneClientOptions,
@@ -8,6 +8,7 @@ import {
 	StandaloneIframeClientHandle,
 	StandaloneIframeClientOptions,
 } from "./StandaloneIframeClient"
+import type WalletConnectProvider from "@walletconnect/web3-provider"
 
 type VirtualKeyboardEvent = UIEvent & {
 	target: { boundingRect: { height: string } }
@@ -25,6 +26,7 @@ declare global {
 			) => StandaloneIframeClientHandle
 		}
 		loadIframePage: () => void
+		WalletConnectProvider: WalletConnectProvider
 	}
 
 	interface Navigator {

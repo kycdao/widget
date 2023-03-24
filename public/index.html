@@ -329,10 +329,18 @@
 
 							kycDaoWidget.open(selectedChain, newConfig)
 						} else if (mode === "iframe") {
-							const newConfig = { ...iframeConfig }
-							newConfig.config.evmProvider = "walletConnect"
+							const newConfig = {
+								...iframeConfig,
+								config: {
+									...iframeConfig.config,
 
-							kycDaoIframeWidget.open(newConfig)
+									evmProvider: "walletConnect",
+								},
+							}
+
+							console.log(newConfig)
+
+							kycDaoIframeWidget.open(selectedChain, newConfig)
 						}
 					} else {
 						if (mode === "integrated") {

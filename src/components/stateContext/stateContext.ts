@@ -22,6 +22,11 @@ export const reducer = (
 	{ payload, type }: DataChangeActions
 ): Data => {
 	switch (type) {
+		case DataActionTypes.Reset: {
+			const { onFail, onSuccess } = data
+
+			return { ...DefaultData, onFail, onSuccess }
+		}
 		case DataActionTypes.HideModal: {
 			return { ...data, modal: undefined }
 		}

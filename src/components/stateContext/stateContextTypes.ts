@@ -14,6 +14,7 @@ export enum HeaderButtons {
 }
 
 export enum DataActionTypes {
+	Reset,
 	SetError,
 	chainChange,
 	changePage,
@@ -265,6 +266,11 @@ export type HideModal = {
 	payload?: never
 }
 
+export type Reset = {
+	type: DataActionTypes.Reset
+	payload?: never
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -294,6 +300,7 @@ export type DataChangeActions =
 	| SetLoadingMessage
 	| SetError
 	| HideModal
+	| Reset
 
 export type ModalType =
 	| "emailVerification"

@@ -1,3 +1,4 @@
+import { lastItem } from "@Utils/lastItem"
 import { Data, StepID } from "./stateContextTypes"
 
 export type FlowStep = {
@@ -94,10 +95,6 @@ export type PageFlow = { steps: StepID[]; getSubFlow?: (data: Data) => Flow }
 export const VerifyMailSubFlow = []
 export const VerifySubFlow = []
 
-function last<T>(this: Array<T>) {
-	return this.at(this.length - 1)
-}
-
 /**
  * Gets back the step
  * @param data The current state
@@ -124,13 +121,13 @@ export function CalculateStep(data: Data, direction: boolean): Data {
 		return data
 	}
 
-	const currentFlow = last.call(flowStack) as Flow | undefined
+	const currentFlow = lastItem.call(flowStack) as Flow | undefined
 
 	/**
 	 * If there is a flow running
 	 */
 	if (currentFlow) {
-		const currentStepIndex = last.call(stepIndices) as number | undefined
+		const currentStepIndex = lastItem.call(stepIndices) as number | undefined
 
 		/**
 		 * If there is a current step
@@ -185,7 +182,7 @@ export function CalculateStep(data: Data, direction: boolean): Data {
 			} else {
 				while (flowStack.length !== 0) {
 					flowStack.pop()
-					const prevFlow = last.call(flowStack) as Flow | undefined
+					const prevFlow = lastItem.call(flowStack) as Flow | undefined
 
 					/**
 					 * If there is no previous flow, then the program is done
@@ -196,7 +193,7 @@ export function CalculateStep(data: Data, direction: boolean): Data {
 
 					stepIndices.pop()
 
-					const prevStepIndex = last.call(stepIndices) as number | undefined
+					const prevStepIndex = lastItem.call(stepIndices) as number | undefined
 
 					/**
 					 * If there is no steps in the flow anymore, then it is done

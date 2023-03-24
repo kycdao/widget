@@ -5,7 +5,6 @@ import { createRoot } from "react-dom/client"
 import { BlockchainNetwork } from "@kycdao/kycdao-sdk"
 import hasNearRedirected from "@Utils/hasNearRedirected"
 import getEnabledNearNetwork from "@Utils/getEnabledNearNetwork"
-import { mergeDeep } from "@Utils/deepMerge"
 
 export interface StandaloneClientOptions extends WidgetConfig {
 	container: HTMLElement | string

@@ -82,6 +82,7 @@ const open =
 				onReady?.(event.data.data)
 			} else if (isOnFailMessage(event)) {
 				onFail?.(event.data.data)
+				close()
 			} else if (isOnSuccessMessage(event)) {
 				onSuccess?.(event.data.data)
 				close()
