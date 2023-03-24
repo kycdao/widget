@@ -9,7 +9,7 @@ import useErrorHandler from "@Hooks/useErrorHandler"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const onError = useCallback((error: string) => {
-		console.log(error)
+		console.error(error)
 		verifyingModalOpen.current = false
 		// what should be the error page?
 	}, [])

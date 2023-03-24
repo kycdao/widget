@@ -10,6 +10,7 @@ import {
 } from "react"
 
 import {
+	InternalError,
 	KycDao,
 	KycDaoInitializationResult,
 	SdkConfiguration,
@@ -109,164 +110,173 @@ export const Widget: FC<WidgetConfig> = ({
 	const { width, height, backdrop } = modalOptions
 
 	const startFlow = useCallback(async () => {
-		console.log(dispatch.toString())
-		if (!kycDao || dispatch.toString() === "function () { }") return
+		// This keycheck required, to make the restart work
+		if (key) {
+			if (!kycDao || dispatch.toString() === "function () { }") return
 
-		const [firstChainNetwork] = config.enabledBlockchainNetworks
+			const [firstChainNetwork] = config.enabledBlockchainNetworks
 
-		let modalTimeout
+			let modalTimeout
 
-		try {
-			dispatch({
-				type: DataActionTypes.SetLoadingMessage,
-				payload:
-					"Trying to connet your wallet. If it does not succeed please ask for help on our Discord.",
-			})
-
-			dispatch({
-				type: DataActionTypes.setModalMode,
-				payload: isModal,
-			})
-
-			modalTimeout = setTimeout(() => {
+			try {
 				dispatch({
-					type: DataActionTypes.ShowModal,
-					payload: {
-						body: "If it seems stuck, please click to retry.",
-						header: "Trying to connect your wallet",
-						type: "genericInfo",
-						showRetry: true,
-					},
+					type: DataActionTypes.SetLoadingMessage,
+					payload:
+						"Trying to connet your wallet. If it does not succeed please ask for help on our Discord.",
 				})
-			}, 5000)
 
-			//TODO Make this foolproof
-			const isNearLoggedIn = Object.keys(localStorage).find((value) =>
-				/near-api-js:keystore:(?!pending)(.*)/g.test(value)
-			)
+				dispatch({
+					type: DataActionTypes.setModalMode,
+					payload: isModal,
+				})
 
-			if (
-				nearNetworkRegex().test(firstChainNetwork) &&
-				window !== window?.top &&
-				!isNearLoggedIn
-			) {
-				window?.top?.postMessage(
-					{
-						data: firstChainNetwork as KycDaoOnRegisterOrLoginData,
-						type: KycDaoMessageTypes.REGISTERORLOGIN,
-					},
-					messageTargetOrigin
+				modalTimeout = setTimeout(() => {
+					dispatch({
+						type: DataActionTypes.ShowModal,
+						payload: {
+							body: "If it seems stuck, please click to retry.",
+							header: "Trying to connect your wallet",
+							type: "genericInfo",
+							showRetry: true,
+						},
+					})
+				}, 5000)
+
+				//TODO Make this foolproof
+				const isNearLoggedIn = Object.keys(localStorage).find((value) =>
+					/near-api-js:keystore:(?!pending)(.*)/g.test(value)
 				)
 
-				return
-			}
+				if (
+					nearNetworkRegex().test(firstChainNetwork) &&
+					window !== window?.top &&
+					!isNearLoggedIn
+				) {
+					window?.top?.postMessage(
+						{
+							data: firstChainNetwork as KycDaoOnRegisterOrLoginData,
+							type: KycDaoMessageTypes.REGISTERORLOGIN,
+						},
+						messageTargetOrigin
+					)
 
-			await kycDao.kycDao.connectWallet(getNetworkType(firstChainNetwork))
-
-			dispatch({
-				type: DataActionTypes.HideModal,
-			})
-
-			clearTimeout(modalTimeout)
-
-			dispatch({
-				type: DataActionTypes.setModalMode,
-				payload: isModal,
-			})
-
-			const emailData = await kycDao?.kycDao.checkEmailConfirmed()
-
-			dispatch({
-				type: DataActionTypes.setEmailConfirmed,
-				payload: !!emailData.isConfirmed,
-			})
-
-			if (emailData.address) {
-				dispatch({
-					type: DataActionTypes.emailChange,
-					payload: emailData.address,
-				})
-			}
-
-			const hasValidNft = await kycDao.kycDao.hasValidNft("KYC")
-
-			if (hasValidNft && kycDao.redirectEvent !== "NearMint") {
-				dispatch({
-					payload: {
-						current: StepID.finalStep,
-						prev: StepID.loading,
-					},
-					type: DataActionTypes.changePage,
-				})
-
-				dispatch({
-					payload: true,
-					type: DataActionTypes.SetProcessSucess,
-				})
-
-				dispatch({
-					payload: true,
-					type: DataActionTypes.SetAlreadyHaveAnNftOnThisChain,
-				})
-
-				return
-			}
-
-			await kycDao.kycDao.registerOrLogin()
-
-			if (kycDao.redirectEvent) {
-				dispatch({
-					type: DataActionTypes.termsAcceptedChange,
-					payload: true,
-				})
-
-				switch (kycDao.redirectEvent) {
-					case "NearUserRejectedError":
-						onFail?.()
-						return
-					case "NearMint":
-						dispatch({
-							type: DataActionTypes.SetNearMinted,
-							payload: true,
-						})
-
-						if (kycDao.mintingResult?.transactionUrl) {
-							dispatch({
-								type: DataActionTypes.setChainExplorerUrl,
-								payload: kycDao.mintingResult?.transactionUrl || "",
-							})
-						}
-						if (kycDao.mintingResult?.imageUrl) {
-							dispatch({
-								type: DataActionTypes.setNftImageUrl,
-								payload: kycDao.mintingResult?.imageUrl,
-							})
-						}
+					return
 				}
-			} else {
-				await kycDao.kycDao.registerOrLogin()
 
-				const { subscribed } = kycDao.kycDao
+				// For some reason, solana don't throw an exeption in an inframe
+				if ("Solana" === getNetworkType(firstChainNetwork)) {
+					throw new InternalError("Solana is not supported yet.")
+				}
 
-				if (subscribed) {
+				await kycDao.kycDao.connectWallet(getNetworkType(firstChainNetwork))
+
+				dispatch({
+					type: DataActionTypes.HideModal,
+				})
+
+				clearTimeout(modalTimeout)
+
+				dispatch({
+					type: DataActionTypes.setModalMode,
+					payload: isModal,
+				})
+
+				const emailData = await kycDao?.kycDao.checkEmailConfirmed()
+
+				dispatch({
+					type: DataActionTypes.setEmailConfirmed,
+					payload: !!emailData.isConfirmed,
+				})
+
+				if (emailData.address) {
 					dispatch({
-						payload: true,
-						type: DataActionTypes.SetReturnUserFlow,
+						type: DataActionTypes.emailChange,
+						payload: emailData.address,
 					})
 				}
-			}
 
-			dispatch({ type: DataActionTypes.GoToNextStep })
+				const hasValidNft = await kycDao.kycDao.hasValidNft("KYC")
 
-			if (!isModal) {
-				dispatch({
-					type: DataActionTypes.SetHeaderButtonState,
-					payload: { button: HeaderButtons.close, state: "hidden" },
-				})
+				if (hasValidNft && kycDao.redirectEvent !== "NearMint") {
+					dispatch({
+						payload: {
+							current: StepID.finalStep,
+							prev: StepID.loading,
+						},
+						type: DataActionTypes.changePage,
+					})
+
+					dispatch({
+						payload: true,
+						type: DataActionTypes.SetProcessSucess,
+					})
+
+					dispatch({
+						payload: true,
+						type: DataActionTypes.SetAlreadyHaveAnNftOnThisChain,
+					})
+
+					return
+				}
+
+				await kycDao.kycDao.registerOrLogin()
+
+				if (kycDao.redirectEvent) {
+					dispatch({
+						type: DataActionTypes.termsAcceptedChange,
+						payload: true,
+					})
+
+					switch (kycDao.redirectEvent) {
+						case "NearUserRejectedError":
+							onFail?.()
+							return
+						case "NearMint":
+							dispatch({
+								type: DataActionTypes.SetNearMinted,
+								payload: true,
+							})
+
+							if (kycDao.mintingResult?.transactionUrl) {
+								dispatch({
+									type: DataActionTypes.setChainExplorerUrl,
+									payload: kycDao.mintingResult?.transactionUrl || "",
+								})
+							}
+							if (kycDao.mintingResult?.imageUrl) {
+								dispatch({
+									type: DataActionTypes.setNftImageUrl,
+									payload: kycDao.mintingResult?.imageUrl,
+								})
+							}
+					}
+				} else {
+					await kycDao.kycDao.registerOrLogin()
+
+					const { subscribed } = kycDao.kycDao
+
+					if (subscribed) {
+						dispatch({
+							payload: true,
+							type: DataActionTypes.SetReturnUserFlow,
+						})
+					}
+				}
+
+				dispatch({ type: DataActionTypes.GoToNextStep })
+
+				if (!isModal) {
+					dispatch({
+						type: DataActionTypes.SetHeaderButtonState,
+						payload: { button: HeaderButtons.close, state: "hidden" },
+					})
+				}
+			} catch (error) {
+				console.log(error)
+
+				HandleError(dispatch, "fatal", error, data.onFail)
+				clearTimeout(modalTimeout)
 			}
-		} catch (error) {
-			HandleError(dispatch, "fatal", error, data.onFail)
-			clearTimeout(modalTimeout)
 		}
 	}, [
 		config.enabledBlockchainNetworks,
@@ -275,6 +285,7 @@ export const Widget: FC<WidgetConfig> = ({
 		kycDao,
 		onFail,
 		messageTargetOrigin,
+		key,
 	])
 
 	useEffect(() => {
@@ -293,7 +304,13 @@ export const Widget: FC<WidgetConfig> = ({
 	}, [])
 
 	useEffect(() => {
-		if (dispatch.toString() !== "function () { }" && !kycDao && !data.error) {
+		// This keycheck required, to make the restart work
+		if (
+			dispatch.toString() !== "function () { }" &&
+			!kycDao &&
+			!data.error &&
+			key
+		) {
 			KycDao.initialize(config)
 				.then((result) => {
 					setKycDao(result)
@@ -303,7 +320,7 @@ export const Widget: FC<WidgetConfig> = ({
 					HandleError(dispatch, "fatal", error, data.onFail)
 				})
 		}
-	}, [config, onReady, dispatch, data.error, kycDao, data.onFail])
+	}, [config, onReady, dispatch, data.error, kycDao, data.onFail, key])
 
 	useEffect(() => {
 		const close = OnClose.subscribe(() => {

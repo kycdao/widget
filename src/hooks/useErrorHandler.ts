@@ -37,7 +37,12 @@ export const HandleError = (
 	})
 
 	if (/\[RejectedByUser\]/g.test(errorText)) {
-		onFail?.(errorText)
+		dispatch({
+			type: DataActionTypes.GoToNextStep,
+		})
+		dispatch({
+			type: DataActionTypes.HideModal,
+		})
 		return
 	}
 

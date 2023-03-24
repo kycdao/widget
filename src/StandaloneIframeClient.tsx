@@ -29,13 +29,15 @@ export interface StandaloneIframeClientHandle {
 	open: (blockchainNetwork: BlockchainNetwork) => void
 }
 
+// For debug purposes
 window.name = "Main window"
-
-console.log("the iframeclient window is", window.name)
 
 const open =
 	(options: StandaloneIframeClientOptions) =>
-	(blockchainNetwork: BlockchainNetwork) => {
+	(
+		blockchainNetwork: BlockchainNetwork,
+		options2?: StandaloneIframeClientOptions
+	) => {
 		const {
 			container,
 			url,
@@ -45,7 +47,7 @@ const open =
 			config,
 			onSuccess,
 			isModal = true,
-		} = options
+		} = options2 ? options2 : options
 
 		config.enabledBlockchainNetworks = [blockchainNetwork]
 
@@ -76,13 +78,10 @@ const open =
 		)
 
 		const messageHandler = (event: KycDaoMessage) => {
-			console.log(event.data)
-
 			if (isOnReadyMessage(event)) {
 				onReady?.(event.data.data)
 			} else if (isOnFailMessage(event)) {
 				onFail?.(event.data.data)
-				close()
 			} else if (isOnSuccessMessage(event)) {
 				onSuccess?.(event.data.data)
 				close()
@@ -122,11 +121,6 @@ const open =
 			}
 		}
 
-		console.log(
-			"The iframe client messagehandler is atteched to",
-			window.top?.name
-		)
-
 		window.top?.addEventListener("message", messageHandler, false)
 
 		root.render(
@@ -158,7 +152,6 @@ const open =
 		const close = () => {
 			window.top?.removeEventListener("message", messageHandler)
 			setTimeout(() => {
-				console.log("unmount")
 				root.unmount()
 			}, 0)
 		}

@@ -14,7 +14,7 @@ export function useVerified() {
 					)
 				})
 				.catch((error) => {
-					console.log(error)
+					console.error(error)
 				})
 		} else
 			throw new Error(

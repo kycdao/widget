@@ -5,6 +5,7 @@ import { createRoot } from "react-dom/client"
 import { BlockchainNetwork } from "@kycdao/kycdao-sdk"
 import hasNearRedirected from "@Utils/hasNearRedirected"
 import getEnabledNearNetwork from "@Utils/getEnabledNearNetwork"
+import { mergeDeep } from "@Utils/deepMerge"
 
 export interface StandaloneClientOptions extends WidgetConfig {
 	container: HTMLElement | string
@@ -16,8 +17,13 @@ export interface StandaloneClientHandle {
 
 const open =
 	(options: StandaloneClientOptions) =>
-	(blockchainNetwork: BlockchainNetwork) => {
-		const { container, onFail, config, onSuccess, ...props } = options
+	(
+		blockchainNetwork: BlockchainNetwork,
+		options2?: StandaloneClientOptions
+	) => {
+		const { container, onFail, config, onSuccess, ...props } = options2
+			? options2
+			: options
 
 		config.enabledBlockchainNetworks = [blockchainNetwork]
 
@@ -37,8 +43,6 @@ const open =
 
 		const root = createRoot(rootElement)
 
-		console.log(root)
-
 		// todo: move this to a component
 		const ErrorBoundaryFallbackComponent = ErrorPageFactory(
 			window.location.origin
@@ -51,16 +55,12 @@ const open =
 			onFail?.(reason)
 
 			setTimeout(() => {
-				console.log("Unmount")
-
 				root.unmount()
 			}, 0)
 		}
 
 		const onSuccessWrapper = (data?: string) => {
 			onSuccess?.(data)
-
-			console.log("Unmount")
 
 			setTimeout(() => {
 				root.unmount()

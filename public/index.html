@@ -213,8 +213,6 @@
 
 			let mode = localStorage.getItem("mode") || "integrated"
 
-			console.log(mode)
-
 			function handleModeClick(btn) {
 				const typeSelectorChildren = document.getElementsByClassName(
 					"typeSelectorContainer"
@@ -307,9 +305,7 @@
 						evmProvider: "ethereum",
 						baseUrl: "https://staging.kycdao.xyz",
 					},
-					onReady: () => {
-						console.log("This ran")
-					},
+					onReady: () => {},
 					onSuccess: (data) => {
 						if (data) {
 							const i = /Already has an nft on (.*)\./g.exec(data)
@@ -319,45 +315,30 @@
 							}
 						}
 					},
-					onFail: () => {
-						console.log("This ran")
-					},
+					onFail: () => {},
 				}
 
-				console.log("modes")
-
-				if (mode === "integrated") {
-					const kycDaoIframeClientNearCheck = KycDaoWidget.init(config)
-				} else if (mode === "iframe") {
-					const kycDaoClientNearCheck = KycDaoIframeWidget.init(iframeConfig)
-				}
+				const kycDaoWidget = KycDaoWidget.init(config)
+				const kycDaoIframeWidget = KycDaoIframeWidget.init(iframeConfig)
 
 				globalThis.selectorHandler = function (selectedChain, walletConnectOn) {
 					if (walletConnectOn) {
 						if (mode === "integrated") {
-							const kycDaoWalletConnectEvm = KycDaoWidget.init({
-								...config,
-								config: {
-									...config.config,
-									evmProvider: walletConnectEvmProvider,
-								},
-							})
+							const newConfig = { ...config }
+							newConfig.config.evmProvider = walletConnectEvmProvider
 
-							kycDaoWalletConnectEvm.open(selectedChain)
+							kycDaoWidget.open(selectedChain, newConfig)
 						} else if (mode === "iframe") {
-							const kycDaoIframeWalletConnectEvm =
-								KycDaoIframeWidget.init(iframeConfig)
-							kycDaoIframeWalletConnectEvm.open(selectedChain)
+							const newConfig = { ...iframeConfig }
+							newConfig.config.evmProvider = "walletConnect"
+
+							kycDaoIframeWidget.open(newConfig)
 						}
 					} else {
 						if (mode === "integrated") {
-							const kycDaoEvm = KycDaoWidget.init(config)
-							kycDaoEvm.open(selectedChain)
+							kycDaoWidget.open(selectedChain)
 						} else if (mode === "iframe") {
-							const kycDaoIframeWindowEvm =
-								KycDaoIframeWidget.init(iframeConfig)
-
-							kycDaoIframeWindowEvm.open(selectedChain)
+							kycDaoIframeWidget.open(selectedChain)
 						}
 					}
 				}
