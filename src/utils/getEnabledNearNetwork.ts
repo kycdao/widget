@@ -1,5 +1,6 @@
 import { BlockchainNetwork } from "@kycdao/kycdao-sdk"
-import { nearNetworkRegex } from "../StandaloneClientCommon"
+
+export const nearNetworkRegex = () => /.*Near*./g
 
 const getEnabledNearNetwork = (
 	enabledBlockchainNetworks: BlockchainNetwork[]

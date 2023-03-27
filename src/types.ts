@@ -1,8 +1,8 @@
 import type {
 	KycDaoInitializationResult,
+	SdkConfiguration,
 	VerificationType,
 } from "@kycdao/kycdao-sdk"
-import { KycDaoClientOptions } from "StandaloneClientCommon"
 
 export enum KycDaoMessageTypes {
 	READY = "KycDaoIframeWidgetOnReady",
@@ -16,7 +16,7 @@ export type KycDaoOnReadyData = KycDaoInitializationResult
 export type KycDaoOnFailData = string
 export type KycDaoOnSuccessData = string
 export type KycDaoOnRegisterOrLoginData =
-	KycDaoClientOptions["config"]["enabledBlockchainNetworks"][0]
+	SdkConfiguration["enabledBlockchainNetworks"][0]
 export type KycDaoOnMintData = {
 	disclaimerAccepted: boolean
 	verificationType?: VerificationType

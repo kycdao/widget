@@ -41,8 +41,8 @@ import {
 	OnReadyCallback,
 	OnSuccessCallback,
 } from "./types"
-import { nearNetworkRegex } from "./StandaloneClientCommon"
 import { isVerified } from "@Hooks/useVerified"
+import { nearNetworkRegex } from "@Utils/getEnabledNearNetwork"
 
 export interface ModalOptions {
 	width: string | number

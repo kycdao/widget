@@ -17,7 +17,9 @@ import {
 import qs from "qs"
 import { BlockchainNetwork, KycDao } from "@kycdao/kycdao-sdk"
 import hasNearRedirected, { getNearQueryParams } from "@Utils/hasNearRedirected"
-import getEnabledNearNetwork from "@Utils/getEnabledNearNetwork"
+import getEnabledNearNetwork, {
+	nearNetworkRegex,
+} from "@Utils/getEnabledNearNetwork"
 
 export interface StandaloneIframeClientOptions extends WidgetConfig {
 	container: HTMLElement | string
@@ -37,7 +39,7 @@ const open =
 	(options: StandaloneIframeClientOptions) =>
 	(
 		blockchainNetwork: BlockchainNetwork,
-		options2?: StandaloneIframeClientOptions
+		optionsOverride?: StandaloneIframeClientOptions
 	) => {
 		const {
 			container,
@@ -48,7 +50,7 @@ const open =
 			config,
 			onSuccess,
 			isModal = true,
-		} = options2 ? options2 : options
+		} = optionsOverride ? optionsOverride : options
 
 		config.enabledBlockchainNetworks = [blockchainNetwork]
 
@@ -66,9 +68,7 @@ const open =
 		const root = createRoot(rootElement)
 
 		// todo: move this to a component
-		const ErrorBoundaryFallbackComponent = ErrorPageFactory(
-			window.location.origin
-		)
+		const ErrorBoundaryFallbackComponent = ErrorPageFactory()
 
 		const extraParams: { [key: string]: string } = {}
 

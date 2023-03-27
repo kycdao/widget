@@ -18,10 +18,10 @@ const open =
 	(options: StandaloneClientOptions) =>
 	(
 		blockchainNetwork: BlockchainNetwork,
-		options2?: StandaloneClientOptions
+		optionsOverride?: StandaloneClientOptions
 	) => {
-		const { container, onFail, config, onSuccess, ...props } = options2
-			? options2
+		const { container, onFail, config, onSuccess, ...props } = optionsOverride
+			? optionsOverride
 			: options
 
 		config.enabledBlockchainNetworks = [blockchainNetwork]
@@ -43,13 +43,11 @@ const open =
 		const root = createRoot(rootElement)
 
 		// todo: move this to a component
-		const ErrorBoundaryFallbackComponent = ErrorPageFactory(
-			window.location.origin
-		)
+		const ErrorBoundaryFallbackComponent = ErrorPageFactory()
 
 		// As a side effect, unmount the widget when the user closes the modal
 		// todo: what about no modal?
-		// The settimeout looks weird, but neccesary in the moment: https://github.com/facebook/react/issues/25675
+		// The setTimeout looks weird, but necessary in the moment: https://github.com/facebook/react/issues/25675
 		const onFailWrapper = (reason?: string) => {
 			onFail?.(reason)
 
