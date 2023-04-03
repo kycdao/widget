@@ -53,7 +53,9 @@ export const EmailVerificationFlow = {
 
 export const NewSubscriberFlow = {
 	steps: [
-		{ step: StepID.AgreementStep },
+		{
+			step: StepID.AgreementStep,
+		},
 		{
 			step: StepID.kycDAOMembershipStep,
 			startSubFlow: ({ isEmailConfirmed, isVerified }) => {
@@ -71,7 +73,7 @@ export const NewSubscriberFlow = {
 	],
 } as Flow
 
-export const AlreadHaveNftFlow = {
+export const AlreadyHaveNftFlow = {
 	steps: [{ step: StepID.finalStep }],
 } as Flow
 
@@ -79,11 +81,39 @@ export const MainFlow = {
 	steps: [
 		{
 			step: StepID.loading,
-			startSubFlow: ({ alreadyHaveAnNftOnThisChain, returningUserFlow }) => {
+			startSubFlow: ({
+				alreadyHaveAnNftOnThisChain,
+				returningUserFlow,
+				isNearLogin,
+				isVerified,
+				isEmailConfirmed,
+			}) => {
 				if (alreadyHaveAnNftOnThisChain) {
-					return AlreadHaveNftFlow
+					return AlreadyHaveNftFlow
 				} else if (returningUserFlow) {
 					return ReturningUserFlow
+				} else if (isNearLogin) {
+					const NearLoginFlow = {
+						steps: [
+							{ step: StepID.nftArtSelection },
+							{ step: StepID.mintStep },
+							{ step: StepID.finalStep },
+						],
+					} as Flow
+
+					if (!isEmailConfirmed) {
+						return {
+							steps: [...EmailVerificationFlow.steps, ...NearLoginFlow.steps],
+						} as Flow
+					}
+
+					if (!isVerified) {
+						return {
+							steps: [...VerificationFlow.steps, ...NearLoginFlow.steps],
+						} as Flow
+					}
+
+					return NearLoginFlow
 				} else {
 					return NewSubscriberFlow
 				}
