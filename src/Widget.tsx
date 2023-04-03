@@ -202,6 +202,13 @@ export const Widget: FC<WidgetConfig> = ({
 					dispatch({ type: DataActionTypes.SetVerified, payload: true })
 				}
 
+				if (!isModal) {
+					dispatch({
+						type: DataActionTypes.SetHeaderButtonState,
+						payload: { button: HeaderButtons.close, state: "hidden" },
+					})
+				}
+
 				if (
 					(await kycDao.kycDao.hasValidNft("KYC")) &&
 					kycDao.redirectEvent !== "NearMint"
@@ -259,6 +266,16 @@ export const Widget: FC<WidgetConfig> = ({
 									payload: kycDao.mintingResult?.imageUrl,
 								})
 							}
+
+							dispatch({
+								payload: {
+									current: StepID.finalStep,
+									prev: StepID.loading,
+								},
+								type: DataActionTypes.changePage,
+							})
+
+							return
 					}
 				} else {
 					await kycDao.kycDao.registerOrLogin()
@@ -274,13 +291,6 @@ export const Widget: FC<WidgetConfig> = ({
 				}
 
 				dispatch({ type: DataActionTypes.GoToNextStep })
-
-				if (!isModal) {
-					dispatch({
-						type: DataActionTypes.SetHeaderButtonState,
-						payload: { button: HeaderButtons.close, state: "hidden" },
-					})
-				}
 			} catch (error) {
 				HandleError(dispatch, "fatal", error, data.onFail)
 				clearTimeout(modalTimeout)

@@ -7,6 +7,7 @@ import { DataActionTypes, H1, StateContext, StepID } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
 import useErrorHandler from "@Hooks/useErrorHandler"
 import { LoadingCard } from "./loading"
+import { isVerified } from "@Hooks/useVerified"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const onError = useCallback((error: string) => {
@@ -40,11 +41,6 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const verifyingModalOpen = useRef(false)
 	const redirect = useChangePage()
 
-	const onComplete = useCallback(() => {
-		redirect(StepID.nftArtSelection)
-		verifyingModalOpen.current = false
-	}, [redirect])
-
 	const onCancel = useCallback(() => {
 		/*if (grantFlowEnabled) {
 			redirect(StepID.grantSocialSecurityNumberStep, StepID.loading, "prev")
@@ -54,6 +50,25 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 		dispatch({ type: DataActionTypes.GoToPrevStep })
 		verifyingModalOpen.current = false
 	}, [dispatch])
+
+	const onComplete = useCallback(async () => {
+		if (!kycDao) {
+			return
+		}
+
+		const isVerifiedResult = await isVerified(kycDao)
+
+		if (!isVerifiedResult) {
+			onCancel()
+		}
+
+		dispatch({
+			type: DataActionTypes.SetVerified,
+			payload: isVerifiedResult as boolean,
+		})
+		redirect(StepID.nftArtSelection)
+		verifyingModalOpen.current = false
+	}, [dispatch, kycDao, onCancel, redirect])
 
 	useEffect(() => {
 		if (inactive || disabled || !kycDao || verifyingModalOpen.current) {
