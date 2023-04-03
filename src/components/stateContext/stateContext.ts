@@ -115,6 +115,8 @@ export const reducer = (
 				default:
 					return data
 			}
+		case DataActionTypes.SetIsNearLogin:
+			return { ...data, isNearLogin: payload }
 		case DataActionTypes.OnClickHeaderButton:
 			switch (payload.button) {
 				case HeaderButtons.close:
@@ -170,6 +172,8 @@ export const DefaultData = {
 	grantFlowEnabled: false,
 	alreadyHaveAnNftOnThisChain: false,
 	nearMinted: false,
+	// Indicate if the user the widget flow started from NEAR auth callback
+	isNearLogin: false,
 } as Data
 
 export const StateContext = createContext<{

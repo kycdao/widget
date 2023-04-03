@@ -125,7 +125,7 @@ export const Widget: FC<WidgetConfig> = ({
 				dispatch({
 					type: DataActionTypes.SetLoadingMessage,
 					payload:
-						"Trying to connet your wallet. If it does not succeed please ask for help on our Discord.",
+						"Trying to connect your wallet. If it does not succeed please ask for help on our Discord.",
 				})
 
 				dispatch({
@@ -243,6 +243,14 @@ export const Widget: FC<WidgetConfig> = ({
 					})
 
 					switch (kycDao.redirectEvent) {
+						case "NearLogin":
+							dispatch({
+								payload: true,
+								type: DataActionTypes.SetIsNearLogin,
+							})
+
+							dispatch({ type: DataActionTypes.GoToNextStep })
+							return
 						case "NearUserRejectedError":
 							// So, if the user rejected the transation, it should start a special flow, a rejected near flow. Now it should lead to an error page. Iframe not allways does it. I didn't had time to finish this one. :(
 							// For testing: https://localhost:4002/?authCode=4139164564&errorCode=userRejected&errorMessage=User%2520rejected%2520transaction

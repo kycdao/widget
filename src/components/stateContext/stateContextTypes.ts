@@ -45,6 +45,7 @@ export enum DataActionTypes {
 	ShowModal,
 	HideModal,
 	SetVerified,
+	SetIsNearLogin,
 }
 
 export enum StepID {
@@ -117,6 +118,7 @@ export type Data = {
 	nearMinted: boolean
 	onSuccess?: OnSuccessCallback
 	onFail?: OnFailCallback
+	isNearLogin: boolean
 }
 
 export type HeaderButtonState = "enabled" | "disabled" | "hidden"
@@ -278,6 +280,11 @@ export type Reset = {
 	payload?: never
 }
 
+export type SetIsNearLogin = {
+	type: DataActionTypes.SetIsNearLogin
+	payload: boolean
+}
+
 export type DataChangeActions =
 	| HeaderButtonClickAction
 	| SetHeaderButtonStateAction
@@ -309,6 +316,7 @@ export type DataChangeActions =
 	| HideModal
 	| SetVerified
 	| Reset
+	| SetIsNearLogin
 
 export type ModalType =
 	| "emailVerification"
