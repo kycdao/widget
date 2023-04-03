@@ -121,7 +121,7 @@
 		"babel-plugin-styled-components": "^2.0.7",
 		"babel-plugin-transform-inline-environment-variables": "^0.4.4",
 		"babel-plugin-transform-remove-imports": "1.7.0",
-		"concurrently": "^7.6.0",
+		"concurrently": "^8.0.1",
 		"create-react-app": "^5.0.1",
 		"cross-env": "^7.0.3",
 		"eslint": "^8.35.0",
