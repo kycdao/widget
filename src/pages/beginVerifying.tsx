@@ -3,18 +3,20 @@ import { VerificationTypes } from "@kycdao/kycdao-sdk"
 import { useKycDao } from "@Hooks/useKycDao"
 
 import { PageProps } from "./pageProps"
-import { H1, StateContext, StepID } from "@Components/index"
+import { DataActionTypes, H1, StateContext, StepID } from "@Components/index"
 import useChangePage from "@Hooks/useChangePage"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
+import { LoadingCard } from "./loading"
+import { isVerified } from "@Hooks/useVerified"
 
 export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 	const onError = useCallback((error: string) => {
-		console.log(error)
+		console.error(error)
 		verifyingModalOpen.current = false
 		// what should be the error page?
 	}, [])
 
-	const errorHandler = useErrorHandler()
+	const { handleError } = useErrorHandler()
 
 	const {
 		dispatch,
@@ -27,23 +29,46 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 			grantFlowEnabled,
 		},
 	} = useContext(StateContext)
+
+	useEffect(() => {
+		dispatch({
+			type: DataActionTypes.SetLoadingMessage,
+			payload: "Verification is in progress",
+		})
+	}, [dispatch])
+
 	const kycDao = useKycDao()
 	const verifyingModalOpen = useRef(false)
 	const redirect = useChangePage()
 
-	const onComplete = useCallback(() => {
-		redirect(StepID.nftArtSelection)
-		verifyingModalOpen.current = false
-	}, [redirect])
-
 	const onCancel = useCallback(() => {
-		if (grantFlowEnabled) {
+		/*if (grantFlowEnabled) {
 			redirect(StepID.grantSocialSecurityNumberStep, StepID.loading, "prev")
 		} else {
 			redirect(StepID.taxResidenceStep, StepID.loading, "prev")
-		}
+		}*/
+		dispatch({ type: DataActionTypes.GoToPrevStep })
 		verifyingModalOpen.current = false
-	}, [grantFlowEnabled, redirect])
+	}, [dispatch])
+
+	const onComplete = useCallback(async () => {
+		if (!kycDao) {
+			return
+		}
+
+		const isVerifiedResult = await isVerified(kycDao)
+
+		if (!isVerifiedResult) {
+			onCancel()
+		}
+
+		dispatch({
+			type: DataActionTypes.SetVerified,
+			payload: isVerifiedResult as boolean,
+		})
+		redirect(StepID.nftArtSelection)
+		verifyingModalOpen.current = false
+	}, [dispatch, kycDao, onCancel, redirect])
 
 	useEffect(() => {
 		if (inactive || disabled || !kycDao || verifyingModalOpen.current) {
@@ -81,7 +106,7 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 					}
 				)
 			} catch (error) {
-				errorHandler("fatal", error)
+				handleError("fatal", error)
 			}
 		})()
 	}, [
@@ -100,12 +125,12 @@ export const BeginVerifyingStep: FC<PageProps> = ({ inactive, disabled }) => {
 		isEmailConfirmed,
 		grantFlowEnabled,
 		redirect,
-		errorHandler,
+		handleError,
 	])
 
 	if (!kycDao) {
 		return <H1>Error</H1>
 	}
 
-	return <></>
+	return <LoadingCard />
 }

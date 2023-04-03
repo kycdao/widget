@@ -1,10 +1,14 @@
 /// <reference types="react-scripts" />
-import { MetaMaskInpageProvider } from "@metamask/providers"
-import { KycDaoWidgetConfig } from "./widget"
+import type { MetaMaskInpageProvider } from "@metamask/providers"
 import {
-	KycDaoClientOptions,
-	KycDaoClientInterface,
-} from "./KycDaoClientCommon"
+	StandaloneClientHandle,
+	StandaloneClientOptions,
+} from "./StandaloneClient"
+import {
+	StandaloneIframeClientHandle,
+	StandaloneIframeClientOptions,
+} from "./StandaloneIframeClient"
+import type WalletConnectProvider from "@walletconnect/web3-provider"
 
 type VirtualKeyboardEvent = UIEvent & {
 	target: { boundingRect: { height: string } }
@@ -13,13 +17,16 @@ type VirtualKeyboardEvent = UIEvent & {
 declare global {
 	interface Window {
 		ethereum: MetaMaskInpageProvider
-		KycDaoClient: {
-			new (config: KycDaoClientOptions): KycDaoClientInterface
+		KycDaoWidget: {
+			init: (options: StandaloneClientOptions) => StandaloneClientHandle
 		}
-		KycDaoIframeClient: {
-			new (config: KycDaoClientOptions): KycDaoClientInterface
+		KycDaoIframeWidget: {
+			init: (
+				options: StandaloneIframeClientOptions
+			) => StandaloneIframeClientHandle
 		}
-		KycDaoWidget: React.FC<KycDaoWidgetConfig>
+		loadIframePage: () => void
+		WalletConnectProvider: WalletConnectProvider
 	}
 
 	interface Navigator {

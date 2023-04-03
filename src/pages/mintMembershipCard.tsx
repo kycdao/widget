@@ -7,6 +7,7 @@ import { useMinting } from "@Hooks/useMinting"
 import styled from "styled-components/macro"
 import {
 	Button,
+	Centered,
 	DataActionTypes,
 	H1,
 	HeaderButtons,
@@ -16,12 +17,13 @@ import {
 	P,
 	StateContext,
 	Step,
-	StepID,
 	StepPart,
 	SubmitButton,
+	bold,
+	smallText,
+	text,
 } from "@Components/index"
-import useChangePage from "@Hooks/useChangePage"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 
 const Body = () => {
 	return (
@@ -145,11 +147,8 @@ const Sum = styled.div`
 `
 
 const Price = styled.span`
-	color: black;
-	font-size: 12pt;
-	font-weight: 800;
-	font-family: var(--kyc-sdk-primary-font);
-	-webkit-font-smoothing: antialiased;
+	${text}
+	${bold}
 `
 
 const PriceWithStrikethrough = styled(Price)`
@@ -159,11 +158,9 @@ const PriceWithStrikethrough = styled(Price)`
 `
 
 const Value = styled.div`
-	color: black;
-	font-size: 12px;
+	${smallText}
 	display: flex;
 	margin-bottom: 1em;
-	font-family: var(--kyc-sdk-primary-font);
 
 	padding: 0.5rem;
 	background: var(--kyc-sdk-cybergreen-35);
@@ -176,26 +173,22 @@ const Value = styled.div`
 	}
 
 	p {
+		${smallText}
 		display: flex;
-		font-size: 12px;
 		padding-right: 3px;
 
 		> strong {
+			${bold}
 			padding-right: 3px;
-			color: black;
-			font-weight: 800;
 		}
 	}
 `
 
 const YearCount = styled.div`
+	${Centered}
+	${text}
 	padding: 1rem;
-	font-size: 12pt;
 	width: 10rem;
-	text-align: center;
-	font-family: var(--kyc-sdk-primary-font);
-	-webkit-font-smoothing: antialiased;
-	color: black;
 	display: flex;
 	align-items: center;
 	margin-block: auto;
@@ -230,13 +223,12 @@ export const MintStep: FC<PageProps> = ({
 		data: { imageId },
 	} = useContext(StateContext)
 	const kycDao = useKycDao()
-	const redirect = useChangePage()
 
 	const [yearCount, setYearCount] = useState<number>(1)
 
 	const minting = useMinting()
 
-	const errorHandler = useErrorHandler()
+	const { handleError } = useErrorHandler()
 
 	const onSubmit = useCallback(async () => {
 		if (kycDao && yearCount && yearCount > 0 && imageId) {
@@ -247,10 +239,10 @@ export const MintStep: FC<PageProps> = ({
 			try {
 				await minting(imageId, yearCount)
 			} catch (error) {
-				errorHandler("minting", error)
+				handleError("minting", error)
 			}
 		}
-	}, [kycDao, yearCount, minting, dispatch, imageId, errorHandler])
+	}, [kycDao, yearCount, minting, dispatch, imageId, handleError])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled && !inactive) {
@@ -305,8 +297,8 @@ export const MintStep: FC<PageProps> = ({
 	}, [])
 
 	const onPrev = useCallback(() => {
-		redirect(StepID.nftArtSelection, StepID.mintStep, "prev")
-	}, [redirect])
+		dispatch({ type: DataActionTypes.GoToPrevStep })
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

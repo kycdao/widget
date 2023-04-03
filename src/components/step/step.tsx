@@ -152,18 +152,14 @@ export const Step: FC<StepProps> = ({
 			return () => clearTimeout(timeout)
 		} else {
 			setTransitionState("transitionDone")
-			if (onTransitionDone) {
-				onTransitionDone("transitionDone")
-			}
+			onTransitionDone?.("transitionDone")
 		}
 	}, [onTransitionDone, animation])
 
 	useLayoutEffect(() => {
 		const timeout = setTimeout(() => {
 			if (animation && !!transitionState && animatedClass === animation?.to) {
-				if (onTransitionDone) {
-					onTransitionDone("transitionDone")
-				}
+				onTransitionDone?.("transitionDone")
 				setTransitionState("transitionDone")
 			}
 		}, 250)

@@ -1,3 +1,4 @@
+import { bold } from "@Components/typography"
 import styled from "styled-components/macro"
 
 export const ModalBackdrop = styled.div`
@@ -40,12 +41,8 @@ export const ModalBody = styled.div`
 	box-sizing: border-box;
 
 	p {
-		color: black;
-		font-family: var(--kyc-sdk-primary-font);
-
 		b {
-			font-weight: 800;
-			color: black;
+			${bold}
 		}
 	}
 `

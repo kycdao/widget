@@ -15,14 +15,13 @@ import {
 	OnPrev,
 	StateContext,
 	Step,
-	StepID,
 	StepPart,
 	SubmitButton,
 	tr2,
 } from "@Components/index"
 
 import { NftButtonWrapper } from "./finalStep"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 
 const Header = () => (
 	<H1>
@@ -87,7 +86,7 @@ export const NftSelection: FC<PageProps> = ({
 
 	const [nftImages, setNftImages] = useState<Nft[]>([])
 
-	const errorHandler = useErrorHandler()
+	const { handleError } = useErrorHandler()
 
 	const onArtClick = useCallback(
 		(id: string) => () => {
@@ -124,16 +123,10 @@ export const NftSelection: FC<PageProps> = ({
 				try {
 					await startMinting(currentArt)
 				} catch (error) {
-					errorHandler("fatal", error)
+					handleError("fatal", error)
 				}
 			} else {
-				dispatch({
-					type: DataActionTypes.changePage,
-					payload: {
-						current: StepID.mintStep,
-						prev: StepID.nftArtSelection,
-					},
-				})
+				dispatch({ type: DataActionTypes.GoToNextStep })
 			}
 		}
 	}, [
@@ -141,17 +134,11 @@ export const NftSelection: FC<PageProps> = ({
 		kycDao?.kycDao.subscribed,
 		startMinting,
 		currentArt,
-		errorHandler,
+		handleError,
 	])
 
 	const onPrev = useCallback(() => {
-		dispatch({
-			type: DataActionTypes.changePage,
-			payload: {
-				current: StepID.subscribedStartStep,
-				next: StepID.nftArtSelection,
-			},
-		})
+		dispatch({ type: DataActionTypes.GoToPrevStep })
 	}, [dispatch])
 
 	useEffect(() => {
@@ -190,22 +177,28 @@ export const NftSelection: FC<PageProps> = ({
 		}
 	}, [disabled, inactive, dispatch, currentArt])
 
-	const onRegenerate = useCallback(() => {
-		kycDao?.kycDao.regenerateNftImageOptions().then((options) => {
-			const images = [] as Nft[]
-			setCurrentArt(undefined)
+	const onRegenerate = useCallback(async () => {
+		try {
+			const options = await kycDao?.kycDao.regenerateNftImageOptions()
 
-			dispatch({
-				payload: { button: HeaderButtons.next, state: "hidden" },
-				type: DataActionTypes.SetHeaderButtonState,
-			})
+			if (options) {
+				const images = [] as Nft[]
+				setCurrentArt(undefined)
 
-			Object.entries(options).forEach(([id, url]) => {
-				images.push({ url: url + "?timestamp=" + Date.now().toString(), id })
-			})
-			setNftImages(images.slice(0, 4))
-		})
-	}, [kycDao?.kycDao, dispatch])
+				dispatch({
+					payload: { button: HeaderButtons.next, state: "hidden" },
+					type: DataActionTypes.SetHeaderButtonState,
+				})
+
+				Object.entries(options).forEach(([id, url]) => {
+					images.push({ url: url + "?timestamp=" + Date.now().toString(), id })
+				})
+				setNftImages(images.slice(0, 4))
+			}
+		} catch (error) {
+			handleError("fatal", error)
+		}
+	}, [kycDao?.kycDao, dispatch, handleError])
 
 	const body = useCallback<StepPart>(
 		() => (

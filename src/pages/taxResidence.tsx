@@ -12,7 +12,6 @@ import {
 	P,
 	StateContext,
 	Step,
-	StepID,
 	StepPart,
 	SubmitButton,
 } from "@Components/index"
@@ -25,7 +24,6 @@ import {
 	useEffect,
 	useCallback,
 } from "react"
-import useChangePage from "@Hooks/useChangePage"
 
 const Body = () => {
 	return (
@@ -48,7 +46,7 @@ export const TaxResidenceStep: FC<PageProps> = ({
 	const [value, setValue] = useState<string>()
 	const {
 		dispatch,
-		data: { taxResidency, grantFlowEnabled },
+		data: { taxResidency },
 	} = useContext(StateContext)
 	const submitDisabled = useMemo(
 		() => !Countries.find((c) => c.name === value),
@@ -56,7 +54,6 @@ export const TaxResidenceStep: FC<PageProps> = ({
 	)
 	const taxResidence = useRef(taxResidency)
 	const inputValue = useRef(null)
-	const redirect = useChangePage()
 
 	useEffect(() => {
 		if (taxResidency) {
@@ -93,21 +90,16 @@ export const TaxResidenceStep: FC<PageProps> = ({
 			type: DataActionTypes.taxResidenceChange,
 		})
 
-		if (grantFlowEnabled) {
-			// todo: check country is US
-			redirect(StepID.grantNameAndAddressStep, StepID.taxResidenceStep)
-		} else {
-			redirect(StepID.beginVerificationStep, StepID.taxResidenceStep)
-		}
-	}, [disabled, inactive, submitDisabled, dispatch, grantFlowEnabled, redirect])
+		dispatch({ type: DataActionTypes.GoToNextStep })
+	}, [disabled, inactive, submitDisabled, dispatch])
 
 	const onPrev = useCallback(() => {
-		redirect(StepID.verificationStep, StepID.taxResidenceStep, "prev")
+		dispatch({ type: DataActionTypes.GoToPrevStep })
 		dispatch({
 			payload: taxResidence.current,
 			type: DataActionTypes.taxResidenceChange,
 		})
-	}, [dispatch, redirect])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

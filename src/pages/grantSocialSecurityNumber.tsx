@@ -10,7 +10,6 @@ import {
 	P,
 	StateContext,
 	Step,
-	StepID,
 	StepPart,
 	SubmitButton,
 } from "@Components/index"
@@ -22,7 +21,6 @@ import React, {
 	useCallback,
 	useMemo,
 } from "react"
-import useChangePage from "@Hooks/useChangePage"
 
 const Body: React.FC = () => {
 	return (
@@ -46,7 +44,7 @@ export const GrantSocialSecurityNumber: FC<PageProps> = ({
 		dispatch,
 		data: { grantFlow },
 	} = useContext(StateContext)
-	const redirect = useChangePage()
+
 	const [socialSecurityNumber, setSocialSecurityNumber] = useState<
 		string | undefined
 	>(grantFlow.socialSecurityNumber)
@@ -77,16 +75,12 @@ export const GrantSocialSecurityNumber: FC<PageProps> = ({
 			return
 		}
 
-		redirect(StepID.beginVerificationStep, StepID.grantSocialSecurityNumberStep)
-	}, [disabled, inactive, isStepValid, redirect])
+		dispatch({ type: DataActionTypes.GoToNextStep })
+	}, [disabled, inactive, isStepValid, dispatch])
 
 	const onPrev = useCallback(() => {
-		redirect(
-			StepID.grantNameAndAddressStep,
-			StepID.grantSocialSecurityNumberStep,
-			"prev"
-		)
-	}, [redirect])
+		dispatch({ type: DataActionTypes.GoToPrevStep })
+	}, [dispatch])
 
 	useEffect(() => {
 		dispatch({

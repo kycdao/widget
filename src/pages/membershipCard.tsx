@@ -20,13 +20,14 @@ import {
 	Policy,
 	StateContext,
 	Step,
-	StepID,
 	StepPart,
 	SubmitButton,
 	Ul,
+	bold,
+	smallText,
+	text,
 } from "@Components/index"
-import useChangePage from "@Hooks/useChangePage"
-import useErrorHandler from "@Hooks/errorHandler"
+import useErrorHandler from "@Hooks/useErrorHandler"
 
 const Footer: StepPart = ({ disabled, inactive, onEnter }) => (
 	<>
@@ -94,20 +95,18 @@ const Li = styled.li`
 
 		${P},
 		b {
-			font-family: var(--kyc-sdk-primary-font);
-			font-weight: 400;
-			color: black;
+			${text}
 			margin-bottom: 0;
 		}
 
 		b {
-			font-size: 12px;
-			color: black;
+			${smallText}
 		}
 	}
 `
 
 const Span = styled.span`
+	${bold}
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -116,8 +115,6 @@ const Span = styled.span`
 	outline: 0.5rem solid var(--kyc-sdk-cybergreen-35);
 	border-radius: 999rem;
 	background: var(--kyc-sdk-cybergreen);
-	color: black;
-	font-weight: 800;
 `
 
 const ProcessContainer = styled.div`
@@ -175,22 +172,14 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 	disabled = false,
 	inactive = false,
 }) => {
-	const {
-		dispatch,
-		data: { returningUserFlow },
-	} = useContext(StateContext)
-	const redirect = useChangePage()
-	const errorHandler = useErrorHandler()
+	const { dispatch } = useContext(StateContext)
+	const { handleError } = useErrorHandler()
 
 	const kycDaoContext = useKycDao()
 
 	const onPrev = useCallback(() => {
-		if (returningUserFlow) {
-			redirect(StepID.subscribedStartStep, StepID.kycDAOMembershipStep, "prev")
-		} else {
-			redirect(StepID.AgreementStep, StepID.kycDAOMembershipStep, "prev")
-		}
-	}, [redirect, returningUserFlow])
+		dispatch({ type: DataActionTypes.GoToPrevStep })
+	}, [dispatch])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {
@@ -208,8 +197,8 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 				try {
 					await kycDaoContext.kycDao.connectWallet(network)
 					await kycDaoContext.kycDao.registerOrLogin()
-					redirect(StepID.verifyAccountStep, StepID.kycDAOMembershipStep)
 					dispatch({ type: DataActionTypes.termsAcceptedChange, payload: true })
+					dispatch({ type: DataActionTypes.GoToNextStep })
 				} catch (e) {
 					// TODO: nicer error handling for unsupported network https://kycdao.atlassian.net/browse/KYC-505
 					let errorMsg =
@@ -220,11 +209,11 @@ export const KycDAOMembershipStep: FC<PageProps> = ({
 						errorMsg = `${errorMsg} (${e.message})`
 					}
 
-					errorHandler("modal", errorMsg)
+					handleError("modal", errorMsg)
 				}
 			}
 		}
-	}, [dispatch, kycDaoContext, redirect, errorHandler])
+	}, [dispatch, kycDaoContext, handleError])
 
 	useEffect(() => {
 		if (!disabled && !inactive) {

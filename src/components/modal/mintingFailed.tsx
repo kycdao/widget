@@ -16,9 +16,12 @@ import { CloseButton } from ".."
 export const MintingFailedModal = () => {
 	const minting = useMinting()
 	const {
-		data: { subscriptionYears, imageId, errorModalBody },
+		data: { subscriptionYears, imageId, modal },
 		dispatch,
 	} = useContext(StateContext)
+
+	const { body } =
+		typeof modal === "string" || !modal ? { body: undefined } : modal
 
 	const onRetry = useCallback(() => {
 		if (imageId) {
@@ -27,7 +30,7 @@ export const MintingFailedModal = () => {
 	}, [minting, subscriptionYears, imageId])
 
 	const onClose = useCallback(() => {
-		dispatch({ type: DataActionTypes.setModal, payload: null })
+		dispatch({ type: DataActionTypes.HideModal })
 	}, [dispatch])
 
 	return (
@@ -50,7 +53,7 @@ export const MintingFailedModal = () => {
 				<Policy>
 					Minting failed because of an error. Please try mint kycNFT again.
 				</Policy>
-				{errorModalBody && <Policy>{errorModalBody}</Policy>}
+				{body && <Policy>{body}</Policy>}
 			</ModalBody>
 
 			<ModalButtonWrapper>

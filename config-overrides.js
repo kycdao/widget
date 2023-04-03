@@ -12,16 +12,19 @@ module.exports = function override(config, env) {
 	const fallback = {
 		...(config.resolve.fallback ? config.resolve.fallback : {}),
 		crypto: false,
+		http: false,
+		https: false,
+		os: false,
+		url: false,
 	}
 
 	const outDir = "./build"
 	config.target = "web"
 	config.entry = {
-		KycDaoClient: "./src/KycDaoClient.ts",
-		KycDaoIframeClient: "./src/KycDaoIframeClient.ts",
-		// "index": "./src/index.js",
-		app: "./src/App.tsx",
-		widget: "./src/widget.tsx",
+		Widget: "./src/Widget.tsx",
+		StandaloneClient: "./src/StandaloneClient.tsx",
+		StandaloneIframeClient: "./src/StandaloneIframeClient.tsx",
+		loadIframePage: "./src/loadIframePage.ts",
 	}
 	config.output = {
 		filename: "[name].js",
@@ -41,13 +44,6 @@ module.exports = function override(config, env) {
 		"@Hooks": path.resolve(__dirname, "src/hooks/"),
 		"@Images": path.resolve(__dirname, "src/images/"),
 	}
-
-	config.plugins = (config.plugins || []).concat([
-		new webpack.ProvidePlugin({
-			Buffer: ["buffer", "Buffer"],
-			ethereum: ["ethereum", "ethereum"],
-		}),
-	])
 
 	config.module.rules.unshift({
 		test: /\.(woff2?)$/,
@@ -100,6 +96,10 @@ module.exports = function override(config, env) {
 	)*/
 
 	config.plugins.push(
+		new webpack.ProvidePlugin({
+			Buffer: ["buffer", "Buffer"],
+			ethereum: "ethereum",
+		}),
 		new webpack.DefinePlugin({
 			"process.env.npm_package_name": JSON.stringify(
 				process.env.npm_package_name

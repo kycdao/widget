@@ -7,6 +7,7 @@ import {
 	DataActionTypes,
 	HeaderButtons,
 	Loading,
+	P,
 	StateContext,
 	Step,
 } from "@Components/index"
@@ -15,22 +16,26 @@ const H1 = styled.h1`
 	justify-content: center;
 `
 
-const Body = () => {
-	return (
-		<>
-			<H1>Loading</H1>
-			<Loading />
-		</>
-	)
-}
-
 export const LoadingCard: FC<PageProps> = ({
 	className,
 	animation,
 	disabled = false,
 	inactive = false,
 }) => {
-	const { dispatch } = useContext(StateContext)
+	const {
+		dispatch,
+		data: { loadingMessage },
+	} = useContext(StateContext)
+
+	const Body = useCallback(() => {
+		return (
+			<>
+				<H1>Loading</H1>
+				{loadingMessage && <P>{loadingMessage}</P>}
+				<Loading />
+			</>
+		)
+	}, [loadingMessage])
 
 	const onTransitionDone = useCallback(() => {
 		if (!disabled) {
