@@ -13,8 +13,8 @@ export default defineConfig({
     }),
   ],
   define: {
-    // near-api-js uses `process.env`
-    'process.env': {}
+    // near-api-js uses process.env.NODE_ENV to determine...something
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
   },
   resolve: {
     alias: {
