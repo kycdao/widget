@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.6.0] - 2023-04-04
+
+### Breaking
+
+- Use `import { KycDaoWidget } from "@kycdao/widget"` to import the widget instead of `import { Widget } from "@kycdao/widget"`
+
+### Changed
+
+- Switch from `create-react-app` to `vite`
+
 ## [0.5.10] - 2023-03-10
 
 ### Changed
