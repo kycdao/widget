@@ -12,6 +12,9 @@ export default defineConfig({
       insertTypesEntry: true
     }),
   ],
+  define: {
+    'process.env': {}
+  },
   resolve: {
     alias: {
       "@Pages": resolve(__dirname, "./src/pages/"),
