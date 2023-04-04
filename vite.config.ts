@@ -13,6 +13,7 @@ export default defineConfig({
     }),
   ],
   define: {
+    // near-api-js uses `process.env`
     'process.env': {}
   },
   resolve: {
