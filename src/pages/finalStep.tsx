@@ -90,16 +90,14 @@ export const FinalStep: FC<PageProps> = ({
 		if (kycDao) {
 			;(async function () {
 				if (alreadyHaveAnNftOnThisChain) {
-					if (!/Near/g.test(kycDao.sdkStatus.availableBlockchainNetworks[0])) {
-						try {
-							const tokens = (await kycDao.kycDao.getValidNfts("KYC")).tokens
+					try {
+						const tokens = (await kycDao.kycDao.getValidNfts("KYC")).tokens
 
-							if (tokens && tokens.length > 0 && tokens[0].image) {
-								setDisplayedNftImageUrl(tokens[0].image)
-							}
-						} catch (error) {
-							errorHandler("modal", error)
+						if (tokens && tokens.length > 0 && tokens[0].image) {
+							setDisplayedNftImageUrl(tokens[0].image)
 						}
+					} catch (error) {
+						errorHandler("modal", error)
 					}
 				} else {
 					setDisplayedNftImageUrl(kycDao.mintingResult?.imageUrl || nftImageUrl)
