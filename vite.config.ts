@@ -4,14 +4,13 @@ import { resolve } from "path";
 import eslint from "vite-plugin-eslint";
 import dts from "vite-plugin-dts";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     eslint(),
     dts({
       insertTypesEntry: true
-    })
+    }),
   ],
   resolve: {
     alias: {
@@ -20,7 +19,10 @@ export default defineConfig({
       "@App": resolve(__dirname, "./src/app/"),
       "@Utils": resolve(__dirname, "./src/utils/"),
       "@Hooks": resolve(__dirname, "./src/hooks/"),
-      "@Assets": resolve(__dirname, "./src/assets/")
+      "@Assets": resolve(__dirname, "./src/assets/"),
+      stream: 'stream-browserify',
+      http: 'agent-base',
+      https: 'agent-base',
     }
   },
   build: {
