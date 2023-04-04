@@ -10,3 +10,5 @@
 /src/index.js
 playwright.config.ts
 tests/*.ts
+vitest-setup.ts
+vite.config.ts

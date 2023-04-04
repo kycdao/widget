@@ -6,19 +6,7 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 import { AppContainer, AppContainerRef } from "./AppContainer"
 import { RestartContext } from "@Components/restartContext"
-import NeueMachinaRegularBase64 from "./fonts/NeueMachina-Regular"
-
-const fontFile = new FontFace(
-	"neue-machina",
-	`url(${NeueMachinaRegularBase64})`,
-	{
-		weight: "400",
-		style: "normal",
-	}
-)
-
-document.fonts.add(fontFile)
-fontFile.load()
+import { GlobalStyles } from "./styles/globalStyles";
 
 export type KycDaoModalProps = {
 	width?: number | string
@@ -58,6 +46,8 @@ export const KycDaoModal: FC<KycDaoModalProps> = (props) => {
 				key={key}
 				{...props}
 			/>
+
+			<GlobalStyles />
 		</RestartContext.Provider>
 	)
 }
