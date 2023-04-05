@@ -6,7 +6,7 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 import { AppContainer, AppContainerRef } from "./AppContainer"
 import { RestartContext } from "@Components/restartContext"
-import { GlobalStyles } from "./styles/globalStyles";
+import { GlobalStyles } from "./styles/globalStyles"
 
 export type KycDaoModalProps = {
 	width?: number | string
