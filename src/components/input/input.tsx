@@ -10,7 +10,7 @@ import {
 	useRef,
 	useState,
 } from "react"
-import styled, { css } from "styled-components/macro"
+import styled, { css } from "styled-components"
 
 const specialRegex = /[!$(){}[\]:;<+?\\>]/g
 
@@ -157,7 +157,7 @@ export const Input: FC<InputProps> = ({
 							.filter((v) =>
 								v.match(new RegExp(value.replace(specialRegex, ""), "ig"))
 							)
-							.map((v, i) => {
+							.map((v) => {
 								return value !== "" ? (
 									<Option
 										dangerouslySetInnerHTML={{

@@ -2,7 +2,7 @@ import { FC, useCallback, useContext } from "react"
 
 import { PageProps } from "./pageProps"
 
-import styled from "styled-components/macro"
+import styled from "styled-components"
 import {
 	DataActionTypes,
 	HeaderButtons,
@@ -28,7 +28,6 @@ export const LoadingCard: FC<PageProps> = ({
 	className,
 	animation,
 	disabled = false,
-	inactive = false,
 }) => {
 	const { dispatch } = useContext(StateContext)
 

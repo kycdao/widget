@@ -2,7 +2,7 @@ import { useContext, useCallback, useState, useEffect, FC } from "react"
 
 import { PageProps } from "./pageProps"
 import { useKycDao } from "@Hooks/useKycDao"
-import styled from "styled-components/macro"
+import styled from "styled-components"
 import {
 	Button,
 	CenteredH1,
@@ -107,7 +107,7 @@ export const FinalStep: FC<PageProps> = ({
 	}, [kycDao, nftImageUrl, errorHandler, alreadyHaveAnNftOnThisChain])
 
 	const body = useCallback<StepPart>(
-		(props) => (
+		() => (
 			<>
 				<CenteredH1 marginBottom="0">
 					{alreadyHaveAnNftOnThisChain && !nearMinted

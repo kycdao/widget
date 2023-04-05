@@ -1,4 +1,4 @@
-import styled from "styled-components/macro"
+import styled from "styled-components"
 
 const LogoContainer = styled.span`
 	background: var(--kyc-sdk-cybergreen);

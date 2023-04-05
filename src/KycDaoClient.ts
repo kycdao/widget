@@ -117,15 +117,6 @@ export class KycDaoClient implements KycDaoClientInterface {
 
 		this.messageHndlr = this.messageHndlr.bind(this)
 
-		/**
-		 * Compile time environment variable injection by babel-plugin-transform-inline-environment-variables & webpack.DefinePlugin.
-		 * 	{@link https://www.npmjs.com/package/babel-plugin-transform-inline-environment-variables package/babel-plugin-transform-inline-environment-variables}
-		 *	{@link https://webpack.js.org/plugins/define-plugin define-plugin}
-		 */
-		console.log(
-			`Thank you for using ${process.env.npm_package_name} version ${process.env.npm_package_version}+${process.env.REACT_APP_GIT_HASH}`
-		)
-
 		const nearNetwork = this.config.enabledBlockchainNetworks.find((network) =>
 			nearNetworkRegex.test(network)
 		)
@@ -228,7 +219,7 @@ export class KycDaoClient implements KycDaoClientInterface {
 		const knownQueryParamNames = Object.keys(knownNearQueryParams)
 
 		const queryParams = new URLSearchParams(window.location.search)
-		const matches = [...queryParams].filter(([key, _]) =>
+		const matches = [...queryParams].filter(([key]) =>
 			knownQueryParamNames.includes(key)
 		)
 

@@ -1,6 +1,6 @@
 import { tr2 } from "@Components/typography"
 import { ButtonHTMLAttributes, CSSProperties, forwardRef } from "react"
-import styled, { css } from "styled-components/macro"
+import styled, { css } from "styled-components"
 
 export type ButtonProps = {
 	onClick?: () => void
@@ -15,7 +15,7 @@ export type ButtonProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 const unstyledButton = forwardRef<HTMLButtonElement, ButtonProps>(
-	({ children, inactive, fullWidth, onClick, ...rest }, ref) => (
+	({ children, inactive, onClick, ...rest }, ref) => (
 		<button ref={ref} {...rest} onClick={inactive ? undefined : onClick}>
 			{children}
 		</button>

@@ -6,7 +6,7 @@ import { PageProps } from "@Pages/pageProps"
 
 import { StatusError } from "@kycdao/kycdao-sdk"
 
-import styled from "styled-components/macro"
+import styled from "styled-components"
 import {
 	B,
 	DataActionTypes,

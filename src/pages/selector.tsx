@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import styled from "styled-components/macro"
+import styled from "styled-components"
 
 type SelectorProps<T> = {
 	renderItem: (item: T) => JSX.Element

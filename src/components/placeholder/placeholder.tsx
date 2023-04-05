@@ -1,5 +1,5 @@
 import { CSSProperties } from "react"
-import styled from "styled-components/macro"
+import styled from "styled-components"
 
 export type PlaceholderProps = {
 	width: string
@@ -9,12 +9,9 @@ export type PlaceholderProps = {
 	showSize?: boolean
 }
 
-const unstyledPlaceholder = ({
-	height,
-	onClick,
-	showSize,
-	width,
-}: PlaceholderProps) => <div>{showSize ? `${width}&times;${height}` : ""}</div>
+const unstyledPlaceholder = ({ height, showSize, width }: PlaceholderProps) => (
+	<div>{showSize ? `${width}&times;${height}` : ""}</div>
+)
 
 export const Placeholder = styled(unstyledPlaceholder)<{
 	height: string
