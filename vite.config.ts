@@ -32,14 +32,13 @@ export default defineConfig({
       https: 'agent-base',
     }
   },
-  // todo: review this, can this be moved to the top level define?
   optimizeDeps: {
-    esbuildOptions: {
-      // Node.js global to browser globalThis
-      define: {
-        global: 'globalThis',
+      esbuildOptions: {
+          // Node.js global to browser globalThis
+          define: {
+              global: 'globalThis',
+          },
       },
-    },
   },
   build: {
     sourcemap: true,
