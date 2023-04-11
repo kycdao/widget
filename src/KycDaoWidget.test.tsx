@@ -19,8 +19,9 @@ import {
 	VerificationData,
 	VerificationTypes,
 	VerificationProviderOptions,
+    RedirectEvent,
 } from "@kycdao/kycdao-sdk"
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, test, vi } from "vitest";
 
 const trace = () => new Error("").stack?.split("\n")?.splice(3).join("\n")
 
@@ -191,14 +192,7 @@ vi.mock("@kycdao/kycdao-sdk", async () => {
 	}
 })
 
-beforeEach(() => {
-	// 	vi.useFakeTimers({
-	// 		shouldAdvanceTime: true,
-	// 	})
-})
-
 afterEach(() => {
-	// 	vi.useRealTimers()
 	vi.restoreAllMocks()
 })
 
@@ -306,8 +300,8 @@ test("returning user flow", async () => {
 
 	kir.kycDao.checkVerificationStatus.mockImplementation(() => {
 		return Promise.resolve({ KYC: true })
-	}),
-		await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
+	})
+	await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
 	await waitFor(() => expect(kir.kycDao.connectWallet).toHaveBeenCalled())
 	await waitFor(() => expect(kir.kycDao.hasValidNft).toHaveBeenCalled())
 	await waitFor(() => expect(kir.kycDao.registerOrLogin).toHaveBeenCalled())
@@ -367,7 +361,7 @@ test("new user flow", async () => {
 	await FINAL_STEP.next()
 }, 10000)
 
-test("has ntnft flow", async () => {
+test("has NFT flow", async () => {
 	kir.kycDao.hasValidNft.mockImplementation(
 		(
 			verificationType: keyof typeof VerificationTypes,
@@ -408,3 +402,69 @@ test("has ntnft flow", async () => {
 	await FINAL_STEP_ALREADY_HAVE.parse()
 	await FINAL_STEP_ALREADY_HAVE.next()
 }, 10000)
+
+describe("NEAR", async () => {
+	test("new user flow (NearLogin)", async () => {
+		// @ts-ignore
+		kir.redirectEvent = 'NearLogin' as RedirectEvent
+
+		await render(<KycDaoWidget config={config} />)
+
+		await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
+		await waitFor(() => expect(kir.kycDao.connectWallet).toHaveBeenCalled())
+		await waitFor(() => expect(kir.kycDao.hasValidNft).toHaveBeenCalled())
+		await waitFor(() => expect(kir.kycDao.registerOrLogin).toHaveBeenCalled())
+
+		await INITIAL_STEP.parse()
+		await INITIAL_STEP.next()
+
+		await MEMBERSHIP_STEP.parse()
+		await MEMBERSHIP_STEP.next()
+
+		await VERIFY_STEP.parse()
+		await VERIFY_STEP.next()
+
+		await EMAIL_STEP.parse()
+		await EMAIL_STEP.next()
+
+		await OPEN_ACCOUNT_STEP.parse()
+		await OPEN_ACCOUNT_STEP.next()
+
+		await TAX_RESIDENCE_STEP.parse()
+		await TAX_RESIDENCE_STEP.next()
+
+		await NFT_SELECT_STEP.parse()
+		await NFT_SELECT_STEP.next()
+
+		await MINT_MEMBERSHIP_STEP.parse()
+		await MINT_MEMBERSHIP_STEP.next()
+
+		await FINAL_STEP.parse()
+		await FINAL_STEP.next()
+	})
+
+	test("mint redirect (NearMint)", async () => {
+		// @ts-ignore
+		kir.redirectEvent = 'NearMint' as RedirectEvent
+
+		await render(<KycDaoWidget config={config} />)
+
+		await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
+		await waitFor(() => expect(kir.kycDao.connectWallet).toHaveBeenCalled())
+		await waitFor(() => expect(kir.kycDao.hasValidNft).toHaveBeenCalled())
+		await waitFor(() => expect(kir.kycDao.registerOrLogin).toHaveBeenCalled())
+
+		await FINAL_STEP.parse()
+		await FINAL_STEP.next()
+	})
+
+	test("user rejection (NearUserRejectedError)", async () => {
+		// @ts-ignore
+		kir.redirectEvent = 'NearUserRejectedError' as RedirectEvent
+		const onFail = vi.fn()
+
+		await render(<KycDaoWidget onFail={onFail} config={config} />)
+
+		await waitFor(() => expect(onFail).toHaveBeenCalled())
+	})
+})
