@@ -32,6 +32,8 @@ jobs:
 
       - run: pnpm build
 
+      - run: cp index.html dist/index.html
+
       - name: Cache for Github Pages
         if: env.PUBLISH == 'true'
         uses: actions/upload-pages-artifact@v1
