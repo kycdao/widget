@@ -43,16 +43,6 @@ jobs:
             package.json
             README.md
 
-      - name: Build demo page, and install its dependencies
-        if: env.PUBLISH == 'true'
-        run: cd examples/demo && pnpm install --frozen-lockfile && pnpm build
-
-      - name: Artifact for Github Pages
-        if: env.PUBLISH == 'true'
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: dist
-
   publish:
     name: Publish package
     needs: build
@@ -84,11 +74,36 @@ jobs:
       - name: Enable corepack
         run: corepack enable
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
-
       - name: Publish package
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  demo:
+    name: Deploy Demo page
+    needs: publish
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+
+      - name: Build demo page, and install its dependencies
+        if: env.PUBLISH == 'true'
+        run: cd examples/demo && pnpm install --frozen-lockfile && pnpm build
+
+      - name: Artifact for Github Pages
+        if: env.PUBLISH == 'true'
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: examples/demo/dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
