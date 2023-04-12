@@ -1,6 +1,6 @@
 {
   "name": "@kycdao/widget",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "type": "module",
   "module": "./dist/KycDaoWidget.js",
   "main": "./dist/KycDaoWidget.umd.cjs",
