@@ -17,7 +17,8 @@ export default defineConfig({
   ],
   define: {
     // near-api-js uses process.env.NODE_ENV to determine...something
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+    "process.env.NEAR_NO_LOGS": JSON.stringify( false)
   },
   resolve: {
     alias: {
@@ -27,9 +28,9 @@ export default defineConfig({
       "@Utils": resolve(__dirname, "./src/utils/"),
       "@Hooks": resolve(__dirname, "./src/hooks/"),
       "@Assets": resolve(__dirname, "./src/assets/"),
-      stream: 'stream-browserify',
-      http: 'agent-base',
-      https: 'agent-base',
+      stream: "stream-browserify",
+      http: "agent-base",
+      https: "agent-base"
     }
   },
   // todo: review this, can this be moved to the top level define?
@@ -37,40 +38,41 @@ export default defineConfig({
     esbuildOptions: {
       // Node.js global to browser globalThis
       define: {
-        global: 'globalThis',
-      },
-    },
+        global: "globalThis"
+      }
+    }
   },
   build: {
     sourcemap: true,
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "@kycdao/widget",
+      name: "KycDaoWidget",
       fileName: "index",
+      formats: ["es", "cjs", "iife"]
     },
     commonjsOptions: {
       // See https://github.com/justinmahar/react-social-media-embed/issues/24
-      transformMixedEsModules: true,
+      transformMixedEsModules: true
     },
     rollupOptions: {
       external: [
         "react",
-        "react-dom",
+        "react-dom"
       ],
       output: {
         globals: {
           react: "React",
-          'react-dom': "ReactDOM",
+          "react-dom": "ReactDOM"
         }
       }
     }
   },
   test: {
     globals: true,
-    environment: 'jsdom',
-    setupFiles: './vitest-setup.ts',
+    environment: "jsdom",
+    setupFiles: "./vitest-setup.ts",
     // you might want to disable it, if you don't have tests that rely on CSS
     // since parsing CSS is slow
-    css: true,
-  },
+    css: true
+  }
 });

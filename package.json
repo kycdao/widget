@@ -1,6 +1,6 @@
 {
   "name": "@kycdao/widget",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "type": "module",
   "module": "./dist/index.js",
   "main": "./dist/index.umd.cjs",
@@ -28,9 +28,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@kycdao/kycdao-sdk": "^0.6.12",
-    "@rollup/plugin-inject": "^5.0.3",
     "agent-base": "^6.0.2",
     "buffer": "^6.0.3",
     "clsx": "^1.2.1",

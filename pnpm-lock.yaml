@@ -11,9 +11,7 @@ overrides:
   bn.js: ^5.2.1
 
 specifiers:
-  '@esbuild-plugins/node-globals-polyfill': ^0.2.3
   '@kycdao/kycdao-sdk': ^0.6.12
-  '@rollup/plugin-inject': ^5.0.3
   '@testing-library/dom': ^9.0.0
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^14.0.0
@@ -60,9 +58,7 @@ specifiers:
   vitest: ^0.29.8
 
 dependencies:
-  '@esbuild-plugins/node-globals-polyfill': 0.2.3
   '@kycdao/kycdao-sdk': 0.6.12_25zciknb7fkc66ia5szebs37ti
-  '@rollup/plugin-inject': 5.0.3
   agent-base: 6.0.2
   buffer: 6.0.3
   clsx: 1.2.1
@@ -451,12 +447,6 @@ packages:
 
   /@emotion/unitless/0.7.5:
     resolution: {integrity: sha512-OWORNpfjMsSSUBVrRBVGECkhWcULOAJz9ZW8uK9qgxD+87M7jHRcvh/A96XXNhXTLmKcoYSQtBEX7lHMO7YRwg==}
-    dev: false
-
-  /@esbuild-plugins/node-globals-polyfill/0.2.3:
-    resolution: {integrity: sha512-r3MIryXDeXDOZh7ih1l/yE9ZLORCd5e8vWg02azWRGj5SPTuoh69A2AIyn0Z31V/kHBfZ4HgWJ+OK3GTTwLmnw==}
-    peerDependencies:
-      esbuild: '*'
     dev: false
 
   /@esbuild/android-arm/0.16.17:
@@ -1218,20 +1208,6 @@ packages:
       eventemitter3: 4.0.7
     dev: false
 
-  /@rollup/plugin-inject/5.0.3:
-    resolution: {integrity: sha512-411QlbL+z2yXpRWFXSmw/teQRMkXcAAC8aYTemc15gwJRpvEVDQwoe+N/HTFD8RFG8+88Bme9DK2V9CVm7hJdA==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-    dependencies:
-      '@rollup/pluginutils': 5.0.2
-      estree-walker: 2.0.2
-      magic-string: 0.27.0
-    dev: false
-
   /@rollup/pluginutils/4.2.1:
     resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
     engines: {node: '>= 8.0.0'}
@@ -1252,6 +1228,7 @@ packages:
       '@types/estree': 1.0.0
       estree-walker: 2.0.2
       picomatch: 2.3.1
+    dev: true
 
   /@rushstack/node-core-library/3.55.2_@types+node@18.14.2:
     resolution: {integrity: sha512-SaLe/x/Q/uBVdNFK5V1xXvsVps0y7h1sN7aSJllQyFbugyOaxhNRF25bwEDnicARNEjJw0pk0lYnJQ9Kr6ev0A==}
@@ -2349,6 +2326,7 @@ packages:
 
   /@types/estree/1.0.0:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
+    dev: true
 
   /@types/hoist-non-react-statics/3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
@@ -4538,6 +4516,7 @@ packages:
 
   /estree-walker/2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
+    dev: true
 
   /esutils/2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
@@ -5603,6 +5582,7 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.14
+    dev: true
 
   /magic-string/0.29.0:
     resolution: {integrity: sha512-WcfidHrDjMY+eLjlU+8OvwREqHwpgCeKVBUpQ3OhYYuvfaYCUgcbuBzappNzZvg/v8onU3oQj+BYpkOJe9Iw4Q==}
