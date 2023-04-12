@@ -32,12 +32,6 @@ jobs:
 
       - run: pnpm build
 
-      - name: Cache for Github Pages
-        if: env.PUBLISH == 'true'
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: dist
-
       - name: Cache package
         if: env.PUBLISH == 'true'
         uses: actions/upload-artifact@v3
@@ -48,6 +42,16 @@ jobs:
             index.d.ts
             package.json
             README.md
+
+      - name: Build demo page, and install its dependencies
+        if: env.PUBLISH == 'true'
+        run: cd examples/demo && pnpm install --frozen-lockfile && pnpm build
+
+      - name: Artifact for Github Pages
+        if: env.PUBLISH == 'true'
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: dist
 
   publish:
     name: Publish package

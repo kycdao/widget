@@ -6,6 +6,10 @@
 
 ✍️ [Example](https://sdk.kycdao.xyz)
 
+# Examples
+
+You can find examples of how to use the SDK in the `examples` folder.
+
 # How to develop
 
 ### Install dependencies
