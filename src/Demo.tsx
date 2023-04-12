@@ -179,12 +179,14 @@ const Demo: React.FC = () => {
 	)
 }
 
-const root = createRoot(document.getElementById("root") as HTMLElement)
+window.renderDemo = () => {
+	const root = createRoot(document.getElementById("root") as HTMLElement)
 
-root.render(
-	<React.StrictMode>
-		<Demo />
-	</React.StrictMode>
-)
+	root.render(
+		<React.StrictMode>
+			<Demo />
+		</React.StrictMode>
+	)
+}
 
 export default Demo

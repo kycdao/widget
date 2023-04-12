@@ -17,12 +17,14 @@ const Iframe: React.FC = () => {
 	return <div id="modalRoot" />
 }
 
-const root = createRoot(document.getElementById("root") as HTMLElement)
+window.renderIframe = () => {
+	const root = createRoot(document.getElementById("root") as HTMLElement)
 
-root.render(
-	<React.StrictMode>
-		<Iframe />
-	</React.StrictMode>
-)
+	root.render(
+		<React.StrictMode>
+			<Iframe />
+		</React.StrictMode>
+	)
+}
 
 export default Iframe

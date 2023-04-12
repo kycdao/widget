@@ -21,6 +21,8 @@ declare global {
 			new (config: KycDaoClientOptions): KycDaoClientInterface
 		}
 		KycDaoWidget: React.FC<KycDaoWidgetConfig>
+		renderDemo: () => void
+		renderIframe: () => void
 	}
 
 	interface Navigator {

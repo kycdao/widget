@@ -32,8 +32,6 @@ jobs:
 
       - run: pnpm build
 
-      - run: cp src/Demo.tsx dist/Demo.tsx
-
       - name: Cache for Github Pages
         if: env.PUBLISH == 'true'
         uses: actions/upload-pages-artifact@v1
