@@ -1,20 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>kycDAO</title>
-    <link rel="stylesheet" href="/styles.css">
-    <script type="module" src="./src/index.ts"></script>
-    <script>
-        window.onload = function () {
-            window.renderDemo();
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kycDAO</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="./src/index.ts"></script>
+  <script>
+    const autostart = false;
+
+    onload = () => {
+      const client = new KycDaoClient({
+        parent: "#modalRoot",
+        modal: true,
+        backdrop: true,
+        config: {
+          demoMode: true,
+          enabledBlockchainNetworks: [
+            "PolygonMumbai",
+            "CeloAlfajores",
+            "SolanaDevnet",
+            "NearTestnet",
+            "EthereumGoerli"
+          ],
+          enabledVerificationTypes: ["KYC"],
+          evmProvider: window.ethereum,
+          baseUrl: "https://staging.kycdao.xyz"
+        },
+        onReady: (sdkInstance) => {
+          let nftCheckInterval;
+
+          function writeNFT() {
+            if (sdkInstance.kycDao.connectedWallet) {
+              sdkInstance.kycDao
+                .hasValidNft("KYC")
+                .then((value) => {
+                  console.log(
+                    `This wallet ${value ? "has" : "has not"} a valid nft.`
+                  );
+                })
+                .catch(console.error);
+              clearInterval(nftCheckInterval);
+            }
+          }
+
+          nftCheckInterval = setInterval(writeNFT, 1000);
+        },
+        onSuccess: (data) => {
+          if (data) {
+            const i = /Already has an nft on (.*)\./g.exec(data);
+
+            if (i) {
+              console.log(`Already has an nft on ${i[1]}.`);
+            }
+          }
         }
-    </script>
+      });
+
+      globalThis.selectorHndlr = function(selectedChain) {
+        client.open(
+          selectedChain,
+          window.ethereum
+        );
+      };
+
+      if (autostart) {
+        const chains = [
+          "PolygonMumbai",
+          "CeloAlfajores",
+          "SolanaDevnet",
+          "NearTestnet",
+          "EthereumGoerli"
+        ];
+
+        selectorHndlr(chains[0]);
+      }
+    };
+  </script>
 </head>
 
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
-<div id="root"></div>
+<div id="modalRoot"></div>
+<div id="buttonContainer">
+  <div id="flexCol">
+    <h1 class="centered">Select your chain</h1>
+    <div id="flexRow">
+      <div id="buttonsContainer">
+        <div class="dualButton">
+          <div
+            class="chainSelectorButton"
+            onclick="selectorHndlr('CeloAlfajores')">
+            Celo Testnet (Alfajores)
+          </div>
+        </div>
+        <div class="dualButton">
+          <div
+            class="chainSelectorButton"
+            onclick="selectorHndlr('PolygonMumbai')">
+            Polygon Testnet (Mumbai)
+          </div>
+        </div>
+        <div
+          class="chainSelectorButton"
+          onclick="selectorHndlr('SolanaDevnet')">
+          Solana Devnet
+        </div>
+        <div
+          class="chainSelectorButton"
+          onclick="selectorHndlr('NearTestnet')">
+          NEAR Testnet
+        </div>
+        <div class="dualButton">
+          <div
+            class="chainSelectorButton"
+            onclick="selectorHndlr('EthereumGoerli')">
+            Ethereum Testnet (Goerli)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div id="faucetContainer">
+      <div class="flex-1">
+        <strong>FAUCETS for testing:</strong>
+        <div>
+          <strong>Alfajores</strong>
+          faucet:
+          <a href=" https://celo.org/developers/faucet" target="_blank">
+            https://celo.org/developers/faucet
+          </a>
+        </div>
+        <div>
+          <strong>Mumbai</strong>
+          Faucet1:
+          <a href="https://faucet.polygon.technology" target="_blank">
+            https://faucet.polygon.technology
+          </a>
+        </div>
+        <div>
+          <strong>Mumbai</strong>
+          Faucet2:
+          <a href="https://mumbaifaucet.com" target="_blank">
+            https://mumbaifaucet.com
+          </a>
+        </div>
+        <div>
+          <strong>Goerli</strong>
+          faucet list:
+          <a href="https://faucetlink.to/goerli" target="_blank">
+            https://faucetlink.to/goerli
+          </a>
+        </div>
+        <div>
+          <strong>Near:</strong>
+          Test wallet has testnet tokens.
+        </div>
+      </div>
+      <div style="flex: 1"></div>
+    </div>
+    <div class="centered">
+      If you have any questions, ask us on
+      <a target="_blank" href="https://discord.kycDAO.xyz">
+        discord.kycDAO.xyz
+      </a>
+      <p>
+        <a href="https://github.com/kycdao/widget" target="_blank">
+          @kycdao/widget
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
 </body>
 </html>

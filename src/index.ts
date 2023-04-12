@@ -1,6 +1,3 @@
-import "./Demo"
-import "./Iframe"
-
 export * from "./BootstrapKycDaoModal"
 export * from "./App"
 export * from "./KycDaoWidget"
