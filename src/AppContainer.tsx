@@ -160,8 +160,6 @@ const AppContainerRender: ForwardRefRenderFunction<
 								startPage = StepID.finalStep
 						}
 					} else {
-						await kycDao.kycDao.registerOrLogin()
-
 						const { subscribed } = kycDao.kycDao
 
 						if (subscribed) {
