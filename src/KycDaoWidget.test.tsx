@@ -1,11 +1,4 @@
-import {
-	act,
-	queries,
-	render,
-	screen,
-	waitFor,
-	waitForElementToBeRemoved,
-} from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { KycDaoWidget } from "./KycDaoWidget"
 import {
@@ -19,15 +12,45 @@ import {
 	VerificationData,
 	VerificationTypes,
 	VerificationProviderOptions,
-    RedirectEvent,
+	RedirectEvent,
+	ChainAndAddress,
+	StatusError,
 } from "@kycdao/kycdao-sdk"
-import { afterEach, beforeEach, describe, expect, it, test, vi } from "vitest";
+import { afterEach, describe, expect, Mocked, test, vi } from "vitest"
+import { createTracingProxy } from "@Utils/testUtils"
 
-const trace = () => new Error("").stack?.split("\n")?.splice(3).join("\n")
+declare type KycDaoReduced = Pick<
+	KycDao,
+	| "connectWallet"
+	| "checkEmailConfirmed"
+	| "hasValidNft"
+	| "getValidNfts"
+	| "registerOrLogin"
+	| "checkVerificationStatus"
+	| "updateEmail"
+	| "startVerification"
+	| "getNftImageOptions"
+	| "startMinting"
+	| "sdkStatus"
+	| "connectedWallet"
+	| "subscribed"
+>
 
-const kir = {
+declare type KycDaoInitializationResultMock = {
+	kycDao: Mocked<KycDaoReduced>
+	redirectEvent?: RedirectEvent
+	mintingResult?: MintingResult
+}
+
+const kir: KycDaoInitializationResultMock = {
 	kycDao: {
 		connectWallet: vi.fn((blockchain: "Solana" | "Ethereum" | "Near") => {
+			kir.mintingResult = undefined
+			vi.spyOn(kir.kycDao, "connectedWallet", "get").mockReturnValue({
+				blockchain: "Ethereum",
+				blockchainNetwork: kir.kycDao.sdkStatus.availableBlockchainNetworks[0],
+				address: "0x4242424242424242424242424242424242424242",
+			})
 			return Promise.resolve()
 		}),
 		checkEmailConfirmed: vi.fn(() => {
@@ -35,16 +58,16 @@ const kir = {
 		}),
 		hasValidNft: vi.fn(
 			(
-				verificationType: keyof typeof VerificationTypes,
-				options?: NftCheckOptions
+				_verificationType: keyof typeof VerificationTypes,
+				_options?: NftCheckOptions
 			) => {
 				return Promise.resolve(false)
 			}
 		),
 		getValidNfts: vi.fn(
 			(
-				verificationType: keyof typeof VerificationTypes,
-				options?: NftCheckOptions
+				_verificationType: keyof typeof VerificationTypes,
+				_options?: NftCheckOptions
 			) => {
 				return Promise.resolve<NftCheckResponse>({
 					networkAndAddress: undefined!,
@@ -64,7 +87,7 @@ const kir = {
 		}),
 		startVerification: vi.fn(
 			(
-				verificationData: VerificationData,
+				_verificationData: VerificationData,
 				providerOptions?: VerificationProviderOptions
 			) => {
 				setTimeout(() => {
@@ -90,93 +113,28 @@ const kir = {
 				transactionUrl: "tx1",
 			}
 
-			kir.mintingResult = mr as any
+			kir.mintingResult = mr
 
 			return Promise.resolve<MintingResult>(mr)
 		}),
 		sdkStatus: {
 			availableBlockchainNetworks: ["PolygonMumbai"],
+			baseUrl: "https://mock.to/",
+			demoMode: false,
+			availableVerificationTypes: [VerificationTypes.KYC],
+			evmProviderConfigured: true,
+			nearNetworkConnected: null,
+			solanaNetworkConnected: null,
 		},
-		connectedWallet: false,
-		subscribed: false,
+		get connectedWallet() {
+			return undefined
+		},
+		get subscribed() {
+			return false
+		},
 	},
 	redirectEvent: undefined,
 	mintingResult: undefined,
-}
-
-class TracingProxy<T extends object> implements ProxyHandler<T> {
-	private static traceGet = false
-	private static traceSet = false
-	private static traceCalls = false
-	private static showStackTraces = false
-	private constructor(
-		private readonly target: T,
-		private readonly prefix: string
-	) {}
-
-	get(obj: T, prop: string | symbol) {
-		const value = Reflect.get(obj, prop)
-		const exists = obj.hasOwnProperty(prop)
-
-		if (!exists) {
-			if (prop !== "then") {
-				console.error(
-					`Accessing non-existent property: ${this.prefix}${prop.toString()}`
-				)
-				console.log(trace())
-			}
-		}
-
-		if (typeof value === "object" && value !== null) {
-			return TracingProxy.create(value, prop.toString() + ".")
-		} else if (typeof value === "function") {
-			return TracingProxy.create(value, prop.toString())
-		} else {
-			if (TracingProxy.traceGet) {
-				console.log(
-					`Accessing property: ${this.prefix}${prop.toString()} = ${value}`
-				)
-				if (TracingProxy.showStackTraces) {
-					console.log(trace())
-				}
-			}
-			return value
-		}
-	}
-
-	set(target: T, p: string | symbol, newValue: any, receiver: any): boolean {
-		if (TracingProxy.traceSet) {
-			console.log(`Setting property: ${this.prefix}${p.toString()}`)
-			if (TracingProxy.showStackTraces) {
-				console.log(trace())
-			}
-		}
-		return Reflect.set(target, p, newValue, receiver)
-	}
-
-	apply(target: T & Function, thisArg: any, argArray: any[]) {
-		if (TracingProxy.traceCalls) {
-			console.log(`Calling function: ${this.prefix}(${argArray.join(", ")})`)
-			if (TracingProxy.showStackTraces) {
-				console.log(trace())
-			}
-		}
-		const ret = Reflect.apply(target, thisArg, argArray)
-		if (TracingProxy.traceCalls) {
-			if (ret instanceof Promise) {
-				ret.then((x) => {
-					console.log(`Return value promise: ${JSON.stringify(x)}`)
-				})
-			} else {
-				console.log(`Return value: ${JSON.stringify(ret)}`)
-			}
-		}
-		return ret
-	}
-
-	public static create<T extends object>(target: T, name: string = ""): T {
-		return new Proxy(target, new TracingProxy(target, name))
-	}
 }
 
 vi.mock("@kycdao/kycdao-sdk", async () => {
@@ -187,7 +145,8 @@ vi.mock("@kycdao/kycdao-sdk", async () => {
 		...actual,
 		KycDao: {
 			...actual.KycDao,
-			initialize: vi.fn(() => Promise.resolve(TracingProxy.create(kir))),
+			// use createTracingProxy(kir) for debugging
+			initialize: vi.fn(() => Promise.resolve(kir)),
 		},
 	}
 })
@@ -196,16 +155,10 @@ afterEach(() => {
 	vi.restoreAllMocks()
 })
 
-function runTimers() {
-	// 	act(() => {
-	// 		vi.runOnlyPendingTimers()
-	// 	})
-}
-
 class StepTest {
 	btns?: HTMLElement[]
 	constructor(
-		private readonly name: string,
+		readonly name: string,
 		private readonly heading: string,
 		private readonly interact: () => Promise<void> = async () => {},
 		private readonly afternext: () => Promise<void> = async () => {}
@@ -217,7 +170,6 @@ class StepTest {
 		this.btns = await screen.findAllByRole("button", {
 			name: /arrow_forward arrow_forward/i,
 		})
-		console.log(`ON ${this.name}`)
 	}
 	async next(): Promise<void> {
 		if (this.btns) {
@@ -227,7 +179,6 @@ class StepTest {
 			await waitFor(() => expect(lastBtn).not.toHaveAttribute("disabled"))
 			await userEvent.click(lastBtn)
 			await this.afternext()
-			runTimers()
 		} else {
 			throw new Error("No btns found")
 		}
@@ -278,7 +229,6 @@ const EMAIL_STEP = new StepTest(
 		kir.kycDao.checkEmailConfirmed.mockImplementation(() =>
 			Promise.resolve({ isConfirmed: true })
 		)
-		runTimers()
 		await screen.findByRole(
 			"heading",
 			{ name: /Open account/i },
@@ -286,6 +236,19 @@ const EMAIL_STEP = new StepTest(
 		)
 	}
 )
+const WELCOME_BACK_STEP = new StepTest("WELCOME_BACK", "Welcome back to kycDAO")
+
+async function flow(...steps: StepTest[]) {
+	for (const step of steps) {
+		try {
+			await step.parse()
+			await step.next()
+		} catch (e) {
+			console.error(`Failed at step: ${step.name}`)
+			throw e
+		}
+	}
+}
 
 const config: SdkConfiguration = {
 	demoMode: true,
@@ -295,34 +258,43 @@ const config: SdkConfiguration = {
 	evmProvider: {},
 }
 
+test("returning user flow subscribed", async () => {
+	render(<KycDaoWidget config={config} />)
+
+	kir.kycDao.checkVerificationStatus.mockImplementation(() => {
+		return Promise.resolve({ KYC: true })
+	})
+
+	vi.spyOn(kir.kycDao, "subscribed", "get").mockReturnValue(true)
+
+	await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
+	await waitFor(() => expect(kir.kycDao.connectWallet).toHaveBeenCalled())
+	await waitFor(() => expect(kir.kycDao.hasValidNft).toHaveBeenCalled())
+	await waitFor(() => expect(kir.kycDao.registerOrLogin).toHaveBeenCalled())
+
+	await flow(WELCOME_BACK_STEP, NFT_SELECT_STEP, FINAL_STEP)
+}, 10000)
+
 test("returning user flow", async () => {
 	render(<KycDaoWidget config={config} />)
 
 	kir.kycDao.checkVerificationStatus.mockImplementation(() => {
 		return Promise.resolve({ KYC: true })
 	})
+
 	await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
 	await waitFor(() => expect(kir.kycDao.connectWallet).toHaveBeenCalled())
 	await waitFor(() => expect(kir.kycDao.hasValidNft).toHaveBeenCalled())
 	await waitFor(() => expect(kir.kycDao.registerOrLogin).toHaveBeenCalled())
 
-	await INITIAL_STEP.parse()
-	await INITIAL_STEP.next()
-
-	await MEMBERSHIP_STEP.parse()
-	await MEMBERSHIP_STEP.next()
-
-	await VERIFY_STEP.parse()
-	await VERIFY_STEP.next()
-
-	await NFT_SELECT_STEP.parse()
-	await NFT_SELECT_STEP.next()
-
-	await MINT_MEMBERSHIP_STEP.parse()
-	await MINT_MEMBERSHIP_STEP.next()
-
-	await FINAL_STEP.parse()
-	await FINAL_STEP.next()
+	await flow(
+		INITIAL_STEP,
+		MEMBERSHIP_STEP,
+		VERIFY_STEP,
+		NFT_SELECT_STEP,
+		MINT_MEMBERSHIP_STEP,
+		FINAL_STEP
+	)
 }, 10000)
 
 test("new user flow", async () => {
@@ -333,32 +305,17 @@ test("new user flow", async () => {
 	await waitFor(() => expect(kir.kycDao.hasValidNft).toHaveBeenCalled())
 	await waitFor(() => expect(kir.kycDao.registerOrLogin).toHaveBeenCalled())
 
-	await INITIAL_STEP.parse()
-	await INITIAL_STEP.next()
-
-	await MEMBERSHIP_STEP.parse()
-	await MEMBERSHIP_STEP.next()
-
-	await VERIFY_STEP.parse()
-	await VERIFY_STEP.next()
-
-	await EMAIL_STEP.parse()
-	await EMAIL_STEP.next()
-
-	await OPEN_ACCOUNT_STEP.parse()
-	await OPEN_ACCOUNT_STEP.next()
-
-	await TAX_RESIDENCE_STEP.parse()
-	await TAX_RESIDENCE_STEP.next()
-
-	await NFT_SELECT_STEP.parse()
-	await NFT_SELECT_STEP.next()
-
-	await MINT_MEMBERSHIP_STEP.parse()
-	await MINT_MEMBERSHIP_STEP.next()
-
-	await FINAL_STEP.parse()
-	await FINAL_STEP.next()
+	await flow(
+		INITIAL_STEP,
+		MEMBERSHIP_STEP,
+		VERIFY_STEP,
+		EMAIL_STEP,
+		OPEN_ACCOUNT_STEP,
+		TAX_RESIDENCE_STEP,
+		NFT_SELECT_STEP,
+		MINT_MEMBERSHIP_STEP,
+		FINAL_STEP
+	)
 }, 10000)
 
 test("has NFT flow", async () => {
@@ -399,71 +356,54 @@ test("has NFT flow", async () => {
 	await waitFor(() => expect(kir.kycDao.connectWallet).toHaveBeenCalled())
 	await waitFor(() => expect(kir.kycDao.hasValidNft).toHaveBeenCalled())
 
-	await FINAL_STEP_ALREADY_HAVE.parse()
-	await FINAL_STEP_ALREADY_HAVE.next()
+	await flow(FINAL_STEP_ALREADY_HAVE)
 }, 10000)
 
 describe("NEAR", async () => {
 	test("new user flow (NearLogin)", async () => {
 		// @ts-ignore
-		kir.redirectEvent = 'NearLogin' as RedirectEvent
+		kir.redirectEvent = "NearLogin" as RedirectEvent
 
-		await render(<KycDaoWidget config={config} />)
+		render(<KycDaoWidget config={config} />)
 
 		await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
 		await waitFor(() => expect(kir.kycDao.connectWallet).toHaveBeenCalled())
 		await waitFor(() => expect(kir.kycDao.hasValidNft).toHaveBeenCalled())
 		await waitFor(() => expect(kir.kycDao.registerOrLogin).toHaveBeenCalled())
 
-		await INITIAL_STEP.parse()
-		await INITIAL_STEP.next()
-
-		await MEMBERSHIP_STEP.parse()
-		await MEMBERSHIP_STEP.next()
-
-		await VERIFY_STEP.parse()
-		await VERIFY_STEP.next()
-
-		await EMAIL_STEP.parse()
-		await EMAIL_STEP.next()
-
-		await OPEN_ACCOUNT_STEP.parse()
-		await OPEN_ACCOUNT_STEP.next()
-
-		await TAX_RESIDENCE_STEP.parse()
-		await TAX_RESIDENCE_STEP.next()
-
-		await NFT_SELECT_STEP.parse()
-		await NFT_SELECT_STEP.next()
-
-		await MINT_MEMBERSHIP_STEP.parse()
-		await MINT_MEMBERSHIP_STEP.next()
-
-		await FINAL_STEP.parse()
-		await FINAL_STEP.next()
+		await flow(
+			INITIAL_STEP,
+			MEMBERSHIP_STEP,
+			VERIFY_STEP,
+			EMAIL_STEP,
+			OPEN_ACCOUNT_STEP,
+			TAX_RESIDENCE_STEP,
+			NFT_SELECT_STEP,
+			MINT_MEMBERSHIP_STEP,
+			FINAL_STEP
+		)
 	})
 
 	test("mint redirect (NearMint)", async () => {
 		// @ts-ignore
-		kir.redirectEvent = 'NearMint' as RedirectEvent
+		kir.redirectEvent = "NearMint" as RedirectEvent
 
-		await render(<KycDaoWidget config={config} />)
+		render(<KycDaoWidget config={config} />)
 
 		await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
 		await waitFor(() => expect(kir.kycDao.connectWallet).toHaveBeenCalled())
 		await waitFor(() => expect(kir.kycDao.hasValidNft).toHaveBeenCalled())
 		await waitFor(() => expect(kir.kycDao.registerOrLogin).toHaveBeenCalled())
 
-		await FINAL_STEP.parse()
-		await FINAL_STEP.next()
+		await flow(FINAL_STEP)
 	})
 
 	test("user rejection (NearUserRejectedError)", async () => {
 		// @ts-ignore
-		kir.redirectEvent = 'NearUserRejectedError' as RedirectEvent
+		kir.redirectEvent = "NearUserRejectedError" as RedirectEvent
 		const onFail = vi.fn()
 
-		await render(<KycDaoWidget onFail={onFail} config={config} />)
+		render(<KycDaoWidget onFail={onFail} config={config} />)
 
 		await waitFor(() => expect(onFail).toHaveBeenCalled())
 	})
