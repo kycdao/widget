@@ -78,7 +78,6 @@ jobs:
   demo:
     name: Deploy Demo page
     runs-on: ubuntu-latest
-    needs: publish
     permissions:
       contents: read
       packages: write
