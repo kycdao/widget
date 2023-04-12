@@ -5,20 +5,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content="#000000" />
 		<title>kycDAO</title>
-		<script>
-			window.onload = function () {
-				const client = new KycDaoClient({
-					parent: "#modalRoot",
-					configFromUrl: true,
-				})
-
-				client.open()
-			}
-		</script>
+		<script type="module" src="./Iframe.tsx"></script>
 	</head>
 
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
-		<div id="modalRoot"></div>
+		<div id="root"></div>
 	</body>
 </html>

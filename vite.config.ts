@@ -46,7 +46,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       name: "@kycdao/widget",
-      fileName: "KycDaoWidget"
+      fileName: "index",
     },
     commonjsOptions: {
       // See https://github.com/justinmahar/react-social-media-embed/issues/24
