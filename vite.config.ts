@@ -6,6 +6,7 @@ import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import eslint from "vite-plugin-eslint";
 import dts from "vite-plugin-dts";
+import { configDefaults } from "vitest/config";
 
 export default defineConfig({
   plugins: [
@@ -72,6 +73,7 @@ export default defineConfig({
     setupFiles: "./vitest-setup.ts",
     // you might want to disable it, if you don't have tests that rely on CSS
     // since parsing CSS is slow
-    css: true
+    css: true,
+    exclude: [...configDefaults.exclude, 'examples/**/*'],
   }
 });
