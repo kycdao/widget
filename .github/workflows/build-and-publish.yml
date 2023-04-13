@@ -84,7 +84,7 @@ jobs:
     on:
       push:
         branches:
-          - master
+          - main
     if: ${{ always() }}
     needs: [ publish, build ]
     permissions:
