@@ -1,9 +1,9 @@
-name: Build and publish SDK package
+name: Build, Run Tests, and Publish on Merge
 
-on: [push, pull_request]
-
-env:
-  PUBLISH: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -48,7 +48,6 @@ jobs:
   publish:
     name: Publish package
     needs: build
-    if: needs.build.outputs.PUBLISH == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -81,10 +80,6 @@ jobs:
   demo:
     name: Deploy Demo page
     runs-on: ubuntu-latest
-    on:
-      push:
-        branches:
-          - main
     if: ${{ always() }}
     needs: [ publish, build ]
     permissions:

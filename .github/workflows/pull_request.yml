@@ -1,0 +1,43 @@
+name: Build & Run Tests on Pull Request
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      PUBLISH: ${{ env.PUBLISH }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check for Windows line endings
+        run: |
+          if find ! -path "./.git/*" -type f | xargs file | grep CRLF ; then
+            echo "CRLF line ending detected, please fix it"
+            exit 1
+          fi
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
+
+      - run: pnpm test
+
+      - name: Cache package
+        if: env.PUBLISH == 'true'
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: |
+            dist
+            index.d.ts
+            package.json
+            README.md
