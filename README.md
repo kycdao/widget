@@ -4,7 +4,7 @@
 
 📜 [Developer documentation](https://docs.kycdao.xyz)
 
-✍️ [Example](https://sdk.kycdao.xyz)
+✍️ [Try the demo](https://sdk.kycdao.xyz)
 
 # Examples
 
