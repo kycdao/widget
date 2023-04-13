@@ -32,6 +32,8 @@ jobs:
 
       - run: pnpm build
 
+      - run: pnpm test
+
       - name: Cache package
         if: env.PUBLISH == 'true'
         uses: actions/upload-artifact@v3
@@ -75,9 +77,14 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   demo:
     name: Deploy Demo page
     runs-on: ubuntu-latest
+    on:
+      push:
+        branches:
+          - master
     if: ${{ always() }}
     needs: [ publish, build ]
     permissions:
