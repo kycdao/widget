@@ -117,6 +117,11 @@ export class KycDaoClient implements KycDaoClientInterface {
 
 		this.messageHndlr = this.messageHndlr.bind(this)
 
+		// todo: fix NEAR network + configFromUrl
+		if (this.configFromUrl) {
+			return
+		}
+
 		const nearNetwork = this.config.enabledBlockchainNetworks.find((network) =>
 			nearNetworkRegex.test(network)
 		)
@@ -150,11 +155,6 @@ export class KycDaoClient implements KycDaoClientInterface {
 	) {
 		if (!this.isOpen) {
 			this.container = document.createElement("div")
-			const currentEthProvider = ethProvider || this.config.evmProvider
-
-			const enabledBlockchainNetwork = blockchain
-				? [blockchain]
-				: [this.config.enabledBlockchainNetworks[0]]
 
 			this.parent = this.getParentElement() || document.body
 
@@ -162,7 +162,14 @@ export class KycDaoClient implements KycDaoClientInterface {
 				BootstrapIframeKycDaoModal({
 					parent: this.container,
 				})
+				return
 			} else {
+				const currentEthProvider = ethProvider || this.config.evmProvider
+
+				const enabledBlockchainNetwork = blockchain
+					? [blockchain]
+					: [this.config.enabledBlockchainNetworks[0]]
+
 				BootstrapKycDaoModal({
 					config: {
 						...this.config,
