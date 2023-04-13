@@ -4,7 +4,11 @@
 
 📜 [Developer documentation](https://docs.kycdao.xyz)
 
-✍️ [Example](https://sdk.kycdao.xyz)
+✍️ [Try the demo](https://sdk.kycdao.xyz)
+
+# Examples
+
+You can find examples of how to use the SDK in the `examples` folder.
 
 # How to develop
 
