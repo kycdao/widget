@@ -162,7 +162,6 @@ export class KycDaoClient implements KycDaoClientInterface {
 				BootstrapIframeKycDaoModal({
 					parent: this.container,
 				})
-				return
 			} else {
 				const currentEthProvider = ethProvider || this.config.evmProvider
 

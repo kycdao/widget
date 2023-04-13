@@ -7,14 +7,10 @@ const iframeClient = new KycDaoIframeClient({
 		messageTargetOrigin: window.origin,
 	},
 	config: {
-		demoMode: true,
 		enabledBlockchainNetworks: ["PolygonMumbai"],
 		enabledVerificationTypes: ["KYC"],
 		evmProvider: "ethereum",
 		baseUrl: "https://staging.kycdao.xyz",
-		sentryConfiguration: {
-			dsn: "https://23dafecec027439b9413cd50eb22567d@o1184096.ingest.sentry.io/4504559638413313",
-		},
 	},
 	modal: true,
 })
