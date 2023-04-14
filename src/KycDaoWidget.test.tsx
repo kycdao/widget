@@ -156,12 +156,14 @@ afterEach(() => {
 
 class StepTest {
 	btns?: HTMLElement[]
+
 	constructor(
 		readonly name: string,
 		private readonly heading: string,
 		private readonly interact: () => Promise<void> = async () => {},
 		private readonly afternext: () => Promise<void> = async () => {}
 	) {}
+
 	async parse(): Promise<void> {
 		await screen.findByRole("heading", {
 			name: new RegExp(this.heading, "i"),
@@ -170,6 +172,7 @@ class StepTest {
 			name: /arrow_forward arrow_forward/i,
 		})
 	}
+
 	async next(): Promise<void> {
 		if (this.btns) {
 			await this.interact()
@@ -183,6 +186,7 @@ class StepTest {
 		}
 	}
 }
+
 const INITIAL_STEP = new StepTest(
 	"INITIAL_STEP",
 	"the last proof you need in web3."
@@ -284,9 +288,9 @@ test("returning user flow", async () => {
 
 	await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
 
-  expect(kir.kycDao.connectWallet).toHaveBeenCalled()
-  expect(kir.kycDao.hasValidNft).toHaveBeenCalled()
-  expect(kir.kycDao.registerOrLogin).toHaveBeenCalled()
+	expect(kir.kycDao.connectWallet).toHaveBeenCalled()
+	expect(kir.kycDao.hasValidNft).toHaveBeenCalled()
+	expect(kir.kycDao.registerOrLogin).toHaveBeenCalled()
 
 	await flow(
 		INITIAL_STEP,
@@ -303,9 +307,9 @@ test("new user flow", async () => {
 
 	await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
 
-  expect(kir.kycDao.connectWallet).toHaveBeenCalled()
-  expect(kir.kycDao.hasValidNft).toHaveBeenCalled()
-  expect(kir.kycDao.registerOrLogin).toHaveBeenCalled()
+	expect(kir.kycDao.connectWallet).toHaveBeenCalled()
+	expect(kir.kycDao.hasValidNft).toHaveBeenCalled()
+	expect(kir.kycDao.registerOrLogin).toHaveBeenCalled()
 
 	await flow(
 		INITIAL_STEP,
@@ -356,8 +360,8 @@ test("has NFT flow", async () => {
 
 	await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
 
-  expect(kir.kycDao.connectWallet).toHaveBeenCalled()
-  expect(kir.kycDao.hasValidNft).toHaveBeenCalled()
+	expect(kir.kycDao.connectWallet).toHaveBeenCalled()
+	expect(kir.kycDao.hasValidNft).toHaveBeenCalled()
 
 	await flow(FINAL_STEP_ALREADY_HAVE)
 }, 10000)
@@ -371,9 +375,9 @@ describe("NEAR", async () => {
 
 		await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
 
-    expect(kir.kycDao.connectWallet).toHaveBeenCalled()
-    expect(kir.kycDao.hasValidNft).toHaveBeenCalled()
-    expect(kir.kycDao.registerOrLogin).toHaveBeenCalled()
+		expect(kir.kycDao.connectWallet).toHaveBeenCalled()
+		expect(kir.kycDao.hasValidNft).toHaveBeenCalled()
+		expect(kir.kycDao.registerOrLogin).toHaveBeenCalled()
 
 		await flow(
 			INITIAL_STEP,
@@ -396,9 +400,9 @@ describe("NEAR", async () => {
 
 		await waitFor(() => expect(KycDao.initialize).toHaveBeenCalled())
 
-    expect(kir.kycDao.connectWallet).toHaveBeenCalled()
-    expect(kir.kycDao.hasValidNft).toHaveBeenCalled()
-    expect(kir.kycDao.registerOrLogin).toHaveBeenCalled()
+		expect(kir.kycDao.connectWallet).toHaveBeenCalled()
+		expect(kir.kycDao.hasValidNft).toHaveBeenCalled()
+		expect(kir.kycDao.registerOrLogin).toHaveBeenCalled()
 
 		await flow(FINAL_STEP)
 	})
