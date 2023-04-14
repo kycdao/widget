@@ -13,7 +13,6 @@ import {
 	useReducer,
 	useState,
 	StrictMode,
-	useImperativeHandle,
 	ForwardRefRenderFunction,
 	forwardRef,
 } from "react"
@@ -49,25 +48,16 @@ export type AppContainerRef = {
 const AppContainerRender: ForwardRefRenderFunction<
 	AppContainerRef,
 	AppContainerProps
-> = function AppContainer(
-	{
-		config,
-		isModal,
-		iframeOptions,
-		onReady,
-		messageTargetOrigin,
-	}: AppContainerProps,
-	ref
-) {
+> = function AppContainer({
+	config,
+	isModal,
+	iframeOptions,
+	onReady,
+	messageTargetOrigin,
+}: AppContainerProps) {
 	const [data, dispatch] = useReducer(reducer, DefaultData)
 	const contextData = useMemo(() => ({ data, dispatch }), [data, dispatch])
 	const [kycDao, setKycDao] = useState<KycDaoInitializationResult>()
-
-	useImperativeHandle(ref, () => ({
-		get kycDaoSdkInstance() {
-			return kycDao
-		},
-	}))
 
 	useEffect(() => {
 		dispatch({
@@ -170,8 +160,6 @@ const AppContainerRender: ForwardRefRenderFunction<
 								startPage = StepID.finalStep
 						}
 					} else {
-						await kycDao.kycDao.registerOrLogin()
-
 						const { subscribed } = kycDao.kycDao
 
 						if (subscribed) {

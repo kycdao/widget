@@ -68,8 +68,9 @@ const UnstyledSubmitButton: FC<SubmitButtonProps> = ({
 
 	return (
 		<Button
+			aria-disabled={disabled || inactive}
 			mode="black"
-			disabled={disabled}
+			disabled={disabled || inactive}
 			ref={ref}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}

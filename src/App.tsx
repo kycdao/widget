@@ -2,9 +2,9 @@ import {
 	KycDaoInitializationResult,
 	SdkConfiguration,
 } from "@kycdao/kycdao-sdk"
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { FC, useCallback, useEffect, useMemo, useState } from "react"
 
-import { AppContainer, AppContainerRef } from "./AppContainer"
+import { AppContainer } from "./AppContainer"
 import { RestartContext } from "@Components/restartContext"
 import { GlobalStyles } from "./styles/globalStyles"
 
@@ -30,8 +30,6 @@ export const KycDaoModal: FC<KycDaoModalProps> = (props) => {
 		[props.iframeOptions]
 	)
 
-	const kycDaoSdkInstance = useRef<AppContainerRef>(null)
-
 	const [key, setKey] = useState(Date.now())
 
 	const RestartApp = useCallback(() => {
@@ -42,7 +40,6 @@ export const KycDaoModal: FC<KycDaoModalProps> = (props) => {
 		<RestartContext.Provider value={RestartApp}>
 			<AppContainer
 				messageTargetOrigin={messageTargetOrigin}
-				ref={kycDaoSdkInstance}
 				key={key}
 				{...props}
 			/>

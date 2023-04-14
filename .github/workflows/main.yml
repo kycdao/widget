@@ -1,9 +1,9 @@
-name: Build and publish SDK package
+name: Build, Run Tests, and Publish on Merge
 
-on: [push, pull_request]
-
-env:
-  PUBLISH: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -32,6 +32,8 @@ jobs:
 
       - run: pnpm build
 
+      - run: pnpm test
+
       - name: Cache package
         if: env.PUBLISH == 'true'
         uses: actions/upload-artifact@v3
@@ -46,7 +48,6 @@ jobs:
   publish:
     name: Publish package
     needs: build
-    if: needs.build.outputs.PUBLISH == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -75,6 +76,7 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   demo:
     name: Deploy Demo page
     runs-on: ubuntu-latest
