@@ -11,7 +11,9 @@ import { configDefaults } from "vitest/config";
 export default defineConfig({
   plugins: [
     react(),
-    eslint(),
+    eslint({
+      exclude: ["**/node_modules/**", "dist", "examples/**/*"]
+    }),
     dts({
       insertTypesEntry: true
     }),
