@@ -24,7 +24,7 @@ You can find examples of how to use the SDK in the `examples` folder.
 
 - Run the following command to launch the sdk for local development via https:
   ```
-  pnpm start
+  pnpm dev
   ```
 
 # Contribution

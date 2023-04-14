@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>kycDAO</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/examples/demo/public/styles.css">
   <script type="module" src="./src/index.ts"></script>
   <script>
     const autostart = false;
@@ -87,19 +87,15 @@
     <h1 class="centered">Select your chain</h1>
     <div id="flexRow">
       <div id="buttonsContainer">
-        <div class="dualButton">
-          <div
-            class="chainSelectorButton"
-            onclick="selectorHndlr('CeloAlfajores')">
-            Celo Testnet (Alfajores)
-          </div>
+        <div
+          class="chainSelectorButton"
+          onclick="selectorHndlr('CeloAlfajores')">
+          Celo Testnet (Alfajores)
         </div>
-        <div class="dualButton">
-          <div
-            class="chainSelectorButton"
-            onclick="selectorHndlr('PolygonMumbai')">
-            Polygon Testnet (Mumbai)
-          </div>
+        <div
+          class="chainSelectorButton"
+          onclick="selectorHndlr('PolygonMumbai')">
+          Polygon Testnet (Mumbai)
         </div>
         <div
           class="chainSelectorButton"
@@ -111,12 +107,11 @@
           onclick="selectorHndlr('NearTestnet')">
           NEAR Testnet
         </div>
-        <div class="dualButton">
-          <div
-            class="chainSelectorButton"
-            onclick="selectorHndlr('EthereumGoerli')">
-            Ethereum Testnet (Goerli)
-          </div>
+
+        <div
+          class="chainSelectorButton"
+          onclick="selectorHndlr('EthereumGoerli')">
+          Ethereum Testnet (Goerli)
         </div>
       </div>
     </div>

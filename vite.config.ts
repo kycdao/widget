@@ -10,7 +10,9 @@ import dts from "vite-plugin-dts";
 export default defineConfig({
   plugins: [
     react(),
-    eslint(),
+    eslint({
+      exclude: ["**/node_modules/**", "dist", "examples/**/*"]
+    }),
     dts({
       insertTypesEntry: true
     }),
