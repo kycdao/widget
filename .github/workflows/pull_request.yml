@@ -30,14 +30,3 @@ jobs:
       - run: pnpm build
 
       - run: pnpm test
-
-      - name: Cache package
-        if: env.PUBLISH == 'true'
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist
-          path: |
-            dist
-            index.d.ts
-            package.json
-            README.md
