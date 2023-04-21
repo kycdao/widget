@@ -11,7 +11,7 @@ overrides:
   bn.js: ^5.2.1
 
 specifiers:
-  '@kycdao/kycdao-sdk': ^0.6.12
+  '@kycdao/kycdao-sdk': ^0.6.14
   '@testing-library/dom': ^9.0.0
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^14.0.0
@@ -58,7 +58,7 @@ specifiers:
   vitest: ^0.29.8
 
 dependencies:
-  '@kycdao/kycdao-sdk': 0.6.12_25zciknb7fkc66ia5szebs37ti
+  '@kycdao/kycdao-sdk': 0.6.14_25zciknb7fkc66ia5szebs37ti
   agent-base: 6.0.2
   buffer: 6.0.3
   clsx: 1.2.1
@@ -887,8 +887,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@kycdao/kycdao-sdk/0.6.12_25zciknb7fkc66ia5szebs37ti:
-    resolution: {integrity: sha512-LcDSIlwKUVmaLdDjI1iJVERhoBdDSP92SyjFXNxY5PGBhC+c4jw+6ZKcTyIGpQRFR36DMVd1MGuUOWK/Cy1DRg==}
+  /@kycdao/kycdao-sdk/0.6.14_25zciknb7fkc66ia5szebs37ti:
+    resolution: {integrity: sha512-vik+vhrKlPckvXRrZcLAUXCzl9AOwVPTXYvO/W7kV8t9ckIrGIr8APBgdQuHInn5FWC0fDgSE+xd9p8u6nxY3g==}
     peerDependencies:
       near-api-js: ^1
       persona: ^4
@@ -896,6 +896,7 @@ packages:
       react-dom: ^18
       styled-components: ^5
     dependencies:
+      '@sentry/browser': 7.49.0
       '@solana/buffer-layout': 4.0.1
       '@solana/wallet-adapter-base': 0.9.22_@solana+web3.js@1.75.0
       '@solana/wallet-adapter-wallets': 0.19.16_3aluapnzn5sto7wl46cbnceqsm
@@ -1281,6 +1282,59 @@ packages:
     dependencies:
       '@noble/hashes': 1.2.0
       '@scure/base': 1.1.1
+    dev: false
+
+  /@sentry-internal/tracing/7.49.0:
+    resolution: {integrity: sha512-ESh3+ZneQk/3HESTUmIPNrW5GVPu/HrRJU+eAJJto74vm+6vP7zDn2YV2gJ1w18O/37nc7W/bVCgZJlhZ3cwew==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry/core': 7.49.0
+      '@sentry/types': 7.49.0
+      '@sentry/utils': 7.49.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/browser/7.49.0:
+    resolution: {integrity: sha512-x2DekKkQoY7/dhBzE4J25mdQ978NtPBTVQb+uZqlF/t5mp4K44TAszmPqy8lC/CmVHkp7qcpRGSCIzeboUL4KA==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry-internal/tracing': 7.49.0
+      '@sentry/core': 7.49.0
+      '@sentry/replay': 7.49.0
+      '@sentry/types': 7.49.0
+      '@sentry/utils': 7.49.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/core/7.49.0:
+    resolution: {integrity: sha512-AlSnCYgfEbvK8pkNluUkmdW/cD9UpvOVCa+ERQswXNRkAv5aDGCL6Ihv6fnIajE++BYuwZh0+HwZUBVKTFzoZg==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry/types': 7.49.0
+      '@sentry/utils': 7.49.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/replay/7.49.0:
+    resolution: {integrity: sha512-UY3bHoBDPOu4Dpq3m3oxNjLrq09NiFVYUfrTN4QOq1Am2SA04XbuCj/YZ+jNVy/NrFtoz9cTovK6oQbNw53jog==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@sentry/core': 7.49.0
+      '@sentry/types': 7.49.0
+      '@sentry/utils': 7.49.0
+    dev: false
+
+  /@sentry/types/7.49.0:
+    resolution: {integrity: sha512-9yXXh7iv76+O6h2ONUVx0wsL1auqJFWez62mTjWk4350SgMmWp/zUkBxnVXhmcYqscz/CepC+Loz9vITLXtgxg==}
+    engines: {node: '>=8'}
+    dev: false
+
+  /@sentry/utils/7.49.0:
+    resolution: {integrity: sha512-JdC9yGnOgev4ISJVwmIoFsk8Zx0psDZJAj2DV7x4wMZsO6QK+YjC7G3mUED/S5D5lsrkBZ/3uvQQhr8DQI4UcQ==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry/types': 7.49.0
+      tslib: 1.14.1
     dev: false
 
   /@sinclair/typebox/0.25.24:
@@ -2907,7 +2961,7 @@ packages:
   /@walletconnect/window-metadata/1.0.0:
     resolution: {integrity: sha512-9eFvmJxIKCC3YWOL97SgRkKhlyGXkrHwamfechmqszbypFspaSk+t2jQXAEU7YClHF6Qjw5eYOmy1//zFi9/GA==}
     dependencies:
-      '@walletconnect/window-getters': 1.0.0
+      '@walletconnect/window-getters': 1.0.1
     dev: false
 
   /@walletconnect/window-metadata/1.0.1:
@@ -3332,7 +3386,7 @@ packages:
       elliptic: 6.5.4
       inherits: 2.0.4
       parse-asn1: 5.1.6
-      readable-stream: 3.6.1
+      readable-stream: 3.6.2
       safe-buffer: 5.2.1
     dev: false
 

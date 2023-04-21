@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.6.10] - 2023-04-21
+
+### Changed
+
+- updated Core SDK version to 0.6.14 (better session handling, error messages and sentry integration)
+
 ## [0.6.0] - 2023-04-04
 
 ### Breaking
