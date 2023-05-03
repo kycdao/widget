@@ -30,7 +30,7 @@ import styled from "styled-components"
 import UnstyledDiscordLogo from "@Assets/discord.svg"
 import useErrorHandler from "@Hooks/errorHandler"
 
-const emailRegex = /^[^@]+@[a-z0-9-]+.[a-z]+$/
+const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
 const Header = () => (
 	<H1>
