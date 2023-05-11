@@ -102,7 +102,7 @@ jobs:
     name: Deploy Demo page
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    needs: [ publish, build ]
+    needs: [ demo-build, publish, build ]
     permissions:
       contents: read
       packages: write
