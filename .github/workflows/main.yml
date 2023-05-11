@@ -48,6 +48,7 @@ jobs:
     name: Publish widget package
     needs: build
     runs-on: ubuntu-latest
+    continue-on-error: true
     permissions:
       contents: read
       packages: write
@@ -90,6 +91,23 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Restore dist
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+
       - name: Build demo page, and install its dependencies
         run: cd examples/demo && pnpm install --frozen-lockfile && pnpm build
 
