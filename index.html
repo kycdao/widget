@@ -21,7 +21,8 @@
             "CeloAlfajores",
             "SolanaDevnet",
             "NearTestnet",
-            "EthereumGoerli"
+            "EthereumGoerli",
+            "BaseGoerli"
           ],
           enabledVerificationTypes: ["KYC"],
           evmProvider: window.ethereum,
@@ -70,7 +71,8 @@
           "CeloAlfajores",
           "SolanaDevnet",
           "NearTestnet",
-          "EthereumGoerli"
+          "EthereumGoerli",
+          "BaseGoerli"
         ];
 
         selectorHndlr(chains[0]);
@@ -113,6 +115,12 @@
           onclick="selectorHndlr('EthereumGoerli')">
           Ethereum Testnet (Goerli)
         </div>
+
+        <div
+          class="chainSelectorButton"
+          onclick="selectorHndlr('BaseGoerli')">
+          Base Testnet (Goerli)
+        </div>
       </div>
     </div>
   </div>
@@ -142,10 +150,10 @@
           </a>
         </div>
         <div>
-          <strong>Goerli</strong>
+          <strong>Base Goerli</strong>
           faucet list:
-          <a href="https://faucetlink.to/goerli" target="_blank">
-            https://faucetlink.to/goerli
+          <a href="https://faucet.quicknode.com/base/goerli" target="_blank">
+            https://faucet.quicknode.com/base/goerli
           </a>
         </div>
         <div>

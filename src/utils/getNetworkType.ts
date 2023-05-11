@@ -9,6 +9,9 @@ export const getNetworkType = (
 			case "PolygonMumbai":
 			case "CeloMainnet":
 			case "CeloAlfajores":
+			case "EthereumMainnet":
+			case "EthereumGoerli":
+			case "BaseGoerli":
 				return "Ethereum"
 		}
 	}
