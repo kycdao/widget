@@ -1,27 +1,25 @@
-import Head from "next/head";
-import { useCallback } from "react";
-import styles from "../styles/Home.module.css";
+import Head from "next/head"
+import { useCallback } from "react"
+import styles from "../styles/Home.module.css"
 
 export default function Home() {
   const onOpenSDK = useCallback(async () => {
-    const { KycDaoClient } = await import("@kycdao/widget");
+    const { KycDaoClient } = await import("@kycdao/widget")
 
     new KycDaoClient({
       parent: "#modalroot",
       config: {
         demoMode: false,
-        enabledBlockchainNetworks: [
-          "PolygonMumbai"
-        ],
+        enabledBlockchainNetworks: ["PolygonMumbai"],
         enabledVerificationTypes: ["KYC"],
         evmProvider: window.ethereum,
         baseUrl: "https://staging.kycdao.xyz",
         sentryConfiguration: {
-          dsn: "https://23dafecec027439b9413cd50eb22567d@o1184096.ingest.sentry.io/4504559638413313"
-        }
-      }
-    }).open();
-  }, []);
+          dsn: "https://23dafecec027439b9413cd50eb22567d@o1184096.ingest.sentry.io/4504559638413313",
+        },
+      },
+    }).open()
+  }, [])
 
   return (
     <>
@@ -40,7 +38,7 @@ export default function Home() {
             color: "black",
             fontSize: "2em",
             padding: "0.4em",
-            borderRadius: "0.1em"
+            borderRadius: "0.1em",
           }}
           onClick={onOpenSDK}>
           Start verification
@@ -50,5 +48,5 @@ export default function Home() {
         </div>
       </main>
     </>
-  );
+  )
 }

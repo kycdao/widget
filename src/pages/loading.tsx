@@ -4,53 +4,53 @@ import { PageProps } from "./pageProps"
 
 import styled from "styled-components"
 import {
-	DataActionTypes,
-	HeaderButtons,
-	Loading,
-	StateContext,
-	Step,
+  DataActionTypes,
+  HeaderButtons,
+  Loading,
+  StateContext,
+  Step,
 } from "@Components/index"
 
 const H1 = styled.h1`
-	justify-content: center;
+  justify-content: center;
 `
 
 const Body = () => {
-	return (
-		<>
-			<H1>Loading</H1>
-			<Loading />
-		</>
-	)
+  return (
+    <>
+      <H1>Loading</H1>
+      <Loading />
+    </>
+  )
 }
 
 export const LoadingCard: FC<PageProps> = ({
-	className,
-	animation,
-	disabled = false,
+  className,
+  animation,
+  disabled = false,
 }) => {
-	const { dispatch } = useContext(StateContext)
+  const { dispatch } = useContext(StateContext)
 
-	const onTransitionDone = useCallback(() => {
-		if (!disabled) {
-			dispatch({
-				payload: { button: HeaderButtons.prev, state: "hidden" },
-				type: DataActionTypes.SetHeaderButtonState,
-			})
-			dispatch({
-				payload: { button: HeaderButtons.next, state: "hidden" },
-				type: DataActionTypes.SetHeaderButtonState,
-			})
-		}
-	}, [disabled, dispatch])
+  const onTransitionDone = useCallback(() => {
+    if (!disabled) {
+      dispatch({
+        payload: { button: HeaderButtons.prev, state: "hidden" },
+        type: DataActionTypes.SetHeaderButtonState,
+      })
+      dispatch({
+        payload: { button: HeaderButtons.next, state: "hidden" },
+        type: DataActionTypes.SetHeaderButtonState,
+      })
+    }
+  }, [disabled, dispatch])
 
-	return (
-		<Step
-			disabled={disabled}
-			onTransitionDone={onTransitionDone}
-			className={className}
-			animation={animation}
-			body={Body}
-		/>
-	)
+  return (
+    <Step
+      disabled={disabled}
+      onTransitionDone={onTransitionDone}
+      className={className}
+      animation={animation}
+      body={Body}
+    />
+  )
 }

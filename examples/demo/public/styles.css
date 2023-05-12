@@ -1,125 +1,124 @@
 @font-face {
-    font-family: neue-machina;
-    src: url("./NeueMachina-Regular.woff2");
+  font-family: neue-machina;
+  src: url("./NeueMachina-Regular.woff2");
 }
 
 @font-face {
-    font-family: gilroy-light;
-    font-style: normal;
-    font-weight: 400;
-    src: local("Gilroy-Light"),
-    url(https://fonts.cdnfonts.com/s/16219/Gilroy-Light.woff)
-    format("woff");
+  font-family: gilroy-light;
+  font-style: normal;
+  font-weight: 400;
+  src: local("Gilroy-Light"),
+    url(https://fonts.cdnfonts.com/s/16219/Gilroy-Light.woff) format("woff");
 }
 
 body {
-    font-family: neue-machina;
-    background-image: url("./kycd-pearl-background-transparent.jpg");
-    background-size: cover;
-    font-weight: 400;
+  font-family: neue-machina;
+  background-image: url("./kycd-pearl-background-transparent.jpg");
+  background-size: cover;
+  font-weight: 400;
 }
 
 a {
-    color: #181f60;
-    font-family: gilroy-light;
+  color: #181f60;
+  font-family: gilroy-light;
 }
 
 a:visited {
-    color: #181f60;
-    font-family: gilroy-light;
+  color: #181f60;
+  font-family: gilroy-light;
 }
 
 .chainSelectorButton {
-    cursor: pointer;
-    padding: 1em;
-    border: solid black 2px;
-    border-radius: 10%;
-    background: black;
-    color: white;
-    border-radius: 5px;
+  cursor: pointer;
+  padding: 1em;
+  border: solid black 2px;
+  border-radius: 10%;
+  background: black;
+  color: white;
+  border-radius: 5px;
 }
 
 .chainSelectorButton:hover {
-    background-color: #00ffb3;
-    color: black;
+  background-color: #00ffb3;
+  color: black;
 }
 
 [type="checkbox"]:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 label {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .checkboxContaner {
-    padding: 1em;
+  padding: 1em;
 }
 
 .dualButton {
-    display: flex;
-    box-sizing: content-box;
+  display: flex;
+  box-sizing: content-box;
 }
 
 .dualButton > .chainSelectorButton:nth-child(1) {
-    border-end-end-radius: 0;
-    border-start-end-radius: 0;
-    border-right-style: solid;
+  border-end-end-radius: 0;
+  border-start-end-radius: 0;
+  border-right-style: solid;
 }
 
 .dualButton > .chainSelectorButton:nth-child(2) {
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
-    border-left-style: none;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  border-left-style: none;
 }
 
 #faucetContainer {
-    margin-bottom: 2em;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 #buttonContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-inline: 1em;
-    height: 100vh;
-    position: relative;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-inline: 1em;
+  height: 100vh;
+  position: relative;
+  box-sizing: border-box;
 }
 
 #buttonsContainer {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 1em;
-    padding-bottom: 1em;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding-bottom: 1em;
 }
 
 .flexRow {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .flexCol {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .centered {
-    text-align: center;
-    margin-bottom: 2em;
+  text-align: center;
+  margin-bottom: 2em;
 }
 
 .flex-1 {
-    flex: 1;
+  flex: 1;
 }
 
 body {
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }

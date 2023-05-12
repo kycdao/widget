@@ -1,23 +1,23 @@
 import {
-	BlockchainNetwork,
-	KycDaoInitializationResult,
+  BlockchainNetwork,
+  KycDaoInitializationResult,
 } from "@kycdao/kycdao-sdk"
 import {
-	BootstrapIframeKycDaoModal,
-	BootstrapKycDaoModal,
+  BootstrapIframeKycDaoModal,
+  BootstrapKycDaoModal,
 } from "./BootstrapKycDaoModal"
 import type {
-	KycDaoClientInterface,
-	KycDaoClientMessage,
-	KycDaoClientOptions,
+  KycDaoClientInterface,
+  KycDaoClientMessage,
+  KycDaoClientOptions,
 } from "./KycDaoClientCommon"
 
 const errorPrefix = "Wallet callback handling error"
 
 const knownNearQueryParams = {
-	account_id: "NearLogin",
-	errorCode: "NearUserRejectedError",
-	transactionHashes: "NearMint",
+  account_id: "NearLogin",
+  errorCode: "NearUserRejectedError",
+  transactionHashes: "NearMint",
 }
 
 const nearNetworkRegex = /Near*./g
@@ -73,229 +73,229 @@ styleNode.innerText = styles
 document.head.appendChild(styleNode)
 
 export class KycDaoClient implements KycDaoClientInterface {
-	height: string
-	width: string
-	parent: HTMLElement | string = document.body
-	onFail
-	onSuccess
-	config
-	configFromUrl = false
-	backdrop = true
-	modal?: HTMLDivElement
-	onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
-	isOpen = false
-	isSuccessful = false
-	isModal = false
-	container?: HTMLDivElement
-	originalParentZIndex: null | string = null
+  height: string
+  width: string
+  parent: HTMLElement | string = document.body
+  onFail
+  onSuccess
+  config
+  configFromUrl = false
+  backdrop = true
+  modal?: HTMLDivElement
+  onReady?: (kycDaoSdkInstance: KycDaoInitializationResult) => void
+  isOpen = false
+  isSuccessful = false
+  isModal = false
+  container?: HTMLDivElement
+  originalParentZIndex: null | string = null
 
-	constructor({
-		height = "650px",
-		width = "400px",
-		parent = document.body,
-		onFail,
-		onSuccess,
-		config,
-		configFromUrl = false,
-		backdrop = true,
-		modal = true,
-		onReady,
-	}: KycDaoClientOptions) {
-		this.config = config
+  constructor({
+    height = "650px",
+    width = "400px",
+    parent = document.body,
+    onFail,
+    onSuccess,
+    config,
+    configFromUrl = false,
+    backdrop = true,
+    modal = true,
+    onReady,
+  }: KycDaoClientOptions) {
+    this.config = config
 
-		this.width = typeof width === "string" ? width : `${width}px`
-		this.height = typeof height === "string" ? height : `${height}px`
+    this.width = typeof width === "string" ? width : `${width}px`
+    this.height = typeof height === "string" ? height : `${height}px`
 
-		this.parent = parent
-		this.onFail = onFail
-		this.onSuccess = onSuccess
-		this.backdrop = backdrop
-		this.isModal = modal
+    this.parent = parent
+    this.onFail = onFail
+    this.onSuccess = onSuccess
+    this.backdrop = backdrop
+    this.isModal = modal
 
-		this.configFromUrl = configFromUrl
-		this.onReady = onReady
+    this.configFromUrl = configFromUrl
+    this.onReady = onReady
 
-		this.messageHndlr = this.messageHndlr.bind(this)
+    this.messageHndlr = this.messageHndlr.bind(this)
 
-		// todo: fix NEAR network + configFromUrl
-		if (this.configFromUrl) {
-			return
-		}
+    // todo: fix NEAR network + configFromUrl
+    if (this.configFromUrl) {
+      return
+    }
 
-		const nearNetwork = this.config.enabledBlockchainNetworks.find((network) =>
-			nearNetworkRegex.test(network)
-		)
+    const nearNetwork = this.config.enabledBlockchainNetworks.find((network) =>
+      nearNetworkRegex.test(network)
+    )
 
-		if (nearNetwork && this.nearRedirectCheck()) {
-			this.container = document.createElement("div")
+    if (nearNetwork && this.nearRedirectCheck()) {
+      this.container = document.createElement("div")
 
-			this.open(nearNetwork)
-		}
-	}
+      this.open(nearNetwork)
+    }
+  }
 
-	getParentElement() {
-		if (typeof this.parent === "string") {
-			const parentElement = document.querySelector(
-				this.parent
-			) as HTMLElement | null
-			if (!parentElement) {
-				throw new Error(
-					`There is no such element as '${this.parent}', check your parent selector string!`
-				)
-			}
+  getParentElement() {
+    if (typeof this.parent === "string") {
+      const parentElement = document.querySelector(
+        this.parent
+      ) as HTMLElement | null
+      if (!parentElement) {
+        throw new Error(
+          `There is no such element as '${this.parent}', check your parent selector string!`
+        )
+      }
 
-			return parentElement
-		}
-		return this.parent
-	}
+      return parentElement
+    }
+    return this.parent
+  }
 
-	open(
-		blockchain?: BlockchainNetwork,
-		ethProvider?: KycDaoClientOptions["config"]["evmProvider"]
-	) {
-		if (!this.isOpen) {
-			this.container = document.createElement("div")
+  open(
+    blockchain?: BlockchainNetwork,
+    ethProvider?: KycDaoClientOptions["config"]["evmProvider"]
+  ) {
+    if (!this.isOpen) {
+      this.container = document.createElement("div")
 
-			this.parent = this.getParentElement() || document.body
+      this.parent = this.getParentElement() || document.body
 
-			if (this.configFromUrl) {
-				BootstrapIframeKycDaoModal({
-					parent: this.container,
-				})
-			} else {
-				const currentEthProvider = ethProvider || this.config.evmProvider
+      if (this.configFromUrl) {
+        BootstrapIframeKycDaoModal({
+          parent: this.container,
+        })
+      } else {
+        const currentEthProvider = ethProvider || this.config.evmProvider
 
-				const enabledBlockchainNetwork = blockchain
-					? [blockchain]
-					: [this.config.enabledBlockchainNetworks[0]]
+        const enabledBlockchainNetwork = blockchain
+          ? [blockchain]
+          : [this.config.enabledBlockchainNetworks[0]]
 
-				BootstrapKycDaoModal({
-					config: {
-						...this.config,
-						enabledBlockchainNetworks: enabledBlockchainNetwork,
-						evmProvider: currentEthProvider,
-					},
-					height: this.height,
-					parent: this.container,
-					width: this.width,
-					isModal: this.isModal,
-					onReady: this.onReady,
-				})
-			}
+        BootstrapKycDaoModal({
+          config: {
+            ...this.config,
+            enabledBlockchainNetworks: enabledBlockchainNetwork,
+            evmProvider: currentEthProvider,
+          },
+          height: this.height,
+          parent: this.container,
+          width: this.width,
+          isModal: this.isModal,
+          onReady: this.onReady,
+        })
+      }
 
-			if (this.isModal) {
-				this.parent.classList.add("KycDaoModalRoot")
-			}
+      if (this.isModal) {
+        this.parent.classList.add("KycDaoModalRoot")
+      }
 
-			this.modal = document.createElement("div")
+      this.modal = document.createElement("div")
 
-			if (this.isModal) {
-				this.modal.classList.add("KycDaoModal")
-				this.modal.style.setProperty("--width", this.width)
-				this.modal.style.setProperty("--height", this.height)
-			}
+      if (this.isModal) {
+        this.modal.classList.add("KycDaoModal")
+        this.modal.style.setProperty("--width", this.width)
+        this.modal.style.setProperty("--height", this.height)
+      }
 
-			if (this.backdrop && this.isModal) {
-				this.originalParentZIndex =
-					this.parent.style.getPropertyValue("z-index")
+      if (this.backdrop && this.isModal) {
+        this.originalParentZIndex =
+          this.parent.style.getPropertyValue("z-index")
 
-				this.parent.style.setProperty(
-					"--kyc-dao-backdrop",
-					typeof this.backdrop === "boolean"
-						? "rgba(0, 0, 0, 0.7)"
-						: this.backdrop
-				)
-				this.parent.style.setProperty("z-index", "101")
-			}
+        this.parent.style.setProperty(
+          "--kyc-dao-backdrop",
+          typeof this.backdrop === "boolean"
+            ? "rgba(0, 0, 0, 0.7)"
+            : this.backdrop
+        )
+        this.parent.style.setProperty("z-index", "101")
+      }
 
-			if (this.isModal) {
-				this.container.classList.add("KycDaoModalFrame")
-			}
+      if (this.isModal) {
+        this.container.classList.add("KycDaoModalFrame")
+      }
 
-			this.modal.appendChild(this.container)
+      this.modal.appendChild(this.container)
 
-			this.parent.appendChild(this.modal)
-			this.isOpen = true
+      this.parent.appendChild(this.modal)
+      this.isOpen = true
 
-			window.addEventListener("message", this.messageHndlr)
-		}
-	}
+      window.addEventListener("message", this.messageHndlr)
+    }
+  }
 
-	nearRedirectCheck() {
-		const knownQueryParamNames = Object.keys(knownNearQueryParams)
+  nearRedirectCheck() {
+    const knownQueryParamNames = Object.keys(knownNearQueryParams)
 
-		const queryParams = new URLSearchParams(window.location.search)
-		const matches = [...queryParams].filter(([key]) =>
-			knownQueryParamNames.includes(key)
-		)
+    const queryParams = new URLSearchParams(window.location.search)
+    const matches = [...queryParams].filter(([key]) =>
+      knownQueryParamNames.includes(key)
+    )
 
-		if (matches.length > 1) {
-			console.error(
-				`${errorPrefix} - Multiple URL query parameters identified: ${matches.map(
-					([key]) => key
-				)}.`
-			)
-		} else if (matches.length === 1) {
-			const match = matches[0]
-			const key = match[0] as keyof typeof knownNearQueryParams
-			const event = knownNearQueryParams[key]
+    if (matches.length > 1) {
+      console.error(
+        `${errorPrefix} - Multiple URL query parameters identified: ${matches.map(
+          ([key]) => key
+        )}.`
+      )
+    } else if (matches.length === 1) {
+      const match = matches[0]
+      const key = match[0] as keyof typeof knownNearQueryParams
+      const event = knownNearQueryParams[key]
 
-			if (event.startsWith("Near")) {
-				return true
-			}
-		}
+      if (event.startsWith("Near")) {
+        return true
+      }
+    }
 
-		return false
-	}
+    return false
+  }
 
-	close() {
-		if (this.isOpen && this.modal) {
-			const parentNode = this.getParentElement()
+  close() {
+    if (this.isOpen && this.modal) {
+      const parentNode = this.getParentElement()
 
-			if (this.isModal) {
-				parentNode.classList.remove("KycDaoModalRoot")
-				parentNode.style.setProperty("z-index", this.originalParentZIndex)
+      if (this.isModal) {
+        parentNode.classList.remove("KycDaoModalRoot")
+        parentNode.style.setProperty("z-index", this.originalParentZIndex)
 
-				if (this.backdrop) {
-					parentNode.style.setProperty("--kyc-dao-backdrop", null)
-				}
-			}
+        if (this.backdrop) {
+          parentNode.style.setProperty("--kyc-dao-backdrop", null)
+        }
+      }
 
-			this.container?.remove()
-			parentNode.removeChild(this.modal)
+      this.container?.remove()
+      parentNode.removeChild(this.modal)
 
-			window.removeEventListener("message", this.messageHndlr)
-			this.isOpen = false
-			// document.body.style.setProperty("height", this.originalBodyHeight)
-		}
-	}
+      window.removeEventListener("message", this.messageHndlr)
+      this.isOpen = false
+      // document.body.style.setProperty("height", this.originalBodyHeight)
+    }
+  }
 
-	messageHndlr({ data: { data, type } }: KycDaoClientMessage) {
-		switch (type) {
-			case "kycDaoCloseModal":
-				if (this.onFail) {
-					this.onFail("cancelled")
-				}
-				if (this.isOpen) {
-					this.close()
-				}
-				break
-			case "kycDaoSuccess":
-				this.isSuccessful = true
-				if (this.onSuccess) {
-					this.onSuccess(data)
-				}
-				this.close()
-				break
-			case "kycDaoFail": {
-				if (this.onFail) {
-					this.onFail(data)
-				}
-			}
-		}
-	}
+  messageHndlr({ data: { data, type } }: KycDaoClientMessage) {
+    switch (type) {
+      case "kycDaoCloseModal":
+        if (this.onFail) {
+          this.onFail("cancelled")
+        }
+        if (this.isOpen) {
+          this.close()
+        }
+        break
+      case "kycDaoSuccess":
+        this.isSuccessful = true
+        if (this.onSuccess) {
+          this.onSuccess(data)
+        }
+        this.close()
+        break
+      case "kycDaoFail": {
+        if (this.onFail) {
+          this.onFail(data)
+        }
+      }
+    }
+  }
 }
 
 window.KycDaoClient = KycDaoClient as unknown as {
-	new (config: KycDaoClientOptions): KycDaoClientInterface
+  new (config: KycDaoClientOptions): KycDaoClientInterface
 }

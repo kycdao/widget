@@ -1,207 +1,207 @@
 import { PageProps } from "./pageProps"
 import {
-	DataActionTypes,
-	H1,
-	HeaderButtons,
-	Input,
-	Logo,
-	OnNext,
-	OnPrev,
-	P,
-	StateContext,
-	Step,
-	StepID,
-	StepPart,
-	SubmitButton,
+  DataActionTypes,
+  H1,
+  HeaderButtons,
+  Input,
+  Logo,
+  OnNext,
+  OnPrev,
+  P,
+  StateContext,
+  Step,
+  StepID,
+  StepPart,
+  SubmitButton,
 } from "@Components/index"
 import React, {
-	FC,
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
 } from "react"
 import useChangePage from "@Hooks/useChangePage"
 import { hexEncodeString } from "@kycdao/kycdao-sdk/dist/blockchains/evm/utils"
 import { useKycDao } from "@Hooks/useKycDao"
 
 const Body: React.FC = () => {
-	return (
-		<>
-			<H1>
-				<Logo />
-				Name and address
-			</H1>
-			<P>Please share your name and current address below.</P>
-		</>
-	)
+  return (
+    <>
+      <H1>
+        <Logo />
+        Name and address
+      </H1>
+      <P>Please share your name and current address below.</P>
+    </>
+  )
 }
 
 let isSigning = false
 
 export const GrantNameAndAddress: FC<PageProps> = ({
-	className,
-	animation,
-	disabled = false,
-	inactive = false,
+  className,
+  animation,
+  disabled = false,
+  inactive = false,
 }) => {
-	const {
-		dispatch,
-		data: { grantFlow },
-	} = useContext(StateContext)
-	const redirect = useChangePage()
-	const kycDao = useKycDao()
-	const [name, setName] = useState<string | undefined>(grantFlow.name)
-	const [address, setAddress] = useState<string | undefined>(grantFlow.address)
-	const isStepValid: boolean = useMemo(
-		() => !!name && !!address,
-		[name, address]
-	)
-	const [hasInteracted, setHasInteracted] = useState(false)
-	const [hasSigned, setHasSigned] = useState(false)
+  const {
+    dispatch,
+    data: { grantFlow },
+  } = useContext(StateContext)
+  const redirect = useChangePage()
+  const kycDao = useKycDao()
+  const [name, setName] = useState<string | undefined>(grantFlow.name)
+  const [address, setAddress] = useState<string | undefined>(grantFlow.address)
+  const isStepValid: boolean = useMemo(
+    () => !!name && !!address,
+    [name, address]
+  )
+  const [hasInteracted, setHasInteracted] = useState(false)
+  const [hasSigned, setHasSigned] = useState(false)
 
-	const sign = useCallback(() => {
-		if (isSigning) return
+  const sign = useCallback(() => {
+    if (isSigning) return
 
-		isSigning = true
-		window.ethereum
-			.request<string>({
-				method: "personal_sign",
-				params: [
-					hexEncodeString(
-						"Grant officers will be able to decrypt and view your data. kycDAO does not have access to this data.",
-						{ addPrefix: true }
-					),
-					kycDao?.kycDao.connectedWallet?.address,
-				],
-			})
-			.then(() => {
-				setHasSigned(true)
-			})
-			.catch(() => {
-				redirect(
-					StepID.taxResidenceStep,
-					StepID.grantNameAndAddressStep,
-					"prev"
-				)
-			})
-			.finally(() => {
-				isSigning = false
-			})
-	}, [kycDao?.kycDao.connectedWallet?.address, redirect])
+    isSigning = true
+    window.ethereum
+      .request<string>({
+        method: "personal_sign",
+        params: [
+          hexEncodeString(
+            "Grant officers will be able to decrypt and view your data. kycDAO does not have access to this data.",
+            { addPrefix: true }
+          ),
+          kycDao?.kycDao.connectedWallet?.address,
+        ],
+      })
+      .then(() => {
+        setHasSigned(true)
+      })
+      .catch(() => {
+        redirect(
+          StepID.taxResidenceStep,
+          StepID.grantNameAndAddressStep,
+          "prev"
+        )
+      })
+      .finally(() => {
+        isSigning = false
+      })
+  }, [kycDao?.kycDao.connectedWallet?.address, redirect])
 
-	useEffect(() => {
-		sign()
-	}, [sign])
+  useEffect(() => {
+    sign()
+  }, [sign])
 
-	const onTransitionDone = useCallback(() => {
-		if (disabled || inactive) {
-			return
-		}
+  const onTransitionDone = useCallback(() => {
+    if (disabled || inactive) {
+      return
+    }
 
-		dispatch({
-			payload: { button: HeaderButtons.prev, state: "enabled" },
-			type: DataActionTypes.SetHeaderButtonState,
-		})
-		dispatch({
-			payload: {
-				button: HeaderButtons.next,
-				state: grantFlow.name && grantFlow.address ? "enabled" : "hidden",
-			},
-			type: DataActionTypes.SetHeaderButtonState,
-		})
-	}, [inactive, disabled, dispatch, grantFlow])
+    dispatch({
+      payload: { button: HeaderButtons.prev, state: "enabled" },
+      type: DataActionTypes.SetHeaderButtonState,
+    })
+    dispatch({
+      payload: {
+        button: HeaderButtons.next,
+        state: grantFlow.name && grantFlow.address ? "enabled" : "hidden",
+      },
+      type: DataActionTypes.SetHeaderButtonState,
+    })
+  }, [inactive, disabled, dispatch, grantFlow])
 
-	const onSubmit = useCallback(() => {
-		if (disabled || inactive || !isStepValid) {
-			return
-		}
+  const onSubmit = useCallback(() => {
+    if (disabled || inactive || !isStepValid) {
+      return
+    }
 
-		redirect(
-			StepID.grantSocialSecurityNumberStep,
-			StepID.grantNameAndAddressStep
-		)
-	}, [disabled, inactive, isStepValid, redirect])
+    redirect(
+      StepID.grantSocialSecurityNumberStep,
+      StepID.grantNameAndAddressStep
+    )
+  }, [disabled, inactive, isStepValid, redirect])
 
-	const onPrev = useCallback(() => {
-		redirect(StepID.taxResidenceStep, StepID.grantNameAndAddressStep, "prev")
-	}, [redirect])
+  const onPrev = useCallback(() => {
+    redirect(StepID.taxResidenceStep, StepID.grantNameAndAddressStep, "prev")
+  }, [redirect])
 
-	useEffect(() => {
-		dispatch({
-			type: DataActionTypes.grantNameAndAddressChange,
-			payload: {
-				name,
-				address,
-			},
-		})
-	}, [name, address, dispatch])
+  useEffect(() => {
+    dispatch({
+      type: DataActionTypes.grantNameAndAddressChange,
+      payload: {
+        name,
+        address,
+      },
+    })
+  }, [name, address, dispatch])
 
-	useEffect(() => {
-		if (!disabled && !inactive) {
-			const prev = OnPrev.subscribe(onPrev)
-			const next = OnNext.subscribe(onSubmit)
+  useEffect(() => {
+    if (!disabled && !inactive) {
+      const prev = OnPrev.subscribe(onPrev)
+      const next = OnNext.subscribe(onSubmit)
 
-			return () => {
-				prev.unsubscribe()
-				next.unsubscribe()
-			}
-		}
-	}, [onSubmit, disabled, inactive, onPrev])
+      return () => {
+        prev.unsubscribe()
+        next.unsubscribe()
+      }
+    }
+  }, [onSubmit, disabled, inactive, onPrev])
 
-	const footer = useCallback<StepPart>(
-		({ disabled, inactive, onEnter, onInputBlurred, onInputFocused }) => (
-			<>
-				<Input
-					onInputBlurred={onInputBlurred}
-					onInputFocused={onInputFocused}
-					disabled={disabled}
-					value={name}
-					placeholder="Name"
-					fullWidth
-					onChange={(value) => {
-						setName(value)
-						setHasInteracted(true)
-					}}
-					style={{ marginBottom: "0" }}
-					autoFocus={!isStepValid && !hasInteracted && !inactive}
-				/>
-				<Input
-					disabled={disabled}
-					value={address}
-					placeholder="Address"
-					fullWidth
-					onChange={(value) => {
-						setAddress(value)
-						setHasInteracted(true)
-					}}
-				/>
-				<SubmitButton
-					black
-					fullWidth
-					inactive={inactive}
-					disabled={disabled || !isStepValid || !hasSigned}
-					onClick={onEnter}
-					autoFocus={isStepValid && !hasInteracted && !inactive}
-				/>
-			</>
-		),
-		[address, hasInteracted, hasSigned, isStepValid, name]
-	)
+  const footer = useCallback<StepPart>(
+    ({ disabled, inactive, onEnter, onInputBlurred, onInputFocused }) => (
+      <>
+        <Input
+          onInputBlurred={onInputBlurred}
+          onInputFocused={onInputFocused}
+          disabled={disabled}
+          value={name}
+          placeholder="Name"
+          fullWidth
+          onChange={(value) => {
+            setName(value)
+            setHasInteracted(true)
+          }}
+          style={{ marginBottom: "0" }}
+          autoFocus={!isStepValid && !hasInteracted && !inactive}
+        />
+        <Input
+          disabled={disabled}
+          value={address}
+          placeholder="Address"
+          fullWidth
+          onChange={(value) => {
+            setAddress(value)
+            setHasInteracted(true)
+          }}
+        />
+        <SubmitButton
+          black
+          fullWidth
+          inactive={inactive}
+          disabled={disabled || !isStepValid || !hasSigned}
+          onClick={onEnter}
+          autoFocus={isStepValid && !hasInteracted && !inactive}
+        />
+      </>
+    ),
+    [address, hasInteracted, hasSigned, isStepValid, name]
+  )
 
-	return (
-		<Step
-			onNext={onSubmit}
-			onPrev={onPrev}
-			inactive={inactive}
-			onTransitionDone={onTransitionDone}
-			disabled={disabled}
-			animation={animation}
-			className={className}
-			onEnter={onSubmit}
-			footer={footer}
-			body={Body}
-		/>
-	)
+  return (
+    <Step
+      onNext={onSubmit}
+      onPrev={onPrev}
+      inactive={inactive}
+      onTransitionDone={onTransitionDone}
+      disabled={disabled}
+      animation={animation}
+      className={className}
+      onEnter={onSubmit}
+      footer={footer}
+      body={Body}
+    />
+  )
 }

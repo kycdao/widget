@@ -1,9 +1,9 @@
 exports.onCreateWebpackConfig = ({ actions }) => {
-	actions.setWebpackConfig({
-		resolve: {
-			fallback: {
-				crypto: false,
-			},
-		},
-	})
+  actions.setWebpackConfig({
+    resolve: {
+      fallback: {
+        crypto: false,
+      },
+    },
+  })
 }

@@ -7,44 +7,44 @@ import { MintingFailedModal } from "./mintingFailed"
 import { MintingModal } from "./mintingModal"
 
 export const ModalRouter: FC = () => {
-	const {
-		data: { currentModal },
-	} = useContext(StateContext)
+  const {
+    data: { currentModal },
+  } = useContext(StateContext)
 
-	switch (currentModal) {
-		case "emailVerification": {
-			return (
-				<ModalBackdrop>
-					<EmailVerificationModal />
-				</ModalBackdrop>
-			)
-		}
+  switch (currentModal) {
+    case "emailVerification": {
+      return (
+        <ModalBackdrop>
+          <EmailVerificationModal />
+        </ModalBackdrop>
+      )
+    }
 
-		case "minting": {
-			return (
-				<ModalBackdrop>
-					<MintingModal />
-				</ModalBackdrop>
-			)
-		}
+    case "minting": {
+      return (
+        <ModalBackdrop>
+          <MintingModal />
+        </ModalBackdrop>
+      )
+    }
 
-		case "mintingFailed": {
-			return (
-				<ModalBackdrop>
-					<MintingFailedModal />
-				</ModalBackdrop>
-			)
-		}
+    case "mintingFailed": {
+      return (
+        <ModalBackdrop>
+          <MintingFailedModal />
+        </ModalBackdrop>
+      )
+    }
 
-		case "genericError": {
-			return (
-				<ModalBackdrop>
-					<GenericErrorModal />
-				</ModalBackdrop>
-			)
-		}
+    case "genericError": {
+      return (
+        <ModalBackdrop>
+          <GenericErrorModal />
+        </ModalBackdrop>
+      )
+    }
 
-		default:
-			return null
-	}
+    default:
+      return null
+  }
 }

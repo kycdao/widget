@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { KycDaoClient } from "@kycdao/widget";
-import { BlockchainNetwork, BlockchainNetworks } from "@kycdao/kycdao-sdk";
+import React, { useCallback, useEffect, useState } from "react"
+import { KycDaoClient } from "@kycdao/widget"
+import { BlockchainNetwork, BlockchainNetworks } from "@kycdao/kycdao-sdk"
 
 const App: React.FC = () => {
-  const [client, setClient] = useState<KycDaoClient>();
+  const [client, setClient] = useState<KycDaoClient>()
 
   useEffect(() => {
     const newClient = new KycDaoClient({
@@ -18,15 +18,15 @@ const App: React.FC = () => {
           "SolanaDevnet",
           "NearTestnet",
           "EthereumGoerli",
-          "BaseGoerli"
+          "BaseGoerli",
         ],
         enabledVerificationTypes: ["KYC"],
         evmProvider: window.ethereum,
-        baseUrl: "https://staging.kycdao.xyz"
+        baseUrl: "https://staging.kycdao.xyz",
       },
       onReady: (sdkInstance) => {
         // eslint-disable-next-line prefer-const
-        let nftCheckInterval: NodeJS.Timer;
+        let nftCheckInterval: NodeJS.Timer
 
         function writeNFT() {
           if (sdkInstance.kycDao.connectedWallet) {
@@ -35,35 +35,35 @@ const App: React.FC = () => {
               .then((value) => {
                 console.log(
                   `This wallet ${value ? "has" : "has not"} a valid nft.`
-                );
+                )
               })
-              .catch(console.error);
-            clearInterval(nftCheckInterval);
+              .catch(console.error)
+            clearInterval(nftCheckInterval)
           }
         }
 
-        nftCheckInterval = setInterval(writeNFT, 1000);
+        nftCheckInterval = setInterval(writeNFT, 1000)
       },
       onSuccess: (data) => {
         if (data) {
-          const i = /Already has an nft on (.*)\./g.exec(data);
+          const i = /Already has an nft on (.*)\./g.exec(data)
 
           if (i) {
-            console.log(`Already has an nft on ${i[1]}.`);
+            console.log(`Already has an nft on ${i[1]}.`)
           }
         }
-      }
-    });
+      },
+    })
 
-    setClient(newClient);
-  }, []);
+    setClient(newClient)
+  }, [])
 
   const open = useCallback(
     (selectedChain: BlockchainNetwork) => {
-      client?.open(selectedChain, window.ethereum);
+      client?.open(selectedChain, window.ethereum)
     },
     [client]
-  );
+  )
 
   return (
     <>
@@ -184,7 +184,7 @@ const App: React.FC = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
