@@ -19,6 +19,8 @@ const App: React.FC = () => {
           "NearTestnet",
           "EthereumGoerli",
           "BaseGoerli",
+          "ArbitrumGoerli",
+          "ZKSyncGoerli",
         ],
         enabledVerificationTypes: ["KYC"],
         evmProvider: window.ethereum,
@@ -103,6 +105,16 @@ const App: React.FC = () => {
                 onClick={() => open(BlockchainNetworks.BaseGoerli)}>
                 Base Testnet (Goerli)
               </div>
+              <div
+                className="chainSelectorButton"
+                onClick={() => open(BlockchainNetworks.ArbitrumGoerli)}>
+                Arbitrum Testnet (Goerli)
+              </div>
+              <div
+                className="chainSelectorButton"
+                onClick={() => open(BlockchainNetworks.ZKSyncGoerli)}>
+                zkSync Testnet (Goerli)
+              </div>
             </div>
           </div>
         </div>
@@ -155,6 +167,26 @@ const App: React.FC = () => {
                   target="_blank"
                   rel="noreferrer">
                   https://faucet.quicknode.com/base/goerli
+                </a>
+              </div>
+              <div>
+                <strong>Arbitrum Goerli</strong>
+                faucet list:
+                <a
+                  href="https://faucet.quicknode.com/arbitrum/goerli"
+                  target="_blank"
+                  rel="noreferrer">
+                  https://faucet.quicknode.com/arbitrum/goerli
+                </a>
+              </div>
+              <div>
+                <strong>zkSync Goerli</strong>
+                faucet list:
+                <a
+                  href="https://goerli.portal.zksync.io/faucet"
+                  target="_blank"
+                  rel="noreferrer">
+                  https://goerli.portal.zksync.io/faucet
                 </a>
               </div>
               <div>

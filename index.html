@@ -23,6 +23,8 @@
               "NearTestnet",
               "EthereumGoerli",
               "BaseGoerli",
+              "ArbitrumGoerli",
+              "ZKSyncGoerli",
             ],
             enabledVerificationTypes: ["KYC"],
             evmProvider: window.ethereum,
@@ -70,6 +72,8 @@
             "NearTestnet",
             "EthereumGoerli",
             "BaseGoerli",
+            "ArbitrumGoerli",
+            "ZKSyncGoerli",
           ]
 
           selectorHndlr(chains[0])
@@ -118,6 +122,18 @@
               onclick="selectorHndlr('BaseGoerli')">
               Base Testnet (Goerli)
             </div>
+
+            <div
+              class="chainSelectorButton"
+              onclick="selectorHndlr('ArbitrumGoerli')">
+              Arbitrum Testnet (Goerli)
+            </div>
+
+            <div
+              class="chainSelectorButton"
+              onclick="selectorHndlr('ZKSyncGoerli')">
+              zkSync Testnet (Goerli)
+            </div>
           </div>
         </div>
       </div>
@@ -153,6 +169,24 @@
                 href="https://faucet.quicknode.com/base/goerli"
                 target="_blank">
                 https://faucet.quicknode.com/base/goerli
+              </a>
+            </div>
+            <div>
+              <strong>Arbitrum Goerli</strong>
+              faucet list:
+              <a
+                href="https://faucet.quicknode.com/arbitrum/goerli"
+                target="_blank">
+                https://faucet.quicknode.com/arbitrum/goerli
+              </a>
+            </div>
+            <div>
+              <strong>zkSync Goerli</strong>
+              faucet list:
+              <a
+                href="https://goerli.portal.zksync.io/faucet"
+                target="_blank">
+                https://goerli.portal.zksync.io/faucet
               </a>
             </div>
             <div>

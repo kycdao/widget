@@ -11,7 +11,7 @@ overrides:
   bn.js: ^5.2.1
 
 specifiers:
-  '@kycdao/kycdao-sdk': ^0.6.16
+  '@kycdao/kycdao-sdk': ^0.6.17
   '@testing-library/dom': ^9.0.0
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^14.0.0
@@ -58,7 +58,7 @@ specifiers:
   vitest: ^0.29.8
 
 dependencies:
-  '@kycdao/kycdao-sdk': 0.6.16_h4324sqoag47kjei3ui6uvm3ty
+  '@kycdao/kycdao-sdk': 0.6.17_h4324sqoag47kjei3ui6uvm3ty
   agent-base: 6.0.2
   buffer: 6.0.3
   clsx: 1.2.1
@@ -880,8 +880,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@kycdao/kycdao-sdk/0.6.16_h4324sqoag47kjei3ui6uvm3ty:
-    resolution: {integrity: sha512-Ip6XZvsWZc82mv6ghdr906Ihin7LhYu/drBrZBS5iydtprJBVdRZIheJpunjBaEDna5GzwiIFewmgih161TH9A==}
+  /@kycdao/kycdao-sdk/0.6.17_h4324sqoag47kjei3ui6uvm3ty:
+    resolution: {integrity: sha512-W/E/YUB49pz4oo1i2UIutXtavm9CcahKalmugqNMqvAoDFFwn4UhHMHAmio+FE5rXk9HSsKBSsvsI3yMs9zqpw==}
     peerDependencies:
       near-api-js: ^1
       react: ^18
@@ -2908,7 +2908,7 @@ packages:
   /@walletconnect/window-metadata/1.0.0:
     resolution: {integrity: sha512-9eFvmJxIKCC3YWOL97SgRkKhlyGXkrHwamfechmqszbypFspaSk+t2jQXAEU7YClHF6Qjw5eYOmy1//zFi9/GA==}
     dependencies:
-      '@walletconnect/window-getters': 1.0.0
+      '@walletconnect/window-getters': 1.0.1
     dev: false
 
   /@walletconnect/window-metadata/1.0.1:

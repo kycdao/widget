@@ -12,6 +12,8 @@ export const getNetworkType = (
       case "EthereumMainnet":
       case "EthereumGoerli":
       case "BaseGoerli":
+      case "ArbitrumGoerli":
+      case "ZKSyncGoerli":
         return "Ethereum"
     }
   }
