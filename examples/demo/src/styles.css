@@ -36,11 +36,18 @@ a:visited {
   background: black;
   color: white;
   border-radius: 5px;
+  vertical-align: middle;
 }
 
 .chainSelectorButton:hover {
   background-color: #00ffb3;
   color: black;
+}
+
+.chainSelectorLogo {
+  height: 25px;
+  margin: 0 15px 0 0;
+  vertical-align: middle;
 }
 
 [type="checkbox"]:hover {
@@ -91,7 +98,6 @@ label {
 
 #buttonsContainer {
   display: flex;
-  justify-content: space-around;
   flex-wrap: wrap;
   gap: 1em;
   padding-bottom: 1em;

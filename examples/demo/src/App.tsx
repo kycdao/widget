@@ -2,6 +2,16 @@ import React, { useCallback, useEffect, useState } from "react"
 import { KycDaoClient } from "@kycdao/widget"
 import { BlockchainNetwork, BlockchainNetworks } from "@kycdao/kycdao-sdk"
 
+import ethereumLogo from "assets/logos/ethereum-logo-blue.svg"
+import polygonLogo from "assets/logos/polygon-logo.svg"
+import celoLogo from "assets/logos/celo-logo.svg"
+import baseLogo from "assets/logos/base-logo-in-blue.svg"
+import arbitrumLogo from "assets/logos/arbitrum-logo.svg"
+import zkLogo from "assets/logos/zksync-logo.svg"
+import nearLogo from "assets/logos/near-icon-wht.svg"
+import solanaLogo from "assets/logos/solana-logo.svg"
+
+
 const App: React.FC = () => {
   const [client, setClient] = useState<KycDaoClient>()
 
@@ -72,48 +82,64 @@ const App: React.FC = () => {
       <div id="modalRoot"></div>
       <div id="buttonContainer">
         <div id="flexCol">
-          <h1 className="centered">Select your chain</h1>
+          <h1 className="centered">Select your testnet</h1>
           <div id="flexRow">
             <div id="buttonsContainer">
+              <p>EVM:</p>
               <div
                 className="chainSelectorButton"
-                onClick={() => open(BlockchainNetworks.CeloAlfajores)}>
-                Celo Testnet (Alfajores)
+                onClick={() => open(BlockchainNetworks.EthereumGoerli)}>
+                <img className="chainSelectorLogo" src={ethereumLogo} alt={"Ethereum logo"}/>
+                Ethereum Goerli
               </div>
               <div
                 className="chainSelectorButton"
                 onClick={() => open(BlockchainNetworks.PolygonMumbai)}>
-                Polygon Testnet (Mumbai)
+                <img className="chainSelectorLogo" src={polygonLogo} alt={"Polygon logo"}/>
+                Polygon Mumbai
               </div>
               <div
                 className="chainSelectorButton"
-                onClick={() => open(BlockchainNetworks.SolanaDevnet)}>
-                Solana Devnet
-              </div>
-              <div
-                className="chainSelectorButton"
-                onClick={() => open(BlockchainNetworks.NearTestnet)}>
-                NEAR Testnet
-              </div>
-              <div
-                className="chainSelectorButton"
-                onClick={() => open(BlockchainNetworks.EthereumGoerli)}>
-                Ethereum Testnet (Goerli)
+                onClick={() => open(BlockchainNetworks.CeloAlfajores)}>
+                <img className="chainSelectorLogo" src={celoLogo} alt={"Celo logo"}/>
+                Celo Alfajores
               </div>
               <div
                 className="chainSelectorButton"
                 onClick={() => open(BlockchainNetworks.BaseGoerli)}>
-                Base Testnet (Goerli)
+                <img className="chainSelectorLogo" src={baseLogo} alt={"Base logo"}/>
+                Base Goerli
               </div>
               <div
                 className="chainSelectorButton"
-                onClick={() => open(BlockchainNetworks.ArbitrumGoerli)}>
-                Arbitrum Testnet (Goerli)
+                onClick={() => open(BlockchainNetworks.ArbitrumGoerli)}
+              >
+                <img className="chainSelectorLogo" src={arbitrumLogo} alt={"Arbitrum logo"}/>
+                Arbitrum Goerli
               </div>
               <div
                 className="chainSelectorButton"
                 onClick={() => open(BlockchainNetworks.ZKSyncGoerli)}>
-                zkSync Testnet (Goerli)
+                <img className="chainSelectorLogo" src={zkLogo} alt={"zkSync logo"}/>
+                zkSync Goerli
+              </div>
+            </div>
+            <div id="buttonsContainer">
+              <p>Near:</p>
+              <div
+                className="chainSelectorButton"
+                onClick={() => open(BlockchainNetworks.NearTestnet)}>
+                <img className="chainSelectorLogo" src={nearLogo} alt={"Near logo"}/>
+                NEAR Testnet
+              </div>
+            </div>
+            <div id="buttonsContainer">
+              <p>Solana:</p>
+              <div
+                className="chainSelectorButton"
+                onClick={() => open(BlockchainNetworks.SolanaDevnet)}>
+                <img className="chainSelectorLogo" src={solanaLogo} alt={"Solana logo"}/>
+                Solana Devnet
               </div>
             </div>
           </div>
@@ -124,14 +150,14 @@ const App: React.FC = () => {
               <strong>FAUCETS for testing:</strong>
               <div>
                 <strong>Alfajores</strong>
-                faucet:
+                &nbsp;faucet:&nbsp;
                 <a href=" https://celo.org/developers/faucet" target="_blank">
                   https://celo.org/developers/faucet
                 </a>
               </div>
               <div>
                 <strong>Mumbai</strong>
-                Faucet1:
+                &nbsp;Faucet1:&nbsp;
                 <a
                   href="https://faucet.polygon.technology"
                   target="_blank"
@@ -141,7 +167,7 @@ const App: React.FC = () => {
               </div>
               <div>
                 <strong>Mumbai</strong>
-                Faucet2:
+                &nbsp;Faucet2:&nbsp;
                 <a
                   href="https://mumbaifaucet.com"
                   target="_blank"
@@ -151,7 +177,7 @@ const App: React.FC = () => {
               </div>
               <div>
                 <strong>Ethereum Goerli</strong>
-                faucet list:
+                &nbsp;faucet list:&nbsp;
                 <a
                   href="https://faucetlink.to/goerli"
                   target="_blank"
@@ -161,7 +187,7 @@ const App: React.FC = () => {
               </div>
               <div>
                 <strong>Base Goerli</strong>
-                faucet list:
+                &nbsp;faucet list:&nbsp;
                 <a
                   href="https://faucet.quicknode.com/base/goerli"
                   target="_blank"
@@ -171,7 +197,7 @@ const App: React.FC = () => {
               </div>
               <div>
                 <strong>Arbitrum Goerli</strong>
-                faucet list:
+                &nbsp;faucet list:&nbsp;
                 <a
                   href="https://faucet.quicknode.com/arbitrum/goerli"
                   target="_blank"
@@ -181,7 +207,7 @@ const App: React.FC = () => {
               </div>
               <div>
                 <strong>zkSync Goerli</strong>
-                faucet list:
+                &nbsp;faucet list:&nbsp;
                 <a
                   href="https://goerli.portal.zksync.io/faucet"
                   target="_blank"
@@ -191,13 +217,13 @@ const App: React.FC = () => {
               </div>
               <div>
                 <strong>Near:</strong>
-                Test wallet has testnet tokens.
+                &nbsp;Test wallet has testnet tokens.
               </div>
             </div>
             <div style={{ flex: 1 }}></div>
           </div>
           <div className="centered">
-            If you have any questions, ask us on
+            If you have any questions, ask us on&nbsp;
             <a
               target="_blank"
               href="https://discord.kycDAO.xyz"

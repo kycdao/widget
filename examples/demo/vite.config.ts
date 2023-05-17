@@ -1,5 +1,6 @@
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
+import path from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,6 +10,7 @@ export default defineConfig({
       stream: "stream-browserify",
       http: "agent-base",
       https: "agent-base",
+      assets: path.resolve(__dirname, "src/assets"),
     },
   },
   define: {
