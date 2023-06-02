@@ -44,18 +44,11 @@ jobs:
             package.json
             README.md
 
-      - name: Build demo page, and install its dependencies
-        run: cd examples/demo && pnpm install --frozen-lockfile && pnpm build
-
-      - name: Artifact for Github Pages
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: examples/demo/dist
-
   publish:
-    name: Publish package
+    name: Publish widget package
     needs: build
     runs-on: ubuntu-latest
+    continue-on-error: true
     permissions:
       contents: read
       packages: write
@@ -84,11 +77,50 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+  demo-build:
+    name: Build Demo page
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: [ publish, build ]
+    permissions:
+      contents: read
+      packages: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Restore dist
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+
+      - name: Build demo page, and install its dependencies
+        run: cd examples/demo && pnpm install && pnpm build
+
+      - name: Artifact for Github Pages
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: examples/demo/dist
+
   demo:
     name: Deploy Demo page
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    needs: [ publish, build ]
+    needs: [ demo-build, publish, build ]
     permissions:
       contents: read
       packages: write

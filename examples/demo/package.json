@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@kycdao/kycdao-sdk": "^0.6.12",
+    "@kycdao/kycdao-sdk": "^0.6.17",
     "@kycdao/widget": "latest",
     "agent-base": "^6.0.2",
     "near-api-js": "^2.0.4",

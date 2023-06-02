@@ -1,6 +1,6 @@
 {
 	"semi": false,
-	"useTabs": true,
+	"useTabs": false,
 	"arrowParens": "always",
 	"htmlWhitespaceSensitivity": "ignore",
 	"bracketSameLine": true,
