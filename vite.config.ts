@@ -7,6 +7,7 @@ import { resolve } from "path"
 import eslint from "vite-plugin-eslint"
 import dts from "vite-plugin-dts"
 import { configDefaults } from "vitest/config"
+import replace from "rollup-plugin-re"
 
 export default defineConfig({
   plugins: [
@@ -50,20 +51,36 @@ export default defineConfig({
       entry: resolve(__dirname, "src/index.ts"),
       name: "KycDaoWidget",
       fileName: "index",
-      formats: ["es", "cjs", "iife"],
+      formats: ["es", "iife", "cjs"],
     },
     commonjsOptions: {
       // See https://github.com/justinmahar/react-social-media-embed/issues/24
       transformMixedEsModules: true,
     },
     rollupOptions: {
-      external: ["react", "react-dom"],
+      external: ["near-api-js", "react", "react-dom"],
       output: {
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
         },
       },
+      plugins: [
+        replace({
+          patterns: [
+            {
+              match: /js-sha256/,
+              test: `eval("require('crypto')")`,
+              replace: `require('crypto')`,
+            },
+            {
+              match: /js-sha256/,
+              test: `eval("require('buffer').Buffer")`,
+              replace: `require('buffer').Buffer`,
+            },
+          ],
+        }),
+      ],
     },
   },
   test: {
