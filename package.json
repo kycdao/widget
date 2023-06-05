@@ -36,7 +36,7 @@
     "persona": "4.8.0-alpha",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-error-boundary": "^3.1.4",
+    "react-error-boundary": "^4.0.9",
     "react-swipeable": "^7.0.0",
     "react-twitter-embed": "^4.0.4",
     "rxjs": "^7.8.0",
