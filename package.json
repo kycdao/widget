@@ -1,6 +1,6 @@
 {
   "name": "@kycdao/widget",
-  "version": "0.6.16",
+  "version": "0.6.17",
   "type": "module",
   "module": "./dist/index.js",
   "main": "./dist/index.umd.cjs",
@@ -28,7 +28,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@kycdao/kycdao-sdk": "0.6.18",
+    "@kycdao/kycdao-sdk": "0.6.19",
     "agent-base": "^6.0.2",
     "buffer": "^6.0.3",
     "clsx": "^1.2.1",

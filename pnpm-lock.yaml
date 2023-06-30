@@ -11,7 +11,7 @@ overrides:
   bn.js: ^5.2.1
 
 specifiers:
-  '@kycdao/kycdao-sdk': 0.6.18
+  '@kycdao/kycdao-sdk': 0.6.19
   '@testing-library/dom': ^9.0.0
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^14.0.0
@@ -59,7 +59,7 @@ specifiers:
   vitest: ^0.29.8
 
 dependencies:
-  '@kycdao/kycdao-sdk': 0.6.18_3xzyxlxfhrtv3yzrfspmumw6x4
+  '@kycdao/kycdao-sdk': 0.6.19_3xzyxlxfhrtv3yzrfspmumw6x4
   agent-base: 6.0.2
   buffer: 6.0.3
   clsx: 1.2.1
@@ -926,8 +926,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@kycdao/kycdao-sdk/0.6.18_3xzyxlxfhrtv3yzrfspmumw6x4:
-    resolution: {integrity: sha512-irWQYYopxcPFsI3gJ/exN6eVih0AYqt6qn9t60dw03fFV7sWDYycxkw3RWaQMqcQ4BwqB5FJmbDDsOIyZSladw==}
+  /@kycdao/kycdao-sdk/0.6.19_3xzyxlxfhrtv3yzrfspmumw6x4:
+    resolution: {integrity: sha512-XlYb+JzuCKFDkNOw8jpNTd/ZKALN5fFSt/cvy7+4x7QqlgKQ16clIRDhNNKqqM/SLeH9Uz/iQOs+WMcCvTuSvQ==}
     peerDependencies:
       near-api-js: ^1
       persona: ^4
