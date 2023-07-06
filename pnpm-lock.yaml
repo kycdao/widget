@@ -11,7 +11,7 @@ overrides:
   bn.js: ^5.2.1
 
 specifiers:
-  '@kycdao/kycdao-sdk': 0.6.19
+  '@kycdao/kycdao-sdk': 0.6.20
   '@testing-library/dom': ^9.0.0
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^14.0.0
@@ -59,7 +59,7 @@ specifiers:
   vitest: ^0.29.8
 
 dependencies:
-  '@kycdao/kycdao-sdk': 0.6.19_3xzyxlxfhrtv3yzrfspmumw6x4
+  '@kycdao/kycdao-sdk': 0.6.20_ro7bkxmm2iljf6hwzh2uf7t6iq
   agent-base: 6.0.2
   buffer: 6.0.3
   clsx: 1.2.1
@@ -926,11 +926,10 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@kycdao/kycdao-sdk/0.6.19_3xzyxlxfhrtv3yzrfspmumw6x4:
-    resolution: {integrity: sha512-XlYb+JzuCKFDkNOw8jpNTd/ZKALN5fFSt/cvy7+4x7QqlgKQ16clIRDhNNKqqM/SLeH9Uz/iQOs+WMcCvTuSvQ==}
+  /@kycdao/kycdao-sdk/0.6.20_ro7bkxmm2iljf6hwzh2uf7t6iq:
+    resolution: {integrity: sha512-Av0hiQCfH4FrjRg/7NinIi3uXApHsMNETwf/1KSjh36OnK/2vFCqkiFg0HOQtkvnB5F8p5F3y+eNCrQtMfM9XQ==}
     peerDependencies:
       near-api-js: ^1
-      persona: ^4
       react: ^18
       react-dom: ^18
       styled-components: ^5
@@ -946,7 +945,7 @@ packages:
       bn.js: 5.2.1
       bs58: 5.0.0
       near-api-js: 2.1.3
-      persona: 4.8.0-alpha_2zpt4ilzykmne4yndyzrqd4gdm
+      persona: 4.9.0_2zpt4ilzykmne4yndyzrqd4gdm
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
@@ -5438,13 +5437,13 @@ packages:
       '@types/connect': 3.4.35
       '@types/node': 12.20.55
       '@types/ws': 7.4.7
-      JSONStream: 1.3.5
       commander: 2.20.3
       delay: 5.0.0
       es6-promisify: 5.0.0
       eyes: 0.1.8
       isomorphic-ws: 4.0.1_ws@7.5.9
       json-stringify-safe: 5.0.1
+      JSONStream: 1.3.5
       lodash: 4.17.21
       uuid: 8.3.2
       ws: 7.5.9
@@ -6277,6 +6276,21 @@ packages:
 
   /persona/4.8.0-alpha_2zpt4ilzykmne4yndyzrqd4gdm:
     resolution: {integrity: sha512-02Xnen9+3lNiXiVA3G2jb8R46C9N8VQbpMMLnxsjtSrcteomb8M/PLsohgQpvC+Y5K/d1eluVU12cpMs/tD3zA==}
+    peerDependencies:
+      react: '>= 16'
+      react-dom: '>= 16'
+      styled-components: '>= 4'
+    dependencies:
+      core-js: 3.29.0
+      lodash: 4.17.21
+      qs: 6.11.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
+    dev: false
+
+  /persona/4.9.0_2zpt4ilzykmne4yndyzrqd4gdm:
+    resolution: {integrity: sha512-xSjoNrBjU9M9lp1uUXd2a5lQqrgWcH8kVczgOuOdBt5XHw8PVTyRCU9Q4K5omrlRm6XnjcJvnkq00sDgmInAzw==}
     peerDependencies:
       react: '>= 16'
       react-dom: '>= 16'
