@@ -18,7 +18,12 @@ export const getNetworkType = (
     }
   }
 
-  if (test !== "Solana" && test !== "Near" && test !== "Aptos" && test !== "Ethereum") {
+  if (
+    test !== "Solana" &&
+    test !== "Near" &&
+    test !== "Aptos" &&
+    test !== "Ethereum"
+  ) {
     throw Error("Unknown network!")
   }
 
