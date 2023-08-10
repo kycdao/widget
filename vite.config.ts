@@ -58,7 +58,7 @@ export default defineConfig({
       transformMixedEsModules: true,
     },
     rollupOptions: {
-      external: ["near-api-js", "react", "react-dom"],
+      external: ["near-api-js", "react", "react-dom", "aptos"],
       output: {
         globals: {
           react: "React",

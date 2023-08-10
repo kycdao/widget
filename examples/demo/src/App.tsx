@@ -10,6 +10,7 @@ import arbitrumLogo from "assets/logos/arbitrum-logo.svg"
 import zkLogo from "assets/logos/zksync-logo.svg"
 import nearLogo from "assets/logos/near-icon-wht.svg"
 import solanaLogo from "assets/logos/solana-logo.svg"
+import aptosLogo from "assets/logos/aptos-logo.svg"
 
 
 const App: React.FC = () => {
@@ -31,6 +32,7 @@ const App: React.FC = () => {
           "BaseGoerli",
           "ArbitrumGoerli",
           "ZKSyncGoerli",
+          "AptosTestnet",
         ],
         enabledVerificationTypes: ["KYC"],
         evmProvider: window.ethereum,
@@ -142,6 +144,15 @@ const App: React.FC = () => {
                 Solana Devnet
               </div>
             </div>
+            <div id="buttonsContainer">
+              <p>Aptos:</p>
+              <div
+                className="chainSelectorButton"
+                onClick={() => open(BlockchainNetworks.AptosTestnet)}>
+                <img className="chainSelectorLogo" src={aptosLogo} alt={"Aptos logo"}/>
+                Aptos Testnet
+              </div>
+            </div>            
           </div>
         </div>
         <div>

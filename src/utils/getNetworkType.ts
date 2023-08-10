@@ -1,7 +1,7 @@
 export const getNetworkType = (
   network: string
-): "Solana" | "Ethereum" | "Near" => {
-  const test = network.match("(Solana|Ethereum|Near)")?.[0]
+): "Solana" | "Ethereum" | "Near" | "Aptos" => {
+  const test = network.match("(Solana|Ethereum|Near|Aptos)")?.[0]
 
   if (!test) {
     switch (network) {
@@ -18,7 +18,12 @@ export const getNetworkType = (
     }
   }
 
-  if (test !== "Solana" && test !== "Near" && test !== "Ethereum") {
+  if (
+    test !== "Solana" &&
+    test !== "Near" &&
+    test !== "Aptos" &&
+    test !== "Ethereum"
+  ) {
     throw Error("Unknown network!")
   }
 

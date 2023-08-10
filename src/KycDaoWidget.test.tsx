@@ -43,7 +43,7 @@ declare type KycDaoInitializationResultMock = {
 
 const kir: KycDaoInitializationResultMock = {
   kycDao: {
-    connectWallet: vi.fn((blockchain: "Solana" | "Ethereum" | "Near") => {
+    connectWallet: vi.fn((blockchain: "Solana" | "Ethereum" | "Near" | "Aptos") => {
       kir.mintingResult = undefined
       vi.spyOn(kir.kycDao, "connectedWallet", "get").mockReturnValue({
         blockchain: "Ethereum",
@@ -124,6 +124,7 @@ const kir: KycDaoInitializationResultMock = {
       evmProviderConfigured: true,
       nearNetworkConnected: null,
       solanaNetworkConnected: null,
+      aptosNetworkConnected: null,
     },
     get connectedWallet() {
       return undefined
