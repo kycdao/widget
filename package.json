@@ -28,7 +28,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@kycdao/kycdao-sdk": "0.6.20",
+    "@kycdao/kycdao-sdk": "0.6.21",
     "agent-base": "^6.0.2",
     "buffer": "^6.0.3",
     "clsx": "^1.2.1",
